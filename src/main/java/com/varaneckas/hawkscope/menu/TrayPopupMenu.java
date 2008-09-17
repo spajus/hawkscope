@@ -7,6 +7,7 @@ import java.io.File;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
+import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 
 import com.varaneckas.hawkscope.listeners.ExitActionListener;
@@ -26,6 +27,7 @@ public class TrayPopupMenu extends JPopupMenu {
         // menubar.add(menu);
         for (File root : roots) {
             final FolderMenu item = new FolderMenu(root);
+            item.setMnemonic('0');
             item.setText(root.getAbsolutePath());
             add(item);
         }
