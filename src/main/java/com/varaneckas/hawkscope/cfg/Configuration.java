@@ -1,11 +1,16 @@
 package com.varaneckas.hawkscope.cfg;
 
-import java.util.ResourceBundle;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Configuration {
 
-    private final ResourceBundle properties;
+    public static Map<String, String> getDefaults() {
+        return new HashMap<String, String>();
+    }
+
+    private final Map<String, String> properties;
     
     private boolean changed = false;
     
@@ -13,11 +18,11 @@ public class Configuration {
         return changed;
     }
 
-    public Configuration(final ResourceBundle properties) {
+    public Configuration(final Map<String, String> properties) {
         this.properties = properties;
     }
     
-    public ResourceBundle getResourceBundle() {
+    public Map<String, String> getMap() {
         return properties;
     }
     

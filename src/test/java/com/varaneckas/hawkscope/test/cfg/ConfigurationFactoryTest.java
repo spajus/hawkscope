@@ -4,6 +4,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 
+import com.varaneckas.hawkscope.cfg.Configuration;
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+
 public class ConfigurationFactoryTest {
 
     private static final Log log = LogFactory
@@ -11,8 +14,11 @@ public class ConfigurationFactoryTest {
     
     @Test
     public void testConfigurationFactory() throws Exception {
-        log.info(System.getenv().toString().replaceAll(", ", "\n"));
-        log.info(System.getProperties().toString().replaceAll(", ", "\n"));
+//        log.info(System.getenv().toString().replaceAll(", ", "\n"));
+//        log.info(System.getProperties().toString().replaceAll(", ", "\n"));
+        Configuration cfg = ConfigurationFactory.getConfigurationFactory().getConfiguration();
+        cfg.getMap().put("test", "works");
+        ConfigurationFactory.getConfigurationFactory().write(cfg);
     }
     
 }
