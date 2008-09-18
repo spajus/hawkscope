@@ -19,7 +19,7 @@ public class Launcher {
         try {
             registerExceptionHandler();
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            final TrayPopupMenu tpm = new TrayPopupMenu();
+            final TrayPopupMenu tpm = TrayPopupMenu.getInstance();
             final TrayManager tm = TrayManager.getInstance();
             tm.setTrayPopupMenu(tpm);
             tm.setTrayIconImage("hawk16.png");

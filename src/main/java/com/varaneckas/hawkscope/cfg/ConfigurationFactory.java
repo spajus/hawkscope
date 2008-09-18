@@ -60,7 +60,7 @@ public abstract class ConfigurationFactory {
             }
         } catch (MissingResourceException e) {
             log.debug("Configuration not found, using defaults. (" + e.getMessage() + ")");
-            cfg = Configuration.getDefaults();
+            cfg = getDefaults();
         }
         return new Configuration(cfg);
     }
@@ -83,4 +83,6 @@ public abstract class ConfigurationFactory {
 
     abstract protected String loadConfigFilePath();
 
+    abstract protected Map<String, String> getDefaults();
+    
 }

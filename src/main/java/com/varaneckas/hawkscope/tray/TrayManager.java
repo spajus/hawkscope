@@ -13,6 +13,8 @@ import javax.swing.JPopupMenu;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.varaneckas.hawkscope.listeners.TrayPopupMenuMouseListener;
+
 public class TrayManager {
     
     private static final TrayManager instance = new TrayManager();
@@ -63,27 +65,7 @@ public class TrayManager {
         trayIcon = new TrayIcon(new ImageIcon(iconURL).getImage());
         trayIcon.setImageAutoSize(false);
         trayIcon.setToolTip(trayToolTip);
-        trayIcon.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                try {
-                    e.consume();
-                    if (e.getButton() != MouseEvent.BUTTON1) {
-                        if (trayPopupMenu.isVisible()) {
-                            trayPopupMenu.setVisible(false);
-                        } else {
-                            trayPopupMenu.setLocation(e.getX(), e.getY());
-                            trayPopupMenu.setInvoker(trayPopupMenu);
-                            trayPopupMenu.setVisible(true);
-                        }
-                    }
-                }
-                catch (Exception ae) {
-                    System.out.println("tEst");
-                    ae.printStackTrace();
-                }
-            }
-        });
+        trayIcon.addMouseListener(new TrayPopupMenuMouseListener());
         
         try {
             SystemTray.getSystemTray().add(trayIcon);
