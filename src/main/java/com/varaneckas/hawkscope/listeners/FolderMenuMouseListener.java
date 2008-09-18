@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+import com.varaneckas.hawkscope.menu.DynamicFileFilter;
 import com.varaneckas.hawkscope.menu.FileMenuItem;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.TrayPopupMenu;
@@ -24,7 +25,7 @@ public class FolderMenuMouseListener extends MouseAdapter {
     @Override
     public synchronized void mouseEntered(final MouseEvent e) {
         if (!loaded && file != null && file.isDirectory()) {
-            File[] files = file.listFiles();
+            File[] files = file.listFiles(DynamicFileFilter.getInstance());
             Arrays.sort(files);
             for (final File ff : files) {
                 if (ff.isDirectory()) {

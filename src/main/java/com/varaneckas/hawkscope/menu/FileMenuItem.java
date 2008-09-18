@@ -12,6 +12,7 @@ public class FileMenuItem extends JMenuItem {
     public FileMenuItem(final File file) {
         setText(file.getName());
         addMouseListener(new FileMenuMouseListener(this, file));
+        setIcon(IconFactory.getIcon("file"));
     }
 
 }

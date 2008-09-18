@@ -56,8 +56,8 @@ public class TrayPopupMenu extends JPopupMenu {
         for (File root : roots) {
             log.info("Listing roots");
             final FolderMenu item = new FolderMenu(root);
-            item.setMnemonic('0');
             item.setText(root.getAbsolutePath());
+            item.setIcon(IconFactory.getIcon("drive"));
             add(item);
         }
         add(new JSeparator(SwingConstants.HORIZONTAL));

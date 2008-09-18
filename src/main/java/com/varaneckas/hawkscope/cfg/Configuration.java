@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Configuration {
     
-    private static final String HIDDEN_FILES_DISPLAYED = "display.hidden";
+    protected static final String HIDDEN_FILES_DISPLAYED = "display.hidden";
 
     public static Map<String, String> getDefaults() {
         return new HashMap<String, String>();

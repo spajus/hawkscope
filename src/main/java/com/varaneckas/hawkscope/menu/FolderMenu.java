@@ -15,5 +15,6 @@ public class FolderMenu extends JMenu {
             setText(file.getName());
             addMouseListener(new FolderMenuMouseListener(this, file));               
         }
+        setIcon(IconFactory.getIcon("folder"));
     }
 }

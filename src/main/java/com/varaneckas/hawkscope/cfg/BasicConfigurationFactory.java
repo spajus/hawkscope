@@ -1,6 +1,7 @@
 package com.varaneckas.hawkscope.cfg;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 public class BasicConfigurationFactory extends ConfigurationFactory {
@@ -12,8 +13,9 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
 
     @Override
     protected Map<String, String> getDefaults() {
-        
-        return null;
+        Map<String, String> data = new HashMap<String, String>();
+        data.put(Configuration.HIDDEN_FILES_DISPLAYED, "0");
+        return data;
     }
 
 }

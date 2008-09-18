@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
@@ -40,7 +39,7 @@ public abstract class ConfigurationFactory {
     }
 
     public Configuration getConfiguration() {
-        Map<String, String> cfg = new HashMap<String, String>();
+        Map<String, String> cfg = getDefaults();
         try {
             
             ResourceBundle data = ResourceBundle.getBundle(CONFIG_FILE_NAME, Locale.ENGLISH, new ClassLoader() {
@@ -60,7 +59,6 @@ public abstract class ConfigurationFactory {
             }
         } catch (MissingResourceException e) {
             log.debug("Configuration not found, using defaults. (" + e.getMessage() + ")");
-            cfg = getDefaults();
         }
         return new Configuration(cfg);
     }
