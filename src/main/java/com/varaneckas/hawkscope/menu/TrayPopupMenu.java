@@ -1,7 +1,5 @@
 package com.varaneckas.hawkscope.menu;
 
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import java.io.File;
 
 import javax.swing.JMenuItem;
@@ -43,21 +41,14 @@ public class TrayPopupMenu extends JPopupMenu {
     }
     
     private TrayPopupMenu() {
-        addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusLost(final FocusEvent e) {
-                log.info("Hiding");
-                setVisible(false);
-            }
-        });
-        setLabel("Hard Drives");
         File[] roots = File.listRoots();
-        // menubar.add(menu);
         for (File root : roots) {
             log.info("Listing roots");
             final FolderMenu item = new FolderMenu(root);
             item.setText(root.getAbsolutePath());
             item.setIcon(IconFactory.getIcon("drive"));
+            item.setToolTipText("" + root.getUsableSpace() / (1024*1024*1024) 
+                    + "G free");
             add(item);
         }
         add(new JSeparator(SwingConstants.HORIZONTAL));

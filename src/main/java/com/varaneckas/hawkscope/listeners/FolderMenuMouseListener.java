@@ -49,7 +49,11 @@ public class FolderMenuMouseListener extends MouseAdapter {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+            TrayPopupMenu.getInstance().getState().act(e);
         }
-        TrayPopupMenu.getInstance().getState().act(e);
+        else {
+            folderMenu.removeAll();
+            loaded = false;
+        }
     }
 }
