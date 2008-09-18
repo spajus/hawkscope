@@ -13,6 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.listeners.ExitActionListener;
+import com.varaneckas.hawkscope.listeners.HideActionListener;
 import com.varaneckas.hawkscope.listeners.TrayPopupMenuMouseListener;
 public class TrayPopupMenu extends JPopupMenu {
 
@@ -26,6 +27,11 @@ public class TrayPopupMenu extends JPopupMenu {
     
     public static TrayPopupMenu getInstance() {
         return instance;
+    }
+    
+    public void forceHide() {
+        setState(MenuClosedState.getInstance());
+        setVisible(false);
     }
     
     public State getState() {
@@ -55,9 +61,12 @@ public class TrayPopupMenu extends JPopupMenu {
             add(item);
         }
         add(new JSeparator(SwingConstants.HORIZONTAL));
+        JMenuItem hide = new JMenuItem("Hide");
+        hide.addActionListener(new HideActionListener());
         JMenuItem exit = new JMenuItem("Exit");
-        addMouseListener(new TrayPopupMenuMouseListener());
         exit.addActionListener(new ExitActionListener());
+        addMouseListener(new TrayPopupMenuMouseListener());
+        add(hide);
         add(exit);
     }
 }
