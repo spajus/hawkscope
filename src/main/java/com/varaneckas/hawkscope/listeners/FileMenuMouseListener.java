@@ -1,19 +1,19 @@
 package com.varaneckas.hawkscope.listeners;
 
-import java.awt.Desktop;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.IOException;
 
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.menu.FileMenuItem;
+import com.varaneckas.hawkscope.menu.TrayPopupMenu;
 
 public class FileMenuMouseListener extends MouseAdapter {
+    
+    private static final Log log = LogFactory
+            .getLog(FileMenuMouseListener.class);
     
     private final FileMenuItem menuItem;
     private final File file;
@@ -25,30 +25,9 @@ public class FileMenuMouseListener extends MouseAdapter {
     
     @Override
     public void mouseClicked(MouseEvent e) {
-        e.consume();
-        if (e.getButton() != MouseEvent.BUTTON1) {
-            final JPopupMenu pop = new JPopupMenu();
-            pop.setInvoker(pop);
-            final JMenuItem explore = new JMenuItem("Edit");
-            explore.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    try {
-                        Desktop.getDesktop().open(file);
-//                        Runtime.getRuntime().exec(
-//                                "explorer.exe "
-//                                        + file.getAbsolutePath());
-                        pop.setVisible(false);
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                }
-            });
-            pop.setLocation(e.getXOnScreen(), e.getYOnScreen());
-            pop.add(explore);
-            pop.setVisible(true);
-
-        }
+        log.info("File clicked: " + file);
+        log.info(e);
+        TrayPopupMenu.getInstance().getState().act(e);
     }    
     
 }

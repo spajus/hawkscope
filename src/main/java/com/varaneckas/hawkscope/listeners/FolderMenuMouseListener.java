@@ -5,6 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 import com.varaneckas.hawkscope.menu.FileMenuItem;
 import com.varaneckas.hawkscope.menu.FolderMenu;
@@ -23,7 +24,9 @@ public class FolderMenuMouseListener extends MouseAdapter {
     @Override
     public synchronized void mouseEntered(final MouseEvent e) {
         if (!loaded && file != null && file.isDirectory()) {
-            for (final File ff : file.listFiles()) {
+            File[] files = file.listFiles();
+            Arrays.sort(files);
+            for (final File ff : files) {
                 if (ff.isDirectory()) {
                     folderMenu.add(new FolderMenu(ff));
                 } else {

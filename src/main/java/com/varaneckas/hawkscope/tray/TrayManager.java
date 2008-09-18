@@ -3,12 +3,9 @@ package com.varaneckas.hawkscope.tray;
 import java.awt.AWTException;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 
 import javax.swing.ImageIcon;
-import javax.swing.JPopupMenu;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -35,8 +32,6 @@ public class TrayManager {
     
     private TrayIcon trayIcon;
     
-    private JPopupMenu trayPopupMenu;
-    
     public TrayIcon getTrayIcon() {
         return trayIcon;
     }
@@ -54,6 +49,8 @@ public class TrayManager {
     }
     
     private void loadTray() {
+        
+        trayIconImage = getBestTrayIcon();
         
         final URL iconURL = ClassLoader.getSystemClassLoader()
             .getResource(trayIconImage);
@@ -74,6 +71,25 @@ public class TrayManager {
         }
     }
     
+    private String getBestTrayIcon() {
+        float height = SystemTray.getSystemTray().getTrayIconSize().height;
+        int[] sizes = new int[] { 64, 48, 32, 24, 16 };
+        int best = 64;
+        for (int i = 0; i < sizes.length; i++) {
+            if (sizes[i] / height >= 1) {
+                best = sizes[i];
+            }
+            else {
+                break;
+            }
+        }
+        String res = "hawkscope" + best + ".png";
+        if (log.isDebugEnabled()) {
+            log.debug("Chose best icon for " + (int) height + " pixel tray: " + res);
+        }
+        return res;
+    }
+
     public void unload() {
         if (trayIcon != null) {
             log.debug("Unloading tray icon");
@@ -87,7 +103,4 @@ public class TrayManager {
         this.trayToolTip = trayToolTip;
     }
 
-    public void setTrayPopupMenu(JPopupMenu trayPopupMenu) {
-        this.trayPopupMenu = trayPopupMenu;
-    }
 }

@@ -5,6 +5,8 @@ import java.util.Map;
 
 
 public class Configuration {
+    
+    private static final String HIDDEN_FILES_DISPLAYED = "display.hidden";
 
     public static Map<String, String> getDefaults() {
         return new HashMap<String, String>();
@@ -24,6 +26,10 @@ public class Configuration {
     
     public Map<String, String> getMap() {
         return properties;
+    }
+    
+    public boolean isHiddenFilesDisplayed() {
+        return properties.get(Configuration.HIDDEN_FILES_DISPLAYED).equals("1");
     }
     
     

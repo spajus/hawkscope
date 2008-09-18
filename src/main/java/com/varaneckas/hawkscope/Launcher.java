@@ -7,10 +7,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
-import com.varaneckas.hawkscope.menu.TrayPopupMenu;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.tray.TrayManager;
 
 public class Launcher {
+    
+    private static final Log log = LogFactory.getLog(Launcher.class);
 
     /**
      * @param args
@@ -19,11 +24,9 @@ public class Launcher {
         try {
             registerExceptionHandler();
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            final TrayPopupMenu tpm = TrayPopupMenu.getInstance();
             final TrayManager tm = TrayManager.getInstance();
-            tm.setTrayPopupMenu(tpm);
-            tm.setTrayIconImage("hawk16.png");
             tm.load();
+            ConfigurationFactory.getConfigurationFactory().getConfiguration();
         } catch (final Throwable e) {
             e.printStackTrace();
         }
