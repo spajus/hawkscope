@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.menu;
+package com.varaneckas.hawkscope.util;
 
 import java.awt.SystemTray;
 import java.awt.TrayIcon;

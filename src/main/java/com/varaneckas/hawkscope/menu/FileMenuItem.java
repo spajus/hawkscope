@@ -5,6 +5,7 @@ import java.io.File;
 import javax.swing.JMenuItem;
 
 import com.varaneckas.hawkscope.listeners.FileActionListener;
+import com.varaneckas.hawkscope.util.IconFactory;
 
 public class FileMenuItem extends JMenuItem {
     private static final long serialVersionUID = 2512823752109399974L;

@@ -2,7 +2,6 @@ package com.varaneckas.hawkscope;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -12,7 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.gui.SettingsPanel;
+import com.varaneckas.hawkscope.menu.TrayPopupMenu;
 import com.varaneckas.hawkscope.tray.TrayManager;
 
 public class Launcher {
@@ -29,10 +28,10 @@ public class Launcher {
             final TrayManager tm = TrayManager.getInstance();
             tm.load();
             ConfigurationFactory.getConfigurationFactory().getConfiguration();
-            JFrame xframe = new JFrame("Hawkscope Config");
-            xframe.setContentPane(new SettingsPanel());
-            xframe.pack();
-            xframe.setVisible(true);
+//            JFrame xframe = new JFrame("Hawkscope Config");
+//            xframe.setContentPane(new SettingsPanel());
+//            xframe.pack();
+//            xframe.setVisible(true);
         } catch (final Throwable e) {
             e.printStackTrace();
         }
@@ -56,6 +55,7 @@ public class Launcher {
                         new JScrollPane(text)
                         , "Error"
                         , JOptionPane.ERROR_MESSAGE);
+                TrayPopupMenu.getInstance().forceHide();
             }
         });
     }

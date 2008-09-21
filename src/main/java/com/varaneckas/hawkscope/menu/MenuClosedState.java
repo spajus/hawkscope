@@ -22,7 +22,6 @@ public class MenuClosedState extends State {
     
     @Override
     public void act(MouseEvent event) {
-        log.info("menu closed: " + event);
         TrayPopupMenu menu = TrayPopupMenu.getInstance();
         menu.setLocation(event.getX(), event.getY());
         menu.setInvoker(menu);
@@ -30,4 +29,12 @@ public class MenuClosedState extends State {
         menu.setState(MenuOpenState.getInstance());
     }
 
+    @Override
+    public void init() {
+        log.info("Menu closed. Free mem before cleanup: " + Runtime.getRuntime().freeMemory() / (1024*1024));
+        TrayPopupMenu.getInstance().removeAll();
+        TrayPopupMenu.getInstance().loadMenu();
+        Runtime.getRuntime().gc();
+    }
+    
 }

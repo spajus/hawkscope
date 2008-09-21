@@ -5,6 +5,7 @@ import java.io.File;
 import javax.swing.JMenu;
 
 import com.varaneckas.hawkscope.listeners.FolderMenuMouseListener;
+import com.varaneckas.hawkscope.util.IconFactory;
 
 public class FolderMenu extends JMenu {
     

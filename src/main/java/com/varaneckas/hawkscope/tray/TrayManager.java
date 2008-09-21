@@ -11,7 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.listeners.TrayPopupMenuMouseListener;
-import com.varaneckas.hawkscope.menu.IconFactory;
+import com.varaneckas.hawkscope.util.IconFactory;
 
 public class TrayManager {
     

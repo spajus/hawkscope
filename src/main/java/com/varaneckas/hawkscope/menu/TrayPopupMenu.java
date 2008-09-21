@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import com.varaneckas.hawkscope.listeners.ExitActionListener;
 import com.varaneckas.hawkscope.listeners.HideActionListener;
 import com.varaneckas.hawkscope.listeners.TrayPopupMenuMouseListener;
+import com.varaneckas.hawkscope.util.IconFactory;
 public class TrayPopupMenu extends JPopupMenu {
 
     private static final long serialVersionUID = -5946207879630091657L;
@@ -38,9 +39,14 @@ public class TrayPopupMenu extends JPopupMenu {
 
     public void setState(State state) {
         this.state = state;
+        state.init();
     }
     
     private TrayPopupMenu() {
+        loadMenu();
+    }
+
+    public void loadMenu() {
         File[] roots = File.listRoots();
         for (File root : roots) {
             log.info("Listing roots");
