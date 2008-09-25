@@ -24,6 +24,7 @@ public class Launcher {
     public static void main(String[] args) {
         try {
             registerExceptionHandler();
+            preloadTrayPopupMenu();
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             final TrayManager tm = TrayManager.getInstance();
             tm.load();
@@ -58,6 +59,17 @@ public class Launcher {
                 TrayPopupMenu.getInstance().forceHide();
             }
         });
+    }
+    
+    private static void preloadTrayPopupMenu() {
+    	new Thread(new Runnable() {
+			@Override
+			public void run() {
+				log.debug("Preloading tray popup menu");
+				TrayPopupMenu.getInstance().loadMenu();
+				log.debug("Preloaded...");
+			}
+    	}).start();
     }
     
 

@@ -3,9 +3,6 @@ package com.varaneckas.hawkscope.tray;
 import java.awt.AWTException;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
-import java.net.URL;
-
-import javax.swing.ImageIcon;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -45,7 +42,11 @@ public class TrayManager {
         if (SystemTray.isSupported()) {
             loadTray();
         } else {
-            log.warn("System Tray not supported, working in desktop mode");
+            log.warn("System Tray not supported, sorry...");
+            throw new UnsupportedOperationException(
+            		"System Tray integration not supported. " +
+            		"Make sure you are using Java 1.6+ in a " +
+            		"compatible environment.");
         }
     }
     

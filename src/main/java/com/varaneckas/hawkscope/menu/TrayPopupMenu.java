@@ -43,13 +43,12 @@ public class TrayPopupMenu extends JPopupMenu {
     }
     
     private TrayPopupMenu() {
-        loadMenu();
     }
 
     public void loadMenu() {
         File[] roots = File.listRoots();
         for (File root : roots) {
-            log.info("Listing roots");
+            log.info("Listing roots: " + root.getAbsolutePath());
             final FolderMenu item = new FolderMenu(root);
             item.setText(root.getAbsolutePath());
             item.setIcon(IconFactory.getIcon("drive"));
