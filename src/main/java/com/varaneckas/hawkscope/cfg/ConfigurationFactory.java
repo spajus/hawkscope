@@ -25,6 +25,12 @@ public abstract class ConfigurationFactory {
 
     private static ConfigurationFactory concreteInstance = null;
 
+    public static ConfigurationFactory getConfigurationFactory(final String[] args) {
+        final ConfigurationFactory cf = getConfigurationFactory();
+        cf.setCommandLineArgs(args);
+        return cf;
+    }
+    
     public static ConfigurationFactory getConfigurationFactory() {
         synchronized (ConfigurationFactory.class) {
             if (concreteInstance == null) {
@@ -77,6 +83,10 @@ public abstract class ConfigurationFactory {
         } catch (IOException e) {
             log.error("Failed writing config file", e);
         }
+    }
+    
+    private void setCommandLineArgs(final String[] args) {
+        
     }
 
     abstract protected String loadConfigFilePath();

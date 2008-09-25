@@ -1,10 +1,5 @@
 package com.varaneckas.hawkscope;
 
-import java.lang.Thread.UncaughtExceptionHandler;
-
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -14,64 +9,50 @@ import org.apache.commons.logging.LogFactory;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.menu.TrayPopupMenu;
 import com.varaneckas.hawkscope.tray.TrayManager;
+import com.varaneckas.hawkscope.util.SimpleUncaughtExceptionHandler;
 
+/**
+ * Hawkscope Application Launcher
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class Launcher {
     
+    /**
+     * Logger
+     */
     private static final Log log = LogFactory.getLog(Launcher.class);
 
     /**
-     * @param args
+     * Application bootstrapper
+     * 
+     * @param args Command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         try {
+            ConfigurationFactory.getConfigurationFactory(args).getConfiguration();
         	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            registerExceptionHandler();
-            preloadTrayPopupMenu();
-            final TrayManager tm = TrayManager.getInstance();
-            tm.load();
-            ConfigurationFactory.getConfigurationFactory().getConfiguration();
-//            JFrame xframe = new JFrame("Hawkscope Config");
-//            xframe.setContentPane(new SettingsPanel());
-//            xframe.pack();
-//            xframe.setVisible(true);
+        	 Thread.setDefaultUncaughtExceptionHandler(new SimpleUncaughtExceptionHandler());
         } catch (final Throwable e) {
-            e.printStackTrace();
+            log.fatal("Failed starting Hawkscope", e);
         }
+        preload();
+        TrayManager.getInstance().load();
     }
     
-    private static void registerExceptionHandler() {
-        Thread.setDefaultUncaughtExceptionHandler(
-                new UncaughtExceptionHandler() {
-            @Override
-            public void uncaughtException(Thread t, Throwable e) {
-                if ((e instanceof ClassCastException) 
-                        && e.getMessage().matches(".*java.awt.TrayIcon.*")) {
-                    return;
-                }
-                JTextArea text = new JTextArea(e.getMessage()
-                        .replaceAll(": ", ":\n"));
-                text.setColumns(50);
-                text.setRows(5);
-                text.setEditable(false);
-                JOptionPane.showMessageDialog(null, 
-                        new JScrollPane(text)
-                        , "Error"
-                        , JOptionPane.ERROR_MESSAGE);
-                TrayPopupMenu.getInstance().forceHide();
-            }
-        });
-    }
-    
-    private static void preloadTrayPopupMenu() {
+    /**
+     * Preloads slow Hawkscope singletons for fast use later
+     */
+    private static void preload() {
     	SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				log.debug("Preloading tray popup menu");
+				log.debug("Preloading data");
 				TrayPopupMenu.getInstance().loadMenu();
 				log.debug("Preloaded...");
 			}
     	});
     }
-    
 
 }
