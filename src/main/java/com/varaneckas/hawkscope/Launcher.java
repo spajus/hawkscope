@@ -5,6 +5,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.apache.commons.logging.Log;
@@ -23,9 +24,9 @@ public class Launcher {
      */
     public static void main(String[] args) {
         try {
+        	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             registerExceptionHandler();
             preloadTrayPopupMenu();
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             final TrayManager tm = TrayManager.getInstance();
             tm.load();
             ConfigurationFactory.getConfigurationFactory().getConfiguration();
@@ -62,14 +63,14 @@ public class Launcher {
     }
     
     private static void preloadTrayPopupMenu() {
-    	new Thread(new Runnable() {
+    	SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
 				log.debug("Preloading tray popup menu");
 				TrayPopupMenu.getInstance().loadMenu();
 				log.debug("Preloaded...");
 			}
-    	}).start();
+    	});
     }
     
 

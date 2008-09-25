@@ -14,9 +14,7 @@ public class TrayPopupMenuMouseListener extends MouseAdapter {
     
     @Override
     public void mouseClicked(MouseEvent e) {
-        log.info("Something happening: " +e );
         TrayPopupMenu.getInstance().getState().act(e);
-        
     }
     
 }
