@@ -8,10 +8,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+import javax.swing.JMenu;
+
 import com.varaneckas.hawkscope.menu.DynamicFileFilter;
 import com.varaneckas.hawkscope.menu.FileMenuItem;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.TrayPopupMenu;
+import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.MenuUtils;
 
 /**
  * Folder Menu {@link MouseListener}
@@ -39,6 +43,11 @@ public class FolderMenuMouseListener extends MouseAdapter {
     private final File file;
     
     /**
+     * Number of Menu Items in one Menu
+     */
+    private static final int MENU_SIZE = MenuUtils.getAutoMenuSize();
+    
+    /**
      * Constructor
      * 
      * @param menu tagert
@@ -54,11 +63,19 @@ public class FolderMenuMouseListener extends MouseAdapter {
         if (!loaded && file != null && file.isDirectory()) {
             final File[] files = file.listFiles(DynamicFileFilter.getInstance());
             Arrays.sort(files);
+            long counter = 0L;
+            JMenu workMenu = folderMenu;
             for (final File ff : files) {
                 if (ff.isDirectory()) {
-                    folderMenu.add(new FolderMenu(ff));
+                    workMenu.add(new FolderMenu(ff));
                 } else {
-                    folderMenu.add(new FileMenuItem(ff));
+                    workMenu.add(new FileMenuItem(ff));
+                }
+                if (++counter % MENU_SIZE == 0) {
+                    JMenu more = new JMenu("More");
+                    more.setIcon(IconFactory.getIcon("more"));
+                    workMenu.add(more);
+                    workMenu = more;
                 }
 
             }

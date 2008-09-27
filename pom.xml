@@ -4,7 +4,7 @@
 	<groupId>org.spajus</groupId>
 	<artifactId>hawkscope</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1.1</version>
+	<version>0.1.2-DEV</version>
 	<name>hawkscope</name>
 	<url>http://maven.apache.org</url>
 	<build>

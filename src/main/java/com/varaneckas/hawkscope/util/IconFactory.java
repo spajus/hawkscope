@@ -32,12 +32,18 @@ public class IconFactory {
     private static final Map<String, Icon> icons = new HashMap<String, Icon>();
 
     static {
-        //initialize icons
-        icons.put("drive", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("hdd24.png")));
-        icons.put("folder", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("folder24.png")));
-        icons.put("file", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("file24.png")));
-        icons.put("exit", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("exit24.png")));
-        icons.put("hide", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("down24.png")));
+        try {
+            //initialize icons
+            icons.put("drive",  new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/hdd24.png")));
+            icons.put("folder", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/folder24.png")));
+            icons.put("file",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/file24.png")));
+            icons.put("exit",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/exit24.png")));
+            icons.put("hide",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/down24.png")));
+            icons.put("more",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/more24.png")));
+            icons.put("unknown",new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/unknown24.png")));        
+        } catch (final Exception e) {
+            log.warn("Cannot find icon", e);
+        }
     }
     
     /**
@@ -99,7 +105,7 @@ public class IconFactory {
                 break;
             }
         }
-        final String res = "hawkscope" + best + ".png";
+        final String res = "icons/hawkscope" + best + ".png";
         if (log.isDebugEnabled()) {
             log.debug("Chose best icon for " + (int) height 
                     + " pixel tray: " + res);
