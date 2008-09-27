@@ -2,6 +2,7 @@ package com.varaneckas.hawkscope.util;
 
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
+import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,35 +13,81 @@ import javax.swing.ImageIcon;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * Icon Factory
+ *
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class IconFactory {
 
+    /**
+     * Logger
+     */
     private static final Log log = LogFactory.getLog(IconFactory.class);
     
+    /**
+     * Collection of flyweight icons that are ready for use
+     */
     private static final Map<String, Icon> icons = new HashMap<String, Icon>();
-    
+
     static {
+        //initialize icons
         icons.put("drive", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("hdd24.png")));
         icons.put("folder", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("folder24.png")));
         icons.put("file", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("file24.png")));
+        icons.put("exit", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("exit24.png")));
+        icons.put("hide", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("down24.png")));
     }
     
-    public static Icon getIcon(String name) {
+    /**
+     * Gets {@link Icon} for name
+     * 
+     * @param name icon name
+     * @return icon
+     */
+    public static Icon getIcon(final String name) {
         return icons.get(name);
     }
     
-    public static TrayIcon getTrayIcon() {
-        String trayIconImage = getBestTrayIconSize();
-        final URL iconURL = ClassLoader.getSystemClassLoader()
-        .getResource(trayIconImage);
-    if (iconURL == null) {
-        throw new RuntimeException("Could not find tray icon " +
-                "image: " + trayIconImage);
+    /**
+     * Gets {@link Icon} for {@link File}
+     * 
+     * @param file any file
+     * @return icon
+     */
+    public static Icon getIcon(final File file) {
+        if (file.isFile()) {
+            return getIcon("file");
+        } else if (file.isDirectory()) {
+            return getIcon("folder");
+        } else {
+            return getIcon("unknown");
+        }
     }
     
+    /**
+     * Gets Hawkscope Tray Icon of best size
+     * 
+     * @return tray icon
+     */
+    public static TrayIcon getTrayIcon() {
+        final String trayIconImage = getBestTrayIcon();
+        final URL iconURL = ClassLoader.getSystemClassLoader()
+                .getResource(trayIconImage);
+        if (iconURL == null) {
+            throw new RuntimeException("Could not find tray icon " +
+                    "image: " + trayIconImage);
+        }
         return new TrayIcon(new ImageIcon(iconURL).getImage());
     }
     
-    private static String getBestTrayIconSize() {
+    /**
+     * Gets best sized tray icon name for current setup
+     * 
+     * @return tray icon name
+     */
+    private static String getBestTrayIcon() {
         float height = SystemTray.getSystemTray().getTrayIconSize().height;
         int[] sizes = new int[] { 64, 48, 32, 24, 16 };
         int best = 64;
@@ -52,9 +99,10 @@ public class IconFactory {
                 break;
             }
         }
-        String res = "hawkscope" + best + ".png";
+        final String res = "hawkscope" + best + ".png";
         if (log.isDebugEnabled()) {
-            log.debug("Chose best icon for " + (int) height + " pixel tray: " + res);
+            log.debug("Chose best icon for " + (int) height 
+                    + " pixel tray: " + res);
         }
         return res;
     }

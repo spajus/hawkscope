@@ -7,13 +7,28 @@ import javax.swing.JMenuItem;
 import com.varaneckas.hawkscope.listeners.FileActionListener;
 import com.varaneckas.hawkscope.util.IconFactory;
 
+/**
+ * File {@link JMenuItem}
+ *
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class FileMenuItem extends JMenuItem {
+    
+    /**
+     * Serial Version UID
+     */
     private static final long serialVersionUID = 2512823752109399974L;
 
+    /**
+     * Constructor
+     * 
+     * @param file target
+     */
     public FileMenuItem(final File file) {
         setText(file.getName());
         addActionListener(new FileActionListener(file));
-        setIcon(IconFactory.getIcon("file"));
+        setIcon(IconFactory.getIcon(file));
     }
 
 }

@@ -17,7 +17,7 @@ public class ConfigurationFactoryTest {
 //        log.info(System.getenv().toString().replaceAll(", ", "\n"));
 //        log.info(System.getProperties().toString().replaceAll(", ", "\n"));
         Configuration cfg = ConfigurationFactory.getConfigurationFactory().getConfiguration();
-        cfg.getMap().put("test", "works");
+        cfg.getProperties().put("test", "works");
         ConfigurationFactory.getConfigurationFactory().write(cfg);
     }
     

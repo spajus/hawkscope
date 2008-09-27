@@ -10,34 +10,57 @@ import org.apache.commons.logging.LogFactory;
 import com.varaneckas.hawkscope.listeners.TrayPopupMenuMouseListener;
 import com.varaneckas.hawkscope.util.IconFactory;
 
+/**
+ * System Tray Manager
+ *
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class TrayManager {
-    
+
+    /**
+     * Singleton instance
+     */
     private static final TrayManager instance = new TrayManager();
     
+    /**
+     * Singleton constructor
+     */
     private TrayManager() {
         //singleton constructor
     }
     
+    /**
+     * Singleton instance getter
+     * 
+     * @return instance
+     */
     public static TrayManager getInstance() {
         return instance;
     }
     
+    /**
+     * Logger
+     */
     private static final Log log = LogFactory.getLog(TrayManager.class);
     
-    private String trayIconImage;
-    
-    private String trayToolTip;
-    
+    /**
+     * System Tray Icon
+     */
     private TrayIcon trayIcon;
     
+    /**
+     * Gets system tray icon
+     * 
+     * @return system tray icon
+     */
     public TrayIcon getTrayIcon() {
         return trayIcon;
     }
 
-    public void setTrayIconImage(final String trayIconImage) {
-        this.trayIconImage = trayIconImage;
-    }
-
+    /**
+     * Loads system tray icon if it is supported
+     */
     public void load() {
         if (SystemTray.isSupported()) {
             loadTray();
@@ -50,32 +73,19 @@ public class TrayManager {
         }
     }
     
+    /**
+     * Configures and adds system tray icon
+     */
     private void loadTray() {
         trayIcon = IconFactory.getTrayIcon();
         trayIcon.setImageAutoSize(false);
-        trayIcon.setToolTip(trayToolTip);
         trayIcon.addMouseListener(new TrayPopupMenuMouseListener());
         
         try {
             SystemTray.getSystemTray().add(trayIcon);
-        } catch (AWTException e) {
+        } catch (final AWTException e) {
             throw new RuntimeException("Could not add tray icon", e);
         }
-    }
-    
-
-
-    public void unload() {
-        if (trayIcon != null) {
-            log.debug("Unloading tray icon");
-            SystemTray.getSystemTray().remove(trayIcon);
-            trayIcon = null;
-            log.debug("Unloaded");
-        }
-    }
-
-    public void setTrayToolTip(String trayToolTip) {
-        this.trayToolTip = trayToolTip;
     }
 
 }

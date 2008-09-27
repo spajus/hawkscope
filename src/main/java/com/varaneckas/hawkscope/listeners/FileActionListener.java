@@ -8,24 +8,38 @@ import java.io.IOException;
 
 import com.varaneckas.hawkscope.menu.TrayPopupMenu;
 
+/**
+ * File {@link ActionListener}
+ * 
+ * Opens file with default system application
+ *
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class FileActionListener implements ActionListener {
     
+    /**
+     * Target file
+     */
     private final File file;
     
-    public FileActionListener(File file) {
+    /**
+     * Constructor 
+     * 
+     * @param file target
+     */
+    public FileActionListener(final File file) {
         this.file = file;
     }
 
- 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(final ActionEvent e) {
         try {
             Desktop.getDesktop().open(file);
-        } catch (IOException e1) {
-            throw new RuntimeException("Failed opening file: " + file);
+        } catch (final IOException e1) {
+            throw new RuntimeException("Failed opening file: " + file, e1);
         }
         TrayPopupMenu.getInstance().forceHide();
-        
     }    
     
 }

@@ -5,27 +5,52 @@ import java.awt.event.MouseEvent;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * State when {@link TrayPopupMenu} is open (visible)
+ *
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class MenuOpenState extends State {
 
+    /**
+     * Logger
+     */
     private static final Log log = LogFactory.getLog(MenuOpenState.class);
     
-    private static final MenuOpenState self = new MenuOpenState();
+    /**
+     * Singleton instance
+     */
+    private static final MenuOpenState instance = new MenuOpenState();
     
-    private MenuOpenState() {}
+    /**
+     * Singleton constructor
+     */
+    private MenuOpenState() {
+        //nothing to do
+    }
     
+    /**
+     * Singleton instance getter
+     * 
+     * @return instance
+     */
     public static MenuOpenState getInstance() {
-        return self;
+        return instance;
     }
     
     @Override
-    public void act(MouseEvent event) {
+    public void act(final MouseEvent event) {
         TrayPopupMenu.getInstance().setVisible(false);
         TrayPopupMenu.getInstance().setState(MenuClosedState.getInstance());
     }
     
     @Override
     public void init() {
-        log.info("Menu open. Free mem: " + Runtime.getRuntime().freeMemory() / (1024*1024));
+        if (log.isDebugEnabled()) {
+            log.info("Menu open. Free mem: " 
+                    + Runtime.getRuntime().freeMemory() / (1024*1024));
+        }
     }
 
 }

@@ -23,16 +23,19 @@ import com.varaneckas.hawkscope.menu.TrayPopupMenu;
  */
 public class SimpleUncaughtExceptionHandler implements UncaughtExceptionHandler {
 
+    /**
+     * Logger
+     */
     private static final Log log = LogFactory
             .getLog(SimpleUncaughtExceptionHandler.class);
     
     @Override
-    public void uncaughtException(Thread t, Throwable e) {
+    public void uncaughtException(final Thread t, final Throwable e) {
+        //workaround for some weird exception that has no impact for application
         if ((e instanceof ClassCastException) 
                 && e.getMessage().matches(".*java.awt.TrayIcon.*")) {
             return;
         }
-        
         final Writer stringWriter = new StringWriter();
         final PrintWriter w = new PrintWriter(stringWriter);
         e.printStackTrace(w);

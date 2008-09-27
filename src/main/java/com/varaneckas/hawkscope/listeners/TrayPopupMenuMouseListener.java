@@ -3,17 +3,18 @@ package com.varaneckas.hawkscope.listeners;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import com.varaneckas.hawkscope.menu.TrayPopupMenu;
 
+/**
+ * Mouse listener that controls the {@link TrayPopupMenu}
+ *
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class TrayPopupMenuMouseListener extends MouseAdapter {
-    private static final Log log = LogFactory
-            .getLog(TrayPopupMenuMouseListener.class);
-    
+
     @Override
-    public void mouseClicked(MouseEvent e) {
+    public void mouseClicked(final MouseEvent e) {
         TrayPopupMenu.getInstance().getState().act(e);
     }
     

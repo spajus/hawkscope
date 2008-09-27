@@ -15,22 +15,57 @@ import java.util.ResourceBundle;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.varaneckas.hawkscope.util.IOUtils;
 
+/**
+ * Hawkscope configuration factory
+ * 
+ *
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public abstract class ConfigurationFactory {
 
-    private static final Log log = LogFactory
-            .getLog(ConfigurationFactory.class);
+    /**
+     * Logger
+     */
+    private static final Log log = LogFactory.getLog(ConfigurationFactory.class);
     
+    /**
+     * Configuration file name. 
+     * 
+     * It will be prefixed with "." and suffixed with ".properties".
+     */
     protected static final String CONFIG_FILE_NAME = "hawkscope";
 
+    /**
+     * Concrete Singleton instance
+     */
     private static ConfigurationFactory concreteInstance = null;
+    
+    /**
+     * Configuration
+     */
+    private Configuration configuration = null;
 
+    /**
+     * Gets concrete implementation of {@link ConfigurationFactory} with use of
+     * command line arguments
+     * 
+     * @param args command line arguments
+     * @return concrete instance
+     */
     public static ConfigurationFactory getConfigurationFactory(final String[] args) {
         final ConfigurationFactory cf = getConfigurationFactory();
         cf.setCommandLineArgs(args);
         return cf;
     }
     
+    /**
+     * Gets concrete implementation of {@link ConfigurationFactory}
+     * 
+     * @return concrete instance
+     */
     public static ConfigurationFactory getConfigurationFactory() {
         synchronized (ConfigurationFactory.class) {
             if (concreteInstance == null) {
@@ -44,47 +79,81 @@ public abstract class ConfigurationFactory {
         return concreteInstance;
     }
 
+    /**
+     * Gets {@link Configuration} that can be used within application
+     * 
+     * @return configuration
+     */
     public Configuration getConfiguration() {
-        Map<String, String> cfg = getDefaults();
+        if (configuration == null) {
+            loadConfiguration();
+        }
+        return configuration;
+    }
+
+    /**
+     * Loads {@link Configuration}
+     * 
+     * @see #configuration
+     */
+    private void loadConfiguration() {
+        final Map<String, String> cfg = getDefaults();
         try {
             
-            ResourceBundle data = ResourceBundle.getBundle(CONFIG_FILE_NAME, Locale.ENGLISH, new ClassLoader() {
+            final ResourceBundle data = ResourceBundle
+                    .getBundle(CONFIG_FILE_NAME, Locale.ENGLISH
+                            , new ClassLoader() {
                 @Override
-                protected URL findResource(String name) {
+                protected URL findResource(final String name) {
                     try {
                         return new URL("file://" 
                                 + loadConfigFilePath() + "/." + name);
-                    } catch (MalformedURLException e) {
+                    } catch (final MalformedURLException e) {
                         log.error("Failed loading file", e);
                         return null;
                     }
                 }
             });
-            for (String key : data.keySet()) {
+            for (final String key : data.keySet()) {
                 cfg.put(key, data.getString(key));
             }
-        } catch (MissingResourceException e) {
-            log.debug("Configuration not found, using defaults. (" + e.getMessage() + ")");
+        } catch (final MissingResourceException e) {
+            log.debug("Configuration not found, using defaults. (" 
+                    + e.getMessage() + ")");
         }
-        return new Configuration(cfg);
+        configuration = new Configuration(cfg);
     }
 
-    public void write(Configuration configuration) {
+    /**
+     * Writes {@link Configuration} to file
+     * 
+     * @param configuration configuration to be written
+     */
+    public void write(final Configuration cfg) {
+        Writer config = null;
         try {
-            Writer config = new BufferedWriter(new FileWriter(
+            config = new BufferedWriter(new FileWriter(
                     loadConfigFilePath() + "/." + CONFIG_FILE_NAME));
-            for (String key : configuration.getMap().keySet()) {
+            for (final String key : cfg.getProperties().keySet()) {
                 config.write(key);
                 config.write(" = ");
-                config.write(configuration.getMap().get(key));
+                config.write(cfg.getProperties().get(key));
                 config.write('\n');
             }
             config.close();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             log.error("Failed writing config file", e);
+        }
+        finally {
+            IOUtils.closeQuietly(config);
         }
     }
     
+    /**
+     * Sets command line arguments. Should influence the default parameter map
+     * 
+     * @param args
+     */
     private void setCommandLineArgs(final String[] args) {
         
     }

@@ -6,6 +6,14 @@ import java.awt.event.MouseEvent;
 
 import com.varaneckas.hawkscope.menu.TrayPopupMenu;
 
+/**
+ * Exit {@link ActionListener}
+ * 
+ * Quits the application on left click
+ *
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class ExitActionListener implements ActionListener {
 
     @Override
