@@ -12,6 +12,8 @@
 package com.varaneckas.hawkscope.gui;
 
 import java.awt.Desktop;
+import java.awt.DisplayMode;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URI;
@@ -26,18 +28,38 @@ import com.varaneckas.hawkscope.util.IconFactory;
  * About box
  *
  * @author Tomas Varaneckas
- * @version $Id$
+ * @version $Id: AboutFrame.java 26 2008-09-28 12:36:07Z tomas.varaneckas $
  */
 public class AboutFrame extends javax.swing.JFrame {
 
+    /**
+     * Singleton instance
+     */
+    private static AboutFrame instance = null;
+
+    /**
+     * Singleton instance getter
+     * 
+     * @return instance
+     */
+    public static AboutFrame getInstance() {
+        if (instance == null) {
+            instance = new AboutFrame();
+        }
+        return instance;
+    }
+    
     /**
      * Serial Version UID 
      */
     private static final long serialVersionUID = 2324352047369162981L;
     
     /** Creates new form AboutFrame */
-    public AboutFrame() {
+    private AboutFrame() {
         initComponents();
+        DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment()
+            .getDefaultScreenDevice().getDisplayMode();
+        setLocation(dm.getWidth() / 2 - getWidth() / 2, dm.getHeight() / 2 - getHeight() / 2);
     }
 
     /** 
@@ -61,7 +83,8 @@ public class AboutFrame extends javax.swing.JFrame {
         logoPanel = new javax.swing.JPanel();
         hawkscopeLogo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("About");
+        setResizable(false);
 
         appName.setFont(appName.getFont().deriveFont(appName.getFont().getStyle() | java.awt.Font.BOLD, appName.getFont().getSize()+3));
         appName.setText("Hawkscope");
@@ -188,6 +211,7 @@ public class AboutFrame extends javax.swing.JFrame {
             }
         });
         appDescription.setText(Version.APP_SLOGAN);
+        appVersion.setText(Version.VERSION_NUMBER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

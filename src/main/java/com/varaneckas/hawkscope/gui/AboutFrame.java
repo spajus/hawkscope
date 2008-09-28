@@ -83,7 +83,8 @@ public class AboutFrame extends javax.swing.JFrame {
         logoPanel = new javax.swing.JPanel();
         hawkscopeLogo = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("About");
+        setResizable(false);
 
         appName.setFont(appName.getFont().deriveFont(appName.getFont().getStyle() | java.awt.Font.BOLD, appName.getFont().getSize()+3));
         appName.setText("Hawkscope");
@@ -210,6 +211,7 @@ public class AboutFrame extends javax.swing.JFrame {
             }
         });
         appDescription.setText(Version.APP_SLOGAN);
+        appVersion.setText(Version.VERSION_NUMBER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
