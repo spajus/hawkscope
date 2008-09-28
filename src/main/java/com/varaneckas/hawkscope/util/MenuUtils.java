@@ -2,6 +2,9 @@ package com.varaneckas.hawkscope.util;
 
 import java.awt.GraphicsEnvironment;
 
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
+
 /**
  * Utilities related to menus and menu items 
  *
@@ -10,6 +13,12 @@ import java.awt.GraphicsEnvironment;
  */
 public abstract class MenuUtils {
 
+    /**
+     * Menu separator
+     */
+    public final static JSeparator SEPARATOR = 
+        new JSeparator(SwingConstants.HORIZONTAL);
+    
     /**
      * Menu item size in pixels
      */

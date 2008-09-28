@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import javax.swing.JMenu;
+import javax.swing.JSeparator;
 
 import com.varaneckas.hawkscope.menu.DynamicFileFilter;
 import com.varaneckas.hawkscope.menu.FileMenuItem;
@@ -74,6 +75,7 @@ public class FolderMenuMouseListener extends MouseAdapter {
                 if (++counter % MENU_SIZE == 0) {
                     JMenu more = new JMenu("More");
                     more.setIcon(IconFactory.getIcon("more"));
+                    workMenu.add(new JSeparator());
                     workMenu.add(more);
                     workMenu = more;
                 }

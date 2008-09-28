@@ -30,6 +30,7 @@ public class Launcher {
      * @param args Command line arguments
      */
     public static void main(final String[] args) {
+        log.info(Version.formatFullString());
         try {
             ConfigurationFactory.getConfigurationFactory(args).getConfiguration();
         	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

@@ -40,7 +40,8 @@ public class IconFactory {
             icons.put("exit",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/exit24.png")));
             icons.put("hide",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/down24.png")));
             icons.put("more",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/more24.png")));
-            icons.put("unknown",new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/unknown24.png")));        
+            icons.put("unknown",new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/unknown24.png")));  
+            icons.put("about",  new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/about24.png")));  
         } catch (final Exception e) {
             log.warn("Cannot find icon", e);
         }
@@ -54,6 +55,17 @@ public class IconFactory {
      */
     public static Icon getIcon(final String name) {
         return icons.get(name);
+    }
+    
+    /**
+     * Gets uncached icon
+     * 
+     * @param name Icon name with extension
+     * @return icon
+     */
+    public static Icon getUncachedIcon(final String name) {
+        return new ImageIcon(ClassLoader.getSystemClassLoader()
+                .getResource("icons/" + name));
     }
     
     /**

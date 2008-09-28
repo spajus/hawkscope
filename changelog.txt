@@ -2,7 +2,7 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
-Changes in version 0.1.2 (2008-??-??)
+Changes in version 0.1.2 (2008-09-28)
 -------------------------------------
 * Added icons for "Hide" and "Exit" actions
 * Various performance and memory consumption optimizations
@@ -10,6 +10,7 @@ Changes in version 0.1.2 (2008-??-??)
   http://code.google.com/p/hawkscope/issues/detail?id=3
 * Items that are neither files nor folders (i.e. unix devices in /dev/*) now
   have a separate icon and are properly displayed  
+* Added "About" menu item  
 
 Changes in version 0.1.1 (2008-09-25)
 -------------------------------------
