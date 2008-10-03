@@ -9,12 +9,13 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
 import com.varaneckas.hawkscope.menu.DynamicFileFilter;
 import com.varaneckas.hawkscope.menu.FileMenuItem;
 import com.varaneckas.hawkscope.menu.FolderMenu;
-import com.varaneckas.hawkscope.menu.TrayPopupMenu;
+import com.varaneckas.hawkscope.menu.MainPopupMenu;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.MenuUtils;
 
@@ -66,6 +67,12 @@ public class FolderMenuMouseListener extends MouseAdapter {
             Arrays.sort(files);
             long counter = 0L;
             JMenu workMenu = folderMenu;
+            if (files.length == 0) {
+                final JMenuItem empty = new JMenuItem(IconFactory.getIcon("empty"));
+                empty.setText("Empty...");
+                empty.setEnabled(false);
+                workMenu.add(empty);
+            }
             for (final File ff : files) {
                 if (ff.isDirectory()) {
                     workMenu.add(new FolderMenu(ff));
@@ -85,6 +92,8 @@ public class FolderMenuMouseListener extends MouseAdapter {
         }
         e.consume();
     }
+    
+    
 
     @Override
     public void mouseClicked(final MouseEvent e) {
@@ -95,7 +104,7 @@ public class FolderMenuMouseListener extends MouseAdapter {
             } catch (final IOException e1) {
                 e1.printStackTrace();
             }
-            TrayPopupMenu.getInstance().forceHide();
+            MainPopupMenu.getInstance().forceHide();
         }
         else {
             folderMenu.removeAll();

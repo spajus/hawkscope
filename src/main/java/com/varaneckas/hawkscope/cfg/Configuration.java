@@ -1,6 +1,11 @@
 package com.varaneckas.hawkscope.cfg;
 
+import java.io.File;
+import java.util.List;
 import java.util.Map;
+
+import com.varaneckas.hawkscope.menu.MainPopupMenu;
+import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
  * Hawkscope configuration.
@@ -13,7 +18,18 @@ public class Configuration {
     /**
      * Display hidden files property name
      */
-    protected static final String HIDDEN_FILES_DISPLAYED = "display.hidden";
+    public static final String HIDDEN_FILES_DISPLAYED = "display.hidden";
+    
+    /**
+     * Quick folder access list property name
+     */
+    public static final String QUICK_ACCESS_LIST = "quick.access.list";
+    
+    /**
+     * Property name for blacklist of file/folder names that will be filtered out 
+     */
+    //TODO use it
+    public static final String FILESYSTEM_BLACKLIST = "filesystem.blacklist";
 
     /**
      * Properties {@link Map}
@@ -59,6 +75,16 @@ public class Configuration {
     public boolean isHiddenFilesDisplayed() {
         return properties.get(Configuration.HIDDEN_FILES_DISPLAYED).equals("1");
     }
-    
+
+    /**
+     * Gets list of {@link File}s that can be accessed quickly from 
+     * {@link MainPopupMenu}
+     * 
+     * @return list of files
+     */
+    public List<File> getQuickAccessList() {
+        return PathUtils.pathToDirList(
+                properties.get(Configuration.QUICK_ACCESS_LIST), ";");
+    }
     
 }

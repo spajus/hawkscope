@@ -4,9 +4,9 @@
 	<groupId>com.varaneckas</groupId>
 	<artifactId>hawkscope</artifactId>
 	<packaging>jar</packaging>
-	<version>0.1.2</version>
-	<name>hawkscope</name>
-	<url>http://maven.apache.org</url>
+	<version>0.1.3-DEV</version>
+	<name>Hawkscope</name>
+	<url>http://hawkscope.googlecode.com</url>
 	<build>
 		<plugins>
 			<plugin>
@@ -19,6 +19,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.1</version>
 				<configuration>
 					<archive>
 						<manifest>
@@ -50,8 +51,14 @@
 		</dependency>
 		<dependency>
 			<groupId>commons-logging</groupId>
-			<artifactId>commons-logging</artifactId>
+			<artifactId>commons-logging-api</artifactId>
 			<version>1.1</version>
 		</dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+            <version>1.1</version>
+            <scope>test</scope>
+        </dependency>
 	</dependencies>
 </project>

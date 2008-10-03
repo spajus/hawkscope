@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
-import com.varaneckas.hawkscope.menu.TrayPopupMenu;
+import com.varaneckas.hawkscope.menu.MainPopupMenu;
 
 /**
  * Exit {@link ActionListener}
@@ -21,7 +21,7 @@ public class ExitActionListener implements ActionListener {
         if ((e.getModifiers() & MouseEvent.BUTTON1_MASK) != 0) {
             System.exit(0);
         } else {
-            TrayPopupMenu.getInstance().forceHide();
+            MainPopupMenu.getInstance().forceHide();
         }
     }
 

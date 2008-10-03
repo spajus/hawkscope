@@ -23,40 +23,53 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="logoPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="appName" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Component id="appDescription" alignment="0" min="-2" max="-2" attributes="0"/>
-                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" alignment="1" attributes="1">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="labelReleased" min="-2" max="-2" attributes="0"/>
-                              <Component id="labelVersion" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="logoPanel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="appName" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="appDescription" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="labelReleased" min="-2" max="-2" attributes="0"/>
+                                          <Component id="labelVersion" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="labelHomepage" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="appReleased" min="-2" max="-2" attributes="0"/>
+                                  <Component id="appHomepage" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="appVersion" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="appVersion" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="appReleased" alignment="0" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="labelHomepage" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="appHomepage" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                      </Group>
+                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="copyToClipboardButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="closeButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="envScrollPane" pref="389" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="labelHomepage1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="304" max="32767" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="449" max="32767" attributes="0"/>
-              <Component id="closeButton" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -87,9 +100,16 @@
                   </Group>
                   <Component id="logoPanel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
-              <Component id="closeButton" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+              <Component id="labelHomepage1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="envScrollPane" min="-2" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="closeButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="copyToClipboardButton" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -105,7 +125,7 @@
         <Property name="text" type="java.lang.String" value="Hawkscope"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="appName.setText(Version.formatString());"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="appName.setText(Version.APP_NAME);"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="appReleased">
@@ -135,7 +155,7 @@
         <Property name="toolTipText" type="java.lang.String" value="Click to open in browser"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="appHomepage.setText(Version.HOMEPAGE);&#xa;appHomepage.addMouseListener(new MouseAdapter() {&#xa;    @Override&#xa;    public void mouseClicked(final MouseEvent e) {&#xa;        try {&#xa;            Desktop.getDesktop().browse(new URI(appHomepage.getText()));&#xa;        } catch (Exception e1) {&#xa;            e1.printStackTrace();&#xa;        }&#xa;    }&#xa;});"/>
+        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="appHomepage.setText(Version.HOMEPAGE);&#xa;appHomepage.addMouseListener(new MouseAdapter() {&#xa;    @Override&#xa;    public void mouseClicked(final MouseEvent e) {&#xa;        try {&#xa;            Desktop.getDesktop().browse(new URI(appHomepage.getText()));&#xa;            setVisible(false);&#xa;        } catch (final Exception e1) {&#xa;            log.warn(&quot;Failed browsing&quot;, e1);&#xa;        }&#xa;    }&#xa;});"/>
       </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="closeButton">
@@ -218,7 +238,7 @@
             <Property name="verticalAlignment" type="int" value="1"/>
           </Properties>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="hawkscopeLogo.setIcon(IconFactory.getUncachedIcon(&quot;hawkscope128.png&quot;));&#xa;hawkscopeLogo.addMouseListener(new MouseAdapter() {&#xa;   @Override&#xa;   public void mouseClicked(final MouseEvent e) {&#xa;       try {&#xa;           Desktop.getDesktop().browse(new URI(Version.HOMEPAGE));&#xa;       } catch (final Exception e1) {&#xa;           e1.printStackTrace();&#xa;       }&#xa;   }        &#xa;});"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="hawkscopeLogo.setIcon(IconFactory.getUncachedIcon(&quot;hawkscope128.png&quot;));&#xa;hawkscopeLogo.addMouseListener(new MouseAdapter() {&#xa;   @Override&#xa;   public void mouseClicked(final MouseEvent e) {&#xa;       try {&#xa;           Desktop.getDesktop().browse(new URI(Version.HOMEPAGE));&#xa;            setVisible(false);&#xa;        } catch (final Exception e1) {&#xa;            log.warn(&quot;Failed browsing&quot;, e1);&#xa;        }&#xa;   }        &#xa;});"/>
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout" value="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout$BorderConstraintsDescription">
@@ -228,5 +248,46 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="labelHomepage1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.modules.form.editors2.FontEditor">
+          <FontInfo relative="true">
+            <Font bold="true" component="labelHomepage1" property="font" relativeSize="true" size="0"/>
+          </FontInfo>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Environment:"/>
+      </Properties>
+    </Component>
+    <Container class="javax.swing.JScrollPane" name="envScrollPane">
+      <Properties>
+        <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
+        <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+      </AuxValues>
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Component class="javax.swing.JTextArea" name="envTextArea">
+          <Properties>
+            <Property name="columns" type="int" value="20"/>
+            <Property name="editable" type="boolean" value="false"/>
+            <Property name="rows" type="int" value="5"/>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="envTextArea.setText(Version.getSystemProperties());"/>
+          </AuxValues>
+        </Component>
+      </SubComponents>
+    </Container>
+    <Component class="javax.swing.JButton" name="copyToClipboardButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Copy to Clipboard"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="copyToClipboardButtonActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>

@@ -6,7 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * State when {@link TrayPopupMenu} is closed (invisible) 
+ * State when {@link MainPopupMenu} is closed (invisible) 
  *
  * @author Tomas Varaneckas
  * @version $Id$
@@ -41,7 +41,7 @@ public class MenuClosedState extends State {
     
     @Override
     public void act(final MouseEvent event) {
-        final TrayPopupMenu menu = TrayPopupMenu.getInstance();
+        final MainPopupMenu menu = MainPopupMenu.getInstance();
         menu.setLocation(event.getX(), event.getY());
         menu.setInvoker(menu);
         menu.setVisible(true);
@@ -54,8 +54,8 @@ public class MenuClosedState extends State {
             log.debug("Menu closed. Free mem before cleanup: " 
                     + Runtime.getRuntime().freeMemory() / (1024*1024));
         }
-        TrayPopupMenu.getInstance().removeAll();
-        TrayPopupMenu.getInstance().loadMenu();
+        MainPopupMenu.getInstance().removeAll();
+        MainPopupMenu.getInstance().loadMenu();
         Runtime.getRuntime().gc();
     }
     

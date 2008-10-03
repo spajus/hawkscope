@@ -6,7 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- * State when {@link TrayPopupMenu} is open (visible)
+ * State when {@link MainPopupMenu} is open (visible)
  *
  * @author Tomas Varaneckas
  * @version $Id$
@@ -41,8 +41,8 @@ public class MenuOpenState extends State {
     
     @Override
     public void act(final MouseEvent event) {
-        TrayPopupMenu.getInstance().setVisible(false);
-        TrayPopupMenu.getInstance().setState(MenuClosedState.getInstance());
+        MainPopupMenu.getInstance().setVisible(false);
+        MainPopupMenu.getInstance().setState(MenuClosedState.getInstance());
     }
     
     @Override

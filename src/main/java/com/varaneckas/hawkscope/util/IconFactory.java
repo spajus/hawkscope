@@ -36,12 +36,14 @@ public class IconFactory {
             //initialize icons
             icons.put("drive",  new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/hdd24.png")));
             icons.put("folder", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/folder24.png")));
+            icons.put("folder.open", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/folder.open.24.png")));
             icons.put("file",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/file24.png")));
             icons.put("exit",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/exit24.png")));
             icons.put("hide",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/down24.png")));
             icons.put("more",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/more24.png")));
             icons.put("unknown",new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/unknown24.png")));  
             icons.put("about",  new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/about24.png")));  
+            icons.put("empty",  new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/empty24.png"))); 
         } catch (final Exception e) {
             log.warn("Cannot find icon", e);
         }

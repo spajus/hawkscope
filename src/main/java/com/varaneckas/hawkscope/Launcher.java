@@ -7,7 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.menu.TrayPopupMenu;
+import com.varaneckas.hawkscope.menu.MainPopupMenu;
 import com.varaneckas.hawkscope.tray.TrayManager;
 import com.varaneckas.hawkscope.util.SimpleUncaughtExceptionHandler;
 
@@ -50,7 +50,7 @@ public class Launcher {
 			@Override
 			public void run() {
 				log.debug("Preloading data");
-				TrayPopupMenu.getInstance().loadMenu();
+				MainPopupMenu.getInstance().loadMenu();
 				log.debug("Preloaded...");
 			}
     	});

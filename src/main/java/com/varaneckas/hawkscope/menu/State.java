@@ -3,7 +3,7 @@ package com.varaneckas.hawkscope.menu;
 import java.awt.event.MouseEvent;
 
 /**
- * State of {@link TrayPopupMenu} 
+ * State of {@link MainPopupMenu} 
  *
  * @author Tomas Varaneckas
  * @version $Id$

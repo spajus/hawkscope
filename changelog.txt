@@ -2,6 +2,23 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
+Changes in version 0.1.3 (2008-??-??)
+-------------------------------------
+* Added quick access list to main menu, configurable via .hawkscope.properties
+  "user.home" folder read from system properties is added by default
+  http://code.google.com/p/hawkscope/issues/detail?id=11
+* Improved About dialog:
+  - Added "Environment" field to About dialog
+  - Added icon to About dialog
+  - Added "Copy to Clipboard" button to About dialog for copying environmental 
+    report
+  http://code.google.com/p/hawkscope/issues/detail?id=12
+* Fixed configuration file writing
+* Changed "unknown" icon
+* Removed lots of unneeded dependencies to get a lighter executable
+* Switched to maven assembly plugin version 2.1 due to file duplication bug:
+  http://jira.codehaus.org/browse/MASSEMBLY-355
+
 Changes in version 0.1.2 (2008-09-28)
 -------------------------------------
 * Added icons for "Hide" and "Exit" actions

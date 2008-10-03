@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-import com.varaneckas.hawkscope.menu.TrayPopupMenu;
+import com.varaneckas.hawkscope.menu.MainPopupMenu;
 
 /**
  * File {@link ActionListener}
@@ -39,7 +39,7 @@ public class FileActionListener implements ActionListener {
         } catch (final IOException e1) {
             throw new RuntimeException("Failed opening file: " + file, e1);
         }
-        TrayPopupMenu.getInstance().forceHide();
+        MainPopupMenu.getInstance().forceHide();
     }    
     
 }

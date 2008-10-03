@@ -1,5 +1,7 @@
 package com.varaneckas.hawkscope;
 
+import java.util.Date;
+
 /**
  * Hawkscope Version information
  *
@@ -21,12 +23,12 @@ public class Version {
     /**
      * Application version number   
      */
-    public static final String VERSION_NUMBER = "0.1.2";
+    public static final String VERSION_NUMBER = "0.1.3";
     
     /**
      * Application version date
      */
-    public static final String VERSION_DATE = "2008-09-28";
+    public static final String VERSION_DATE = "2008-??-??";
     
     /**
      * Application Homepage URL
@@ -41,7 +43,7 @@ public class Version {
     public static String formatFullString() {
         return APP_NAME.concat(" ").concat(VERSION_NUMBER)
                 .concat(" (").concat(VERSION_DATE)
-                .concat(") [").concat(HOMEPAGE);
+                .concat(") [").concat(HOMEPAGE).concat("]");
     }
     
     /**
@@ -51,6 +53,37 @@ public class Version {
      */
     public static String formatString() {
         return APP_NAME.concat(" ").concat(VERSION_NUMBER);
+    }
+    
+    /**
+     * Gets system properties as single formatted string
+     * 
+     * @return environment
+     */
+    public static String getSystemProperties() {
+        final StringBuilder props = new StringBuilder();
+        for (final Object p : System.getProperties().keySet()) {
+            props.append(p).append(": ").append(System.getProperty("" + p));
+            props.append('\n');
+        }
+        return props.toString().trim();
+    }
+    
+    /**
+     * Generates Environmental report
+     * 
+     * @return report
+     */
+    public static String getEnvironmentReport() {
+        final StringBuilder env = new StringBuilder("Hawkscope Environment Report\n");
+        env.append("--------------------------------------\n");
+        env.append(formatFullString()).append('\n');
+        env.append("--------------------------------------\n");
+        env.append(getSystemProperties()).append('\n');
+        env.append("--------------------------------------\n");
+        env.append(new Date()).append('\n');
+        env.append("--------------------------------------\n");
+        return env.toString();
     }
     
 }

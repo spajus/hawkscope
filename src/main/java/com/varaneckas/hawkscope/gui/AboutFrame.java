@@ -18,10 +18,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URI;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.varaneckas.hawkscope.Version;
+import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
@@ -33,13 +38,18 @@ import com.varaneckas.hawkscope.util.IconFactory;
 public class AboutFrame extends javax.swing.JFrame {
 
     /**
+     * Logger
+     */
+    private static final Log log = LogFactory.getLog(AboutFrame.class);
+
+    /**
      * Singleton instance
      */
     private static AboutFrame instance = null;
 
     /**
      * Singleton instance getter
-     * 
+     *
      * @return instance
      */
     public static AboutFrame getInstance() {
@@ -48,18 +58,19 @@ public class AboutFrame extends javax.swing.JFrame {
         }
         return instance;
     }
-    
+
     /**
-     * Serial Version UID 
+     * Serial Version UID
      */
     private static final long serialVersionUID = 2324352047369162981L;
-    
+
     /** Creates new form AboutFrame */
     private AboutFrame() {
         initComponents();
         DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment()
             .getDefaultScreenDevice().getDisplayMode();
         setLocation(dm.getWidth() / 2 - getWidth() / 2, dm.getHeight() / 2 - getHeight() / 2);
+        setIconImage(((ImageIcon) IconFactory.getUncachedIcon("hawkscope16.png")).getImage());
     }
 
     /** 
@@ -82,6 +93,10 @@ public class AboutFrame extends javax.swing.JFrame {
         labelHomepage = new javax.swing.JLabel();
         logoPanel = new javax.swing.JPanel();
         hawkscopeLogo = new javax.swing.JLabel();
+        labelHomepage1 = new javax.swing.JLabel();
+        envScrollPane = new javax.swing.JScrollPane();
+        envTextArea = new javax.swing.JTextArea();
+        copyToClipboardButton = new javax.swing.JButton();
 
         setTitle("About");
         setResizable(false);
@@ -132,9 +147,29 @@ public class AboutFrame extends javax.swing.JFrame {
             public void mouseClicked(final MouseEvent e) {
                 try {
                     Desktop.getDesktop().browse(new URI(Version.HOMEPAGE));
+                    setVisible(false);
                 } catch (final Exception e1) {
-                    e1.printStackTrace();
+                    log.warn("Failed browsing", e1);
                 }
+            }
+        });
+
+        labelHomepage1.setFont(labelHomepage1.getFont().deriveFont(labelHomepage1.getFont().getStyle() | java.awt.Font.BOLD));
+        labelHomepage1.setText("Environment:");
+
+        envScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        envScrollPane.setVerifyInputWhenFocusTarget(false);
+
+        envTextArea.setColumns(20);
+        envTextArea.setEditable(false);
+        envTextArea.setRows(5);
+        envScrollPane.setViewportView(envTextArea);
+        envTextArea.setText(Version.getSystemProperties());
+
+        copyToClipboardButton.setText("Copy to Clipboard");
+        copyToClipboardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                copyToClipboardButtonActionPerformed(evt);
             }
         });
 
@@ -144,31 +179,39 @@ public class AboutFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(appName)
-                    .addComponent(appDescription)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(labelReleased)
-                                .addComponent(labelVersion))
-                            .addGap(18, 18, 18)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(appVersion)
-                                .addComponent(appReleased))
-                            .addGap(149, 149, 149))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(labelHomepage)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(appHomepage)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
-                .addGap(24, 24, 24))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(449, Short.MAX_VALUE)
-                .addComponent(closeButton)
-                .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(appName)
+                            .addComponent(appDescription)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(labelReleased)
+                                            .addComponent(labelVersion))
+                                        .addGap(36, 36, 36))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(labelHomepage)
+                                        .addGap(23, 23, 23)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(appReleased)
+                                    .addComponent(appHomepage)
+                                    .addComponent(appVersion))))
+                        .addGap(56, 56, 56))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(copyToClipboardButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(closeButton)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(envScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(labelHomepage1)
+                        .addContainerGap(304, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,12 +235,18 @@ public class AboutFrame extends javax.swing.JFrame {
                             .addComponent(labelHomepage)
                             .addComponent(appHomepage)))
                     .addComponent(logoPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(closeButton)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelHomepage1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(envScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(closeButton)
+                    .addComponent(copyToClipboardButton))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        appName.setText(Version.formatString());
+        appName.setText(Version.APP_NAME);
         appReleased.setText(Version.VERSION_DATE);
         appHomepage.setText(Version.HOMEPAGE);
         appHomepage.addMouseListener(new MouseAdapter() {
@@ -205,8 +254,9 @@ public class AboutFrame extends javax.swing.JFrame {
             public void mouseClicked(final MouseEvent e) {
                 try {
                     Desktop.getDesktop().browse(new URI(appHomepage.getText()));
-                } catch (Exception e1) {
-                    e1.printStackTrace();
+                    setVisible(false);
+                } catch (final Exception e1) {
+                    log.warn("Failed browsing", e1);
                 }
             }
         });
@@ -219,6 +269,10 @@ public class AboutFrame extends javax.swing.JFrame {
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         setVisible(false);
 }//GEN-LAST:event_closeButtonActionPerformed
+
+    private void copyToClipboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyToClipboardButtonActionPerformed
+        IOUtils.copyToClipboard(Version.getEnvironmentReport());
+    }//GEN-LAST:event_copyToClipboardButtonActionPerformed
 
     /**
     * @param args the command line arguments
@@ -245,8 +299,12 @@ public class AboutFrame extends javax.swing.JFrame {
     private javax.swing.JLabel appReleased;
     private javax.swing.JLabel appVersion;
     private javax.swing.JButton closeButton;
+    private javax.swing.JButton copyToClipboardButton;
+    private javax.swing.JScrollPane envScrollPane;
+    private javax.swing.JTextArea envTextArea;
     private javax.swing.JLabel hawkscopeLogo;
     private javax.swing.JLabel labelHomepage;
+    private javax.swing.JLabel labelHomepage1;
     private javax.swing.JLabel labelReleased;
     private javax.swing.JLabel labelVersion;
     private javax.swing.JPanel logoPanel;

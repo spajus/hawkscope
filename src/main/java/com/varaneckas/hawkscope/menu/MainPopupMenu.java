@@ -1,19 +1,21 @@
 package com.varaneckas.hawkscope.menu;
 
 import java.io.File;
+import java.util.List;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
+import javax.swing.JSeparator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.listeners.AboutActionListener;
 import com.varaneckas.hawkscope.listeners.ExitActionListener;
 import com.varaneckas.hawkscope.listeners.HideActionListener;
 import com.varaneckas.hawkscope.listeners.TrayPopupMenuMouseListener;
 import com.varaneckas.hawkscope.util.IconFactory;
-import com.varaneckas.hawkscope.util.MenuUtils;
 
 /**
  * Main popup menu of Hawkscope application
@@ -21,7 +23,7 @@ import com.varaneckas.hawkscope.util.MenuUtils;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class TrayPopupMenu extends JPopupMenu {
+public class MainPopupMenu extends JPopupMenu {
 
     /**
      * Serial Version UID
@@ -31,12 +33,12 @@ public class TrayPopupMenu extends JPopupMenu {
     /**
      * Logger
      */
-    private static final Log log = LogFactory.getLog(TrayPopupMenu.class);
+    private static final Log log = LogFactory.getLog(MainPopupMenu.class);
     
     /**
      * Singleton instance
      */
-    private static final TrayPopupMenu instance = new TrayPopupMenu();
+    private static final MainPopupMenu instance = new MainPopupMenu();
     
     /**
      * Current {@link State}
@@ -63,7 +65,7 @@ public class TrayPopupMenu extends JPopupMenu {
      * 
      * @return instance
      */
-    public static TrayPopupMenu getInstance() {
+    public static MainPopupMenu getInstance() {
         return instance;
     }
     
@@ -97,7 +99,7 @@ public class TrayPopupMenu extends JPopupMenu {
     /**
      * Singleton constructor
      */
-    private TrayPopupMenu() {
+    private MainPopupMenu() {
         hideItem.addActionListener(new HideActionListener());
         hideItem.setIcon(IconFactory.getIcon("hide"));
         exitItem.addActionListener(new ExitActionListener());
@@ -111,6 +113,7 @@ public class TrayPopupMenu extends JPopupMenu {
      * Loads menu contents
      */
     public void loadMenu() {
+        loadQuickAccessMenu();
         final File[] roots = File.listRoots();
         for (final File root : roots) {
             log.debug("Generating menu for: " + root.getAbsolutePath());
@@ -125,10 +128,24 @@ public class TrayPopupMenu extends JPopupMenu {
     }
 
     /**
+     * Loads quick access menu
+     */
+    private void loadQuickAccessMenu() {
+        final List<File> quick = ConfigurationFactory.getConfigurationFactory()
+                .getConfiguration().getQuickAccessList();
+        if (quick != null && quick.size() > 0) {
+            for (final File custom : quick) {
+                add(new FolderMenu(custom));
+            }
+            add(new JSeparator());
+        }
+    }
+
+    /**
      * Adds static menu items
      */
     private void addStaticItems() {
-        add(MenuUtils.SEPARATOR);
+        add(new JSeparator());
         add(hideItem);
         add(aboutItem);
         add(exitItem);

@@ -12,7 +12,7 @@ import javax.swing.JTextArea;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.varaneckas.hawkscope.menu.TrayPopupMenu;
+import com.varaneckas.hawkscope.menu.MainPopupMenu;
 
 /**
  * Registers uncaught exception handler that displays error message inside
@@ -49,7 +49,7 @@ public class SimpleUncaughtExceptionHandler implements UncaughtExceptionHandler 
                 new JScrollPane(text)
                 , "Hawkscope Error"
                 , JOptionPane.ERROR_MESSAGE);
-        TrayPopupMenu.getInstance().forceHide();
+        MainPopupMenu.getInstance().forceHide();
         log.error("Uncaught exception", e);
     }
 }

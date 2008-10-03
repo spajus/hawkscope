@@ -106,8 +106,10 @@ public abstract class ConfigurationFactory {
                 @Override
                 protected URL findResource(final String name) {
                     try {
-                        return new URL("file://" 
-                                + loadConfigFilePath() + "/." + name);
+                        final String file = "file://" 
+                            + loadConfigFilePath() + "/." + name;
+                        log.debug("Resolving config file: " + file);
+                        return new URL(file);
                     } catch (final MalformedURLException e) {
                         log.error("Failed loading file", e);
                         return null;
@@ -132,8 +134,10 @@ public abstract class ConfigurationFactory {
     public void write(final Configuration cfg) {
         Writer config = null;
         try {
-            config = new BufferedWriter(new FileWriter(
-                    loadConfigFilePath() + "/." + CONFIG_FILE_NAME));
+            final String file = loadConfigFilePath() + "/." 
+                    + CONFIG_FILE_NAME + ".properties";
+            log.debug("Writing config file: " + file);
+            config = new BufferedWriter(new FileWriter(file));
             for (final String key : cfg.getProperties().keySet()) {
                 config.write(key);
                 config.write(" = ");

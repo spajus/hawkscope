@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.varaneckas.hawkscope.gui.AboutFrame;
-import com.varaneckas.hawkscope.menu.TrayPopupMenu;
+import com.varaneckas.hawkscope.menu.MainPopupMenu;
 
 /**
  * About {@link ActionListener}
@@ -19,7 +19,7 @@ public class AboutActionListener implements ActionListener {
     @Override
     public void actionPerformed(final ActionEvent e) {
         AboutFrame.getInstance().setVisible(true);
-        TrayPopupMenu.getInstance().forceHide();
+        MainPopupMenu.getInstance().forceHide();
     }
 
 }
