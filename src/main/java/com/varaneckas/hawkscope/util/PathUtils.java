@@ -3,6 +3,8 @@ package com.varaneckas.hawkscope.util;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,9 +18,9 @@ import org.apache.commons.logging.LogFactory;
 public abstract class PathUtils {
 
     /**
-     * Property marker tag name
+     * Property marker regex
      */
-    public static final String PROPERTY_TAG = "property#";
+    public static final String INTERPRET_REGEX = "\\$\\{([^\\{]+)\\}";
     
     /**
      * Logger
@@ -35,12 +37,9 @@ public abstract class PathUtils {
         if (path == null || path.equals("")) {
             return null;
         }
-        final String[] locations = path.split(delimiter);
+        final String[] locations = interpret(path).split(delimiter);
         final List<File> files = new ArrayList<File>();
-        for (String location : locations) {
-            if (location.startsWith(PROPERTY_TAG)) {
-                location = System.getProperty(location.replaceFirst(PROPERTY_TAG, ""));
-            } 
+        for (final String location : locations) {
             final File f = new File(location);
             if (!f.isDirectory()) {
                 log.warn(f.getAbsolutePath() + " is not a directory!");
@@ -53,4 +52,26 @@ public abstract class PathUtils {
         return files;
     }
     
+    
+    private static String interpret(final String location) {
+        if (!location.matches(".*" + INTERPRET_REGEX + ".*")) {
+            return location;
+        } else {
+            String newLocation = location;
+            final Pattern grep = Pattern.compile(INTERPRET_REGEX);
+            final Matcher matcher = grep.matcher(location);
+            while (matcher.find()) {
+                log.debug("Parsing: " + matcher.group(1));
+                String replacement;
+                if (matcher.group(1).startsWith("$")) {
+                    replacement = "" + System.getenv(matcher.group(1).substring(1));
+                } else {
+                    replacement = "" + System.getProperty(matcher.group(1));
+                }
+                newLocation = newLocation.replaceFirst(Pattern.quote(
+                        matcher.group()), replacement);
+            }
+            return newLocation;
+        }
+    }
 }

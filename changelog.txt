@@ -2,7 +2,7 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
-Changes in version 0.1.3 (2008-??-??)
+Changes in version 0.2.0 (2008-??-??)
 -------------------------------------
 * Added quick access list to main menu, configurable via .hawkscope.properties
   "user.home" folder read from system properties is added by default
