@@ -69,7 +69,8 @@ public abstract class ConfigurationFactory {
     public static ConfigurationFactory getConfigurationFactory() {
         synchronized (ConfigurationFactory.class) {
             if (concreteInstance == null) {
-                if (new File(System.getProperty("user.home")).canWrite()) {
+                if (new File(System.getProperty("user.home")
+                		.replaceAll("\\\\", "/")).canWrite()) {
                     concreteInstance = new UserHomeConfigurationFactory();
                 } else {
                     concreteInstance = new BasicConfigurationFactory();
@@ -106,10 +107,9 @@ public abstract class ConfigurationFactory {
                 @Override
                 protected URL findResource(final String name) {
                     try {
-                        final String file = "file://" 
-                            + loadConfigFilePath() + "/." + name;
+                        final String file = loadConfigFilePath() + "/." + name;
                         log.debug("Resolving config file: " + file);
-                        return new URL(file);
+                        return new File(file).toURI().toURL();
                     } catch (final MalformedURLException e) {
                         log.error("Failed loading file", e);
                         return null;

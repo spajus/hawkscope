@@ -18,6 +18,7 @@ Changes in version 0.2.0 (2008-??-??)
 * Removed lots of unneeded dependencies to get a lighter executable
 * Switched to maven assembly plugin version 2.1 due to file duplication bug:
   http://jira.codehaus.org/browse/MASSEMBLY-355
+* Fixed path resolving problems in Windows
 
 Changes in version 0.1.2 (2008-09-28)
 -------------------------------------

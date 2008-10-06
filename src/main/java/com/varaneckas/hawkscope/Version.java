@@ -23,7 +23,7 @@ public class Version {
     /**
      * Application version number   
      */
-    public static final String VERSION_NUMBER = "0.1.3";
+    public static final String VERSION_NUMBER = "0.2.0-DEV";
     
     /**
      * Application version date

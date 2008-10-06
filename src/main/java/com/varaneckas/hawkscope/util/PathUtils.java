@@ -69,7 +69,7 @@ public abstract class PathUtils {
                     replacement = "" + System.getProperty(matcher.group(1));
                 }
                 newLocation = newLocation.replaceFirst(Pattern.quote(
-                        matcher.group()), replacement);
+                        matcher.group()), replacement.replaceAll("\\\\", "/"));
             }
             return newLocation;
         }
