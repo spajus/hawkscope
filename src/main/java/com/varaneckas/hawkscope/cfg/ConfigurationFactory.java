@@ -122,6 +122,7 @@ public abstract class ConfigurationFactory {
         } catch (final MissingResourceException e) {
             log.debug("Configuration not found, using defaults. (" 
                     + e.getMessage() + ")");
+            write(new Configuration(cfg));
         }
         configuration = new Configuration(cfg);
     }
