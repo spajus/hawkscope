@@ -19,6 +19,9 @@ Changes in version 0.2.0 (2008-??-??)
 * Switched to maven assembly plugin version 2.1 due to file duplication bug:
   http://jira.codehaus.org/browse/MASSEMBLY-355
 * Fixed path resolving problems in Windows
+* Added ignore to Floppy drive by default
+* Improved error dialogs
+  http://code.google.com/p/hawkscope/issues/detail?id=2
 
 Changes in version 0.1.2 (2008-09-28)
 -------------------------------------

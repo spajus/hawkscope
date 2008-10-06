@@ -1,5 +1,8 @@
 package com.varaneckas.hawkscope;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.io.Writer;
 import java.util.Date;
 
 /**
@@ -9,6 +12,11 @@ import java.util.Date;
  * @version $Id$
  */
 public class Version {
+    
+    /**
+     * Report separator
+     */
+    private static final String SEPARATOR = "--------------------------------------\n";
     
     /**
      * Application name
@@ -76,14 +84,29 @@ public class Version {
      */
     public static String getEnvironmentReport() {
         final StringBuilder env = new StringBuilder("Hawkscope Environment Report\n");
-        env.append("--------------------------------------\n");
+        env.append(SEPARATOR);
         env.append(formatFullString()).append('\n');
-        env.append("--------------------------------------\n");
+        env.append(SEPARATOR);
         env.append(getSystemProperties()).append('\n');
-        env.append("--------------------------------------\n");
+        env.append(SEPARATOR);
         env.append(new Date()).append('\n');
-        env.append("--------------------------------------\n");
+        env.append(SEPARATOR);
         return env.toString();
+    }
+    
+    public static String getBugReport(final Throwable e) {
+        final StringBuilder sb = new StringBuilder(300);
+        final Writer stringWriter = new StringWriter();
+        final PrintWriter w = new PrintWriter(stringWriter);
+        e.printStackTrace(w);
+        sb.append("Hawkscope Bug Report").append('\n')
+            .append(SEPARATOR)
+            .append(e.getMessage().replaceAll(": ", ":\n")).append('\n')
+            .append(SEPARATOR)
+            .append(stringWriter.toString()).append('\n')  
+            .append(SEPARATOR)
+            .append(getEnvironmentReport());
+        return sb.toString();
     }
     
 }

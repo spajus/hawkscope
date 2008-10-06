@@ -1,8 +1,5 @@
 package com.varaneckas.hawkscope.util;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.lang.Thread.UncaughtExceptionHandler;
 
 import javax.swing.JOptionPane;
@@ -12,6 +9,7 @@ import javax.swing.JTextArea;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.menu.MainPopupMenu;
 
 /**
@@ -36,19 +34,21 @@ public class SimpleUncaughtExceptionHandler implements UncaughtExceptionHandler 
                 && e.getMessage().matches(".*java.awt.TrayIcon.*")) {
             return;
         }
-        final Writer stringWriter = new StringWriter();
-        final PrintWriter w = new PrintWriter(stringWriter);
-        e.printStackTrace(w);
-        final String error = e.getMessage().replaceAll(": ", ":\n") 
-                + "\n\n" + stringWriter.toString();
-        final JTextArea text = new JTextArea(error);
+        final JTextArea text = new JTextArea(Version.getBugReport(e));
         text.setColumns(60);
         text.setRows(6);
         text.setEditable(false);
-        JOptionPane.showMessageDialog(null, 
-                new JScrollPane(text)
-                , "Hawkscope Error"
-                , JOptionPane.ERROR_MESSAGE);
+        final int choice = JOptionPane.showOptionDialog(null, 
+                new JScrollPane(text), 
+                Version.APP_NAME, 
+                JOptionPane.OK_CANCEL_OPTION, 
+                JOptionPane.ERROR_MESSAGE, 
+                null, 
+                new String[] {"Copy to Clipboard", "Cancel"}, 
+                "Copy to Clipboard");
+        if (choice == 0) {
+            IOUtils.copyToClipboard(text.getText());
+        }
         MainPopupMenu.getInstance().forceHide();
         log.error("Uncaught exception", e);
     }

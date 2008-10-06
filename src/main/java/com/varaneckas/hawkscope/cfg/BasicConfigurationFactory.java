@@ -24,6 +24,8 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         data.put(Configuration.HIDDEN_FILES_DISPLAYED, "0");
         //quick access list contains one entry - user home, read from system properties
         data.put(Configuration.QUICK_ACCESS_LIST, "${user.home}");
+        
+        data.put(Configuration.FLOPPY_DRIVES_DISPLAYED, "0");
         return data;
     }
 

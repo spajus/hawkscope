@@ -15,6 +15,7 @@ public class ConfigurationFactoryTest {
     private static final Log log = LogFactory
             .getLog(ConfigurationFactoryTest.class);
     
+    //not used
     public void testFindCfg() throws Exception {
 		File cfg = new File(URI.create("C:/Documents and Settings/tomasv/.hawkscope.properties".replaceAll(" ", "%20")));
 		log.info(cfg.canRead());
@@ -22,8 +23,6 @@ public class ConfigurationFactoryTest {
     
     @Test
     public void testConfigurationFactory() throws Exception {
-        log.info(System.getenv().toString().replaceAll(", ", "\n"));
-//        log.info(System.getProperties().toString().replaceAll(", ", "\n"));
         Configuration cfg = ConfigurationFactory.getConfigurationFactory().getConfiguration();
         cfg.getProperties().put("test", "works");
         ConfigurationFactory.getConfigurationFactory().write(cfg);

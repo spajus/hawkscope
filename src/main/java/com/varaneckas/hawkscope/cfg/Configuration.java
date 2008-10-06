@@ -19,6 +19,11 @@ public class Configuration {
      * Display hidden files property name
      */
     public static final String HIDDEN_FILES_DISPLAYED = "display.hidden";
+
+    /**
+     * Display floppy drives
+     */
+    public static final String FLOPPY_DRIVES_DISPLAYED = "display.floppy";
     
     /**
      * Quick folder access list property name
@@ -74,6 +79,15 @@ public class Configuration {
      */
     public boolean isHiddenFilesDisplayed() {
         return properties.get(Configuration.HIDDEN_FILES_DISPLAYED).equals("1");
+    }
+    
+    /**
+     * Tells if to display floppy drives
+     * 
+     * @return display 
+     */
+    public boolean isFloppyDrivesDisplayed() {
+        return properties.get(Configuration.FLOPPY_DRIVES_DISPLAYED).equals("1");
     }
 
     /**

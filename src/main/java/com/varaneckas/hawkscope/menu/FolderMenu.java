@@ -6,6 +6,7 @@ import javax.swing.JMenu;
 
 import com.varaneckas.hawkscope.listeners.FolderMenuMouseListener;
 import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
  * Folder {@link JMenu}
@@ -25,11 +26,7 @@ public class FolderMenu extends JMenu {
      */
     public FolderMenu(final File file) {
         if (file != null) {
-            String name = file.getName();
-            if (name == null || name.equals("")) {
-                name = file.getPath();
-            }
-            setText(name);
+            setText(PathUtils.getFileName(file));
             addMouseListener(new FolderMenuMouseListener(this, file));  
         }
         setIcon(IconFactory.getIcon(file));

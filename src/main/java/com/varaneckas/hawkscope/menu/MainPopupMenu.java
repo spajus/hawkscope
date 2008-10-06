@@ -16,6 +16,7 @@ import com.varaneckas.hawkscope.listeners.ExitActionListener;
 import com.varaneckas.hawkscope.listeners.HideActionListener;
 import com.varaneckas.hawkscope.listeners.TrayPopupMenuMouseListener;
 import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
  * Main popup menu of Hawkscope application
@@ -116,13 +117,17 @@ public class MainPopupMenu extends JPopupMenu {
         loadQuickAccessMenu();
         final File[] roots = File.listRoots();
         for (final File root : roots) {
+            boolean loadFloppy = ConfigurationFactory.getConfigurationFactory()
+                    .getConfiguration().isFloppyDrivesDisplayed();
+            if (loadFloppy || !PathUtils.isFloppy(root)) {
             log.debug("Generating menu for: " + root.getAbsolutePath());
-            final FolderMenu item = new FolderMenu(root);
-            item.setText(root.getAbsolutePath());
-            item.setIcon(IconFactory.getIcon("drive"));
-            item.setToolTipText("" + root.getUsableSpace() / (1024*1024*1024) 
-                    + "G free");
-            add(item);
+                final FolderMenu item = new FolderMenu(root);
+                item.setText(PathUtils.getFileName(root));
+                item.setIcon(IconFactory.getIcon(root));
+                item.setToolTipText("" + root.getUsableSpace() / (1024*1024*1024) 
+                        + "G free");
+                add(item);
+            }
         }
         addStaticItems();
     }
