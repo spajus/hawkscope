@@ -2,7 +2,7 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
-Changes in version 0.2.0 (2008-??-??)
+Changes in version 0.2.0 (2008-10-06)
 -------------------------------------
 * Added quick access list to main menu, configurable via .hawkscope.properties
   "user.home" folder read from system properties is added by default
@@ -15,7 +15,7 @@ Changes in version 0.2.0 (2008-??-??)
   http://code.google.com/p/hawkscope/issues/detail?id=12
 * Fixed configuration file writing
 * Changed "unknown" icon
-* Removed lots of unneeded dependencies to get a lighter executable
+* Removed lots of unneeded dependencies to get a much lighter executable
 * Switched to maven assembly plugin version 2.1 due to file duplication bug:
   http://jira.codehaus.org/browse/MASSEMBLY-355
 * Fixed path resolving problems in Windows

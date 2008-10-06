@@ -16,7 +16,8 @@ public class Version {
     /**
      * Report separator
      */
-    private static final String SEPARATOR = "--------------------------------------\n";
+    private static final String SEPARATOR = 
+            "--------------------------------------\n";
     
     /**
      * Application name
@@ -31,12 +32,12 @@ public class Version {
     /**
      * Application version number   
      */
-    public static final String VERSION_NUMBER = "0.2.0-DEV";
+    public static final String VERSION_NUMBER = "0.2.0";
     
     /**
      * Application version date
      */
-    public static final String VERSION_DATE = "2008-??-??";
+    public static final String VERSION_DATE = "2008-10-06";
     
     /**
      * Application Homepage URL
@@ -83,7 +84,8 @@ public class Version {
      * @return report
      */
     public static String getEnvironmentReport() {
-        final StringBuilder env = new StringBuilder("Hawkscope Environment Report\n");
+        final StringBuilder env = 
+                new StringBuilder("Hawkscope Environment Report\n");
         env.append(SEPARATOR);
         env.append(formatFullString()).append('\n');
         env.append(SEPARATOR);
@@ -94,6 +96,12 @@ public class Version {
         return env.toString();
     }
     
+    /**
+     * Formats bug report from exception
+     * 
+     * @param e cause of possible bug
+     * @return formatted report
+     */
     public static String getBugReport(final Throwable e) {
         final StringBuilder sb = new StringBuilder(300);
         final Writer stringWriter = new StringWriter();
