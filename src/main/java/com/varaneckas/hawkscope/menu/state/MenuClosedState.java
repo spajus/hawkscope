@@ -1,15 +1,15 @@
-package com.varaneckas.hawkscope.menu;
+package com.varaneckas.hawkscope.menu.state;
 
-import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
-
-import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.varaneckas.hawkscope.gui.swing.SwingMainMenu;
+import com.varaneckas.hawkscope.menu.MenuFactory;
+
 /**
- * State when {@link MainPopupMenu} is closed (invisible) 
+ * State when {@link SwingMainMenu} is closed (invisible) 
  *
  * @author Tomas Varaneckas
  * @version $Id$
@@ -44,12 +44,8 @@ public class MenuClosedState extends State {
     
     @Override
     public void act(final MouseEvent event) {
-        final MainPopupMenu menu = MainPopupMenu.getInstance();
-        menu.setLocation(event.getX(), event.getY());
-        menu.setInvoker(menu);
-        menu.setVisible(true);
-        menu.getRootPane().requestFocus(true);
-        SwingUtilities.windowForComponent(menu).setAlwaysOnTop(true);
+        final SwingMainMenu menu = (SwingMainMenu) MenuFactory.getMainMenu();
+        menu.showMenu(event.getX(), event.getY());
         menu.setState(MenuOpenState.getInstance());
     }
 
@@ -59,8 +55,8 @@ public class MenuClosedState extends State {
             log.debug("Menu closed. Free mem before cleanup: " 
                     + Runtime.getRuntime().freeMemory() / (1024*1024));
         }
-        MainPopupMenu.getInstance().removeAll();
-        MainPopupMenu.getInstance().loadMenu();
+        MenuFactory.getMainMenu().clearMenu();
+        MenuFactory.getMainMenu().loadMenu();
         Runtime.getRuntime().gc();
     }
     

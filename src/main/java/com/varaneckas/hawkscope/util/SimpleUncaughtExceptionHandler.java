@@ -1,5 +1,6 @@
 package com.varaneckas.hawkscope.util;
 
+import java.awt.Component;
 import java.lang.Thread.UncaughtExceptionHandler;
 
 import javax.swing.JOptionPane;
@@ -10,7 +11,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.Version;
-import com.varaneckas.hawkscope.menu.MainPopupMenu;
+import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
  * Registers uncaught exception handler that displays error message inside
@@ -38,7 +39,7 @@ public class SimpleUncaughtExceptionHandler implements UncaughtExceptionHandler 
         text.setColumns(60);
         text.setRows(6);
         text.setEditable(false);
-        final int choice = JOptionPane.showOptionDialog(null, 
+        final int choice = JOptionPane.showOptionDialog((Component) MenuFactory.getMainMenu(), 
                 new JScrollPane(text), 
                 Version.APP_NAME, 
                 JOptionPane.OK_CANCEL_OPTION, 
@@ -49,7 +50,7 @@ public class SimpleUncaughtExceptionHandler implements UncaughtExceptionHandler 
         if (choice == 0) {
             IOUtils.copyToClipboard(text.getText());
         }
-        MainPopupMenu.getInstance().forceHide();
+        MenuFactory.getMainMenu().forceHide();
         log.error("Uncaught exception", e);
     }
 }

@@ -12,7 +12,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.Version;
-import com.varaneckas.hawkscope.menu.MainPopupMenu;
+import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.IconFactory;
 
@@ -51,14 +51,14 @@ public class FileActionListener implements ActionListener {
             if (file.canRead()) {
                 Desktop.getDesktop().open(file);
             } else {
-                JOptionPane.showMessageDialog(MainPopupMenu.getInstance(), 
+                JOptionPane.showMessageDialog(null, 
                         "Cannot open this file!", 
                         Version.APP_NAME,
                         JOptionPane.WARNING_MESSAGE);
             }
         } catch (final IOException e1) {
             log.error("Failed opening file: " + file, e1);
-            int choice = JOptionPane.showConfirmDialog(MainPopupMenu.getInstance(), 
+            int choice = JOptionPane.showConfirmDialog(null, 
                         "Error while opening file: " + file.getAbsolutePath() 
                         + "\nFile type may not be associated with any application."
                         + "\nCopy Hawkscope Error Report to Clipboard?", 
@@ -70,7 +70,7 @@ public class FileActionListener implements ActionListener {
                 IOUtils.copyToClipboard(Version.getBugReport(e1));
             }
         }
-        MainPopupMenu.getInstance().forceHide();
+        MenuFactory.getMainMenu().forceHide();
     }    
     
 }

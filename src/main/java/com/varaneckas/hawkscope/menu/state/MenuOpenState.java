@@ -1,12 +1,15 @@
-package com.varaneckas.hawkscope.menu;
+package com.varaneckas.hawkscope.menu.state;
 
 import java.awt.event.MouseEvent;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.varaneckas.hawkscope.gui.swing.SwingMainMenu;
+import com.varaneckas.hawkscope.menu.MenuFactory;
+
 /**
- * State when {@link MainPopupMenu} is open (visible)
+ * State when {@link SwingMainMenu} is open (visible)
  *
  * @author Tomas Varaneckas
  * @version $Id$
@@ -41,8 +44,7 @@ public class MenuOpenState extends State {
     
     @Override
     public void act(final MouseEvent event) {
-        MainPopupMenu.getInstance().setVisible(false);
-        MainPopupMenu.getInstance().setState(MenuClosedState.getInstance());
+        MenuFactory.getMainMenu().forceHide();
     }
     
     @Override

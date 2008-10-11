@@ -1,12 +1,11 @@
-package com.varaneckas.hawkscope.menu;
+package com.varaneckas.hawkscope.gui.swing;
 
 import java.io.File;
 import java.util.List;
 
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
+import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,6 +15,10 @@ import com.varaneckas.hawkscope.listeners.AboutActionListener;
 import com.varaneckas.hawkscope.listeners.ExitActionListener;
 import com.varaneckas.hawkscope.listeners.HideActionListener;
 import com.varaneckas.hawkscope.listeners.TrayPopupMenuMouseListener;
+import com.varaneckas.hawkscope.menu.FolderMenu;
+import com.varaneckas.hawkscope.menu.MainMenu;
+import com.varaneckas.hawkscope.menu.state.MenuClosedState;
+import com.varaneckas.hawkscope.menu.state.State;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.PathUtils;
 
@@ -25,7 +28,7 @@ import com.varaneckas.hawkscope.util.PathUtils;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class MainPopupMenu extends JPopupMenu {
+public class SwingMainMenu extends JPopupMenu implements MainMenu {
 
     /**
      * Serial Version UID
@@ -35,12 +38,7 @@ public class MainPopupMenu extends JPopupMenu {
     /**
      * Logger
      */
-    private static final Log log = LogFactory.getLog(MainPopupMenu.class);
-    
-    /**
-     * Singleton instance
-     */
-    private static final MainPopupMenu instance = new MainPopupMenu();
+    private static final Log log = LogFactory.getLog(SwingMainMenu.class);
     
     /**
      * Current {@link State}
@@ -62,48 +60,33 @@ public class MainPopupMenu extends JPopupMenu {
      */
     private final JMenuItem aboutItem = new JMenuItem("About");
     
-    /**
-     * Singleton instance getter
-     * 
-     * @return instance
-     */
-    public static MainPopupMenu getInstance() {
-        return instance;
-    }
-    
-    /**
-     * Forces menu to go to {@link MenuClosedState}
+    /* (non-Javadoc)
+     * @see com.varaneckas.hawkscope.menu.MainMenu#forceHide()
      */
     public void forceHide() {
         setState(MenuClosedState.getInstance());
         setVisible(false);
     }
     
-    /**
-     * Gets current {@link State}
-     * 
-     * @return current state
+    /* (non-Javadoc)
+     * @see com.varaneckas.hawkscope.menu.MainMenu#getState()
      */
     public State getState() {
         return state;
     }
 
-    /**
-     * Sets menu {@link State}
-     * 
-     * @param state new state
+    /* (non-Javadoc)
+     * @see com.varaneckas.hawkscope.menu.MainMenu#setState(com.varaneckas.hawkscope.menu.state.State)
      */
     public void setState(final State state) {
         this.state = state;
         state.init();
     }
     
-    private final JPanel menuPanel = new JPanel(false);
-    
     /**
-     * Singleton constructor
+     * Constructor
      */
-    private MainPopupMenu() {
+    public SwingMainMenu() {
         hideItem.addActionListener(new HideActionListener());
         hideItem.setIcon(IconFactory.getIcon("hide"));
         exitItem.addActionListener(new ExitActionListener());
@@ -113,8 +96,8 @@ public class MainPopupMenu extends JPopupMenu {
         addMouseListener(new TrayPopupMenuMouseListener());
     }
     
-    /**
-     * Loads menu contents
+    /* (non-Javadoc)
+     * @see com.varaneckas.hawkscope.menu.MainMenu#loadMenu()
      */
     public void loadMenu() {
         loadQuickAccessMenu();
@@ -145,7 +128,7 @@ public class MainPopupMenu extends JPopupMenu {
             for (final File custom : quick) {
                 add(new FolderMenu(custom));
             }
-            add(new JSeparator());
+            addSeparator();
         }
     }
 
@@ -153,9 +136,22 @@ public class MainPopupMenu extends JPopupMenu {
      * Adds static menu items
      */
     private void addStaticItems() {
-        add(new JSeparator());
+        addSeparator();
         add(hideItem);
         add(aboutItem);
         add(exitItem);
+    }
+    
+    @Override
+    public void clearMenu() {
+        removeAll();
+    }
+    
+    @Override
+    public void showMenu(int x, int y) {
+        setLocation(x, y);
+        setInvoker(this);
+        setVisible(true);
+        SwingUtilities.windowForComponent(this).setAlwaysOnTop(true);
     }
 }

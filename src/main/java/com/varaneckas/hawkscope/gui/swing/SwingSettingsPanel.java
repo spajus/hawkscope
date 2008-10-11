@@ -9,7 +9,9 @@
  * Created on Sep 20, 2008, 9:07:52 PM
  */
 
-package com.varaneckas.hawkscope.gui;
+package com.varaneckas.hawkscope.gui.swing;
+
+import com.varaneckas.hawkscope.gui.SettingsWindow;
 
 /**
  * Hawkscope Settings pannel. 
@@ -18,12 +20,12 @@ package com.varaneckas.hawkscope.gui;
  *
  * @author Tomas Varaneckas
  */
-public class SettingsPanel extends javax.swing.JPanel {
+public class SwingSettingsPanel extends javax.swing.JPanel implements SettingsWindow {
 
     private static final long serialVersionUID = 1951079292804934656L;
 
     /** Creates new form SettingsPanel */
-    public SettingsPanel() {
+    public SwingSettingsPanel() {
         initComponents();
     }
 
@@ -291,5 +293,15 @@ public class SettingsPanel extends javax.swing.JPanel {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void hideObject() {
+        setVisible(true);
+    }
+
+    @Override
+    public void showObject() {
+        setVisible(false);
+    }
 
 }

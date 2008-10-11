@@ -7,7 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.menu.MainPopupMenu;
+import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.tray.TrayManagerFactory;
 import com.varaneckas.hawkscope.util.SimpleUncaughtExceptionHandler;
 
@@ -51,7 +51,11 @@ public class Launcher {
 			@Override
 			public void run() {
 				log.debug("Preloading data");
-				MainPopupMenu.getInstance().loadMenu();
+				try {
+				MenuFactory.getMainMenu().loadMenu();
+				} catch (Exception e) {
+				    log.error("Failed preloading data", e);
+				}
 				log.debug("Preloaded...");
 			}
     	});

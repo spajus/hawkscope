@@ -15,7 +15,7 @@ import javax.swing.JSeparator;
 import com.varaneckas.hawkscope.menu.DynamicFileFilter;
 import com.varaneckas.hawkscope.menu.FileMenuItem;
 import com.varaneckas.hawkscope.menu.FolderMenu;
-import com.varaneckas.hawkscope.menu.MainPopupMenu;
+import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.MenuUtils;
 
@@ -104,7 +104,7 @@ public class FolderMenuMouseListener extends MouseAdapter {
             } catch (final IOException e1) {
                 e1.printStackTrace();
             }
-            MainPopupMenu.getInstance().forceHide();
+            MenuFactory.getMainMenu().forceHide();
         }
         else {
             folderMenu.removeAll();

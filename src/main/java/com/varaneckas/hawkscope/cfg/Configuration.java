@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-import com.varaneckas.hawkscope.menu.MainPopupMenu;
+import com.varaneckas.hawkscope.gui.swing.SwingMainMenu;
 import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
@@ -92,7 +92,7 @@ public class Configuration {
 
     /**
      * Gets list of {@link File}s that can be accessed quickly from 
-     * {@link MainPopupMenu}
+     * {@link SwingMainMenu}
      * 
      * @return list of files
      */

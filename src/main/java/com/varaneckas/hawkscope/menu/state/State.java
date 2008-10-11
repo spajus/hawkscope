@@ -1,9 +1,11 @@
-package com.varaneckas.hawkscope.menu;
+package com.varaneckas.hawkscope.menu.state;
 
 import java.awt.event.MouseEvent;
 
+import com.varaneckas.hawkscope.gui.swing.SwingMainMenu;
+
 /**
- * State of {@link MainPopupMenu} 
+ * State of {@link SwingMainMenu} 
  *
  * @author Tomas Varaneckas
  * @version $Id$

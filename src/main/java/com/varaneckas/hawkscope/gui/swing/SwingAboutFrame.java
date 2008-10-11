@@ -9,7 +9,7 @@
  * Created on Sep 28, 2008, 12:17:00 PM
  */
 
-package com.varaneckas.hawkscope.gui;
+package com.varaneckas.hawkscope.gui.swing;
 
 import java.awt.Desktop;
 import java.awt.DisplayMode;
@@ -19,13 +19,12 @@ import java.awt.event.MouseEvent;
 import java.net.URI;
 
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.UIManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.Version;
+import com.varaneckas.hawkscope.gui.AboutWindow;
 import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.IconFactory;
 
@@ -35,37 +34,19 @@ import com.varaneckas.hawkscope.util.IconFactory;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class AboutFrame extends javax.swing.JFrame {
+public class SwingAboutFrame extends javax.swing.JFrame implements AboutWindow {
 
     /**
      * Logger
      */
-    private static final Log log = LogFactory.getLog(AboutFrame.class);
-
-    /**
-     * Singleton instance
-     */
-    private static AboutFrame instance = null;
-
-    /**
-     * Singleton instance getter
-     *
-     * @return instance
-     */
-    public static AboutFrame getInstance() {
-        if (instance == null) {
-            instance = new AboutFrame();
-        }
-        return instance;
-    }
+    private static final Log log = LogFactory.getLog(SwingAboutFrame.class);
 
     /**
      * Serial Version UID
      */
     private static final long serialVersionUID = 2324352047369162981L;
 
-    /** Creates new form AboutFrame */
-    private AboutFrame() {
+    public SwingAboutFrame() {
         initComponents();
         DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment()
             .getDefaultScreenDevice().getDisplayMode();
@@ -274,24 +255,6 @@ public class AboutFrame extends javax.swing.JFrame {
         IOUtils.copyToClipboard(Version.getEnvironmentReport());
     }//GEN-LAST:event_copyToClipboardButtonActionPerformed
 
-    /**
-    * @param args the command line arguments
-    */
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                AboutFrame af = new AboutFrame();
-                af.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                af.setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel appDescription;
     private javax.swing.JLabel appHomepage;
@@ -309,5 +272,15 @@ public class AboutFrame extends javax.swing.JFrame {
     private javax.swing.JLabel labelVersion;
     private javax.swing.JPanel logoPanel;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void hideObject() {
+        setVisible(false);
+    }
+
+    @Override
+    public void showObject() {
+        setVisible(true);        
+    }
 
 }

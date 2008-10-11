@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.tray;
+package com.varaneckas.hawkscope.gui.swing;
 
 import java.awt.AWTException;
 import java.awt.SystemTray;
@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.listeners.TrayPopupMenuMouseListener;
+import com.varaneckas.hawkscope.tray.TrayManager;
 import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
@@ -16,12 +17,12 @@ import com.varaneckas.hawkscope.util.IconFactory;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class AWTTrayManager implements TrayManager {
+public class SwingTrayManager implements TrayManager {
     
     /**
      * Logger
      */
-    private static final Log log = LogFactory.getLog(AWTTrayManager.class);
+    private static final Log log = LogFactory.getLog(SwingTrayManager.class);
     
     /**
      * System Tray Icon

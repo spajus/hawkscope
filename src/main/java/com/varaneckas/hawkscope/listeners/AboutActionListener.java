@@ -3,8 +3,8 @@ package com.varaneckas.hawkscope.listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import com.varaneckas.hawkscope.gui.AboutFrame;
-import com.varaneckas.hawkscope.menu.MainPopupMenu;
+import com.varaneckas.hawkscope.gui.WindowFactory;
+import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
  * About {@link ActionListener}
@@ -18,8 +18,8 @@ public class AboutActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(final ActionEvent e) {
-        AboutFrame.getInstance().setVisible(true);
-        MainPopupMenu.getInstance().forceHide();
+        WindowFactory.getAboutWindow().showObject();
+        MenuFactory.getMainMenu().forceHide();
     }
 
 }
