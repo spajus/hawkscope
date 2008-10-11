@@ -22,10 +22,13 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         final Map<String, String> data = new HashMap<String, String>();
         //hidden files are not displayed
         data.put(Configuration.HIDDEN_FILES_DISPLAYED, "0");
-        //quick access list contains one entry - user home, read from system properties
+        //quick access list contains one entry - user home, 
+        //read from system properties
         data.put(Configuration.QUICK_ACCESS_LIST, "${user.home}");
-        
+        //floppy drives are not displayed
         data.put(Configuration.FLOPPY_DRIVES_DISPLAYED, "0");
+        //blacklist is empty
+        data.put(Configuration.FILESYSTEM_BLACKLIST, "");
         return data;
     }
 

@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 
@@ -97,6 +98,8 @@ public class MainPopupMenu extends JPopupMenu {
         state.init();
     }
     
+    private final JPanel menuPanel = new JPanel(false);
+    
     /**
      * Singleton constructor
      */
@@ -109,7 +112,7 @@ public class MainPopupMenu extends JPopupMenu {
         aboutItem.setIcon(IconFactory.getIcon("about"));
         addMouseListener(new TrayPopupMenuMouseListener());
     }
-
+    
     /**
      * Loads menu contents
      */

@@ -8,7 +8,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.menu.MainPopupMenu;
-import com.varaneckas.hawkscope.tray.TrayManager;
+import com.varaneckas.hawkscope.tray.TrayManagerFactory;
 import com.varaneckas.hawkscope.util.SimpleUncaughtExceptionHandler;
 
 /**
@@ -34,12 +34,13 @@ public class Launcher {
         try {
             ConfigurationFactory.getConfigurationFactory(args).getConfiguration();
         	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        	 Thread.setDefaultUncaughtExceptionHandler(new SimpleUncaughtExceptionHandler());
+        	Thread.setDefaultUncaughtExceptionHandler(
+        	         new SimpleUncaughtExceptionHandler());
         } catch (final Throwable e) {
             log.fatal("Failed starting Hawkscope", e);
         }
         preload();
-        TrayManager.getInstance().load();
+        TrayManagerFactory.getTrayManager().load();
     }
     
     /**

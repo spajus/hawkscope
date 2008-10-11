@@ -1,6 +1,9 @@
 package com.varaneckas.hawkscope.menu;
 
+import java.awt.event.FocusEvent;
 import java.awt.event.MouseEvent;
+
+import javax.swing.SwingUtilities;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -45,6 +48,8 @@ public class MenuClosedState extends State {
         menu.setLocation(event.getX(), event.getY());
         menu.setInvoker(menu);
         menu.setVisible(true);
+        menu.getRootPane().requestFocus(true);
+        SwingUtilities.windowForComponent(menu).setAlwaysOnTop(true);
         menu.setState(MenuOpenState.getInstance());
     }
 

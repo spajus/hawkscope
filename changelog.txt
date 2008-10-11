@@ -2,6 +2,10 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
+Changes in version 0.2.? (????-??-??)
+-------------------------------------
+* Hawkscope menu is now always on top
+
 Changes in version 0.2.0 (2008-10-06)
 -------------------------------------
 * Added quick access list to main menu, configurable via .hawkscope.properties

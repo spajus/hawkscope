@@ -32,12 +32,12 @@ public class Version {
     /**
      * Application version number   
      */
-    public static final String VERSION_NUMBER = "0.2.0";
+    public static final String VERSION_NUMBER = "0.2.1-DEV";
     
     /**
      * Application version date
      */
-    public static final String VERSION_DATE = "2008-10-06";
+    public static final String VERSION_DATE = "2008-??-??";
     
     /**
      * Application Homepage URL
