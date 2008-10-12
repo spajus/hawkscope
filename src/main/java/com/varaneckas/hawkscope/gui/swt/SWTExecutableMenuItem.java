@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import com.varaneckas.hawkscope.menu.Command;
 import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 
-public class SWTExecutableMenuItem implements ExecutableMenuItem {
+public class SWTExecutableMenuItem implements ExecutableMenuItem, SWTMenuItem {
 
     private String text;
 
@@ -22,7 +22,7 @@ public class SWTExecutableMenuItem implements ExecutableMenuItem {
 
     private boolean enabled;
     
-    public MenuItem getMenuItem(Menu parent) {
+    public void createMenuItem(Menu parent) {
         MenuItem mi = new MenuItem(parent, SWT.PUSH);
         mi.setImage((Image) icon);
         mi.setText(text);
@@ -32,7 +32,6 @@ public class SWTExecutableMenuItem implements ExecutableMenuItem {
                 command.execute();
             }
         });
-        return mi;
     }
 
     @Override

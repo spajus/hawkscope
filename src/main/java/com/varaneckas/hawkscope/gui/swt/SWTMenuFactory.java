@@ -21,12 +21,12 @@ public class SWTMenuFactory extends MenuFactory {
 
     @Override
     public FileMenuItem newFileMenuItem(File file) {
-        return null;
+        return new SWTFileMenuItem(file);
     }
 
     @Override
     public FolderMenu newFolderMenu(File file) {
-        return null;
+        return new SWTFolderMenu(file);
     }
     
 }

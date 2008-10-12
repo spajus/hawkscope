@@ -45,7 +45,7 @@ public static void main(String[] args) {
         });
         final Menu menu = new Menu (shell, SWT.POP_UP);
         for (int i = 0; i < 8; i++) {
-            MenuItem mi = new MenuItem (menu, SWT.PUSH);
+            MenuItem mi = new MenuItem (menu, SWT.MENU);
             mi.setText ("Item" + i);
             mi.addListener (SWT.Selection, new Listener () {
                 public void handleEvent (Event event) {

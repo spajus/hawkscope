@@ -5,8 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.Icon;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -69,7 +67,7 @@ public abstract class MainMenu {
             log.debug("Generating menu for: " + root.getAbsolutePath());
                 final FolderMenu item = MenuFactory.getMenuFactory().newFolderMenu(root);
                 item.setText(PathUtils.getFileName(root));
-                item.setIcon((Icon) IconFactory.getIconFactory().getIcon(root));
+                item.setIcon(IconFactory.getIconFactory().getIcon(root));
                 item.setToolTipText("" + root.getUsableSpace() / (1024*1024*1024) 
                         + "G free");
                 addMenuItem(item);

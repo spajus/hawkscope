@@ -33,8 +33,8 @@ public class Launcher {
         try {
             ConfigurationFactory.getConfigurationFactory(args).getConfiguration();
         	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        	Thread.setDefaultUncaughtExceptionHandler(
-        	         new SwingUncaughtExceptionHandler());
+//        	Thread.setDefaultUncaughtExceptionHandler(
+//        	         new SwingUncaughtExceptionHandler());
         } catch (final Throwable e) {
             log.fatal("Failed starting Hawkscope", e);
         }

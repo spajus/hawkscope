@@ -3,12 +3,9 @@ package com.varaneckas.hawkscope.gui.swt;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
-import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
 import com.varaneckas.hawkscope.menu.state.State;
@@ -59,20 +56,6 @@ public class SWTMainMenu extends MainMenu {
     }
 
     @Override
-    public void loadMenu() {
-        for (int i = 0; i < 8; i++) {
-            MenuItem mi = new MenuItem (menu, SWT.PUSH);
-            mi.setText ("Item" + i);
-            mi.addListener (SWT.Selection, new Listener () {
-                public void handleEvent (Event event) {
-                    System.out.println("selection " + event.widget);
-                }
-            });
-            if (i == 0) menu.setDefaultItem(mi);
-        }
-    }
-
-    @Override
     public void setState(State state) {
         this.state = state;
         state.init();
@@ -86,8 +69,8 @@ public class SWTMainMenu extends MainMenu {
 
     @Override
     public void addMenuItem(com.varaneckas.hawkscope.menu.MenuItem item) {
-        if (item instanceof ExecutableMenuItem) {
-              ((SWTExecutableMenuItem) item).getMenuItem(menu);
+        if (item instanceof SWTMenuItem) {
+            ((SWTMenuItem) item).createMenuItem(menu);
         }
     }
 
