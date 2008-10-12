@@ -1,9 +1,9 @@
 package com.varaneckas.hawkscope.gui.swt;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
@@ -20,15 +20,16 @@ public class SWTExecutableMenuItem implements ExecutableMenuItem, SWTMenuItem {
 
     private Command command;
 
-    private boolean enabled;
+    private boolean enabled = true;
     
     public void createMenuItem(Menu parent) {
         MenuItem mi = new MenuItem(parent, SWT.PUSH);
         mi.setImage((Image) icon);
         mi.setText(text);
-        mi.addSelectionListener(new SelectionAdapter() {
+        mi.setEnabled(enabled);
+        mi.addListener(SWT.Selection, new Listener() {
             @Override
-            public void widgetSelected(SelectionEvent e) {
+            public void handleEvent(Event event) {
                 command.execute();
             }
         });

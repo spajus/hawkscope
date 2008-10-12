@@ -33,11 +33,7 @@ public static void main(String[] args) {
                 System.out.println("hide");
             }
         });
-        item.addListener (SWT.Selection, new Listener () {
-            public void handleEvent (Event event) {
-                System.out.println("selection");
-            }
-        });
+
         item.addListener (SWT.DefaultSelection, new Listener () {
             public void handleEvent (Event event) {
                 System.out.println("default selection");

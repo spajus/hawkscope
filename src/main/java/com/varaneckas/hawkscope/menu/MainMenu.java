@@ -53,8 +53,10 @@ public abstract class MainMenu {
      * @param state new state
      */
     public void setState(final State state) {
-        this.state = state;
-        state.init();
+        if (!this.state.equals(state)) {
+            this.state = state;
+            state.init();
+        }
     }
 
     public void loadMenu() {
@@ -99,14 +101,9 @@ public abstract class MainMenu {
      */
     private void addStaticItems() {
         addSeparator();
-        if (statics.size() == 0) {
-            addExecutableMenuItem("hide", "Hide", new HideCommand());
-            addExecutableMenuItem("about", "About", new AboutCommand());
-            addExecutableMenuItem("exit", "Exit", new ExitCommand());
-        }
-        addMenuItem(statics.get("hide"));
-        addMenuItem(statics.get("about"));
-        addMenuItem(statics.get("exit"));
+        addExecutableMenuItem("hide", "Hide", new HideCommand());
+        addExecutableMenuItem("about", "About", new AboutCommand());
+        addExecutableMenuItem("exit", "Exit", new ExitCommand());
     }
 
     private void addExecutableMenuItem(String name, String text, Command command) {
@@ -114,7 +111,7 @@ public abstract class MainMenu {
         item.setCommand(command);
         item.setText(text);
         item.setIcon(IconFactory.getIconFactory().getIcon(name));
-        statics.put(name, item);
+        addMenuItem(item);
     }    
     
     /**

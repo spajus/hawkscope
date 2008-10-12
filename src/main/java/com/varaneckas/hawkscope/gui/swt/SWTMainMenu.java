@@ -1,8 +1,8 @@
 package com.varaneckas.hawkscope.gui.swt;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.MenuAdapter;
-import org.eclipse.swt.events.MenuEvent;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
@@ -17,15 +17,25 @@ public class SWTMainMenu extends MainMenu {
     
     private final Menu menu;
     
-    private State state = MenuClosedState.getInstance();
-
     private SWTMainMenu() {
         menu = new Menu(((SWTTrayManager) TrayManagerFactory
                 .getTrayManager()).getShell(), SWT.POP_UP);
-        menu.addMenuListener(new MenuAdapter() {
+        menu.addListener(SWT.Hide, new Listener() {
             @Override
-            public void menuHidden(MenuEvent e) {
-                setState(MenuClosedState.getInstance());
+            public void handleEvent(Event event) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(10l);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if (!(state instanceof MenuClosedState)) {
+                            setState(MenuClosedState.getInstance());
+                        }
+                    }
+                }).start();
             }
         });
     }
@@ -40,7 +50,9 @@ public class SWTMainMenu extends MainMenu {
     @Override
     public void clearMenu() {
         for (MenuItem item : menu.getItems()) {
-            item.dispose();
+            if (!item.isDisposed()) {
+                item.dispose();
+            }
         }
     }
 
@@ -48,17 +60,6 @@ public class SWTMainMenu extends MainMenu {
     public void forceHide() {
         setState(MenuClosedState.getInstance());
         menu.setVisible(false);
-    }
-
-    @Override
-    public State getState() {
-        return state;
-    }
-
-    @Override
-    public void setState(State state) {
-        this.state = state;
-        state.init();
     }
 
     @Override

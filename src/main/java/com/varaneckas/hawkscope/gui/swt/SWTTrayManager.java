@@ -32,16 +32,16 @@ public class SWTTrayManager implements TrayManager {
     
     @Override
     public void load() {
-
         trayIcon = new TrayItem(d.getSystemTray(), SWT.NONE);
         trayIcon.setImage((Image) IconFactory.getIconFactory().getTrayIcon());
         SWTTrayIconListener listener = new SWTTrayIconListener();
         trayIcon.addListener (SWT.Selection, listener);
         trayIcon.addListener (SWT.MenuDetect, listener);
-        while (!d.isDisposed()) {
+        while (!sh.isDisposed()) {
             if (!d.readAndDispatch ()) {
                 d.sleep();
             }
         }
+        d.dispose();
     }
 }

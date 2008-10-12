@@ -7,9 +7,9 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 
 import com.varaneckas.hawkscope.listeners.FolderMenuItemListener;
@@ -24,30 +24,31 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
     
     private String text;
     private Object icon;
+    private boolean enabled = true;
 
     private org.eclipse.swt.widgets.MenuItem menu;
     private Menu submenu;
     
     public void createMenuItem(Menu parent) {
-        log.info("Creating menu item for parent: " + parent);
-        log.info("Text: " + text);
         menu = new org.eclipse.swt.widgets.MenuItem(parent, SWT.CASCADE);
         submenu = new Menu(parent);
         menu.setMenu(submenu);
         menu.setText(text);
+        menu.setEnabled(enabled);
         menu.setImage((Image) icon);
         final FolderMenuItemListener listener = new FolderMenuItemListener(this, this.file);
         if (this.file != null) {
+            menu.addListener(SWT.Selection, new Listener() {
+                @Override
+                public void handleEvent(Event event) {
+                    log.info("clicked: " + event);
+                    listener.itemClicked();
+                }
+            });
             submenu.addMenuListener(new MenuAdapter() {
                 @Override
                 public void menuShown(MenuEvent e) {
                     listener.itemSelected();
-                }
-            });
-            menu.addSelectionListener(new SelectionAdapter() {
-                @Override
-                public void widgetSelected(SelectionEvent e) {
-                    listener.itemClicked();
                 }
             });
         }
@@ -75,7 +76,7 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
 
     @Override
     public void setEnabled(boolean enabled) {
-        menu.setEnabled(enabled);
+        this.enabled = enabled;
     }
 
     @Override

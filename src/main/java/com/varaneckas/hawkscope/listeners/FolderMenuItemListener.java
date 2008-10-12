@@ -57,29 +57,30 @@ public class FolderMenuItemListener implements MenuItemListener {
     public synchronized void itemSelected() {
         if (!loaded && file != null && file.isDirectory()) {
             final File[] files = file.listFiles(DynamicFileFilter.getInstance());
-            Arrays.sort(files);
             long counter = 0L;
             FolderMenu workMenu = folderMenu;
-            if (files.length == 0) {
+            if (files == null || files.length == 0) {                
                 final ExecutableMenuItem empty = MenuFactory.getMenuFactory().newExecutableMenuItem();
                 empty.setIcon(IconFactory.getIconFactory().getIcon("empty"));
                 empty.setText("Empty...");
                 empty.setEnabled(false);
                 workMenu.addMenuItem(empty);
-            }
-            for (final File ff : files) {
-                if (ff.isDirectory()) {
-                    workMenu.addMenuItem(MenuFactory.getMenuFactory().newFolderMenu(ff));
-                } else {
-                    workMenu.addMenuItem(MenuFactory.getMenuFactory().newFileMenuItem(ff));
-                }
-                if (++counter % MENU_SIZE == 0) {
-                    FolderMenu more = MenuFactory.getMenuFactory().newFolderMenu(null);
-                    more.setIcon(IconFactory.getIconFactory().getIcon("more"));
-                    more.setText("More");
-                    workMenu.addSeparator();
-                    workMenu.addMenuItem(more);
-                    workMenu = more;
+            } else {
+                Arrays.sort(files);
+                for (final File ff : files) {
+                    if (ff.isDirectory()) {
+                        workMenu.addMenuItem(MenuFactory.getMenuFactory().newFolderMenu(ff));
+                    } else {
+                        workMenu.addMenuItem(MenuFactory.getMenuFactory().newFileMenuItem(ff));
+                    }
+                    if (++counter % MENU_SIZE == 0) {
+                        FolderMenu more = MenuFactory.getMenuFactory().newFolderMenu(null);
+                        more.setIcon(IconFactory.getIconFactory().getIcon("more"));
+                        more.setText("More");
+                        workMenu.addSeparator();
+                        workMenu.addMenuItem(more);
+                        workMenu = more;
+                    }
                 }
             }
             loaded = true;
