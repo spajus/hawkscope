@@ -1,33 +1,26 @@
 package com.varaneckas.hawkscope.listeners;
 
 import java.awt.Desktop;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JSeparator;
-
 import com.varaneckas.hawkscope.menu.DynamicFileFilter;
-import com.varaneckas.hawkscope.menu.FileMenuItem;
+import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.MenuUtils;
 
 /**
- * Folder Menu {@link MouseListener}
+ * Folder Menu Item Listener
  * 
  * Loads menu contents on mouse over
  *
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class FolderMenuMouseListener extends MouseAdapter {
+public class FolderMenuItemListener implements MenuItemListener {
     
     /**
      * Lazy loading flag
@@ -55,60 +48,54 @@ public class FolderMenuMouseListener extends MouseAdapter {
      * @param menu tagert
      * @param file target
      */
-    public FolderMenuMouseListener(final FolderMenu menu, final File file) {
+    public FolderMenuItemListener(final FolderMenu menu, final File file) {
         this.folderMenu = menu;
         this.file = file;
     }
 
     @Override
-    public synchronized void mouseEntered(final MouseEvent e) {
+    public synchronized void itemSelected() {
         if (!loaded && file != null && file.isDirectory()) {
             final File[] files = file.listFiles(DynamicFileFilter.getInstance());
             Arrays.sort(files);
             long counter = 0L;
-            JMenu workMenu = folderMenu;
+            FolderMenu workMenu = folderMenu;
             if (files.length == 0) {
-                final JMenuItem empty = new JMenuItem(IconFactory.getIcon("empty"));
+                final ExecutableMenuItem empty = MenuFactory.getMenuFactory().newExecutableMenuItem();
+                empty.setIcon(IconFactory.getIconFactory().getIcon("empty"));
                 empty.setText("Empty...");
                 empty.setEnabled(false);
-                workMenu.add(empty);
+                workMenu.addMenuItem(empty);
             }
             for (final File ff : files) {
                 if (ff.isDirectory()) {
-                    workMenu.add(new FolderMenu(ff));
+                    workMenu.addMenuItem(MenuFactory.getMenuFactory().newFolderMenu(ff));
                 } else {
-                    workMenu.add(new FileMenuItem(ff));
+                    workMenu.addMenuItem(MenuFactory.getMenuFactory().newFileMenuItem(ff));
                 }
                 if (++counter % MENU_SIZE == 0) {
-                    JMenu more = new JMenu("More");
-                    more.setIcon(IconFactory.getIcon("more"));
-                    workMenu.add(new JSeparator());
-                    workMenu.add(more);
+                    FolderMenu more = MenuFactory.getMenuFactory().newFolderMenu(null);
+                    more.setIcon(IconFactory.getIconFactory().getIcon("more"));
+                    more.setText("More");
+                    workMenu.addSeparator();
+                    workMenu.addMenuItem(more);
                     workMenu = more;
                 }
-
             }
             loaded = true;
         }
-        e.consume();
     }
     
     
 
     @Override
-    public void mouseClicked(final MouseEvent e) {
-        e.consume();
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            try {
-                Desktop.getDesktop().open(file);
-            } catch (final IOException e1) {
-                e1.printStackTrace();
-            }
-            MenuFactory.getMainMenu().forceHide();
-        }
-        else {
-            folderMenu.removeAll();
-            loaded = false;
+    public void itemClicked() {
+         try {
+            Desktop.getDesktop().open(file);
+            MenuFactory.getMenuFactory().getMainMenu().forceHide();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 }

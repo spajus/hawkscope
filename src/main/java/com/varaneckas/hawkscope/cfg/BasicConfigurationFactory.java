@@ -29,6 +29,8 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         data.put(Configuration.FLOPPY_DRIVES_DISPLAYED, "0");
         //blacklist is empty
         data.put(Configuration.FILESYSTEM_BLACKLIST, "");
+        //swing implementation
+        data.put(Configuration.GUI_IMPLEMENTATION, "Swing");
         return data;
     }
 

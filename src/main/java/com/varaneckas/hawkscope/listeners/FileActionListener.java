@@ -12,9 +12,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.Version;
+import com.varaneckas.hawkscope.gui.swing.SwingIconFactory;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.util.IOUtils;
-import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
  * File {@link ActionListener}
@@ -65,12 +65,12 @@ public class FileActionListener implements ActionListener {
                         Version.APP_NAME, 
                         JOptionPane.OK_CANCEL_OPTION, 
                         JOptionPane.ERROR_MESSAGE,
-                        IconFactory.getFileSystemIcon(file));
+                        SwingIconFactory.getFileSystemIcon(file));
             if (choice == JOptionPane.OK_OPTION) {
                 IOUtils.copyToClipboard(Version.getBugReport(e1));
             }
         }
-        MenuFactory.getMainMenu().forceHide();
+        MenuFactory.getMenuFactory().getMainMenu().forceHide();
     }    
     
 }

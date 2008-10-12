@@ -1,11 +1,9 @@
 package com.varaneckas.hawkscope.menu.state;
 
-import java.awt.event.MouseEvent;
-
-import com.varaneckas.hawkscope.gui.swing.SwingMainMenu;
+import com.varaneckas.hawkscope.menu.MainMenu;
 
 /**
- * State of {@link SwingMainMenu} 
+ * State of {@link MainMenu} 
  *
  * @author Tomas Varaneckas
  * @version $Id$
@@ -17,7 +15,7 @@ public abstract class State {
      * 
      * @param event mouse event
      */
-    public abstract void act(final MouseEvent event);
+    public abstract void act(final StateEvent event);
     
     /**
      * State initialization

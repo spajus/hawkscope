@@ -7,7 +7,7 @@ import javax.swing.UIManager;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.varaneckas.hawkscope.util.SimpleUncaughtExceptionHandler;
+import com.varaneckas.hawkscope.gui.swing.SwingUncaughtExceptionHandler;
 
 public class SimpleUncaughtExceptionHandlerTest {
     
@@ -22,7 +22,7 @@ public class SimpleUncaughtExceptionHandlerTest {
     
     @Test
     public void testShortException() throws Exception {
-        Thread.setDefaultUncaughtExceptionHandler(new SimpleUncaughtExceptionHandler());
+        Thread.setDefaultUncaughtExceptionHandler(new SwingUncaughtExceptionHandler());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -35,7 +35,7 @@ public class SimpleUncaughtExceptionHandlerTest {
     @Test
     public void testLongException() throws Exception {
         UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        Thread.setDefaultUncaughtExceptionHandler(new SimpleUncaughtExceptionHandler());
+        Thread.setDefaultUncaughtExceptionHandler(new SwingUncaughtExceptionHandler());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -57,7 +57,7 @@ public class SimpleUncaughtExceptionHandlerTest {
     @Test
     public void testExceptionWithLongStackTrace() throws Exception {
         UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        Thread.setDefaultUncaughtExceptionHandler(new SimpleUncaughtExceptionHandler());
+        Thread.setDefaultUncaughtExceptionHandler(new SwingUncaughtExceptionHandler());
         new Thread(new Runnable() {
             @Override
             public void run() {

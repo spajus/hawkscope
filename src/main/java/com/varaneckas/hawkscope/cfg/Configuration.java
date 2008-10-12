@@ -35,6 +35,11 @@ public class Configuration {
      */
     //TODO use it
     public static final String FILESYSTEM_BLACKLIST = "filesystem.blacklist";
+    
+    /**
+     * GUI implementation
+     */
+    public static final String GUI_IMPLEMENTATION ="gui.implementation";
 
     /**
      * Properties {@link Map}
@@ -88,6 +93,15 @@ public class Configuration {
      */
     public boolean isFloppyDrivesDisplayed() {
         return properties.get(Configuration.FLOPPY_DRIVES_DISPLAYED).equals("1");
+    }
+    
+    /**
+     * Gets GUI Implementation
+     * 
+     * @return implementation name
+     */
+    public String getGuiImplementation() {
+        return properties.get(Configuration.GUI_IMPLEMENTATION);
     }
 
     /**

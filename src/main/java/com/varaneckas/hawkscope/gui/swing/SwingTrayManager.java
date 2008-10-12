@@ -1,13 +1,13 @@
 package com.varaneckas.hawkscope.gui.swing;
 
 import java.awt.AWTException;
+import java.awt.Image;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.varaneckas.hawkscope.listeners.TrayPopupMenuMouseListener;
 import com.varaneckas.hawkscope.tray.TrayManager;
 import com.varaneckas.hawkscope.util.IconFactory;
 
@@ -55,9 +55,9 @@ public class SwingTrayManager implements TrayManager {
      * Configures and adds system tray icon
      */
     private void loadTray() {
-        trayIcon = IconFactory.getTrayIcon();
+        trayIcon = new TrayIcon((Image) IconFactory.getIconFactory().getTrayIcon());
         trayIcon.setImageAutoSize(false);
-        trayIcon.addMouseListener(new TrayPopupMenuMouseListener());
+        trayIcon.addMouseListener(new SwingTrayIconListener());
         try {
             SystemTray.getSystemTray().add(trayIcon);
         } catch (final AWTException e) {

@@ -1,6 +1,5 @@
 package com.varaneckas.hawkscope.tray;
 
-import java.awt.TrayIcon;
 
 public interface TrayManager {
 
@@ -9,7 +8,7 @@ public interface TrayManager {
      * 
      * @return system tray icon
      */
-    public abstract TrayIcon getTrayIcon();
+    public abstract Object getTrayIcon();
 
     /**
      * Loads system tray icon if it is supported

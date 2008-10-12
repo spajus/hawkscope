@@ -1,14 +1,11 @@
 package com.varaneckas.hawkscope.util;
 
 import java.awt.SystemTray;
-import java.awt.TrayIcon;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.filechooser.FileSystemView;
 
 import org.apache.commons.logging.Log;
@@ -16,79 +13,77 @@ import org.apache.commons.logging.LogFactory;
 
 import sun.awt.shell.ShellFolder;
 
-/**
- * Icon Factory
- *
- * @author Tomas Varaneckas
- * @version $Id$
- */
-public class IconFactory {
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+import com.varaneckas.hawkscope.gui.swing.SwingIconFactory;
+import com.varaneckas.hawkscope.gui.swt.SWTIconFactory;
 
-    /**
-     * Logger
-     */
+public abstract class IconFactory<IconType> {
+
     private static final Log log = LogFactory.getLog(IconFactory.class);
+    
+    private static IconFactory instance = null;
     
     /**
      * Collection of flyweight icons that are ready for use
      */
-    private static final Map<String, Icon> icons = new HashMap<String, Icon>();
+    private final Map<String, IconType> icons = new HashMap<String, IconType>();
 
+    protected static final Map<String, URL> resources = new HashMap<String, URL>();
+    
     static {
         try {
-            //initialize icons
-            icons.put("drive",  new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/hdd24.png")));
-            icons.put("floppy",  new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/fdd24.png")));
-            icons.put("folder", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/folder24.png")));
-            icons.put("folder.open", new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/folder.open.24.png")));
-            icons.put("file",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/file24.png")));
-            icons.put("exit",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/exit24.png")));
-            icons.put("hide",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/down24.png")));
-            icons.put("more",   new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/more24.png")));
-            icons.put("unknown",new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/unknown24.png")));  
-            icons.put("about",  new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/about24.png")));  
-            icons.put("empty",  new ImageIcon(ClassLoader.getSystemClassLoader().getResource("icons/empty24.png"))); 
+            //initialize resources
+            resources.put("drive",  ClassLoader.getSystemClassLoader().getResource("icons/hdd24.png"));
+            resources.put("floppy",  ClassLoader.getSystemClassLoader().getResource("icons/fdd24.png"));
+            resources.put("folder", ClassLoader.getSystemClassLoader().getResource("icons/folder24.png"));
+            resources.put("folder.open", ClassLoader.getSystemClassLoader().getResource("icons/folder.open.24.png"));
+            resources.put("file",   ClassLoader.getSystemClassLoader().getResource("icons/file24.png"));
+            resources.put("exit",   ClassLoader.getSystemClassLoader().getResource("icons/exit24.png"));
+            resources.put("hide",   ClassLoader.getSystemClassLoader().getResource("icons/down24.png"));
+            resources.put("more",   ClassLoader.getSystemClassLoader().getResource("icons/more24.png"));
+            resources.put("unknown",ClassLoader.getSystemClassLoader().getResource("icons/unknown24.png"));  
+            resources.put("about",  ClassLoader.getSystemClassLoader().getResource("icons/about24.png"));  
+            resources.put("empty",  ClassLoader.getSystemClassLoader().getResource("icons/empty24.png")); 
         } catch (final Exception e) {
             log.warn("Cannot find icon", e);
         }
     }
     
-    /**
-     * Gets {@link Icon} for name
-     * 
-     * @param name icon name
-     * @return icon
-     */
-    public static Icon getIcon(final String name) {
-        return icons.get(name);
+    
+    @SuppressWarnings("unchecked")
+    public static <T> IconFactory<T> getIconFactory() {
+        if (instance == null) {
+            if (ConfigurationFactory.getConfigurationFactory()
+                    .getConfiguration().getGuiImplementation().equals("SWT")) {
+                instance = new SWTIconFactory();
+            } else {
+                instance = new SwingIconFactory();
+            }
+        }
+        return (IconFactory<T>) instance;
     }
     
-    /**
-     * Gets uncached icon
-     * 
-     * @param name Icon name with extension
-     * @return icon
-     */
-    public static Icon getUncachedIcon(final String name) {
-        return new ImageIcon(ClassLoader.getSystemClassLoader()
-                .getResource("icons/" + name));
-    }
+    abstract public IconType getIcon(final String icon);
+    
+    abstract public IconType getUncachedIcon(final String iconFile);
+
+    abstract public Object getTrayIcon();
     
     /**
-     * Gets {@link Icon} for {@link File}
+     * Gets icon for {@link File}
      * 
-     * @param file any file
+     * @param targetFile any file
      * @return icon
-     */
-    public static Icon getIcon(final File file) {
-        if (ShellFolder.isFileSystemRoot(file)) {
-            if (FileSystemView.getFileSystemView().isFloppyDrive(file)) {
+     */    
+    public IconType getIcon(final File targetFile) {
+        if (ShellFolder.isFileSystemRoot(targetFile)) {
+            if (FileSystemView.getFileSystemView().isFloppyDrive(targetFile)) {
                 return getIcon("floppy");
             }
             return getIcon("drive");
-        } else if (file.isFile()) {
+        } else if (targetFile.isFile()) {
             return getIcon("file");
-        } else if (file.isDirectory()) {
+        } else if (targetFile.isDirectory()) {
             return getIcon("folder");
         } else {
             return getIcon("unknown");
@@ -96,42 +91,11 @@ public class IconFactory {
     }
     
     /**
-     * Gets large file system icon for any file
-     * 
-     * @param file source
-     * @return icon
-     */
-    public static Icon getFileSystemIcon(final File file) {
-        try {
-            return new ImageIcon(ShellFolder.getShellFolder(file).getIcon(true));
-        } catch (final Exception e) {
-            log.warn("Could not get system icon for file: " + file.getName());
-        }
-        return null;
-    }
-    
-    /**
-     * Gets Hawkscope Tray Icon of best size
-     * 
-     * @return tray icon
-     */
-    public static TrayIcon getTrayIcon() {
-        final String trayIconImage = getBestTrayIcon();
-        final URL iconURL = ClassLoader.getSystemClassLoader()
-                .getResource(trayIconImage);
-        if (iconURL == null) {
-            throw new RuntimeException("Could not find tray icon " +
-                    "image: " + trayIconImage);
-        }
-        return new TrayIcon(new ImageIcon(iconURL).getImage());
-    }
-    
-    /**
      * Gets best sized tray icon name for current setup
      * 
      * @return tray icon name
      */
-    private static String getBestTrayIcon() {
+    protected String getBestTrayIcon() {
         float height = SystemTray.getSystemTray().getTrayIconSize().height;
         int[] sizes = new int[] { 64, 48, 32, 24, 16 };
         int best = 64;
@@ -149,6 +113,7 @@ public class IconFactory {
                     + " pixel tray: " + res);
         }
         return res;
-    }
+    }    
+    
     
 }

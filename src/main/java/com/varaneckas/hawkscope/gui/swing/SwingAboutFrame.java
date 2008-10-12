@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URI;
 
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 import org.apache.commons.logging.Log;
@@ -51,7 +52,7 @@ public class SwingAboutFrame extends javax.swing.JFrame implements AboutWindow {
         DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment()
             .getDefaultScreenDevice().getDisplayMode();
         setLocation(dm.getWidth() / 2 - getWidth() / 2, dm.getHeight() / 2 - getHeight() / 2);
-        setIconImage(((ImageIcon) IconFactory.getUncachedIcon("hawkscope16.png")).getImage());
+        setIconImage(((ImageIcon) IconFactory.getIconFactory().getUncachedIcon("hawkscope16.png")).getImage());
     }
 
     /** 
@@ -122,7 +123,7 @@ public class SwingAboutFrame extends javax.swing.JFrame implements AboutWindow {
         hawkscopeLogo.setToolTipText("Click to visit Homepage");
         hawkscopeLogo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         logoPanel.add(hawkscopeLogo, java.awt.BorderLayout.CENTER);
-        hawkscopeLogo.setIcon(IconFactory.getUncachedIcon("hawkscope128.png"));
+        hawkscopeLogo.setIcon((Icon) IconFactory.getIconFactory().getUncachedIcon("hawkscope128.png"));
         hawkscopeLogo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {

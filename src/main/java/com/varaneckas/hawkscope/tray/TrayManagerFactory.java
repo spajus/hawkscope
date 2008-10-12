@@ -1,6 +1,8 @@
 package com.varaneckas.hawkscope.tray;
 
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.swing.SwingTrayManager;
+import com.varaneckas.hawkscope.gui.swt.SWTTrayManager;
 
 public abstract class TrayManagerFactory {
     
@@ -8,7 +10,12 @@ public abstract class TrayManagerFactory {
     
     public static TrayManager getTrayManager() {
         if (instance == null) {
-            instance = new SwingTrayManager();
+            if (ConfigurationFactory.getConfigurationFactory()
+                    .getConfiguration().getGuiImplementation().equals("SWT")) {
+                instance = new SWTTrayManager();
+            } else {
+                instance = new SwingTrayManager();
+            }
         }
         return instance;
     }

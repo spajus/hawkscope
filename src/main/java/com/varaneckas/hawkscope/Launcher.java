@@ -1,15 +1,14 @@
 package com.varaneckas.hawkscope;
 
-import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+import com.varaneckas.hawkscope.gui.swing.SwingUncaughtExceptionHandler;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.tray.TrayManagerFactory;
-import com.varaneckas.hawkscope.util.SimpleUncaughtExceptionHandler;
 
 /**
  * Hawkscope Application Launcher
@@ -35,7 +34,7 @@ public class Launcher {
             ConfigurationFactory.getConfigurationFactory(args).getConfiguration();
         	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         	Thread.setDefaultUncaughtExceptionHandler(
-        	         new SimpleUncaughtExceptionHandler());
+        	         new SwingUncaughtExceptionHandler());
         } catch (final Throwable e) {
             log.fatal("Failed starting Hawkscope", e);
         }
@@ -47,18 +46,9 @@ public class Launcher {
      * Preloads slow Hawkscope singletons for fast use later
      */
     private static void preload() {
-    	SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				log.debug("Preloading data");
-				try {
-				MenuFactory.getMainMenu().loadMenu();
-				} catch (Exception e) {
-				    log.error("Failed preloading data", e);
-				}
-				log.debug("Preloaded...");
-			}
-    	});
+		log.debug("Preloading data");
+		MenuFactory.getMenuFactory().getMainMenu().loadMenu();
+		log.debug("Preloaded...");
     }
 
 }

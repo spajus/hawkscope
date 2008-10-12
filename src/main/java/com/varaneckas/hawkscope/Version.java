@@ -4,6 +4,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Date;
+import java.util.Map.Entry;
+
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 
 /**
  * Hawkscope Version information
@@ -78,6 +81,17 @@ public class Version {
         return props.toString().trim();
     }
     
+    public static String formatConfigurationProperties() {
+        final StringBuilder props = new StringBuilder();
+        for (Entry<String, String> entry : ConfigurationFactory
+                .getConfigurationFactory()
+                .getConfiguration().getProperties().entrySet()) {
+            props.append(entry.getKey()).append(": ");
+            props.append(entry.getValue()).append('\n');
+        }
+        return props.toString().trim();
+    }
+    
     /**
      * Generates Environmental report
      * 
@@ -88,6 +102,8 @@ public class Version {
                 new StringBuilder("Hawkscope Environment Report\n");
         env.append(SEPARATOR);
         env.append(formatFullString()).append('\n');
+        env.append(SEPARATOR);
+        env.append(formatConfigurationProperties()).append('\n');
         env.append(SEPARATOR);
         env.append(getSystemProperties()).append('\n');
         env.append(SEPARATOR);

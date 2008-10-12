@@ -12,7 +12,7 @@ public class IconFactoryTest {
 
     @Test
     public void testIconFactory() {
-        Icon drive = IconFactory.getIcon("drive");
+        Icon drive = (Icon) IconFactory.getIconFactory().getIcon("drive");
         assertNotNull(drive);
     }
     

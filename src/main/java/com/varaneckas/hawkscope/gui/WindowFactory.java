@@ -1,6 +1,9 @@
 package com.varaneckas.hawkscope.gui;
 
+import java.lang.Thread.UncaughtExceptionHandler;
+
 import com.varaneckas.hawkscope.gui.swing.SwingAboutFrame;
+import com.varaneckas.hawkscope.gui.swing.SwingUncaughtExceptionHandler;
 
 public class WindowFactory {
 
@@ -11,6 +14,10 @@ public class WindowFactory {
             aboutWindow = new SwingAboutFrame();
         }
         return aboutWindow;
+    }
+    
+    public static UncaughtExceptionHandler getUncaughtExceptionHandler() {
+        return new SwingUncaughtExceptionHandler();
     }
     
 }

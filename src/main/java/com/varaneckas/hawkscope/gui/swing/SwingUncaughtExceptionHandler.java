@@ -1,8 +1,8 @@
-package com.varaneckas.hawkscope.util;
+package com.varaneckas.hawkscope.gui.swing;
 
-import java.awt.Component;
 import java.lang.Thread.UncaughtExceptionHandler;
 
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.menu.MenuFactory;
+import com.varaneckas.hawkscope.util.IOUtils;
 
 /**
  * Registers uncaught exception handler that displays error message inside
@@ -20,13 +21,13 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SimpleUncaughtExceptionHandler implements UncaughtExceptionHandler {
+public class SwingUncaughtExceptionHandler implements UncaughtExceptionHandler {
 
     /**
      * Logger
      */
     private static final Log log = LogFactory
-            .getLog(SimpleUncaughtExceptionHandler.class);
+            .getLog(SwingUncaughtExceptionHandler.class);
     
     @Override
     public void uncaughtException(final Thread t, final Throwable e) {
@@ -39,7 +40,7 @@ public class SimpleUncaughtExceptionHandler implements UncaughtExceptionHandler 
         text.setColumns(60);
         text.setRows(6);
         text.setEditable(false);
-        final int choice = JOptionPane.showOptionDialog((Component) MenuFactory.getMainMenu(), 
+        final int choice = JOptionPane.showOptionDialog(new JDialog(), 
                 new JScrollPane(text), 
                 Version.APP_NAME, 
                 JOptionPane.OK_CANCEL_OPTION, 
@@ -50,7 +51,7 @@ public class SimpleUncaughtExceptionHandler implements UncaughtExceptionHandler 
         if (choice == 0) {
             IOUtils.copyToClipboard(text.getText());
         }
-        MenuFactory.getMainMenu().forceHide();
+        MenuFactory.getMenuFactory().getMainMenu().forceHide();
         log.error("Uncaught exception", e);
     }
 }

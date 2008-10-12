@@ -1,7 +1,5 @@
 package com.varaneckas.hawkscope.menu.state;
 
-import java.awt.event.MouseEvent;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -43,8 +41,8 @@ public class MenuOpenState extends State {
     }
     
     @Override
-    public void act(final MouseEvent event) {
-        MenuFactory.getMainMenu().forceHide();
+    public void act(final StateEvent event) {
+        MenuFactory.getMenuFactory().getMainMenu().forceHide();
     }
     
     @Override

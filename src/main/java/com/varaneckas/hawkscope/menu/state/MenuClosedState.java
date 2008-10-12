@@ -1,11 +1,10 @@
 package com.varaneckas.hawkscope.menu.state;
 
-import java.awt.event.MouseEvent;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.gui.swing.SwingMainMenu;
+import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
@@ -43,8 +42,8 @@ public class MenuClosedState extends State {
     }
     
     @Override
-    public void act(final MouseEvent event) {
-        final SwingMainMenu menu = (SwingMainMenu) MenuFactory.getMainMenu();
+    public void act(final StateEvent event) {
+        final MainMenu menu = MenuFactory.getMenuFactory().getMainMenu();
         menu.showMenu(event.getX(), event.getY());
         menu.setState(MenuOpenState.getInstance());
     }
@@ -55,8 +54,8 @@ public class MenuClosedState extends State {
             log.debug("Menu closed. Free mem before cleanup: " 
                     + Runtime.getRuntime().freeMemory() / (1024*1024));
         }
-        MenuFactory.getMainMenu().clearMenu();
-        MenuFactory.getMainMenu().loadMenu();
+        MenuFactory.getMenuFactory().getMainMenu().clearMenu();
+        MenuFactory.getMenuFactory().getMainMenu().loadMenu();
         Runtime.getRuntime().gc();
     }
     

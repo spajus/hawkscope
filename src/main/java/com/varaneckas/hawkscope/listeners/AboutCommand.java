@@ -1,9 +1,9 @@
 package com.varaneckas.hawkscope.listeners;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import com.varaneckas.hawkscope.gui.WindowFactory;
+import com.varaneckas.hawkscope.menu.Command;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
@@ -14,12 +14,12 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class AboutActionListener implements ActionListener {
+public class AboutCommand implements Command {
 
     @Override
-    public void actionPerformed(final ActionEvent e) {
+    public void execute() {
         WindowFactory.getAboutWindow().showObject();
-        MenuFactory.getMainMenu().forceHide();
+        MenuFactory.getMenuFactory().getMainMenu().forceHide();
     }
 
 }
