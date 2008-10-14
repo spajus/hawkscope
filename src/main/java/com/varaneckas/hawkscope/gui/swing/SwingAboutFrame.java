@@ -46,13 +46,15 @@ public class SwingAboutFrame extends javax.swing.JFrame implements AboutWindow {
      * Serial Version UID
      */
     private static final long serialVersionUID = 2324352047369162981L;
+    
+    private IconFactory iconFactory = null;
 
     public SwingAboutFrame() {
         initComponents();
         DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment()
             .getDefaultScreenDevice().getDisplayMode();
         setLocation(dm.getWidth() / 2 - getWidth() / 2, dm.getHeight() / 2 - getHeight() / 2);
-        setIconImage(((ImageIcon) IconFactory.getIconFactory().getUncachedIcon("hawkscope16.png")).getImage());
+        setIconImage(((ImageIcon) getIconFactory().getUncachedIcon("hawkscope16.png")).getImage());
     }
 
     /** 
@@ -123,7 +125,7 @@ public class SwingAboutFrame extends javax.swing.JFrame implements AboutWindow {
         hawkscopeLogo.setToolTipText("Click to visit Homepage");
         hawkscopeLogo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         logoPanel.add(hawkscopeLogo, java.awt.BorderLayout.CENTER);
-        hawkscopeLogo.setIcon((Icon) IconFactory.getIconFactory().getUncachedIcon("hawkscope128.png"));
+        hawkscopeLogo.setIcon((Icon) getIconFactory().getUncachedIcon("hawkscope128.png"));
         hawkscopeLogo.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(final MouseEvent e) {
@@ -282,6 +284,13 @@ public class SwingAboutFrame extends javax.swing.JFrame implements AboutWindow {
     @Override
     public void showObject() {
         setVisible(true);        
+    }
+    
+    private IconFactory getIconFactory() {
+        if (iconFactory == null) {
+            iconFactory = new SwingIconFactory();
+        } 
+        return iconFactory;
     }
 
 }

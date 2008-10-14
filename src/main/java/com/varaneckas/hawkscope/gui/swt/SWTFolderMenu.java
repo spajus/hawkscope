@@ -7,9 +7,9 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 
 import com.varaneckas.hawkscope.listeners.FolderMenuItemListener;
@@ -32,23 +32,31 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
     public void createMenuItem(Menu parent) {
         menu = new org.eclipse.swt.widgets.MenuItem(parent, SWT.CASCADE);
         submenu = new Menu(parent);
+        final FolderMenuItemListener listener = new FolderMenuItemListener(this, this.file);
+        addOpenAction(listener);
         menu.setMenu(submenu);
         menu.setText(text);
         menu.setEnabled(enabled);
         menu.setImage((Image) icon);
-        final FolderMenuItemListener listener = new FolderMenuItemListener(this, this.file);
         if (this.file != null) {
-            menu.addListener(SWT.Selection, new Listener() {
-                @Override
-                public void handleEvent(Event event) {
-                    log.info("clicked: " + event);
-                    listener.itemClicked();
-                }
-            });
             submenu.addMenuListener(new MenuAdapter() {
                 @Override
                 public void menuShown(MenuEvent e) {
                     listener.itemSelected();
+                }
+            });
+        }
+    }
+
+    private void addOpenAction(final FolderMenuItemListener listener) {
+        if (file != null) {
+            org.eclipse.swt.widgets.MenuItem open = new org.eclipse.swt.widgets.MenuItem(submenu, SWT.PUSH);
+            open.setImage((Image) IconFactory.getIconFactory().getIcon("open"));
+            open.setText("Open");
+            open.addSelectionListener(new SelectionAdapter() {
+                @Override
+                public void widgetSelected(SelectionEvent e) {
+                    listener.itemClicked();
                 }
             });
         }

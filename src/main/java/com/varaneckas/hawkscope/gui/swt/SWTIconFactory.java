@@ -1,6 +1,7 @@
 package com.varaneckas.hawkscope.gui.swt;
 
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.Icon;
 
@@ -29,7 +30,12 @@ public class SWTIconFactory extends IconFactory<Image> {
      * @return icon
      */
     public Image getIcon(final String name) {
-        return new Image(display, resources.get(name).getFile());
+        try {
+            return new Image(display, resources.get(name).openStream());
+        } catch (IOException e) {
+            log.error("Failed getting icon: " + name, e);
+        }
+        return null;
     }
     
     /**

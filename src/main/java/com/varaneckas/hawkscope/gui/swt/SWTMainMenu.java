@@ -8,32 +8,35 @@ import org.eclipse.swt.widgets.MenuItem;
 
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
-import com.varaneckas.hawkscope.menu.state.State;
 import com.varaneckas.hawkscope.tray.TrayManagerFactory;
 
 public class SWTMainMenu extends MainMenu {
 
     private static SWTMainMenu instance = null;
-    
+
     private final Menu menu;
-    
+
     private SWTMainMenu() {
-        menu = new Menu(((SWTTrayManager) TrayManagerFactory
-                .getTrayManager()).getShell(), SWT.POP_UP);
+        menu = new Menu(((SWTTrayManager) TrayManagerFactory.getTrayManager())
+                .getShell(), SWT.POP_UP);
         menu.addListener(SWT.Hide, new Listener() {
             @Override
             public void handleEvent(Event event) {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        try {
-                            Thread.sleep(10l);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        if (!(state instanceof MenuClosedState)) {
-                            setState(MenuClosedState.getInstance());
-                        }
+                        menu.getDisplay().syncExec(new Runnable() {
+                            public void run() {
+                                try {
+                                    Thread.sleep(10l);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                if (!(state instanceof MenuClosedState)) {
+                                    setState(MenuClosedState.getInstance());
+                                }
+                            }
+                        });
                     }
                 }).start();
             }
@@ -46,9 +49,9 @@ public class SWTMainMenu extends MainMenu {
         }
         return instance;
     }
-    
+
     @Override
-    public void clearMenu() {
+    public synchronized void clearMenu() {
         for (MenuItem item : menu.getItems()) {
             if (!item.isDisposed()) {
                 item.dispose();

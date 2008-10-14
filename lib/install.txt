@@ -1,0 +1,1 @@
+ mvn install:install-file -DgroupId=org.eclipse.swt -DartifactId=swt-linux-64 -Dversion=3.4 -DgeneratePom=true -Dpackaging=jar -Dfile=swt-linux-64.jar 

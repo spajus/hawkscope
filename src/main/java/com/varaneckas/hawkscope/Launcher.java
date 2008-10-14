@@ -31,10 +31,10 @@ public class Launcher {
     public static void main(final String[] args) {
         log.info(Version.formatFullString());
         try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             ConfigurationFactory.getConfigurationFactory(args).getConfiguration();
-        	UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//        	Thread.setDefaultUncaughtExceptionHandler(
-//        	         new SwingUncaughtExceptionHandler());
+        	Thread.setDefaultUncaughtExceptionHandler(
+        	         new SwingUncaughtExceptionHandler());
         } catch (final Throwable e) {
             log.fatal("Failed starting Hawkscope", e);
         }

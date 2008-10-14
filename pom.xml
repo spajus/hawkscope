@@ -4,7 +4,7 @@
 	<groupId>com.varaneckas</groupId>
 	<artifactId>hawkscope</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2.0</version>
+	<version>0.2.1-DEV</version>
 	<name>Hawkscope</name>
 	<url>http://hawkscope.googlecode.com</url>
 	<build>
@@ -59,6 +59,11 @@
             <artifactId>commons-logging</artifactId>
             <version>1.1</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.swt</groupId>
+            <artifactId>swt-linux-64</artifactId>
+            <version>3.4</version>
         </dependency>
 	</dependencies>
 </project>
