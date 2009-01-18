@@ -47,7 +47,7 @@ public class SwingAboutFrame extends javax.swing.JFrame implements AboutWindow {
      */
     private static final long serialVersionUID = 2324352047369162981L;
     
-    private IconFactory iconFactory = null;
+    private IconFactory<Icon> iconFactory = null;
 
     public SwingAboutFrame() {
         initComponents();
@@ -286,7 +286,7 @@ public class SwingAboutFrame extends javax.swing.JFrame implements AboutWindow {
         setVisible(true);        
     }
     
-    private IconFactory getIconFactory() {
+    private IconFactory<Icon> getIconFactory() {
         if (iconFactory == null) {
             iconFactory = new SwingIconFactory();
         } 

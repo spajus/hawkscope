@@ -1,34 +1,20 @@
 package com.varaneckas.hawkscope.gui.swt;
-import com.cloudgarden.resource.SWTResourceManager;
-import com.varaneckas.hawkscope.gui.AboutWindow;
-
-import java.awt.BorderLayout;
-import java.awt.Frame;
-import java.awt.Panel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-
-import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.awt.SWT_AWT;
+
+import com.cloudgarden.resource.SWTResourceManager;
+import com.varaneckas.hawkscope.gui.AboutWindow;
+import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -228,6 +214,9 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 logoCanvasLData.top =  new FormAttachment(0, 1000, 12);
                 logoCanvas = new Canvas(dialogShell, SWT.NONE);
                 logoCanvas.setLayoutData(logoCanvasLData);
+                Image logo = (Image) IconFactory.getIconFactory().getUncachedIcon("hawkscope128.png");
+                logo.setBackground(new Color(this.getParent().getDisplay(), 255,255,255));
+                logoCanvas.setBackgroundImage(logo);
             }
             dialogShell.setLocation(getParent().toDisplay(100, 100));
             dialogShell.open();

@@ -20,7 +20,6 @@ import com.varaneckas.hawkscope.util.IOUtils;
 /**
  * Hawkscope configuration factory
  * 
- *
  * @author Tomas Varaneckas
  * @version $Id$
  */

@@ -21,13 +21,9 @@ public abstract class IconFactory<IconType> {
 
     private static final Log log = LogFactory.getLog(IconFactory.class);
     
+    @SuppressWarnings("unchecked")
     private static IconFactory instance = null;
     
-    /**
-     * Collection of flyweight icons that are ready for use
-     */
-    private final Map<String, IconType> icons = new HashMap<String, IconType>();
-
     protected static final Map<String, URL> resources = new HashMap<String, URL>();
     
     static {
