@@ -38,8 +38,13 @@ public class SWTTrayManager implements TrayManager {
         trayIcon.addListener (SWT.Selection, listener);
         trayIcon.addListener (SWT.MenuDetect, listener);
         while (!sh.isDisposed()) {
-            if (!d.readAndDispatch ()) {
-                d.sleep();
+            try {
+                if (!d.readAndDispatch ()) {
+                    d.sleep();
+                }
+            } catch (final Exception e) {
+                new SWTUncaughtExceptionHandler()
+                        .uncaughtException(Thread.currentThread(), e);
             }
         }
         d.dispose();

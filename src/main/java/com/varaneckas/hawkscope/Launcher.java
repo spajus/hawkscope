@@ -1,12 +1,10 @@
 package com.varaneckas.hawkscope;
 
-import javax.swing.UIManager;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.gui.swing.SwingUncaughtExceptionHandler;
+import com.varaneckas.hawkscope.gui.WindowFactory;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.tray.TrayManagerFactory;
 
@@ -31,10 +29,9 @@ public class Launcher {
     public static void main(final String[] args) {
         log.info(Version.formatFullString());
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             ConfigurationFactory.getConfigurationFactory(args).getConfiguration();
-        	Thread.setDefaultUncaughtExceptionHandler(
-        	         new SwingUncaughtExceptionHandler());
+        	Thread.setDefaultUncaughtExceptionHandler(WindowFactory
+        	        .getUncaughtExceptionHandler());
         } catch (final Throwable e) {
             log.fatal("Failed starting Hawkscope", e);
         }
