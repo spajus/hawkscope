@@ -162,8 +162,18 @@ public abstract class ConfigurationFactory {
         log.debug(args[0]);
     }
 
+    /**
+     * Loads configuration file path
+     * 
+     * @return
+     */
     abstract protected String loadConfigFilePath();
 
+    /**
+     * Gets default configuration parameters
+     * 
+     * @return
+     */
     abstract protected Map<String, String> getDefaults();
     
 }

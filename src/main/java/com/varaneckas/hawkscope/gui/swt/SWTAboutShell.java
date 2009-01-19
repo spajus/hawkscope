@@ -1,6 +1,9 @@
 package com.varaneckas.hawkscope.gui.swt;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -13,7 +16,9 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import com.cloudgarden.resource.SWTResourceManager;
+import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.gui.AboutWindow;
+import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
@@ -88,6 +93,12 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 copyReportButtonLData.left =  new FormAttachment(0, 1000, 314);
                 copyReportButtonLData.top =  new FormAttachment(0, 1000, 252);
                 copyReportButton.setLayoutData(copyReportButtonLData);
+                copyReportButton.addMouseListener(new MouseAdapter() {
+                   @Override
+                   public void mouseUp(MouseEvent event) {
+                       IOUtils.copyToClipboard(Version.getEnvironmentReport());
+                   } 
+                });
                 copyReportButton.setText("Copy to Clipboard");
             }
             {
@@ -98,6 +109,12 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 closeButtonLData.left =  new FormAttachment(0, 1000, 451);
                 closeButtonLData.top =  new FormAttachment(0, 1000, 252);
                 closeButton.setLayoutData(closeButtonLData);
+                closeButton.addMouseListener(new MouseAdapter() {
+                   @Override
+                    public void mouseUp(MouseEvent event) {
+                       dialogShell.setVisible(false);
+                    } 
+                });
                 closeButton.setText("Close");
             }
             {
@@ -119,7 +136,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 environmentTextAreaLData.left =  new FormAttachment(0, 1000, 12);
                 environmentTextAreaLData.top =  new FormAttachment(0, 1000, 150);
                 environmentTextArea.setLayoutData(environmentTextAreaLData);
-                environmentTextArea.setText("Environment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdf Environment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdfEnvironment asdf asdf asdf asfd asdf asdf asdf asdffdfasdf asdf asdf asdf asdfas dfasdf asdf asdf asdf");
+                environmentTextArea.setText(Version.getSystemProperties());
                 environmentTextArea.setEditable(false);
             }
             {
@@ -130,7 +147,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 appHomepageValueLData.left =  new FormAttachment(0, 1000, 256);
                 appHomepageValueLData.top =  new FormAttachment(0, 1000, 104);
                 appHomepageValue.setLayoutData(appHomepageValueLData);
-                appHomepageValue.setText("http://hawkscope.googlecode.com");
+                appHomepageValue.setText(Version.HOMEPAGE);
             }
             {
                 appHomepageLabel = new Label(dialogShell, SWT.NONE);
@@ -151,7 +168,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 appReleasedValueLData.left =  new FormAttachment(0, 1000, 256);
                 appReleasedValueLData.top =  new FormAttachment(0, 1000, 81);
                 appReleasedValue.setLayoutData(appReleasedValueLData);
-                appReleasedValue.setText("2008-10-10");
+                appReleasedValue.setText(Version.VERSION_DATE);
             }
             {
                 appReleasedLabel = new Label(dialogShell, SWT.NONE);
@@ -172,7 +189,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 appVersionValueLData.left =  new FormAttachment(0, 1000, 256);
                 appVersionValueLData.top =  new FormAttachment(0, 1000, 58);
                 appVersionValue.setLayoutData(appVersionValueLData);
-                appVersionValue.setText("1.0");
+                appVersionValue.setText(Version.VERSION_NUMBER);
             }
             {
                 appVersion = new Label(dialogShell, SWT.NONE);
@@ -207,16 +224,21 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 appNameLabel.setFont(SWTResourceManager.getFont("Sans", 10, 1, false, false));
             }
             {
-                FormData logoCanvasLData = new FormData();
+                final FormData logoCanvasLData = new FormData();
                 logoCanvasLData.width = 114;
                 logoCanvasLData.height = 109;
                 logoCanvasLData.left =  new FormAttachment(0, 1000, 12);
                 logoCanvasLData.top =  new FormAttachment(0, 1000, 12);
-                logoCanvas = new Canvas(dialogShell, SWT.NONE);
+                logoCanvas = new Canvas(dialogShell, SWT.RESIZE);
+                logoCanvas.addPaintListener(new PaintListener() {
+                    @Override
+                    public void paintControl(PaintEvent e) {
+                        e.gc.drawImage((Image) IconFactory.getIconFactory()
+                                .getUncachedIcon("hawkscope128.png"), 0, 0, 128, 
+                                128, 0, 0, 114, 109);
+                    }
+                });
                 logoCanvas.setLayoutData(logoCanvasLData);
-                Image logo = (Image) IconFactory.getIconFactory().getUncachedIcon("hawkscope128.png");
-                logo.setBackground(new Color(this.getParent().getDisplay(), 255,255,255));
-                logoCanvas.setBackgroundImage(logo);
             }
             dialogShell.setLocation(getParent().toDisplay(100, 100));
             dialogShell.open();
