@@ -81,6 +81,11 @@ public class Version {
         return props.toString().trim();
     }
     
+    /**
+     * Formats current configuration properties as string
+     * 
+     * @return configuration
+     */
     public static String formatConfigurationProperties() {
         final StringBuilder props = new StringBuilder();
         for (Entry<String, String> entry : ConfigurationFactory

@@ -14,7 +14,7 @@ public class SWTTrayManager implements TrayManager {
     private TrayItem trayIcon;
     
     private static final Display d = Display.getDefault();
-
+    
     private static final Shell sh = new Shell(d);
     
     @Override

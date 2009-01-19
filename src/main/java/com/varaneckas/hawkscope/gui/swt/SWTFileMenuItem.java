@@ -15,22 +15,51 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.PathUtils;
 
+/**
+ * {@link FileMenuItem} - SWT implementation
+ *
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class SWTFileMenuItem implements FileMenuItem, SWTMenuItem {
 
+    /**
+     * Menu item text
+     */
     private String text;
+    
+    /**
+     * Menu item icon
+     */
     private Object icon;
+    
+    /**
+     * Is menu item enabled?
+     */
     private boolean enabled = true;
     
+    /**
+     * Menu item data
+     */
     private MenuItem menuItem;
     
+    /**
+     * Associated {@link File}
+     */
     private File file;
     
-    public SWTFileMenuItem(File file) {
+    /**
+     * Constructor that sets the target {@link File}
+     * 
+     * @param file associated target {@link File}
+     */
+    public SWTFileMenuItem(final File file) {
         text = PathUtils.getFileName(file);
         icon = IconFactory.getIconFactory().getIcon(file);
         this.file = file;
     }
     
+    @Override
     public void createMenuItem(Menu parent) {
         menuItem = new MenuItem(parent, SWT.PUSH);
         menuItem.setImage((Image) icon);

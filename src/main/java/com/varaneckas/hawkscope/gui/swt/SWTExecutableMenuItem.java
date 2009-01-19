@@ -10,20 +10,37 @@ import org.eclipse.swt.widgets.MenuItem;
 import com.varaneckas.hawkscope.menu.Command;
 import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 
+/**
+ * {@link ExecutableMenuItem} - SWT implementation
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class SWTExecutableMenuItem implements ExecutableMenuItem, SWTMenuItem {
 
+    /**
+     * Menu item text
+     */
     private String text;
 
+    /**
+     * Menu item icon
+     */
     private Object icon;
 
-    private String toolTipText;
-
+    /**
+     * Menu item command
+     */
     private Command command;
 
+    /**
+     * Is the item enabled?
+     */
     private boolean enabled = true;
     
-    public void createMenuItem(Menu parent) {
-        MenuItem mi = new MenuItem(parent, SWT.PUSH);
+    @Override
+    public void createMenuItem(final Menu parent) {
+        final MenuItem mi = new MenuItem(parent, SWT.PUSH);
         mi.setImage((Image) icon);
         mi.setText(text);
         mi.setEnabled(enabled);
@@ -41,18 +58,18 @@ public class SWTExecutableMenuItem implements ExecutableMenuItem, SWTMenuItem {
     }
 
     @Override
-    public void setIcon(Object icon) {
+    public void setIcon(final Object icon) {
         this.icon = icon;
     }
 
     @Override
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
     @Override
-    public void setToolTipText(String text) {
-        this.toolTipText = text;
+    public void setToolTipText(final String text) {
+        //unsupported feature
     }
 
     @Override
@@ -61,7 +78,7 @@ public class SWTExecutableMenuItem implements ExecutableMenuItem, SWTMenuItem {
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }
     

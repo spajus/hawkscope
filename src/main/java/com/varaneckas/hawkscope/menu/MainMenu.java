@@ -1,9 +1,7 @@
 package com.varaneckas.hawkscope.menu;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -22,8 +20,6 @@ public abstract class MainMenu {
     protected State state = MenuClosedState.getInstance();
     
     private static final Log log = LogFactory.getLog(MainMenu.class);
-    
-    private Map<String, MenuItem> statics = new HashMap<String, MenuItem>();
     
     /**
      * Displays the menu

@@ -22,18 +22,26 @@ import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
-public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements AboutWindow {
+ * {@link AboutWindow} - SWT implementation 
+ * 
+ * This code was edited or generated using CloudGarden's Jigloo
+ * SWT/Swing GUI Builder, which is free for non-commercial
+ * use. If Jigloo is being used commercially (ie, by a corporation,
+ * company or business for any purpose whatever) then you
+ * should purchase a license for each developer using Jigloo.
+ * Please visit www.cloudgarden.com for details.
+ * Use of Jigloo implies acceptance of these licensing terms.
+ * A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+ * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+ * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+ * 
+ * However, as this is Free Software, it's all right. :)
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
+public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog 
+        implements AboutWindow {
 
     private Shell dialogShell;
     private Canvas logoCanvas;
@@ -50,21 +58,6 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
     private Label appReleasedLabel;
     private Label appVersionValue;
 
-    /**
-    * Auto-generated main method to display this 
-    * org.eclipse.swt.widgets.Dialog inside a new Shell.
-    */
-    public static void main(String[] args) {
-        try {
-            Display display = Display.getDefault();
-            Shell shell = new Shell(display);
-            SWTAboutShell inst = new SWTAboutShell(shell, SWT.NULL);
-            inst.open();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public SWTAboutShell(Shell parent, int style) {
         super(parent, style);
     }
@@ -73,7 +66,9 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
         try {
             Shell parent = getParent();
             dialogShell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-
+            dialogShell.setImage((Image) SWTIconFactory.getIconFactory()
+                    .getUncachedIcon("hawkscope16.png"));
+            dialogShell.setText("About");
             {
                 //Register as a resource user - SWTResourceManager will
                 //handle the obtaining and disposing of resources
@@ -126,7 +121,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 environmentLabelLData.top =  new FormAttachment(0, 1000, 127);
                 environmentLabel.setLayoutData(environmentLabelLData);
                 environmentLabel.setText("Environment");
-                environmentLabel.setFont(SWTResourceManager.getFont("Sans", 10, 1, false, false));
+                environmentLabel.setFont(SWTResourceManager.getFont("Sans", 10, 1));
             }
             {
                 environmentTextArea = new Text(dialogShell, SWT.MULTI | SWT.WRAP | SWT.V_SCROLL | SWT.BORDER);
@@ -158,7 +153,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 appHomepageLabelLData.top =  new FormAttachment(0, 1000, 104);
                 appHomepageLabel.setLayoutData(appHomepageLabelLData);
                 appHomepageLabel.setText("Homepage:");
-                appHomepageLabel.setFont(SWTResourceManager.getFont("Sans", 10, 1, false, false));
+                appHomepageLabel.setFont(SWTResourceManager.getFont("Sans", 10, 1));
             }
             {
                 appReleasedValue = new Label(dialogShell, SWT.NONE);
@@ -179,7 +174,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 appReleasedLabelLData.top =  new FormAttachment(0, 1000, 81);
                 appReleasedLabel.setLayoutData(appReleasedLabelLData);
                 appReleasedLabel.setText("Released:");
-                appReleasedLabel.setFont(SWTResourceManager.getFont("Sans", 10, 1, false, false));
+                appReleasedLabel.setFont(SWTResourceManager.getFont("Sans", 10, 1));
             }
             {
                 appVersionValue = new Label(dialogShell, SWT.NONE);
@@ -200,7 +195,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 appVersionLData.top =  new FormAttachment(0, 1000, 58);
                 appVersion.setLayoutData(appVersionLData);
                 appVersion.setText("Version:");
-                appVersion.setFont(SWTResourceManager.getFont("Sans", 10, 1, false, false));
+                appVersion.setFont(SWTResourceManager.getFont("Sans", 10, 1));
             }
             {
                 appSloganLabel = new Label(dialogShell, SWT.WRAP);
@@ -221,7 +216,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
                 appNameLabelLData.top =  new FormAttachment(0, 1000, 12);
                 appNameLabel.setLayoutData(appNameLabelLData);
                 appNameLabel.setText("Hawkscope");
-                appNameLabel.setFont(SWTResourceManager.getFont("Sans", 10, 1, false, false));
+                appNameLabel.setFont(SWTResourceManager.getFont("Sans", 10, 1));
             }
             {
                 final FormData logoCanvasLData = new FormData();
@@ -260,7 +255,6 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog implements Abo
     @Override
     public void showObject() {
         open();
-        //dialogShell.setVisible(true);
     }
     
 }

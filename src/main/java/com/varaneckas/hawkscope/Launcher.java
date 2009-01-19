@@ -29,9 +29,11 @@ public class Launcher {
     public static void main(final String[] args) {
         log.info(Version.formatFullString());
         try {
-            ConfigurationFactory.getConfigurationFactory(args).getConfiguration();
+            ConfigurationFactory.getConfigurationFactory(args)
+                    .getConfiguration();
         	Thread.setDefaultUncaughtExceptionHandler(WindowFactory
         	        .getUncaughtExceptionHandler());
+        	WindowFactory.initialize();
         } catch (final Throwable e) {
             log.fatal("Failed starting Hawkscope", e);
         }

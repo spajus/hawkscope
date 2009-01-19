@@ -54,7 +54,8 @@ public abstract class ConfigurationFactory {
      * @param args command line arguments
      * @return concrete instance
      */
-    public static ConfigurationFactory getConfigurationFactory(final String[] args) {
+    public static ConfigurationFactory getConfigurationFactory(
+            final String[] args) {
         final ConfigurationFactory cf = getConfigurationFactory();
         cf.setCommandLineArgs(args);
         return cf;

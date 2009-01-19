@@ -2,8 +2,6 @@ package com.varaneckas.hawkscope.gui.swt;
 
 import java.io.File;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuAdapter;
 import org.eclipse.swt.events.MenuEvent;
@@ -19,8 +17,6 @@ import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.PathUtils;
 
 public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
-    
-    private static final Log log = LogFactory.getLog(SWTFolderMenu.class);
     
     private String text;
     private Object icon;

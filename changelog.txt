@@ -2,9 +2,11 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
-Changes in version 0.2.? (????-??-??)
+Changes in version 0.3.0 (????-??-??)
 -------------------------------------
 * Hawkscope menu is now always on top
+* SWT GUI Implementation
+* Closed http://code.google.com/p/hawkscope/issues/detail?id=7
 
 Changes in version 0.2.0 (2008-10-06)
 -------------------------------------

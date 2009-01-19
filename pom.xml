@@ -4,7 +4,7 @@
 	<groupId>com.varaneckas</groupId>
 	<artifactId>hawkscope</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2.1-DEV</version>
+	<version>0.3.0-DEV</version>
 	<name>Hawkscope</name>
 	<url>http://hawkscope.googlecode.com</url>
 	<build>
@@ -14,7 +14,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
 					<source>1.6</source>
-					<target>1.6</target>
+					<target>1.5</target>
 				</configuration>
 			</plugin>
 			<plugin>
