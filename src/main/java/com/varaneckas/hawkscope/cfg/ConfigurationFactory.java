@@ -160,7 +160,7 @@ public abstract class ConfigurationFactory {
      * @param args
      */
     private void setCommandLineArgs(final String[] args) {
-        log.debug(args[0]);
+        //TODO implementation
     }
 
     /**
