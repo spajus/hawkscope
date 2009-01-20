@@ -30,7 +30,7 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         //blacklist is empty
         data.put(Configuration.FILESYSTEM_BLACKLIST, "");
         //swing implementation
-        data.put(Configuration.GUI_IMPLEMENTATION, "Swing");
+        data.put(Configuration.GUI_IMPLEMENTATION, "SWT");
         return data;
     }
 
