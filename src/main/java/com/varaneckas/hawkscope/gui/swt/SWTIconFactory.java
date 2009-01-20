@@ -12,6 +12,12 @@ import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.util.IconFactory;
 
+/**
+ * {@link IconFactory} - SWT implmementation
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class SWTIconFactory extends IconFactory<Image> {
 
     /**
@@ -19,10 +25,11 @@ public class SWTIconFactory extends IconFactory<Image> {
      */
     private static final Log log = LogFactory.getLog(SWTIconFactory.class);
     
+    /**
+     * Default {@link Display}
+     */
     private static final Display display = Display.getDefault();
 
-
-    
     /**
      * Gets {@link Icon} for name
      * 
@@ -68,7 +75,4 @@ public class SWTIconFactory extends IconFactory<Image> {
         return new Image(display, ClassLoader.getSystemClassLoader()
                 .getResourceAsStream(getBestTrayIcon()));
     }
-    
-
-    
 }

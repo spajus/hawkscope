@@ -9,6 +9,12 @@ import org.eclipse.swt.widgets.TrayItem;
 import com.varaneckas.hawkscope.tray.TrayManager;
 import com.varaneckas.hawkscope.util.IconFactory;
 
+/**
+ * {@link TrayManager} - SWT Implementation
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class SWTTrayManager implements TrayManager {
 
     private TrayItem trayIcon;

@@ -9,10 +9,22 @@ import javax.swing.JMenuItem;
 import com.varaneckas.hawkscope.menu.Command;
 import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 
+/**
+ * {@link ExecutableMenuItem} - Swing implementation
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class SwingExecutableMenuItem implements ExecutableMenuItem, SwingMenuItem {
 
+    /**
+     * Swing menu item
+     */
     private final JMenuItem item;
     
+    /**
+     * Initializing constructor
+     */
     public SwingExecutableMenuItem() {
         item = new JMenuItem();
     }
@@ -33,22 +45,22 @@ public class SwingExecutableMenuItem implements ExecutableMenuItem, SwingMenuIte
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(final boolean enabled) {
         item.setEnabled(enabled);
     }
 
     @Override
-    public void setIcon(Object icon) {
+    public void setIcon(final Object icon) {
         item.setIcon((Icon) icon);
     }
 
     @Override
-    public void setText(String text) {
+    public void setText(final String text) {
         item.setText(text);
     }
 
     @Override
-    public void setToolTipText(String text) {
+    public void setToolTipText(final String text) {
         item.setToolTipText(text);
     }
 

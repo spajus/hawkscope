@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.listeners;
+package com.varaneckas.hawkscope.gui.swing.listeners;
 
 import java.awt.event.ActionListener;
 

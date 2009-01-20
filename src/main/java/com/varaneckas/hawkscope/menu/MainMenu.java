@@ -7,18 +7,30 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.listeners.AboutCommand;
-import com.varaneckas.hawkscope.listeners.ExitCommand;
-import com.varaneckas.hawkscope.listeners.HideCommand;
+import com.varaneckas.hawkscope.gui.swing.listeners.AboutCommand;
+import com.varaneckas.hawkscope.gui.swing.listeners.ExitCommand;
+import com.varaneckas.hawkscope.gui.swing.listeners.HideCommand;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
 import com.varaneckas.hawkscope.menu.state.State;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.PathUtils;
 
+/**
+ * Abstract Main menu 
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public abstract class MainMenu {
 
+    /**
+     * Current menu state
+     */
     protected State state = MenuClosedState.getInstance();
     
+    /**
+     * Logger
+     */
     private static final Log log = LogFactory.getLog(MainMenu.class);
     
     /**
@@ -55,6 +67,9 @@ public abstract class MainMenu {
         }
     }
 
+    /**
+     * Loads the menu
+     */
     public void loadMenu() {
         loadQuickAccessMenu();
         final File[] roots = File.listRoots();
@@ -63,7 +78,8 @@ public abstract class MainMenu {
                     .getConfiguration().isFloppyDrivesDisplayed();
             if (loadFloppy || !PathUtils.isFloppy(root)) {
             log.debug("Generating menu for: " + root.getAbsolutePath());
-                final FolderMenu item = MenuFactory.getMenuFactory().newFolderMenu(root);
+                final FolderMenu item = MenuFactory.getMenuFactory()
+                        .newFolderMenu(root);
                 item.setText(PathUtils.getFileName(root));
                 item.setIcon(IconFactory.getIconFactory().getIcon(root));
                 item.setToolTipText("" + root.getUsableSpace() / (1024*1024*1024) 
@@ -74,8 +90,16 @@ public abstract class MainMenu {
         addStaticItems();
     }
     
+    /**
+     * Adds a menu item
+     * 
+     * @param item menu item to add
+     */
     public abstract void addMenuItem(MenuItem item);
     
+    /**
+     * Adds a separator
+     */
     public abstract void addSeparator();
     
     /**
@@ -102,8 +126,10 @@ public abstract class MainMenu {
         addExecutableMenuItem("exit", "Exit", new ExitCommand());
     }
 
-    private void addExecutableMenuItem(String name, String text, Command command) {
-        ExecutableMenuItem item = MenuFactory.getMenuFactory().newExecutableMenuItem();
+    private void addExecutableMenuItem(final String name, 
+            final String text, final Command command) {
+        final ExecutableMenuItem item = MenuFactory.getMenuFactory()
+                .newExecutableMenuItem();
         item.setCommand(command);
         item.setText(text);
         item.setIcon(IconFactory.getIconFactory().getIcon(name));

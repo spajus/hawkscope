@@ -35,7 +35,8 @@ public abstract class PathUtils {
      * @param delimiter
      * @return
      */
-    public static List<File> pathToDirList(final String path, final String delimiter) {
+    public static List<File> pathToDirList(final String path, 
+            final String delimiter) {
         if (path == null || path.equals("")) {
             return null;
         }
@@ -54,7 +55,14 @@ public abstract class PathUtils {
         return files;
     }
     
-    
+    /**
+     * Interprets the location
+     * 
+     * TODO more documentation
+     * 
+     * @param location
+     * @return
+     */
     private static String interpret(final String location) {
         if (!location.matches(".*" + INTERPRET_REGEX + ".*")) {
             return location;
@@ -66,7 +74,8 @@ public abstract class PathUtils {
                 log.debug("Parsing: " + matcher.group(1));
                 String replacement;
                 if (matcher.group(1).startsWith("$")) {
-                    replacement = "" + System.getenv(matcher.group(1).substring(1));
+                    replacement = "" + System.getenv(matcher.group(1)
+                            .substring(1));
                 } else {
                     replacement = "" + System.getProperty(matcher.group(1));
                 }

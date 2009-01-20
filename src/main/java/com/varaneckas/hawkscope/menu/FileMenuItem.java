@@ -1,6 +1,9 @@
 package com.varaneckas.hawkscope.menu;
 
-
-public interface FileMenuItem extends MenuItem {
-
-}
+/**
+ * File menu item interface
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
+public interface FileMenuItem extends MenuItem {}

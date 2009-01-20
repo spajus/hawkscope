@@ -10,25 +10,51 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Menu;
 
-import com.varaneckas.hawkscope.listeners.FolderMenuItemListener;
+import com.varaneckas.hawkscope.gui.swing.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MenuItem;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.PathUtils;
 
+/**
+ * {@link FolderMenu} - SWT implementation
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
     
+    /**
+     * Menu text
+     */
     private String text;
+    
+    /**
+     * Menu icon
+     */
     private Object icon;
+    
+    /**
+     * Is menu enabled?
+     */
     private boolean enabled = true;
 
+    /**
+     * SWT Menu item object
+     */
     private org.eclipse.swt.widgets.MenuItem menu;
-    private Menu submenu;
     
-    public void createMenuItem(Menu parent) {
+    /**
+     * SWT Submenu object
+     */
+    private Menu submenu;
+
+    @Override
+    public void createMenuItem(final Menu parent) {
         menu = new org.eclipse.swt.widgets.MenuItem(parent, SWT.CASCADE);
         submenu = new Menu(parent);
-        final FolderMenuItemListener listener = new FolderMenuItemListener(this, this.file);
+        final FolderMenuItemListener listener = new FolderMenuItemListener(this, 
+                this.file);
         addOpenAction(listener);
         menu.setMenu(submenu);
         menu.setText(text);
@@ -37,28 +63,39 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
         if (this.file != null) {
             submenu.addMenuListener(new MenuAdapter() {
                 @Override
-                public void menuShown(MenuEvent e) {
+                public void menuShown(final MenuEvent e) {
                     listener.itemSelected();
                 }
             });
         }
     }
 
+    /**
+     * Adds "Open" action to the menu
+     * 
+     * @param listener Folder menu item listener
+     */
     private void addOpenAction(final FolderMenuItemListener listener) {
         if (file != null) {
-            org.eclipse.swt.widgets.MenuItem open = new org.eclipse.swt.widgets.MenuItem(submenu, SWT.PUSH);
+            org.eclipse.swt.widgets.MenuItem open = 
+                new org.eclipse.swt.widgets.MenuItem(submenu, SWT.PUSH);
             open.setImage((Image) IconFactory.getIconFactory().getIcon("open"));
             open.setText("Open");
             open.addSelectionListener(new SelectionAdapter() {
                 @Override
-                public void widgetSelected(SelectionEvent e) {
+                public void widgetSelected(final SelectionEvent e) {
                     listener.itemClicked();
                 }
             });
         }
     }
     
-    public SWTFolderMenu(File file) {
+    /**
+     * Initializing constructor
+     * 
+     * @param file target folder
+     */
+    public SWTFolderMenu(final File file) {
         super(file);
         if (file != null) {
             this.text = PathUtils.getFileName(file);
@@ -67,7 +104,7 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
     }
     
     @Override
-    public void addMenuItem(MenuItem item) {
+    public void addMenuItem(final MenuItem item) {
         if (item instanceof SWTMenuItem) {
             ((SWTMenuItem) item).createMenuItem(submenu);
         }
@@ -79,22 +116,23 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }
 
     @Override
-    public void setIcon(Object icon) {
+    public void setIcon(final Object icon) {
         this.icon = icon;
     }
 
     @Override
-    public void setText(String text) {
+    public void setText(final String text) {
         this.text = text;
     }
 
     @Override
     public void setToolTipText(String text) {
+        //unsupported feature
     }
 
 }

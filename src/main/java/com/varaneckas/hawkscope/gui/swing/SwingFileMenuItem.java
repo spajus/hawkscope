@@ -5,18 +5,21 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.JMenuItem;
 
-import com.varaneckas.hawkscope.listeners.FileActionListener;
+import com.varaneckas.hawkscope.gui.swing.listeners.FileActionListener;
 import com.varaneckas.hawkscope.menu.FileMenuItem;
 import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
- * File {@link JMenuItem}
+ * {@link FileMenuItem} - Swing implementation
  *
  * @author Tomas Varaneckas
  * @version $Id$
  */
 public class SwingFileMenuItem implements FileMenuItem, SwingMenuItem {
     
+    /**
+     * Swing menu item
+     */
     private JMenuItem item;
     
     /**
@@ -37,22 +40,22 @@ public class SwingFileMenuItem implements FileMenuItem, SwingMenuItem {
     }
 
     @Override
-    public void setIcon(Object icon) {
+    public void setIcon(final Object icon) {
         item.setIcon((Icon) icon);
     }
 
     @Override
-    public void setText(String text) {
+    public void setText(final String text) {
         item.setText(text);
     }
 
     @Override
-    public void setToolTipText(String text) {
+    public void setToolTipText(final String text) {
         item.setToolTipText(text);
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(final boolean enabled) {
         item.setEnabled(enabled);
     }
 

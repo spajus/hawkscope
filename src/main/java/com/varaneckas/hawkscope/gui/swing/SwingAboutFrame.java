@@ -30,7 +30,7 @@ import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
- * About box
+ * {@link AboutWindow} - Swing implementation
  *
  * @author Tomas Varaneckas
  * @version $Id$
@@ -47,8 +47,14 @@ public class SwingAboutFrame extends javax.swing.JFrame implements AboutWindow {
      */
     private static final long serialVersionUID = 2324352047369162981L;
     
+    /**
+     * Icon Factory
+     */
     private IconFactory<Icon> iconFactory = null;
 
+    /**
+     * Initilizing constructor
+     */
     public SwingAboutFrame() {
         initComponents();
         DisplayMode dm = GraphicsEnvironment.getLocalGraphicsEnvironment()
@@ -250,10 +256,19 @@ public class SwingAboutFrame extends javax.swing.JFrame implements AboutWindow {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Close button action handler
+     * 
+     * @param evt
+     */
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
         setVisible(false);
 }//GEN-LAST:event_closeButtonActionPerformed
 
+    /**
+     * Copy to clipboard button action handler
+     * @param evt
+     */
     private void copyToClipboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_copyToClipboardButtonActionPerformed
         IOUtils.copyToClipboard(Version.getEnvironmentReport());
     }//GEN-LAST:event_copyToClipboardButtonActionPerformed
@@ -286,6 +301,11 @@ public class SwingAboutFrame extends javax.swing.JFrame implements AboutWindow {
         setVisible(true);        
     }
     
+    /**
+     * Lazy getter for {@link IconFactory}
+     * 
+     * @return
+     */
     private IconFactory<Icon> getIconFactory() {
         if (iconFactory == null) {
             iconFactory = new SwingIconFactory();

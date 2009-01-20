@@ -1,13 +1,19 @@
 package com.varaneckas.hawkscope.gui.swt;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Display;
@@ -42,6 +48,11 @@ import com.varaneckas.hawkscope.util.IconFactory;
  */
 public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog 
         implements AboutWindow {
+    
+    /**
+     * Logger
+     */
+    private static final Log log = LogFactory.getLog(SWTAboutShell.class);
 
     private Shell dialogShell;
     private Canvas logoCanvas;
@@ -58,13 +69,22 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
     private Label appReleasedLabel;
     private Label appVersionValue;
 
-    public SWTAboutShell(Shell parent, int style) {
+    /**
+     * Initializing constructor
+     * 
+     * @param parent
+     * @param style
+     */
+    public SWTAboutShell(final Shell parent, final int style) {
         super(parent, style);
     }
 
+    /**
+     * Opens the window
+     */
     public void open() {
         try {
-            Shell parent = getParent();
+            final Shell parent = getParent();
             dialogShell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
             dialogShell.setImage((Image) SWTIconFactory.getIconFactory()
                     .getUncachedIcon("hawkscope16.png"));
@@ -74,7 +94,6 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                 //handle the obtaining and disposing of resources
                 SWTResourceManager.registerResourceUser(dialogShell);
             }
-            
             
             dialogShell.setLayout(new FormLayout());
             dialogShell.layout();
@@ -136,6 +155,16 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
             }
             {
                 appHomepageValue = new Label(dialogShell, SWT.NONE);
+                appHomepageValue.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseUp(MouseEvent event) {
+                        Program.launch(Version.HOMEPAGE);
+                    } 
+                });
+                appHomepageValue.setCursor(new Cursor(dialogShell.getDisplay(), 
+                        SWT.CURSOR_HAND));
+                appHomepageValue.setForeground(
+                        new Color(dialogShell.getDisplay(), 0, 0, 255));
                 FormData appHomepageValueLData = new FormData();
                 appHomepageValueLData.width = 242;
                 appHomepageValueLData.height = 17;
@@ -242,8 +271,8 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                 if (!display.readAndDispatch())
                     display.sleep();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (final Exception e) {
+            log.warn("Failure in SWT About Window implementation", e);
         }
     }
 

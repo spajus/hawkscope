@@ -4,9 +4,10 @@
 	<groupId>com.varaneckas</groupId>
 	<artifactId>hawkscope</artifactId>
 	<packaging>jar</packaging>
-	<version>0.3.0-DEV</version>
+	<version>0.3.0</version>
 	<name>Hawkscope</name>
 	<url>http://hawkscope.googlecode.com</url>
+    <!-- $Id$ -->
 	<build>
 		<plugins>
 			<plugin>
@@ -62,7 +63,7 @@
         </dependency>
         <dependency>
             <groupId>org.eclipse.swt</groupId>
-            <artifactId>swt-linux-64</artifactId>
+            <artifactId>swt-win-32</artifactId>
             <version>3.4</version>
         </dependency>
 	</dependencies>

@@ -8,8 +8,17 @@ import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 
+/**
+ * {@link MenuFactory} - Swing implementation
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class SwingMenuFactory extends MenuFactory {
 
+    /**
+     * Instance of {@link MainMenu}
+     */
     private MainMenu mainMenu;
     
     @Override
@@ -26,7 +35,7 @@ public class SwingMenuFactory extends MenuFactory {
     }
 
     @Override
-    public FileMenuItem newFileMenuItem(File file) {
+    public FileMenuItem newFileMenuItem(final File file) {
         return new SwingFileMenuItem(file);
     }
 

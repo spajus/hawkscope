@@ -17,7 +17,7 @@ import com.varaneckas.hawkscope.util.IOUtils;
  * Swing dialog
  *
  * @author Tomas Varaneckas
- * @version $Id: SwingUncaughtExceptionHandler.java 50 2008-10-12 12:26:04Z tomas.varaneckas $
+ * @version $Id$
  */
 public class SWTUncaughtExceptionHandler implements UncaughtExceptionHandler {
 

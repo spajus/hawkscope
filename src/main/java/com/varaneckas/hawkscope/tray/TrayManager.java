@@ -1,6 +1,11 @@
 package com.varaneckas.hawkscope.tray;
 
-
+/**
+ * System Tray Manager interface
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public interface TrayManager {
 
     /**

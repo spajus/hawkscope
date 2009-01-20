@@ -15,10 +15,10 @@ import sun.awt.shell.ShellFolder;
 import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
- * Icon Factory
+ * {@link IconFactory} for Swing GUI implementation
  *
  * @author Tomas Varaneckas
- * @version $Id: IconFactory.java 38 2008-10-06 17:30:15Z tomas.varaneckas $
+ * @version $Id$
  */
 public class SwingIconFactory extends IconFactory<Icon> {
 

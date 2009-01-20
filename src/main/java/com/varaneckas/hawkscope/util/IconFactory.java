@@ -17,13 +17,26 @@ import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.swing.SwingIconFactory;
 import com.varaneckas.hawkscope.gui.swt.SWTIconFactory;
 
+/**
+ * Icon object factory
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ * @param <IconType> Icon class of the implementation
+ */
 public abstract class IconFactory<IconType> {
 
+    /**
+     * Logger
+     */
     private static final Log log = LogFactory.getLog(IconFactory.class);
     
     @SuppressWarnings("unchecked")
     private static IconFactory instance = null;
     
+    /**
+     * Preloaded resources
+     */
     protected static final Map<String, URL> resources = new HashMap<String, URL>();
     
     static {
@@ -47,6 +60,12 @@ public abstract class IconFactory<IconType> {
     }
     
     
+    /**
+     * Gets the {@link IconFactory} instance
+     * 
+     * @param <T> Icon class
+     * @return
+     */
     @SuppressWarnings("unchecked")
     public static <T> IconFactory<T> getIconFactory() {
         if (instance == null) {
@@ -60,10 +79,27 @@ public abstract class IconFactory<IconType> {
         return (IconFactory<T>) instance;
     }
     
+    /**
+     * Gets the icon object
+     * 
+     * @param icon
+     * @return
+     */
     abstract public IconType getIcon(final String icon);
     
+    /**
+     * Gets uncached icon object
+     * 
+     * @param iconFile
+     * @return
+     */
     abstract public IconType getUncachedIcon(final String iconFile);
 
+    /**
+     * Gets Hawkscope Tray Icon object
+     * 
+     * @return
+     */
     abstract public Object getTrayIcon();
     
     /**
@@ -111,6 +147,5 @@ public abstract class IconFactory<IconType> {
         }
         return res;
     }    
-    
     
 }

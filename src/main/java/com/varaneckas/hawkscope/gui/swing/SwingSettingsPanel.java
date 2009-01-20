@@ -17,11 +17,17 @@ import com.varaneckas.hawkscope.gui.SettingsWindow;
  * Hawkscope Settings pannel. 
  * 
  * Reserved for future use.
+ * TODO implement
  *
  * @author Tomas Varaneckas
+ * @version $Id$
  */
-public class SwingSettingsPanel extends javax.swing.JPanel implements SettingsWindow {
+public class SwingSettingsPanel extends javax.swing.JPanel 
+        implements SettingsWindow {
 
+    /**
+     * Serial Version UID
+     */
     private static final long serialVersionUID = 1951079292804934656L;
 
     /** Creates new form SettingsPanel */

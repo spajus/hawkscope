@@ -8,8 +8,17 @@ import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 
+/**
+ * SWT {@link MainMenu} factory
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class SWTMenuFactory extends MenuFactory {
 
+    /**
+     * Gets the SWT imlementation of {@link MainMenu} 
+     */
     public MainMenu getMainMenu() {
         return SWTMainMenu.getInstance();
     }
@@ -20,12 +29,12 @@ public class SWTMenuFactory extends MenuFactory {
     }
 
     @Override
-    public FileMenuItem newFileMenuItem(File file) {
+    public FileMenuItem newFileMenuItem(final File file) {
         return new SWTFileMenuItem(file);
     }
 
     @Override
-    public FolderMenu newFolderMenu(File file) {
+    public FolderMenu newFolderMenu(final File file) {
         return new SWTFolderMenu(file);
     }
     

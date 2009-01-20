@@ -28,17 +28,13 @@ public class SwingTrayManager implements TrayManager {
      * System Tray Icon
      */
     private TrayIcon trayIcon;
-    
-    /* (non-Javadoc)
-     * @see com.varaneckas.hawkscope.tray.TrayManager#getTrayIcon()
-     */
+
+    @Override
     public TrayIcon getTrayIcon() {
         return trayIcon;
     }
 
-    /* (non-Javadoc)
-     * @see com.varaneckas.hawkscope.tray.TrayManager#load()
-     */
+    @Override
     public void load() {
         if (SystemTray.isSupported()) {
             loadTray();
@@ -55,7 +51,8 @@ public class SwingTrayManager implements TrayManager {
      * Configures and adds system tray icon
      */
     private void loadTray() {
-        trayIcon = new TrayIcon((Image) IconFactory.getIconFactory().getTrayIcon());
+        trayIcon = new TrayIcon((Image) IconFactory.getIconFactory()
+                .getTrayIcon());
         trayIcon.setImageAutoSize(false);
         trayIcon.addMouseListener(new SwingTrayIconListener());
         try {

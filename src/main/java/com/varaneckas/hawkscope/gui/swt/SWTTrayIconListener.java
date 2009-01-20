@@ -11,20 +11,30 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.menu.state.StateEvent;
 import com.varaneckas.hawkscope.tray.TrayManagerFactory;
 
+/**
+ * Tray Icon listener for SWT GUI implementation
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class SWTTrayIconListener implements Listener {
 
+    /**
+     * Logger
+     */
     private static final Log log = LogFactory.getLog(SWTTrayIconListener.class);
     
     @Override
-    public void handleEvent(Event event) {
+    public void handleEvent(final Event event) {
         try {
             log.info(event);
-            StateEvent se = new StateEvent();
-            Point loc = ((SWTTrayManager) TrayManagerFactory.getTrayManager()).getDisplay().getCursorLocation();
+            final StateEvent se = new StateEvent();
+            final Point loc = ((SWTTrayManager) TrayManagerFactory
+                    .getTrayManager()).getDisplay().getCursorLocation();
             se.setX(loc.x);
             se.setY(loc.y);
             MenuFactory.getMenuFactory().getMainMenu().getState().act(se);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             log.error(e, e);
         }
     }

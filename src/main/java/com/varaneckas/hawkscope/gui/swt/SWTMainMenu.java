@@ -10,12 +10,27 @@ import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
 import com.varaneckas.hawkscope.tray.TrayManagerFactory;
 
+/**
+ * {@link MainMenu} - SWT implementation
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class SWTMainMenu extends MainMenu {
 
+    /**
+     * Singleton instance
+     */
     private static SWTMainMenu instance = null;
 
+    /**
+     * SWT Menu object
+     */
     private final Menu menu;
 
+    /**
+     * Initializing singleton constructor
+     */
     private SWTMainMenu() {
         menu = new Menu(((SWTTrayManager) TrayManagerFactory.getTrayManager())
                 .getShell(), SWT.POP_UP);
@@ -43,6 +58,11 @@ public class SWTMainMenu extends MainMenu {
         });
     }
 
+    /**
+     * Singleton instance getter
+     * 
+     * @return instance of SWTMainMenu
+     */
     public static SWTMainMenu getInstance() {
         if (instance == null) {
             instance = new SWTMainMenu();
@@ -66,13 +86,13 @@ public class SWTMainMenu extends MainMenu {
     }
 
     @Override
-    public void showMenu(int x, int y) {
+    public void showMenu(final int x, final int y) {
         menu.setLocation(x, y);
         menu.setVisible(true);
     }
 
     @Override
-    public void addMenuItem(com.varaneckas.hawkscope.menu.MenuItem item) {
+    public void addMenuItem(final com.varaneckas.hawkscope.menu.MenuItem item) {
         if (item instanceof SWTMenuItem) {
             ((SWTMenuItem) item).createMenuItem(menu);
         }
