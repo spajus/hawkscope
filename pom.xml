@@ -70,7 +70,7 @@
         <activeByDefault>false</activeByDefault>
         <os>
           <family>Windows</family>
-          <arch>i386</arch>
+          <arch>x86</arch>
         </os>
       </activation>
       <dependencies>
