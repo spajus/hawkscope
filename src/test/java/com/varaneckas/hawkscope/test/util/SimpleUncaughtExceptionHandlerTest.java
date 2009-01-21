@@ -2,40 +2,33 @@ package com.varaneckas.hawkscope.test.util;
 
 import java.security.MessageDigest;
 
-import javax.swing.UIManager;
-
 import org.junit.Before;
 import org.junit.Test;
 
-import com.varaneckas.hawkscope.gui.swing.SwingUncaughtExceptionHandler;
+import com.varaneckas.hawkscope.gui.WindowFactory;
 
 public class SimpleUncaughtExceptionHandlerTest {
     
     @Before
     public void startup() {
-        try {
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        WindowFactory.initialize();
+        Thread.setDefaultUncaughtExceptionHandler(WindowFactory
+                .getUncaughtExceptionHandler());
     }
     
     @Test
     public void testShortException() throws Exception {
-        Thread.setDefaultUncaughtExceptionHandler(new SwingUncaughtExceptionHandler());
         new Thread(new Runnable() {
             @Override
             public void run() {
                 throw new RuntimeException("This is how short error looks.");
             }
         }).start();
-        Thread.sleep(4000l);
+        Thread.sleep(100l);
     }
     
     @Test
     public void testLongException() throws Exception {
-        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        Thread.setDefaultUncaughtExceptionHandler(new SwingUncaughtExceptionHandler());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -51,13 +44,11 @@ public class SimpleUncaughtExceptionHandlerTest {
                 		"A quick brown fox jumps over a lazy dog!");
             }
         }).start();
-        Thread.sleep(4000l);
+        Thread.sleep(100l);
     }
     
     @Test
     public void testExceptionWithLongStackTrace() throws Exception {
-        UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        Thread.setDefaultUncaughtExceptionHandler(new SwingUncaughtExceptionHandler());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -73,7 +64,7 @@ public class SimpleUncaughtExceptionHandlerTest {
                 }
             }
         }).start();
-        Thread.sleep(4000l);
+        Thread.sleep(100l);
     }    
     
 }

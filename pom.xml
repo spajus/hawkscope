@@ -9,6 +9,7 @@
   <url>http://hawkscope.googlecode.com</url>
   <!-- $Id$ -->
   <build>
+    <finalName>${project.artifactId}-${project.version}-${profile.id}</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
