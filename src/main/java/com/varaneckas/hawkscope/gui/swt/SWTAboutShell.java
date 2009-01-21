@@ -171,6 +171,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                 appHomepageValueLData.left =  new FormAttachment(0, 1000, 256);
                 appHomepageValueLData.top =  new FormAttachment(0, 1000, 104);
                 appHomepageValue.setLayoutData(appHomepageValueLData);
+                appHomepageValue.setToolTipText("Click to open in browser");
                 appHomepageValue.setText(Version.HOMEPAGE);
             }
             {
@@ -234,7 +235,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                 appSloganLabelLData.left =  new FormAttachment(0, 1000, 156);
                 appSloganLabelLData.top =  new FormAttachment(0, 1000, 35);
                 appSloganLabel.setLayoutData(appSloganLabelLData);
-                appSloganLabel.setText("Access anything with single click!");
+                appSloganLabel.setText(Version.APP_SLOGAN);
             }
             {
                 appNameLabel = new Label(dialogShell, SWT.NONE);
@@ -262,6 +263,15 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                                 128, 0, 0, 114, 109);
                     }
                 });
+                logoCanvas.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mouseUp(MouseEvent event) {
+                        Program.launch(Version.HOMEPAGE);
+                    } 
+                });
+                logoCanvas.setCursor(new Cursor(dialogShell.getDisplay(), 
+                        SWT.CURSOR_HAND));
+                logoCanvas.setToolTipText("Click to visit Homepage");
                 logoCanvas.setLayoutData(logoCanvasLData);
             }
             dialogShell.setLocation(getParent().toDisplay(100, 100));
