@@ -10,7 +10,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Menu;
 
-import com.varaneckas.hawkscope.gui.swing.listeners.FolderMenuItemListener;
+import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MenuItem;
 import com.varaneckas.hawkscope.util.IconFactory;

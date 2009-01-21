@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.swing.listeners;
+package com.varaneckas.hawkscope.gui.listeners;
 
 /**
  * Menu Item listener interface

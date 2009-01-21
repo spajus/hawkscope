@@ -8,8 +8,8 @@ import javax.swing.Icon;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import com.varaneckas.hawkscope.gui.swing.listeners.FolderMenuItemListener;
-import com.varaneckas.hawkscope.gui.swing.listeners.MenuItemListener;
+import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
+import com.varaneckas.hawkscope.gui.listeners.MenuItemListener;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MenuItem;
 import com.varaneckas.hawkscope.util.IconFactory;

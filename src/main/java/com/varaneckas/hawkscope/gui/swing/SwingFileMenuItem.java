@@ -5,7 +5,7 @@ import java.io.File;
 import javax.swing.Icon;
 import javax.swing.JMenuItem;
 
-import com.varaneckas.hawkscope.gui.swing.listeners.FileActionListener;
+import com.varaneckas.hawkscope.gui.listeners.FileActionListener;
 import com.varaneckas.hawkscope.menu.FileMenuItem;
 import com.varaneckas.hawkscope.util.IconFactory;
 

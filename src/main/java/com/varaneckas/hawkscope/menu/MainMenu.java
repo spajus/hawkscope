@@ -7,9 +7,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.gui.swing.listeners.AboutCommand;
-import com.varaneckas.hawkscope.gui.swing.listeners.ExitCommand;
-import com.varaneckas.hawkscope.gui.swing.listeners.HideCommand;
+import com.varaneckas.hawkscope.gui.listeners.AboutCommand;
+import com.varaneckas.hawkscope.gui.listeners.ExitCommand;
+import com.varaneckas.hawkscope.gui.listeners.HideCommand;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
 import com.varaneckas.hawkscope.menu.state.State;
 import com.varaneckas.hawkscope.util.IconFactory;

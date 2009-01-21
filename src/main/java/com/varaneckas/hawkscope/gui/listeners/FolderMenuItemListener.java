@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.swing.listeners;
+package com.varaneckas.hawkscope.gui.listeners;
 
 import java.awt.Desktop;
 import java.io.File;
