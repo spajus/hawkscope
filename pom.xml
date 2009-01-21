@@ -98,5 +98,22 @@
         </dependency>
       </dependencies>
     </profile>
-  </profiles>
+    <profile>
+      <id>linux64</id>
+      <activation>
+        <activeByDefault>false</activeByDefault>
+        <os>
+          <family>Linux</family>
+          <arch>amd64</arch>
+        </os>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.eclipse.swt</groupId>
+          <artifactId>swt-linux-64</artifactId>
+          <version>3.4</version>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>  
 </project>

@@ -129,7 +129,11 @@ public abstract class IconFactory<IconType> {
      * @return tray icon name
      */
     protected String getBestTrayIcon() {
-        float height = SystemTray.getSystemTray().getTrayIconSize().height;
+        float height = 24;
+        //FIXME move to implementations
+        if (SystemTray.isSupported()) {
+            height = SystemTray.getSystemTray().getTrayIconSize().height;
+        }
         int[] sizes = new int[] { 64, 48, 32, 24, 16 };
         int best = 64;
         for (int i = 0; i < sizes.length; i++) {
