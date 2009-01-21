@@ -4,6 +4,8 @@ http://hawkscope.googlecode.com
 
 Changes in version 0.3.0 (2009-01-23)
 -------------------------------------
+* Added -delay (miliseconds) parameter to avoid Java Bug #6438179 that kills 
+  Hawkscope auto-startup on Linux
 * SWT GUI Implementation
   http://code.google.com/p/hawkscope/issues/detail?id=18
 * Fixed some file opening problems
