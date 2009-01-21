@@ -1,7 +1,6 @@
 package com.varaneckas.hawkscope.gui.swt;
 
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.Icon;
 
@@ -39,7 +38,7 @@ public class SWTIconFactory extends IconFactory<Image> {
     public Image getIcon(final String name) {
         try {
             return new Image(display, resources.get(name).openStream());
-        } catch (IOException e) {
+        } catch (final Exception e) {
             log.error("Failed getting icon: " + name, e);
         }
         return null;
@@ -52,7 +51,7 @@ public class SWTIconFactory extends IconFactory<Image> {
      * @return icon
      */
     public Image getUncachedIcon(final String name) {
-        return new Image(display, ClassLoader.getSystemClassLoader()
+        return new Image(display, SWTIconFactory.class.getClassLoader()
                 .getResourceAsStream("icons/" + name));
     }
 
@@ -72,7 +71,7 @@ public class SWTIconFactory extends IconFactory<Image> {
      * @return tray icon
      */
     public Image getTrayIcon() {
-        return new Image(display, ClassLoader.getSystemClassLoader()
+        return new Image(display, SWTIconFactory.class.getClassLoader()
                 .getResourceAsStream(getBestTrayIcon()));
     }
 }

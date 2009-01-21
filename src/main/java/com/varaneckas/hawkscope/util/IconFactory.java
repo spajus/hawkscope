@@ -42,18 +42,18 @@ public abstract class IconFactory<IconType> {
     static {
         try {
             //initialize resources
-            resources.put("drive",  ClassLoader.getSystemClassLoader().getResource("icons/hdd24.png"));
-            resources.put("floppy",  ClassLoader.getSystemClassLoader().getResource("icons/fdd24.png"));
-            resources.put("folder", ClassLoader.getSystemClassLoader().getResource("icons/folder24.png"));
-            resources.put("folder.open", ClassLoader.getSystemClassLoader().getResource("icons/folder.open.24.png"));
-            resources.put("file",   ClassLoader.getSystemClassLoader().getResource("icons/file24.png"));
-            resources.put("exit",   ClassLoader.getSystemClassLoader().getResource("icons/exit24.png"));
-            resources.put("hide",   ClassLoader.getSystemClassLoader().getResource("icons/down24.png"));
-            resources.put("more",   ClassLoader.getSystemClassLoader().getResource("icons/more24.png"));
-            resources.put("unknown",ClassLoader.getSystemClassLoader().getResource("icons/unknown24.png"));  
-            resources.put("about",  ClassLoader.getSystemClassLoader().getResource("icons/about24.png"));  
-            resources.put("open",  ClassLoader.getSystemClassLoader().getResource("icons/open24.png")); 
-            resources.put("empty",  ClassLoader.getSystemClassLoader().getResource("icons/empty24.png")); 
+            resources.put("drive",  IconFactory.class.getClassLoader().getResource("icons/hdd24.png"));
+            resources.put("floppy",  IconFactory.class.getClassLoader().getResource("icons/fdd24.png"));
+            resources.put("folder", IconFactory.class.getClassLoader().getResource("icons/folder24.png"));
+            resources.put("folder.open", IconFactory.class.getClassLoader().getResource("icons/folder.open.24.png"));
+            resources.put("file",   IconFactory.class.getClassLoader().getResource("icons/file24.png"));
+            resources.put("exit",   IconFactory.class.getClassLoader().getResource("icons/exit24.png"));
+            resources.put("hide",   IconFactory.class.getClassLoader().getResource("icons/down24.png"));
+            resources.put("more",   IconFactory.class.getClassLoader().getResource("icons/more24.png"));
+            resources.put("unknown", IconFactory.class.getClassLoader().getResource("icons/unknown24.png"));  
+            resources.put("about",  IconFactory.class.getClassLoader().getResource("icons/about24.png"));  
+            resources.put("open",  IconFactory.class.getClassLoader().getResource("icons/open24.png")); 
+            resources.put("empty",  IconFactory.class.getClassLoader().getResource("icons/empty24.png")); 
         } catch (final Exception e) {
             log.warn("Cannot find icon", e);
         }
