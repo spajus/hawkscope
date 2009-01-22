@@ -83,6 +83,10 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
      * Opens the window
      */
     public void open() {
+        if (dialogShell != null && !dialogShell.isDisposed()) {
+            dialogShell.setVisible(true);
+            return;
+        }
         try {
             final Shell parent = getParent();
             dialogShell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
@@ -288,7 +292,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
 
     @Override
     public void hideObject() {
-        dialogShell.setVisible(false);
+        dialogShell.dispose();
     }
 
     @Override

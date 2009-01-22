@@ -8,8 +8,8 @@ import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
- * State when {@link SwingMainMenu} is closed (invisible) 
- *
+ * State when {@link SwingMainMenu} is closed (invisible)
+ * 
  * @author Tomas Varaneckas
  * @version $Id$
  */
@@ -19,12 +19,17 @@ public class MenuClosedState extends State {
      * Logger
      */
     private static final Log log = LogFactory.getLog(MenuClosedState.class);
-    
+
     /**
      * Singleton instance
      */
     private static final MenuClosedState instance = new MenuClosedState();
-    
+
+    /**
+     * Flag that marks a reloading in progress
+     */
+    private boolean nowReloading;
+
     /**
      * Singleton instance getter
      * 
@@ -33,14 +38,14 @@ public class MenuClosedState extends State {
     public static MenuClosedState getInstance() {
         return instance;
     }
-    
+
     /**
      * Singleton constructor
      */
     private MenuClosedState() {
-        //nothing to do
+        // nothing to do
     }
-    
+
     @Override
     public void act(final StateEvent event) {
         final MainMenu menu = MenuFactory.getMenuFactory().getMainMenu();
@@ -51,12 +56,23 @@ public class MenuClosedState extends State {
     @Override
     public void init() {
         if (log.isDebugEnabled()) {
-            log.debug("Menu closed. Free mem before cleanup: " 
-                    + Runtime.getRuntime().freeMemory() / (1024*1024));
+            log.debug("Menu closed. Free mem before cleanup: "
+                    + Runtime.getRuntime().freeMemory() / (1024 * 1024));
         }
-        MenuFactory.getMenuFactory().getMainMenu().clearMenu();
-        MenuFactory.getMenuFactory().getMainMenu().loadMenu();
-        Runtime.getRuntime().gc();
+        if (!nowReloading) {
+            reload();
+        }
     }
     
+    private void reload() {
+        nowReloading = true;
+        if (MenuFactory.getMenuFactory().getMainMenu().getState() 
+                instanceof MenuClosedState) {
+            MenuFactory.getMenuFactory().getMainMenu().clearMenu();
+            MenuFactory.getMenuFactory().getMainMenu().loadMenu();
+            Runtime.getRuntime().gc();
+        }
+        nowReloading = false;
+    }
+
 }

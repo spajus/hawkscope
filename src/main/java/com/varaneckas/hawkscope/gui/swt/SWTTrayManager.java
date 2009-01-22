@@ -54,5 +54,13 @@ public class SWTTrayManager implements TrayManager {
             }
         }
         d.dispose();
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                trayIcon.dispose();
+            }
+        }, "icon-disposer-hook"));
     }
+    
+    
 }

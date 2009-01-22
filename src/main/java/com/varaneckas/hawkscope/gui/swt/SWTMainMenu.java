@@ -71,7 +71,7 @@ public class SWTMainMenu extends MainMenu {
     }
 
     @Override
-    public synchronized void clearMenu() {
+    public void clearMenu() {
         for (MenuItem item : menu.getItems()) {
             if (!item.isDisposed()) {
                 item.dispose();
