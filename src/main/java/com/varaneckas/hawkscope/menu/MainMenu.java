@@ -45,6 +45,16 @@ public abstract class MainMenu {
      * Forces menu to go to {@link MenuClosedState}
      */
     public abstract void forceHide();
+    
+    /**
+     * Root partitions
+     */
+    private File[] roots = File.listRoots();
+    
+    /**
+     * Marks that root partitions are being listed
+     */
+    private boolean listingRoots;
 
     /**
      * Gets current {@link State}
@@ -72,7 +82,6 @@ public abstract class MainMenu {
      */
     public void loadMenu() {
         loadQuickAccessMenu();
-        final File[] roots = File.listRoots();
         for (final File root : roots) {
             boolean loadFloppy = ConfigurationFactory.getConfigurationFactory()
                     .getConfiguration().isFloppyDrivesDisplayed();
@@ -88,8 +97,36 @@ public abstract class MainMenu {
             }
         }
         addStaticItems();
+        reloadRoots();
     }
     
+    /**
+     * Lazy reload of root partitions
+     */
+    private void reloadRoots() {
+        if (listingRoots) return;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                if (!listingRoots) {
+                    listingRoots = true;
+                    log.debug("Queued root partition listing");
+                    Thread.sleep(1000L);
+                    log.debug("Performing root partition listing");
+                    roots = File.listRoots();
+                    log.debug("Root partition listing complete");
+                    listingRoots = false;
+                }
+                } catch (final Exception e) {
+                    log.debug("Exception while listing roots", e);
+                    listingRoots = false;
+                }
+            }
+        }).start();
+    }
+        
+
     /**
      * Adds a menu item
      * 
@@ -140,5 +177,5 @@ public abstract class MainMenu {
      * Clears menu contents
      */
     public abstract void clearMenu();
-
+    
 }
