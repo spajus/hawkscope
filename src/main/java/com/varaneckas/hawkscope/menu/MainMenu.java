@@ -31,7 +31,7 @@ public abstract class MainMenu {
     /**
      * Logger
      */
-    private static final Log log = LogFactory.getLog(MainMenu.class);
+    protected Log log = LogFactory.getLog(getClass());
     
     /**
      * Displays the menu
@@ -49,13 +49,8 @@ public abstract class MainMenu {
     /**
      * Root partitions
      */
-    private File[] roots = File.listRoots();
+    protected File[] roots = File.listRoots();
     
-    /**
-     * Marks that root partitions are being listed
-     */
-    private boolean listingRoots;
-
     /**
      * Gets current {@link State}
      * 
@@ -103,27 +98,10 @@ public abstract class MainMenu {
     /**
      * Lazy reload of root partitions
      */
-    private void reloadRoots() {
-        if (listingRoots) return;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                if (!listingRoots) {
-                    listingRoots = true;
-                    log.debug("Queued root partition listing");
-                    Thread.sleep(1000L);
-                    log.debug("Performing root partition listing");
-                    roots = File.listRoots();
-                    log.debug("Root partition listing complete");
-                    listingRoots = false;
-                }
-                } catch (final Exception e) {
-                    log.debug("Exception while listing roots", e);
-                    listingRoots = false;
-                }
-            }
-        }).start();
+    protected void reloadRoots() {
+        log.debug("Performing root partition listing");
+        roots = File.listRoots();
+        log.debug("Root partition listing complete");
     }
         
 
@@ -177,5 +155,15 @@ public abstract class MainMenu {
      * Clears menu contents
      */
     public abstract void clearMenu();
+    
+    /**
+     * Reloads the main menu. Can be overloaded in concrete class for 
+     * performance gain
+     */
+    public void reloadMenu() {
+        clearMenu();
+        loadMenu();
+        Runtime.getRuntime().gc();
+    }
     
 }

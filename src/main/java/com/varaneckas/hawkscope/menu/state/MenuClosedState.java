@@ -26,11 +26,6 @@ public class MenuClosedState extends State {
     private static final MenuClosedState instance = new MenuClosedState();
 
     /**
-     * Flag that marks a reloading in progress
-     */
-    private boolean nowReloading;
-
-    /**
      * Singleton instance getter
      * 
      * @return instance
@@ -59,20 +54,7 @@ public class MenuClosedState extends State {
             log.debug("Menu closed. Free mem before cleanup: "
                     + Runtime.getRuntime().freeMemory() / (1024 * 1024));
         }
-        if (!nowReloading) {
-            reload();
-        }
+        MenuFactory.getMenuFactory().getMainMenu().reloadMenu();
     }
     
-    private void reload() {
-        nowReloading = true;
-        if (MenuFactory.getMenuFactory().getMainMenu().getState() 
-                instanceof MenuClosedState) {
-            MenuFactory.getMenuFactory().getMainMenu().clearMenu();
-            MenuFactory.getMenuFactory().getMainMenu().loadMenu();
-            Runtime.getRuntime().gc();
-        }
-        nowReloading = false;
-    }
-
 }

@@ -29,6 +29,11 @@ public class SWTMainMenu extends MainMenu {
     private final Menu menu;
 
     /**
+     * Marks that menu is reloading
+     */
+    private boolean isReloading;
+    
+    /**
      * Initializing singleton constructor
      */
     private SWTMainMenu() {
@@ -102,5 +107,34 @@ public class SWTMainMenu extends MainMenu {
     public void addSeparator() {
         new MenuItem(menu, SWT.SEPARATOR);
     }
-
+    
+    @Override
+    public void reloadMenu() {
+        if (!isReloading) {
+            isReloading = true;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(10000L);
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
+                    menu.getDisplay().asyncExec(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                clearMenu();
+                                loadMenu();
+                                Runtime.getRuntime().gc();
+                            } catch (final Exception e) {
+                                log.debug("Failed reloading menu", e);
+                            }
+                            isReloading = false;
+                        }
+                    });
+                }
+            }).start();
+        }
+    }
 }
