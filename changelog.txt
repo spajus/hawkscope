@@ -4,6 +4,8 @@ http://hawkscope.googlecode.com
 
 Changes in version 0.3.1 (2009-??-??)
 -------------------------------------
+* Automatic check for updates
+  http://code.google.com/p/hawkscope/issues/detail?id=14
 * Added menu reload delay to improve performance
   http://code.google.com/p/hawkscope/issues/detail?id=21
 * SWT About window is now a singleton

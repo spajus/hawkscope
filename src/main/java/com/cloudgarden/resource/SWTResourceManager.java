@@ -106,5 +106,13 @@ public class SWTResourceManager {
         resources.put(fontName, font);
         return font;
 	}
+	
+	/**
+	 * Workaround for Jigloo plugin
+	 */
+	public static Font getFont(final String name, final int size, 
+	        final int style, final boolean a, final boolean b) {
+	    return getFont(name, size, style);
+	}
 
 }
