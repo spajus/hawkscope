@@ -160,7 +160,19 @@ public abstract class ConfigurationFactory {
      * @param args
      */
     private void setCommandLineArgs(final String[] args) {
-        //TODO implementation
+        //FIXME remove this bloody linux session autostart hack
+        if (args != null) {
+            if (args.length > 1) {
+                if (args[0].startsWith("-delay")) {
+                    try {
+                        Thread.sleep(Long.parseLong(args[1].trim()));
+                    } catch (final Exception e) {
+                        log.warn("Insomnia", e);
+                    }
+                }
+            }
+        }
+        //end bloody hack
     }
 
     /**

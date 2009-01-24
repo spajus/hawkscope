@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import com.varaneckas.hawkscope.gui.swing.SwingMainMenu;
 import com.varaneckas.hawkscope.util.PathUtils;
 
@@ -14,6 +17,11 @@ import com.varaneckas.hawkscope.util.PathUtils;
  * @version $Id$
  */
 public class Configuration {
+    
+    /**
+     * Logger 
+     */
+    private static final Log log = LogFactory.getLog(Configuration.class);
     
     /**
      * Display hidden files property name
@@ -39,7 +47,12 @@ public class Configuration {
     /**
      * GUI implementation
      */
-    public static final String GUI_IMPLEMENTATION ="gui.implementation";
+    public static final String GUI_IMPLEMENTATION = "gui.implementation";
+    
+    /**
+     * Delay for reloading menu after it was hidden (milliseconds)
+     */
+    public static final String MENU_RELOAD_DELAY = "menu.reload.delay";
 
     /**
      * Properties {@link Map}
@@ -113,6 +126,25 @@ public class Configuration {
     public List<File> getQuickAccessList() {
         return PathUtils.pathToDirList(
                 properties.get(Configuration.QUICK_ACCESS_LIST), ";");
+    }
+    
+    /**
+     * Gets menu reload delay. 3 seconds (3000) default.
+     * 
+     * @return menu reload delay in milliseconds
+     */
+    public long getMenuReloadDelay() {
+        long millis = 3000L; //default in case of missing
+        try {
+            String delay = properties.get(Configuration.MENU_RELOAD_DELAY);
+            if (delay != null && !delay.equals("")) {
+                millis = Long.valueOf(delay).longValue();
+            }
+        } catch (final Exception e) {
+            log.warn("Could not read " + MENU_RELOAD_DELAY 
+                    + ", defaulting to 10 seconds: " + e.getMessage());
+        }
+        return millis;
     }
     
 }

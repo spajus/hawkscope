@@ -31,7 +31,6 @@ public class SWTTrayIconListener implements Listener {
     @Override
     public void handleEvent(final Event event) {
         try {
-            log.info(event);
             final StateEvent se = findPopupMenuLocation();
             MenuFactory.getMenuFactory().getMainMenu().getState().act(se);
         } catch (final Exception e) {

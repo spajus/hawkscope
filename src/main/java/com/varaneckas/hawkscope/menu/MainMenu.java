@@ -103,7 +103,6 @@ public abstract class MainMenu {
         roots = File.listRoots();
         log.debug("Root partition listing complete");
     }
-        
 
     /**
      * Adds a menu item
@@ -141,6 +140,13 @@ public abstract class MainMenu {
         addExecutableMenuItem("exit", "Exit", new ExitCommand());
     }
 
+    /**
+     * Adds an executable menu item 
+     * 
+     * @param name Item name
+     * @param text Text on menu item
+     * @param command Command to execute
+     */
     private void addExecutableMenuItem(final String name, 
             final String text, final Command command) {
         final ExecutableMenuItem item = MenuFactory.getMenuFactory()
