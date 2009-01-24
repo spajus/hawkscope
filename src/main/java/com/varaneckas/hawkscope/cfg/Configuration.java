@@ -53,7 +53,27 @@ public class Configuration {
      * Delay for reloading menu after it was hidden (milliseconds)
      */
     public static final String MENU_RELOAD_DELAY = "menu.reload.delay";
-
+    
+    /**
+     * Should Hawkscope check for updates?
+     */
+    public static final String CHECK_FOR_UPDATES = "update.check";
+    
+    /**
+     * HTTP proxy in use?
+     */
+    public static final String HTTP_PROXY_USE = "http.proxy.use";
+    
+    /**
+     * HTTP proxy host
+     */
+    public static final String HTTP_PROXY_HOST = "http.proxy.host";
+    
+    /**
+     * HTTP proxy port
+     */
+    public static final String HTTP_PROXY_PORT = "http.proxy.port";
+    
     /**
      * Properties {@link Map}
      */
@@ -136,15 +156,56 @@ public class Configuration {
     public long getMenuReloadDelay() {
         long millis = 3000L; //default in case of missing
         try {
-            String delay = properties.get(Configuration.MENU_RELOAD_DELAY);
-            if (delay != null && !delay.equals("")) {
-                millis = Long.valueOf(delay).longValue();
-            }
+            millis = Long.valueOf(properties.get(
+                    Configuration.MENU_RELOAD_DELAY)).longValue();
         } catch (final Exception e) {
             log.warn("Could not read " + MENU_RELOAD_DELAY 
                     + ", defaulting to 10 seconds: " + e.getMessage());
         }
         return millis;
+    }
+    
+    /**
+     * Tells if Hawkscope should check for updates
+     * 
+     * @return
+     */
+    public boolean checkForUpdates() {
+        return properties.get(CHECK_FOR_UPDATES).equals("1");
+    }
+    
+    /**
+     * Tells if HTTP proxy is in use
+     * 
+     * @return
+     */
+    public boolean isHttpProxyInUse() {
+        return properties.get(HTTP_PROXY_USE).equals("1");
+    }
+    
+    /**
+     * Gets HTTP proxy host
+     * 
+     * @return
+     */
+    public String getHttpProxyHost() {
+        return properties.get(HTTP_PROXY_HOST);
+    }
+ 
+    /**
+     * Gets HTTP proxy port
+     * 
+     * @return port number. 8080 on invalid value
+     */
+    public int getHttpProxyPort() {
+        int port = 8080;
+        try {
+            port = Integer.valueOf(properties.get(HTTP_PROXY_PORT)).intValue();
+        } catch (final Exception e) {
+            log.warn("Could not read " + HTTP_PROXY_PORT 
+                    + ", defaulting to 8080: " + e.getMessage());
+        }
+        return port;
     }
     
 }

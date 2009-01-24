@@ -33,6 +33,14 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         data.put(Configuration.GUI_IMPLEMENTATION, "SWT");
         //3 seconds menu reload delay
         data.put(Configuration.MENU_RELOAD_DELAY, "3000");
+        //check for update by default
+        data.put(Configuration.CHECK_FOR_UPDATES, "1");
+        //no proxy by default
+        data.put(Configuration.HTTP_PROXY_USE, "0");
+        //no proxy host by default
+        data.put(Configuration.HTTP_PROXY_HOST, "");
+        //8080 default proxy port
+        data.put(Configuration.HTTP_PROXY_PORT, "8080");
         return data;
     }
 

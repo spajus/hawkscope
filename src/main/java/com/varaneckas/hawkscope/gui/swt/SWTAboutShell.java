@@ -218,7 +218,28 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                 appVersionValueLData.left =  new FormAttachment(0, 1000, 256);
                 appVersionValueLData.top =  new FormAttachment(0, 1000, 58);
                 appVersionValue.setLayoutData(appVersionValueLData);
-                appVersionValue.setText(Version.VERSION_NUMBER);
+                if (Version.isUpdateAvailable()) {
+                    appVersionValue.setForeground(new Color(dialogShell
+                            .getDisplay(), 255, 0, 0));
+                    appVersionValue.setText(Version.VERSION_NUMBER 
+                            + " (Update Available!)");
+                    appVersionValue.setToolTipText("Click to go to update " +
+                    		"download page");
+                    appVersionValue.setCursor(new Cursor(dialogShell
+                            .getDisplay(), SWT.CURSOR_HAND));
+                    appVersionValue.addMouseListener(new MouseAdapter() {
+                       @Override
+                        public void mouseUp(MouseEvent event) {
+                           Program.launch(Version.DOWNLOAD_URL);
+                           hideObject();
+                        } 
+                    });
+                } else {
+                    appVersionValue.setText(Version.VERSION_NUMBER);
+                    appVersionValue.setToolTipText("Latest available version!");
+                    appVersionValue.setForeground(new Color(dialogShell
+                            .getDisplay(), 0, 128, 0));
+                }
             }
             {
                 appVersion = new Label(dialogShell, SWT.NONE);

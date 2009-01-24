@@ -6,10 +6,12 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.listeners.AboutCommand;
 import com.varaneckas.hawkscope.gui.listeners.ExitCommand;
 import com.varaneckas.hawkscope.gui.listeners.HideCommand;
+import com.varaneckas.hawkscope.gui.listeners.UpdateCommand;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
 import com.varaneckas.hawkscope.menu.state.State;
 import com.varaneckas.hawkscope.util.IconFactory;
@@ -135,6 +137,10 @@ public abstract class MainMenu {
      */
     private void addStaticItems() {
         addSeparator();
+        if (Version.isUpdateAvailable()) {
+            addExecutableMenuItem("update", "Update Available!", 
+                    new UpdateCommand());
+        }
         addExecutableMenuItem("hide", "Hide", new HideCommand());
         addExecutableMenuItem("about", "About", new AboutCommand());
         addExecutableMenuItem("exit", "Exit", new ExitCommand());

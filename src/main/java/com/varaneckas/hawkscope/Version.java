@@ -1,11 +1,21 @@
 package com.varaneckas.hawkscope;
 
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.Proxy.Type;
 import java.util.Date;
 import java.util.Map.Entry;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 
 /**
@@ -15,6 +25,11 @@ import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
  * @version $Id$
  */
 public class Version {
+    
+    /**
+     * Logger
+     */
+    private static final Log log = LogFactory.getLog(Version.class);
     
     /**
      * Report separator
@@ -35,7 +50,7 @@ public class Version {
     /**
      * Application version number   
      */
-    public static final String VERSION_NUMBER = "0.3.1-DEV";
+    public static final String VERSION_NUMBER = "0.3.1";
     
     /**
      * Application version date
@@ -46,6 +61,35 @@ public class Version {
      * Application Homepage URL
      */
     public static final String HOMEPAGE = "http://hawkscope.googlecode.com";
+    
+    /**
+     * URL where latest Hawkscope version is stored
+     */
+    public static final String VERSION_CHECK_URL 
+            = "http://hawkscope.googlecode.com/svn/trunk/version";
+    
+    /**
+     * URL where more recent version of Hawkscope can be downloaded
+     */
+    public static final String DOWNLOAD_URL 
+            = "http://code.google.com/p/hawkscope/downloads/list";
+    
+    /**
+     * Tells if update is available
+     */
+    private static boolean isUpdateAvailable = false; 
+    
+    /**
+     * Asynchronious update check on startup.
+     */
+    static {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                checkForUpdate();
+            }
+        }, "version-updater").start();
+    }
     
     /**
      * Gets a nice application version string
@@ -136,6 +180,61 @@ public class Version {
             .append(SEPARATOR)
             .append(getEnvironmentReport());
         return sb.toString();
+    }
+    
+    /**
+     * Asynchroniously checks if a newer version of Hawkscope is available
+     * 
+     * @return
+     */
+    public static void checkForUpdate() {
+        final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
+                .getConfiguration();
+        if (!cfg.checkForUpdates()) {
+            return;
+        }
+        try {
+            log.debug("Checking for updates...");
+            URLConnection conn = null;
+            final URL versionCheckUrl = new URL(VERSION_CHECK_URL);
+            if (cfg.isHttpProxyInUse()) {
+                final Proxy proxy = new Proxy(Type.HTTP, InetSocketAddress
+                        .createUnresolved(cfg.getHttpProxyHost()
+                                , cfg.getHttpProxyPort()));
+                conn = versionCheckUrl.openConnection(proxy);
+            } else {
+                conn = versionCheckUrl.openConnection();
+            }
+            //timeout in 3 seconds
+            conn.setConnectTimeout(3000);
+            conn.setReadTimeout(3000);
+            final InputStream io = conn.getInputStream();
+            int c = 0;
+            final StringBuilder version = new StringBuilder();
+            while ((c = io.read()) != -1) {
+                version.append((char) c);
+            }
+            log.debug("Check complete. Latest version: " + version.toString());
+            if (VERSION_NUMBER.compareTo(version.toString()) < 0) {
+                log.info("Newer version available (" + version.toString() 
+                        + "). You should update Hawkscope!");
+                isUpdateAvailable = true;
+            } else {
+                log.info("You have the latest available version of Hawkscope: " 
+                        + VERSION_NUMBER);
+            }
+        } catch (final Exception e) {
+            log.info("Failed checking for update: " + e.getMessage());
+        }
+    }
+    
+    /**
+     * Tells is update is available
+     * 
+     * @return
+     */
+    public static boolean isUpdateAvailable() {
+        return isUpdateAvailable;
     }
     
 }
