@@ -3,6 +3,8 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.Iterator;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -43,6 +45,8 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
 public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
     SettingsWindow {
 
+    private static final Log log = LogFactory.getLog(SWTSettingsShell.class);
+    
     private Shell dialogShell;
     private TabFolder settingsTabFolder;
     private TabItem tabNetwork;
@@ -134,8 +138,9 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                 if (!display.readAndDispatch())
                     display.sleep();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (final Exception e) {
+            log.error("Failed loading SWTSettingsShell", e);
+            throw new RuntimeException("Failed loading SWTSettingsSHell", e);
         }
     }
 
@@ -444,11 +449,18 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             Iterator<File> qaFiles = cfg.getQuickAccessList().iterator();
             if (qaFiles.hasNext()) {
                 for (final String qaItem : cfg.getRawQuickAccessList()) {
-                    String qaFile = qaFiles.next().getAbsolutePath();
-                    if (!qaFile.equals(qaItem)) {
-                        listQuickAccess.add(qaFile + " <" + qaItem + ">");
-                    } else {
-                        listQuickAccess.add(qaItem);
+                    try {
+                        String qaFile = qaFiles.next().getAbsolutePath();
+                        if (!qaFile.equals(qaItem)) {
+                            listQuickAccess.add(qaFile + " <" + qaItem + ">");
+                        } else {
+                            listQuickAccess.add(qaItem);
+                        }
+                    } catch (final Exception e) {
+                        log.warn("Processing invalid access entry: " + qaItem 
+                                + ": " + e.getMessage());
+                        listQuickAccess.add(e.getMessage() 
+                                + ": <" + qaItem + ">");
                     }
                 }
             }
