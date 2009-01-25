@@ -4,6 +4,8 @@ http://hawkscope.googlecode.com
 
 Changes in version 0.4.0 (2009-??-??)
 -------------------------------------
+* Ability to override configuration paramters with args line
+  http://code.google.com/p/hawkscope/issues/detail?id=23
 * Ability to blacklist folders and drives
   http://code.google.com/p/hawkscope/issues/detail?id=16 
 * Settings Window

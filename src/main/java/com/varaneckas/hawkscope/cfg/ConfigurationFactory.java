@@ -7,10 +7,12 @@ import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -155,24 +157,48 @@ public abstract class ConfigurationFactory {
     }
     
     /**
-     * Sets command line arguments. Should influence the default parameter map
+     * Sets command line arguments. Should influence the default parameter map.
      * 
      * @param args
      */
     private void setCommandLineArgs(final String[] args) {
-        //FIXME remove this bloody linux session autostart hack
-        if (args != null) {
-            if (args.length > 1) {
-                if (args[0].startsWith("-delay")) {
-                    try {
-                        Thread.sleep(Long.parseLong(args[1].trim()));
-                    } catch (final Exception e) {
-                        log.warn("Insomnia", e);
-                    }
-                }
+        if (args.length == 0) return;
+        if (args.length % 2 != 0) {
+            log.warn("Odd count of '-key value' argument pairs. " +
+            		"Skipping arguments.");
+            return;
+        }
+        final Map<String, String> argPairs = new HashMap<String, String>();
+        for (int i = 0; i < args.length; i+=2) {
+            String key = args[i];
+            String value = args[i+1];
+            if (!key.startsWith("-")) {
+                log.warn("Skipping invalid argument pair: " + key + ": " + value);
+                continue;
+            }
+            argPairs.put(key.substring(1), value);
+        }
+        //FIXME for http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6438179
+        if (argPairs.containsKey("delay")) {
+            try {
+                final long delay = Long.parseLong(argPairs.remove("delay"));
+                log.info("Delaying Hawkscope startup for " 
+                        + (delay / 1000.0) + " seconds.");
+                Thread.sleep(delay);
+                log.info("Delay complete, resuming.");
+            } catch (final Exception e) {
+                log.warn("Failed delaying hawkscope startup", e);
             }
         }
-        //end bloody hack
+        for (final Entry<String, String> pair : argPairs.entrySet()) {
+            if (log.isDebugEnabled()) {
+                log.debug("Overriding " + pair.getKey() + ". Old: " 
+                        + getConfiguration().getProperties().get(pair.getKey())
+                        + ". New: " + pair.getValue());
+            }
+            getConfiguration().getProperties().put(pair.getKey(), 
+                    pair.getValue());
+        }
     }
 
     /**

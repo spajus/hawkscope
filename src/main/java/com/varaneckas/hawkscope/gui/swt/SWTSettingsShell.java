@@ -372,7 +372,8 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                    fd.setMessage("Find a folder to add");
                    fd.setText("Add to Blacklist");
                    String item = fd.open();
-                   if (!Arrays.asList(listBlacklist.getItems()).contains(item)) {
+                   if (item != null && !Arrays.asList(listBlacklist.getItems())
+                           .contains(item)) {
                        listBlacklist.add(item);
                        listBlacklist.setToolTipText(item);
                        listBlacklist.setSelection(listBlacklist.getItemCount()-1);
@@ -470,7 +471,8 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                    fd.setMessage("Find a folder to add");
                    fd.setText("Add to Quick Access List");
                    String item = fd.open();
-                   if (!Arrays.asList(listQuickAccess.getItems()).contains(item)) {
+                   if (item != null && !Arrays.asList(listQuickAccess.getItems())
+                           .contains(item)) {
                        listQuickAccess.add(item);
                        listQuickAccess.setToolTipText(item);
                        listQuickAccess.setSelection(listQuickAccess.getItemCount()-1);
@@ -699,7 +701,6 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                 textHttpProxyHost.getText());
         cfg.getProperties().put(Configuration.HTTP_PROXY_PORT, 
                 textHttpProxyPort.getText());
-        System.out.println(cfg.getProperties());
         ConfigurationFactory.getConfigurationFactory().write(cfg);
     }
 
