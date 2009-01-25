@@ -450,7 +450,8 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             if (qaFiles.hasNext()) {
                 for (final String qaItem : cfg.getRawQuickAccessList()) {
                     try {
-                        String qaFile = qaFiles.next().getAbsolutePath();
+                        String qaFile = qaFiles.next().getAbsolutePath()
+                                .replaceAll("\\\\", "//");
                         if (!qaFile.equals(qaItem)) {
                             listQuickAccess.add(qaFile + " <" + qaItem + ">");
                         } else {
@@ -704,7 +705,8 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
         //quick access
         StringBuilder quickAccess = new StringBuilder();
         for (String item : listQuickAccess.getItems()) {
-            quickAccess.append(item.replaceFirst(".+<", "").replaceFirst(">", ""));
+            quickAccess.append(item.replaceFirst(".+<", "")
+                    .replaceFirst(">", "").replaceAll("\\\\", "//"));
             quickAccess.append(';');
         }
         cfg.getProperties().put(Configuration.QUICK_ACCESS_LIST, 
@@ -716,7 +718,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                 checkDisplayFloppy.getSelection() ? "1" : "0");
         StringBuilder blackList = new StringBuilder();
         for (String item : listBlacklist.getItems()) {
-            blackList.append(item);
+            blackList.append(item.replaceAll("\\\\", "//"));
             blackList.append(';');
         }
         cfg.getProperties().put(Configuration.FILESYSTEM_BLACKLIST, 
