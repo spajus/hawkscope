@@ -1,12 +1,18 @@
+$Id$
+===================
 HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
 Changes in version 0.4.0 (2009-??-??)
 -------------------------------------
-* Ability to override configuration paramters with args line
+* Added possibility to use operating system icons if they are available
+  http://code.google.com/p/hawkscope/issues/detail?id=24 
+* Swing GUI implementation is now discontinued and removed
+  http://code.google.com/p/hawkscope/issues/detail?id=22
+* Added possibility to override configuration parameters with args line
   http://code.google.com/p/hawkscope/issues/detail?id=23
-* Ability to blacklist folders and drives
+* Added possibility to blacklist folders and drives
   http://code.google.com/p/hawkscope/issues/detail?id=16 
 * Settings Window
   http://code.google.com/p/hawkscope/issues/detail?id=6 

@@ -72,6 +72,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
     private List listBlacklist;
     private Button checkDisplayHidden;
     private Composite containerBlacklist;
+    private Button checkUseOsIcons;
     private Button buttonQuickItemDown;
     private Button buttonQuickItemUp;
     private Button buttonOK;
@@ -626,7 +627,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             textMenuReloadDelayLData.width = 46;
             textMenuReloadDelayLData.height = 16;
             textMenuReloadDelayLData.left =  new FormAttachment(0, 1000, 191);
-            textMenuReloadDelayLData.top =  new FormAttachment(0, 1000, 83);
+            textMenuReloadDelayLData.top =  new FormAttachment(0, 1000, 82);
             textMenuReloadDelay.setLayoutData(textMenuReloadDelayLData);
             textMenuReloadDelay.setText("" + (cfg.getMenuReloadDelay() / 1000.0));
             textMenuReloadDelay.addListener(SWT.FocusOut, new Listener() {
@@ -646,6 +647,20 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                     }
                 }
             });
+        }
+        //Check: Use OS icons
+        {
+            checkUseOsIcons = new Button(contanerGeneral, SWT.CHECK | SWT.LEFT);
+            FormData checkUseOsIconsLData = new FormData();
+            checkUseOsIconsLData.width = 346;
+            checkUseOsIconsLData.height = 22;
+            checkUseOsIconsLData.left =  new FormAttachment(0, 1000, 24);
+            checkUseOsIconsLData.top =  new FormAttachment(0, 1000, 114);
+            checkUseOsIcons.setLayoutData(checkUseOsIconsLData);
+            checkUseOsIcons.setText("Use operating system &icons");
+            checkUseOsIcons.setToolTipText("Let Hawkscope look for Operating " +
+            		"System icons? They may get resized with interpolation.");
+            checkUseOsIcons.setSelection(cfg.useOsIcons());
         }
     }
 
@@ -674,6 +689,8 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                 checkCheckforUpdates.getSelection() ? "1" : "0");
         cfg.getProperties().put(Configuration.MENU_RELOAD_DELAY, 
                 "" + Math.round(Double.valueOf(textMenuReloadDelay.getText()) * 1000));
+        cfg.getProperties().put(Configuration.USE_OS_ICONS, 
+                checkUseOsIcons.getSelection() ? "1" : "0");
         //quick access
         StringBuilder quickAccess = new StringBuilder();
         for (String item : listQuickAccess.getItems()) {

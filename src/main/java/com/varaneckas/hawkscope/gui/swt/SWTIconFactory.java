@@ -7,6 +7,8 @@ import javax.swing.Icon;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.util.IconFactory;
@@ -61,8 +63,17 @@ public class SWTIconFactory extends IconFactory<Image> {
      * @param file source
      * @return icon
      */
-    public static Image getFileSystemIcon(final File file) {
-        return null;
+    @Override
+    public Image getFileSystemIcon(final File file) {
+        Image image = null;
+        Program p = Program.findProgram(file.getName());
+        if (p != null) {
+            ImageData data = p.getImageData();
+            if (data != null) {
+                image = new Image(display, data);
+            }
+        }
+        return image;
     }
     
     /**

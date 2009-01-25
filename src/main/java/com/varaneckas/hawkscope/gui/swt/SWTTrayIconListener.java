@@ -13,7 +13,6 @@ import org.eclipse.swt.widgets.Listener;
 
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.menu.state.StateEvent;
-import com.varaneckas.hawkscope.tray.TrayManagerFactory;
 
 /**
  * Tray Icon listener for SWT GUI implementation
@@ -44,8 +43,7 @@ public class SWTTrayIconListener implements Listener {
      * @return
      */
     private StateEvent findPopupMenuLocation() {
-        final Display d = ((SWTTrayManager) TrayManagerFactory
-                .getTrayManager()).getDisplay();
+        final Display d = Display.getDefault();
         final StateEvent se = new StateEvent();
         final Point loc = d.getCursorLocation();
         final Dimension traySize = SystemTray.getSystemTray().getTrayIconSize();

@@ -7,7 +7,7 @@ import com.varaneckas.hawkscope.menu.Command;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
- * About {@link ActionListener}
+ * Settings {@link ActionListener}
  * 
  * Displays Settings dialog
  *

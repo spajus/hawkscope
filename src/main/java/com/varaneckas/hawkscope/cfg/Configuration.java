@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
@@ -67,6 +68,11 @@ public class Configuration {
      * HTTP proxy port
      */
     public static final String HTTP_PROXY_PORT = "http.proxy.port";
+    
+    /**
+     * Tells Hawkscope to use operating system icons where possible;
+     */
+    public static final String USE_OS_ICONS = "use.os.icons";
     
     /**
      * Properties {@link Map}
@@ -205,6 +211,15 @@ public class Configuration {
      */
     public String getHttpProxyHost() {
         return properties.get(HTTP_PROXY_HOST);
+    }
+    
+    /**
+     * Tells if to use OS icons when possible
+     * 
+     * @return
+     */
+    public boolean useOsIcons() {
+        return properties.get(USE_OS_ICONS).equals("1");
     }
  
     /**

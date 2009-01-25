@@ -17,10 +17,19 @@ import com.varaneckas.hawkscope.util.IconFactory;
  */
 public class SWTTrayManager implements TrayManager {
 
+    /**
+     * Tray Icon object
+     */
     private TrayItem trayIcon;
     
+    /**
+     * Display in use
+     */
     private static final Display d = Display.getDefault();
     
+    /**
+     * Shell in use
+     */
     private static final Shell sh = new Shell(d);
     
     @Override
@@ -28,10 +37,11 @@ public class SWTTrayManager implements TrayManager {
         return trayIcon;
     }
 
-    public Display getDisplay() {
-        return d;
-    }
-    
+    /**
+     * Gets the shell
+     * 
+     * @return
+     */
     public Shell getShell() {
         return sh;
     }

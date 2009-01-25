@@ -39,6 +39,8 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         data.put(Configuration.HTTP_PROXY_HOST, "");
         //8080 default proxy port
         data.put(Configuration.HTTP_PROXY_PORT, "8080");
+        //use OS icons - off by default
+        data.put(Configuration.USE_OS_ICONS, "0");
         return data;
     }
 

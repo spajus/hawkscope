@@ -13,6 +13,7 @@ import org.apache.commons.logging.LogFactory;
 
 import sun.awt.shell.ShellFolder;
 
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.swt.SWTIconFactory;
 
 /**
@@ -104,6 +105,13 @@ public abstract class IconFactory<IconType> {
      * @return icon
      */    
     public IconType getIcon(final File targetFile) {
+        if (ConfigurationFactory.getConfigurationFactory().getConfiguration()
+                .useOsIcons()) {
+            IconType icon = getFileSystemIcon(targetFile);
+            if (icon != null) {
+                return icon;
+            }
+        }
         if (ShellFolder.isFileSystemRoot(targetFile)) {
             if (FileSystemView.getFileSystemView().isFloppyDrive(targetFile)) {
                 return getIcon("floppy");
@@ -146,4 +154,13 @@ public abstract class IconFactory<IconType> {
         return res;
     }    
     
+    /**
+     * Override to get it working
+     * 
+     * @param file
+     * @return
+     */
+    public IconType getFileSystemIcon(final File file) {
+        return null;
+    }
 }
