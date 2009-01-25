@@ -106,15 +106,15 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             dialogShell.setLayout(new FormLayout());
             dialogShell.layout();
             dialogShell.pack();
-            dialogShell.setSize(394, 306);
+            dialogShell.setSize(418, 311);
             //Settings tab folder: [General][Quick Access][Blacklist][Network]
             {
                 settingsTabFolder = new TabFolder(dialogShell, SWT.NONE);
                 FormData settingsTabFolderLData = new FormData();
                 settingsTabFolderLData.width = 382;
                 settingsTabFolderLData.height = 197;
-                settingsTabFolderLData.left =  new FormAttachment(0, 1000, 0);
-                settingsTabFolderLData.top =  new FormAttachment(0, 1000, 5);
+                settingsTabFolderLData.left =  new FormAttachment(0, 1000, 12);
+                settingsTabFolderLData.top =  new FormAttachment(0, 1000, 11);
                 settingsTabFolder.setLayoutData(settingsTabFolderLData);
                 //[General] tab
                 createGeneralTab();
@@ -145,8 +145,8 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
         FormData buttonOKLData = new FormData();
         buttonOKLData.width = 30;
         buttonOKLData.height = 29;
-        buttonOKLData.left =  new FormAttachment(0, 1000, 287);
-        buttonOKLData.top =  new FormAttachment(0, 1000, 241);
+        buttonOKLData.left =  new FormAttachment(0, 1000, 299);
+        buttonOKLData.top =  new FormAttachment(0, 1000, 247);
         buttonOK.setLayoutData(buttonOKLData);
         buttonOK.setText("&OK");
         buttonOK.addSelectionListener(new SelectionAdapter() {
@@ -163,8 +163,8 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
         FormData buttonCancelLData = new FormData();
         buttonCancelLData.width = 55;
         buttonCancelLData.height = 29;
-        buttonCancelLData.left =  new FormAttachment(0, 1000, 329);
-        buttonCancelLData.top =  new FormAttachment(0, 1000, 241);
+        buttonCancelLData.left =  new FormAttachment(0, 1000, 341);
+        buttonCancelLData.top =  new FormAttachment(0, 1000, 247);
         buttonCancel.setLayoutData(buttonCancelLData);
         buttonCancel.setText("&Cancel");
         buttonCancel.addSelectionListener(new SelectionAdapter() {
