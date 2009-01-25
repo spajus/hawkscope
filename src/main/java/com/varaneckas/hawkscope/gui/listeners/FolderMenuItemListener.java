@@ -1,8 +1,6 @@
 package com.varaneckas.hawkscope.gui.listeners;
 
-import java.awt.Desktop;
 import java.io.File;
-import java.io.IOException;
 import java.util.Arrays;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
@@ -92,16 +90,8 @@ public class FolderMenuItemListener implements MenuItemListener {
         }
     }
     
-    
-
     @Override
     public void itemClicked() {
-         try {
-            Desktop.getDesktop().open(file);
-            MenuFactory.getMenuFactory().getMainMenu().forceHide();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        //Unsupported in SWT
     }
 }

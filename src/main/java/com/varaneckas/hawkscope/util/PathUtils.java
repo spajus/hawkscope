@@ -59,7 +59,8 @@ public abstract class PathUtils {
     /**
      * Interprets the location
      * 
-     * TODO more documentation
+     * It can either be a full path, a java property, 
+     * like ${user.home} (default) or environmental variable like ${$JAVA_HOME}.
      * 
      * @param location
      * @return

@@ -12,7 +12,7 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
  * Displays Settings dialog
  *
  * @author Tomas Varaneckas
- * @version $Id: AboutCommand.java 70 2009-01-21 06:42:40Z tomas.varaneckas $
+ * @version $Id$
  */
 public class SettingsCommand implements Command {
 

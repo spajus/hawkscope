@@ -125,7 +125,6 @@ public abstract class IconFactory<IconType> {
      */
     protected String getBestTrayIcon() {
         float height = 24;
-        //FIXME move to implementations
         if (SystemTray.isSupported()) {
             height = SystemTray.getSystemTray().getTrayIconSize().height;
         }

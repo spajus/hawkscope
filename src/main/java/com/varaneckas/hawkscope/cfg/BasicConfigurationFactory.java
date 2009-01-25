@@ -29,8 +29,6 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         data.put(Configuration.FLOPPY_DRIVES_DISPLAYED, "0");
         //blacklist is empty
         data.put(Configuration.FILESYSTEM_BLACKLIST, "");
-        //swing implementation
-        data.put(Configuration.GUI_IMPLEMENTATION, "SWT");
         //3 seconds menu reload delay
         data.put(Configuration.MENU_RELOAD_DELAY, "3000");
         //check for update by default

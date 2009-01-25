@@ -2,14 +2,9 @@ package com.varaneckas.hawkscope.gui;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
-import javax.swing.UIManager;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.Version;
-import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.swt.SWTAboutShell;
 import com.varaneckas.hawkscope.gui.swt.SWTSettingsShell;
 import com.varaneckas.hawkscope.gui.swt.SWTTrayManager;
@@ -25,11 +20,6 @@ import com.varaneckas.hawkscope.tray.TrayManagerFactory;
 public class WindowFactory {
 
     /**
-     * Logger
-     */
-    private static final Log log = LogFactory.getLog(WindowFactory.class);
-
-    /**
      * AboutWindow instance
      */
     private static AboutWindow aboutWindow = null;
@@ -43,17 +33,7 @@ public class WindowFactory {
      * Initializes the application GUI 
      */
     public static void initialize() {
-        if (getGuiImplementation().equals("SWT")) {
-            //Set application name 
-            Display.setAppName(Version.APP_NAME);
-        } else {
-            try {
-                //Set Swing look and feel to a native one
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-            } catch (final Exception e) {
-                log.warn("Failed setting Swing system look and feel", e);
-            }
-        }
+        Display.setAppName(Version.APP_NAME);
     }
     
     /**
@@ -89,15 +69,6 @@ public class WindowFactory {
      */
     public static UncaughtExceptionHandler getUncaughtExceptionHandler() {
         return new SWTUncaughtExceptionHandler();
-    }
-    
-    /**
-     * Gets the GUI implementation name
-     * @return
-     */
-    private static String getGuiImplementation() {
-        return ConfigurationFactory.getConfigurationFactory().getConfiguration()
-            .getGuiImplementation();
     }
     
 }
