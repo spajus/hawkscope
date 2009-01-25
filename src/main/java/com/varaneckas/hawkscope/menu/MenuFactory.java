@@ -2,8 +2,6 @@ package com.varaneckas.hawkscope.menu;
 
 import java.io.File;
 
-import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.gui.swing.SwingMenuFactory;
 import com.varaneckas.hawkscope.gui.swt.SWTMenuFactory;
 
 /**
@@ -26,12 +24,7 @@ public abstract class MenuFactory {
      */
     public static MenuFactory getMenuFactory() {
         if (instance == null) {
-            if (ConfigurationFactory.getConfigurationFactory().getConfiguration()
-                    .getGuiImplementation().equals("SWT")) {
-                instance = new SWTMenuFactory();
-            } else {
-                instance = new SwingMenuFactory();
-            }
+            instance = new SWTMenuFactory();
         }
         return instance;   
     }

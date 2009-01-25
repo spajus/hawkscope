@@ -3,11 +3,11 @@ package com.varaneckas.hawkscope.menu.state;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.varaneckas.hawkscope.gui.swing.SwingMainMenu;
+import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
- * State when {@link SwingMainMenu} is open (visible)
+ * State when {@link MainMenu} is open (visible)
  *
  * @author Tomas Varaneckas
  * @version $Id$

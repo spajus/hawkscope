@@ -10,8 +10,6 @@ import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.gui.swing.SwingAboutFrame;
-import com.varaneckas.hawkscope.gui.swing.SwingUncaughtExceptionHandler;
 import com.varaneckas.hawkscope.gui.swt.SWTAboutShell;
 import com.varaneckas.hawkscope.gui.swt.SWTSettingsShell;
 import com.varaneckas.hawkscope.gui.swt.SWTTrayManager;
@@ -65,12 +63,8 @@ public class WindowFactory {
      */
     public static AboutWindow getAboutWindow() {
         if (aboutWindow == null) {
-            if (getGuiImplementation().equals("SWT")) {
-                aboutWindow = new SWTAboutShell(((SWTTrayManager) 
-                        TrayManagerFactory.getTrayManager()).getShell(), 0);
-            } else {
-                aboutWindow = new SwingAboutFrame();
-            }
+            aboutWindow = new SWTAboutShell(((SWTTrayManager) 
+                    TrayManagerFactory.getTrayManager()).getShell(), 0);
         }
         return aboutWindow;
     }
@@ -82,13 +76,8 @@ public class WindowFactory {
      */
     public static SettingsWindow getSettingsWindow() {
         if (settingsWindow == null) {
-            if (getGuiImplementation().equals("SWT")) {
-                settingsWindow = new SWTSettingsShell(((SWTTrayManager) 
-                        TrayManagerFactory.getTrayManager()).getShell(), 0);
-            } else {
-                throw new UnsupportedOperationException("Swing implementation " +
-                		"of SettingsWindow is not available");
-            }
+            settingsWindow = new SWTSettingsShell(((SWTTrayManager) 
+                    TrayManagerFactory.getTrayManager()).getShell(), 0);
         }
         return settingsWindow;
     }
@@ -99,10 +88,7 @@ public class WindowFactory {
      * @return instance of Uncaught Exception Handler
      */
     public static UncaughtExceptionHandler getUncaughtExceptionHandler() {
-        if (getGuiImplementation().equals("SWT")) {
-            return new SWTUncaughtExceptionHandler();
-        } 
-        return new SwingUncaughtExceptionHandler();
+        return new SWTUncaughtExceptionHandler();
     }
     
     /**

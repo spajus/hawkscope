@@ -34,7 +34,6 @@ public class SWTUncaughtExceptionHandler implements UncaughtExceptionHandler {
         MessageBox message = new MessageBox(shell, SWT.OK | SWT.CANCEL | SWT.ICON_ERROR);
         message.setText("Hawkscope Error");
         message.setMessage(e.getMessage() 
-                + "\nFile may not be associated with any application."
                 + "\nCopy Hawkscope Error Report to Clipboard?");
         log.error("Uncaught exception", e);
         if (message.open() == SWT.OK) {

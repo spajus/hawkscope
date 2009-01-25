@@ -13,8 +13,6 @@ import org.apache.commons.logging.LogFactory;
 
 import sun.awt.shell.ShellFolder;
 
-import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.gui.swing.SwingIconFactory;
 import com.varaneckas.hawkscope.gui.swt.SWTIconFactory;
 
 /**
@@ -71,12 +69,7 @@ public abstract class IconFactory<IconType> {
     @SuppressWarnings("unchecked")
     public static <T> IconFactory<T> getIconFactory() {
         if (instance == null) {
-            if (ConfigurationFactory.getConfigurationFactory()
-                    .getConfiguration().getGuiImplementation().equals("SWT")) {
-                instance = new SWTIconFactory();
-            } else {
-                instance = new SwingIconFactory();
-            }
+            instance = new SWTIconFactory();
         }
         return (IconFactory<T>) instance;
     }

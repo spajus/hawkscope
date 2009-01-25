@@ -8,7 +8,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.varaneckas.hawkscope.gui.swing.SwingMainMenu;
 import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
@@ -140,7 +139,7 @@ public class Configuration {
 
     /**
      * Gets list of {@link File}s that can be accessed quickly from 
-     * {@link SwingMainMenu}
+     * {@link MainMenu}
      * 
      * @return list of files
      */
