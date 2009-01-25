@@ -1,5 +1,6 @@
 package com.varaneckas.hawkscope.gui.swt;
 import java.io.File;
+import java.util.Arrays;
 import java.util.Iterator;
 
 import org.eclipse.swt.SWT;
@@ -13,8 +14,10 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TabFolder;
@@ -80,21 +83,6 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
     private Configuration cfg = ConfigurationFactory.getConfigurationFactory()
             .getConfiguration();
     
-    /**
-     * Auto-generated main method to display this org.eclipse.swt.widgets.Dialog
-     * inside a new Shell.
-     */
-    public static void main(String[] args) {
-        try {
-            Display display = Display.getDefault();
-            Shell shell = new Shell(display);
-            SWTSettingsShell inst = new SWTSettingsShell(shell, SWT.NULL);
-            inst.open();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public SWTSettingsShell(Shell parent, int style) {
         super(parent, style);
     }
@@ -269,6 +257,22 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             textHttpProxyPort.setLayoutData(textHttpProxyPortLData);
             textHttpProxyPort.setText("" + cfg.getHttpProxyPort());
             textHttpProxyPort.setEnabled(cfg.isHttpProxyInUse());
+            textHttpProxyPort.addListener(SWT.FocusOut, new Listener() {
+                @Override
+                public void handleEvent(Event event) {
+                    try {
+                        int s = Integer.valueOf(textHttpProxyPort.getText());
+                        if (s <= 0) {
+                            textHttpProxyPort.setText("1");
+                        }
+                        if (s > Short.MAX_VALUE) {
+                            textHttpProxyPort.setText("" + Short.MAX_VALUE);
+                        }
+                    } catch (final Exception e) {
+                        textHttpProxyPort.setText("" + cfg.getHttpProxyPort());
+                    }
+                }
+            });
         }
     }
 
@@ -368,9 +372,11 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                    fd.setMessage("Find a folder to add");
                    fd.setText("Add to Blacklist");
                    String item = fd.open();
-                   listBlacklist.add(item);
-                   listBlacklist.setToolTipText(item);
-                   listBlacklist.setSelection(listBlacklist.getItemCount()-1);
+                   if (!Arrays.asList(listBlacklist.getItems()).contains(item)) {
+                       listBlacklist.add(item);
+                       listBlacklist.setToolTipText(item);
+                       listBlacklist.setSelection(listBlacklist.getItemCount()-1);
+                   }
                    dialogShell.setEnabled(true);
                 } 
             });
@@ -464,9 +470,11 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                    fd.setMessage("Find a folder to add");
                    fd.setText("Add to Quick Access List");
                    String item = fd.open();
-                   listQuickAccess.add(item);
-                   listQuickAccess.setToolTipText(item);
-                   listQuickAccess.setSelection(listQuickAccess.getItemCount()-1);
+                   if (!Arrays.asList(listQuickAccess.getItems()).contains(item)) {
+                       listQuickAccess.add(item);
+                       listQuickAccess.setToolTipText(item);
+                       listQuickAccess.setSelection(listQuickAccess.getItemCount()-1);
+                   }
                    dialogShell.setEnabled(true);
                 } 
             });
@@ -577,7 +585,8 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             checkCheckforUpdatesLData.top =  new FormAttachment(0, 1000, 35);
             checkCheckforUpdates.setLayoutData(checkCheckforUpdatesLData);
             checkCheckforUpdates.setText("Check for &updates on startup");
-            checkCheckforUpdates.setToolTipText("Should Hawkscope check for updates on startup?");
+            checkCheckforUpdates.setToolTipText("Should Hawkscope check for updates on startup? " +
+            		"Please mind the HTTP Proxy settings in Network tab!");
             checkCheckforUpdates.setSelection(cfg.checkForUpdates());
         }
         //Label: Menu
@@ -603,8 +612,10 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             labelReloadDelay.setLayoutData(labelReloadDelayLData);
             labelReloadDelay.setText("&Reload delay (seconds):");
             labelReloadDelay.setToolTipText("After how many seconds " +
-                    "of being idle Hawkscope should reload it's menu " +
-                    "(to find new devices, etc.)?");
+                    "of being idle Hawkscope should reload it's main menu " +
+                    "(to find new devices, refresh Quick Access List, " +
+                    "re-apply Blacklist etc.)? The reload is fast unless you " +
+                    "have got many slow network drives.");
         } 
         //Text: menu reload delay input
         {
@@ -616,6 +627,23 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             textMenuReloadDelayLData.top =  new FormAttachment(0, 1000, 83);
             textMenuReloadDelay.setLayoutData(textMenuReloadDelayLData);
             textMenuReloadDelay.setText("" + (cfg.getMenuReloadDelay() / 1000.0));
+            textMenuReloadDelay.addListener(SWT.FocusOut, new Listener() {
+                @Override
+                public void handleEvent(Event event) {
+                    try {
+                        double d = Double.valueOf(textMenuReloadDelay.getText());
+                        if (d <= 0) {
+                            textMenuReloadDelay.setText("0.1");
+                        }
+                        if (d > 9999) {
+                            textMenuReloadDelay.setText("9999");
+                        }
+                    } catch (final Exception e) {
+                        textMenuReloadDelay.setText("" 
+                                + (cfg.getMenuReloadDelay() / 1000.0));
+                    }
+                }
+            });
         }
     }
 

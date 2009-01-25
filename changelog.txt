@@ -2,8 +2,12 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
-Changes in version 0.3.1 (2009-??-??)
+Changes in version 0.4.0 (2009-??-??)
 -------------------------------------
+* Ability to blacklist folders and drives
+  http://code.google.com/p/hawkscope/issues/detail?id=16 
+* Settings Window
+  http://code.google.com/p/hawkscope/issues/detail?id=6 
 * Automatic check for updates
   http://code.google.com/p/hawkscope/issues/detail?id=14
 * Added menu reload delay to improve performance

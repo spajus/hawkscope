@@ -83,6 +83,7 @@ public abstract class MainMenu {
         Configuration cfg = ConfigurationFactory.getConfigurationFactory()
                 .getConfiguration();
         loadQuickAccessMenu();
+        boolean addSeparator = false;
         for (final File root : roots) {
             if (cfg.getBlackList().contains(root)) {
                 continue;
@@ -94,7 +95,11 @@ public abstract class MainMenu {
                 item.setText(PathUtils.getFileName(root));
                 item.setIcon(IconFactory.getIconFactory().getIcon(root));
                 addMenuItem(item);
+                addSeparator = true;
             }
+        }
+        if (addSeparator) {
+            addSeparator();
         }
         addStaticItems();
         reloadRoots();
@@ -139,7 +144,6 @@ public abstract class MainMenu {
      * Adds static menu items
      */
     private void addStaticItems() {
-        addSeparator();
         if (Version.isUpdateAvailable()) {
             addExecutableMenuItem("update", "Update Available!", 
                     new UpdateCommand());
@@ -179,7 +183,6 @@ public abstract class MainMenu {
     public void reloadMenu() {
         clearMenu();
         loadMenu();
-        Runtime.getRuntime().gc();
     }
     
 }

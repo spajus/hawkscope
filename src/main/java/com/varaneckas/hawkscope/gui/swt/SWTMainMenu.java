@@ -41,18 +41,11 @@ public class SWTMainMenu extends MainMenu {
     private static long hiddenSince;
     
     /**
-     * Menu reloading delay in milliseconds
-     */
-    private long reloadDelay;
-    
-    /**
      * Initializing singleton constructor
      */
     private SWTMainMenu() {
         menu = new Menu(((SWTTrayManager) TrayManagerFactory.getTrayManager())
                 .getShell(), SWT.POP_UP);
-        reloadDelay = ConfigurationFactory.getConfigurationFactory()
-                .getConfiguration().getMenuReloadDelay();
         menu.addListener(SWT.Hide, new Listener() {
             @Override
             public void handleEvent(Event event) {
@@ -133,7 +126,9 @@ public class SWTMainMenu extends MainMenu {
                 @Override
                 public void run() {
                     try {
-                        Thread.sleep(reloadDelay);
+                        Thread.sleep(ConfigurationFactory
+                                .getConfigurationFactory()
+                                .getConfiguration().getMenuReloadDelay());
                     } catch (InterruptedException e1) {
                         e1.printStackTrace();
                     }
@@ -156,7 +151,9 @@ public class SWTMainMenu extends MainMenu {
                         isReloading = false;
                         return;
                     } else if (System.currentTimeMillis() 
-                            - hiddenSince < reloadDelay) {
+                            - hiddenSince < ConfigurationFactory
+                                    .getConfigurationFactory()
+                                    .getConfiguration().getMenuReloadDelay()) {
                         //menu is actively used, try reloading later
                         if (log.isDebugEnabled()) {
                             log.debug("Reloading later, menu is not sleeping " +
