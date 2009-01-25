@@ -357,7 +357,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                 } 
             });
             for (final String blItem : cfg.getRawBlackList()) {
-                listBlacklist.add(blItem);
+                listBlacklist.add(blItem.replaceAll("\\\\", "/"));
             }
         }  
         //Button: [+] (Blacklist)
@@ -451,7 +451,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                 for (final String qaItem : cfg.getRawQuickAccessList()) {
                     try {
                         String qaFile = qaFiles.next().getAbsolutePath()
-                                .replaceAll("\\\\", "//");
+                                .replaceAll("\\\\", "/");
                         if (!qaFile.equals(qaItem)) {
                             listQuickAccess.add(qaFile + " <" + qaItem + ">");
                         } else {
@@ -706,8 +706,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
         StringBuilder quickAccess = new StringBuilder();
         for (String item : listQuickAccess.getItems()) {
             quickAccess.append(item.replaceFirst(".+<", "")
-                    .replaceFirst(">", "").replaceAll("\\\\", "//"));
-            quickAccess.append(';');
+                    .replaceFirst(">", "").replaceAll("\\\\", "/"));
         }
         cfg.getProperties().put(Configuration.QUICK_ACCESS_LIST, 
                 quickAccess.toString());
@@ -718,7 +717,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                 checkDisplayFloppy.getSelection() ? "1" : "0");
         StringBuilder blackList = new StringBuilder();
         for (String item : listBlacklist.getItems()) {
-            blackList.append(item.replaceAll("\\\\", "//"));
+            blackList.append(item.replaceAll("\\\\", "/"));
             blackList.append(';');
         }
         cfg.getProperties().put(Configuration.FILESYSTEM_BLACKLIST, 
