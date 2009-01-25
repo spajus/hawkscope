@@ -50,7 +50,7 @@ public class Version {
     /**
      * Application version number   
      */
-    public static final String VERSION_NUMBER = "0.3.1";
+    public static final String VERSION_NUMBER = "0.4.0";
     
     /**
      * Application version date

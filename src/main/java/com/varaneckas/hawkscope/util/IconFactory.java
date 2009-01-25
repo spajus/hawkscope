@@ -11,8 +11,6 @@ import javax.swing.filechooser.FileSystemView;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import sun.awt.shell.ShellFolder;
-
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.swt.SWTIconFactory;
 
@@ -112,7 +110,7 @@ public abstract class IconFactory<IconType> {
                 return icon;
             }
         }
-        if (ShellFolder.isFileSystemRoot(targetFile)) {
+        if (FileSystemView.getFileSystemView().isFileSystemRoot(targetFile)) {
             if (FileSystemView.getFileSystemView().isFloppyDrive(targetFile)) {
                 return getIcon("floppy");
             }
