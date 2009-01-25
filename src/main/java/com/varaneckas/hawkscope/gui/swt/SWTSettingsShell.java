@@ -458,9 +458,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                         }
                     } catch (final Exception e) {
                         log.warn("Processing invalid access entry: " + qaItem 
-                                + ": " + e.getMessage());
-                        listQuickAccess.add(e.getMessage() 
-                                + ": <" + qaItem + ">");
+                                + ": " + e.getMessage(), e);
                     }
                 }
             }
