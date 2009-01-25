@@ -44,7 +44,13 @@ public abstract class PathUtils {
         final String[] locations = interpret(path).split(delimiter);
         final List<File> files = new ArrayList<File>();
         for (final String location : locations) {
-            final File f = new File(location);
+            File f = null;
+            if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
+                f = new File(location.replaceAll("/", "\\"));
+            } else {
+                f = new File(location);
+            }
+            
             if (!f.isDirectory()) {
                 log.warn(f.getAbsolutePath() + " is not a directory!");
             } else if (!f.canRead()) {
