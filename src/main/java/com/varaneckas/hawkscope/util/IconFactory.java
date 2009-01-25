@@ -55,6 +55,7 @@ public abstract class IconFactory<IconType> {
             resources.put("open",  IconFactory.class.getClassLoader().getResource("icons/open24.png")); 
             resources.put("empty",  IconFactory.class.getClassLoader().getResource("icons/empty24.png")); 
             resources.put("update", IconFactory.class.getClassLoader().getResource("icons/update24.png"));
+            resources.put("settings", IconFactory.class.getClassLoader().getResource("icons/settings24.png"));
         } catch (final Exception e) {
             log.warn("Cannot find icon", e);
         }

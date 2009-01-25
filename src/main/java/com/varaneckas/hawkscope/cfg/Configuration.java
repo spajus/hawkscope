@@ -1,6 +1,7 @@
 package com.varaneckas.hawkscope.cfg;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -146,6 +147,36 @@ public class Configuration {
     public List<File> getQuickAccessList() {
         return PathUtils.pathToDirList(
                 properties.get(Configuration.QUICK_ACCESS_LIST), ";");
+    }
+    
+    /**
+     * Gets raw quick access list for settings window
+     * 
+     * @return
+     */
+    public List<String> getRawQuickAccessList() {
+        return Arrays.asList(properties.get(Configuration.QUICK_ACCESS_LIST)
+                .split(";"));
+    }
+    
+    /**
+     * Gets blacklist of skipped items
+     * 
+     * @return
+     */
+    public List<File> getBlackList() {
+        return PathUtils.pathToDirList(properties.get(Configuration
+                .FILESYSTEM_BLACKLIST), ";");
+    }
+    
+    /**
+     * Gets raw blacklist of skipped items for settings window
+     * 
+     * @return
+     */
+    public List<String> getRawBlackList() {
+        return Arrays.asList(properties.get(Configuration.FILESYSTEM_BLACKLIST)
+                .split(";"));
     }
     
     /**

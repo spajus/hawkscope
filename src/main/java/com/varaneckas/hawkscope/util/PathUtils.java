@@ -2,6 +2,7 @@ package com.varaneckas.hawkscope.util;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,7 +39,7 @@ public abstract class PathUtils {
     public static List<File> pathToDirList(final String path, 
             final String delimiter) {
         if (path == null || path.equals("")) {
-            return null;
+            return Collections.emptyList();
         }
         final String[] locations = interpret(path).split(delimiter);
         final List<File> files = new ArrayList<File>();

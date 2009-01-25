@@ -13,6 +13,7 @@ import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.swing.SwingAboutFrame;
 import com.varaneckas.hawkscope.gui.swing.SwingUncaughtExceptionHandler;
 import com.varaneckas.hawkscope.gui.swt.SWTAboutShell;
+import com.varaneckas.hawkscope.gui.swt.SWTSettingsShell;
 import com.varaneckas.hawkscope.gui.swt.SWTTrayManager;
 import com.varaneckas.hawkscope.gui.swt.SWTUncaughtExceptionHandler;
 import com.varaneckas.hawkscope.tray.TrayManagerFactory;
@@ -34,6 +35,11 @@ public class WindowFactory {
      * AboutWindow instance
      */
     private static AboutWindow aboutWindow = null;
+    
+    /**
+     * SettingsWindow instance
+     */
+    private static SettingsWindow settingsWindow = null;
 
     /**
      * Initializes the application GUI 
@@ -75,9 +81,16 @@ public class WindowFactory {
      * @return instance of Settings Window
      */
     public static SettingsWindow getSettingsWindow() {
-        //TODO implement settings window
-        throw new UnsupportedOperationException("GUI Settings Form is not " +
-        		"yet implemented.");
+        if (settingsWindow == null) {
+            if (getGuiImplementation().equals("SWT")) {
+                settingsWindow = new SWTSettingsShell(((SWTTrayManager) 
+                        TrayManagerFactory.getTrayManager()).getShell(), 0);
+            } else {
+                throw new UnsupportedOperationException("Swing implementation " +
+                		"of SettingsWindow is not available");
+            }
+        }
+        return settingsWindow;
     }
     
     /**

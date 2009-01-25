@@ -7,10 +7,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.Version;
+import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.listeners.AboutCommand;
 import com.varaneckas.hawkscope.gui.listeners.ExitCommand;
 import com.varaneckas.hawkscope.gui.listeners.HideCommand;
+import com.varaneckas.hawkscope.gui.listeners.SettingsCommand;
 import com.varaneckas.hawkscope.gui.listeners.UpdateCommand;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
 import com.varaneckas.hawkscope.menu.state.State;
@@ -78,18 +80,19 @@ public abstract class MainMenu {
      * Loads the menu
      */
     public void loadMenu() {
+        Configuration cfg = ConfigurationFactory.getConfigurationFactory()
+                .getConfiguration();
         loadQuickAccessMenu();
         for (final File root : roots) {
-            boolean loadFloppy = ConfigurationFactory.getConfigurationFactory()
-                    .getConfiguration().isFloppyDrivesDisplayed();
-            if (loadFloppy || !PathUtils.isFloppy(root)) {
+            if (cfg.getBlackList().contains(root)) {
+                continue;
+            }
+            if (cfg.isFloppyDrivesDisplayed() || !PathUtils.isFloppy(root)) {
             log.debug("Generating menu for: " + root.getAbsolutePath());
                 final FolderMenu item = MenuFactory.getMenuFactory()
                         .newFolderMenu(root);
                 item.setText(PathUtils.getFileName(root));
                 item.setIcon(IconFactory.getIconFactory().getIcon(root));
-                item.setToolTipText("" + root.getUsableSpace() / (1024*1024*1024) 
-                        + "G free");
                 addMenuItem(item);
             }
         }
@@ -143,6 +146,7 @@ public abstract class MainMenu {
         }
         addExecutableMenuItem("hide", "Hide", new HideCommand());
         addExecutableMenuItem("about", "About", new AboutCommand());
+        addExecutableMenuItem("settings", "Settings", new SettingsCommand());
         addExecutableMenuItem("exit", "Exit", new ExitCommand());
     }
 

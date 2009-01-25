@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.menu.DynamicFileFilter;
 import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 import com.varaneckas.hawkscope.menu.FolderMenu;
@@ -69,6 +70,10 @@ public class FolderMenuItemListener implements MenuItemListener {
                 Arrays.sort(files);
                 for (final File ff : files) {
                     if (ff.isDirectory()) {
+                        if (ConfigurationFactory.getConfigurationFactory()
+                                .getConfiguration().getBlackList().contains(ff)) {
+                            continue;
+                        }
                         workMenu.addMenuItem(MenuFactory.getMenuFactory().newFolderMenu(ff));
                     } else {
                         workMenu.addMenuItem(MenuFactory.getMenuFactory().newFileMenuItem(ff));

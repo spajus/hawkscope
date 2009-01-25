@@ -7,6 +7,8 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
 import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.Image;
@@ -90,14 +92,14 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
         try {
             final Shell parent = getParent();
             dialogShell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-            dialogShell.setImage((Image) SWTIconFactory.getIconFactory()
-                    .getUncachedIcon("hawkscope16.png"));
-            dialogShell.setText("About");
             {
                 //Register as a resource user - SWTResourceManager will
                 //handle the obtaining and disposing of resources
                 SWTResourceManager.registerResourceUser(dialogShell);
             }
+            dialogShell.setImage((Image) SWTIconFactory.getIconFactory()
+                    .getUncachedIcon("hawkscope16.png"));
+            dialogShell.setText("About");
             
             dialogShell.setLayout(new FormLayout());
             dialogShell.layout();
@@ -111,9 +113,9 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                 copyReportButtonLData.left =  new FormAttachment(0, 1000, 314);
                 copyReportButtonLData.top =  new FormAttachment(0, 1000, 252);
                 copyReportButton.setLayoutData(copyReportButtonLData);
-                copyReportButton.addMouseListener(new MouseAdapter() {
+                copyReportButton.addSelectionListener(new SelectionAdapter() {
                    @Override
-                   public void mouseUp(MouseEvent event) {
+                   public void widgetSelected(SelectionEvent event) {
                        IOUtils.copyToClipboard(Version.getEnvironmentReport());
                    } 
                 });
@@ -127,9 +129,9 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                 closeButtonLData.left =  new FormAttachment(0, 1000, 451);
                 closeButtonLData.top =  new FormAttachment(0, 1000, 252);
                 closeButton.setLayoutData(closeButtonLData);
-                closeButton.addMouseListener(new MouseAdapter() {
+                closeButton.addSelectionListener(new SelectionAdapter() {
                    @Override
-                    public void mouseUp(MouseEvent event) {
+                    public void widgetSelected(SelectionEvent event) {
                        dialogShell.setVisible(false);
                     } 
                 });
