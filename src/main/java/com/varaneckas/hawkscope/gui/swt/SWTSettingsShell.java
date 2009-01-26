@@ -468,7 +468,6 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                     }
                 }
             }
-            
         }          
         //Button [+] (QA list)
         {
@@ -534,6 +533,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                    if (listQuickAccess.getSelectionCount() == 0) return;
                    if (listQuickAccess.getSelectionCount() > 1) {
                        showMoveWarnDialog();
+                       return;
                    }
                    int i = listQuickAccess.getSelectionIndex();
                    //first item
@@ -562,6 +562,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                    if (listQuickAccess.getSelectionCount() == 0) return;
                    if (listQuickAccess.getSelectionCount() > 1) {
                        showMoveWarnDialog();
+                       return;
                    }
                    int i = listQuickAccess.getSelectionIndex();
                    //last item
@@ -692,11 +693,11 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
     
     private void showMoveWarnDialog() {
         MessageBox mb = new MessageBox(dialogShell, SWT.ICON_WARNING);
-           mb.setMessage("Please select only one item to move!");
-           mb.setText("Hey!");
-           dialogShell.setEnabled(false);
-           mb.open();
-           dialogShell.setEnabled(true);
+        mb.setMessage("Please select only one item to move!");
+        mb.setText("Hey!");
+        dialogShell.setEnabled(false);
+        mb.open();
+        dialogShell.setEnabled(true);
     } 
     
     private void saveConfiguration() {
