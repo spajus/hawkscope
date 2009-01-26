@@ -92,9 +92,10 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
         super(parent, style);
     }
 
-    public void open() {
+    public synchronized void open() {
         if (dialogShell != null && !dialogShell.isDisposed()) {
             dialogShell.setVisible(true);
+            dialogShell.forceFocus();
             return;
         }
         try {
@@ -687,7 +688,6 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
     @Override
     public void showObject() {
         open();
-        dialogShell.forceFocus();
     }
     
     private void showMoveWarnDialog() {

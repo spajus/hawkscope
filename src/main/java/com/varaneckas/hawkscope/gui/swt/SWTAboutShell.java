@@ -84,9 +84,10 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
     /**
      * Opens the window
      */
-    public void open() {
+    public synchronized void open() {
         if (dialogShell != null && !dialogShell.isDisposed()) {
             dialogShell.setVisible(true);
+            dialogShell.forceFocus();
             return;
         }
         try {
@@ -321,7 +322,6 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
     @Override
     public void showObject() {
         open();
-        dialogShell.forceFocus();
     }
     
 }
