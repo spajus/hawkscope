@@ -17,7 +17,6 @@ import com.varaneckas.hawkscope.util.IconFactory;
  */
 public class ExitCommand implements Command {
 
-    @Override
     public void execute() {
         IconFactory.getIconFactory().cleanup();
         Display.getDefault().dispose();

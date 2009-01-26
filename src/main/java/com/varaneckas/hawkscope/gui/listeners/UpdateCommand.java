@@ -15,7 +15,6 @@ import com.varaneckas.hawkscope.menu.Command;
  */
 public class UpdateCommand implements Command {
 
-    @Override
     public void execute() {
         Program.launch(Version.DOWNLOAD_URL);
     }

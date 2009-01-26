@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -118,8 +119,10 @@ public abstract class ConfigurationFactory {
                     }
                 }
             });
-            for (final String key : data.keySet()) {
-                cfg.put(key, data.getString(key));
+            final Enumeration<String> keys = data.getKeys();
+            while (keys.hasMoreElements()) {
+            	String key = keys.nextElement();
+            	cfg.put(key, data.getString(key));
             }
         } catch (final MissingResourceException e) {
             log.debug("Configuration not found, using defaults. (" 

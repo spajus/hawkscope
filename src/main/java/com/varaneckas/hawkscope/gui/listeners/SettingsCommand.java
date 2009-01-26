@@ -16,7 +16,6 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
  */
 public class SettingsCommand implements Command {
 
-    @Override
     public void execute() {
         WindowFactory.getSettingsWindow().showObject();
         MenuFactory.getMenuFactory().getMainMenu().forceHide();

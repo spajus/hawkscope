@@ -42,7 +42,6 @@ public class DynamicFileFilter implements FileFilter {
         return instance;
     }
     
-    @Override
     public boolean accept(final File file) {
         if (!cfg.isHiddenFilesDisplayed()) {
             if (file.isHidden()) {

@@ -49,7 +49,6 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
      */
     private Menu submenu;
 
-    @Override
     public void createMenuItem(final Menu parent) {
         menu = new org.eclipse.swt.widgets.MenuItem(parent, SWT.CASCADE);
         submenu = new Menu(parent);
@@ -115,22 +114,18 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
         new org.eclipse.swt.widgets.MenuItem(menu.getMenu(), SWT.SEPARATOR);
     }
 
-    @Override
     public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }
 
-    @Override
     public void setIcon(final Object icon) {
         this.icon = icon;
     }
 
-    @Override
     public void setText(final String text) {
         this.text = text;
     }
 
-    @Override
     public void setToolTipText(String text) {
         //unsupported feature
     }

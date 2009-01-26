@@ -86,7 +86,6 @@ public class Version {
      */
     static {
         new Thread(new Runnable() {
-            @Override
             public void run() {
                 try {
                     Thread.sleep(5000L);

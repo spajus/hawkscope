@@ -280,7 +280,6 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             textHttpProxyPort.setTextLimit(5);
             textHttpProxyPort.setEnabled(cfg.isHttpProxyInUse());
             textHttpProxyPort.addListener(SWT.FocusOut, new Listener() {
-                @Override
                 public void handleEvent(Event event) {
                     try {
                         int s = Integer.valueOf(textHttpProxyPort.getText());
@@ -732,7 +731,6 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             textMenuReloadDelay.setText("" + (cfg.getMenuReloadDelay() / 1000.0));
             textMenuReloadDelay.setTextLimit(4);
             textMenuReloadDelay.addListener(SWT.FocusOut, new Listener() {
-                @Override
                 public void handleEvent(Event event) {
                     try {
                         double d = Double.valueOf(textMenuReloadDelay.getText());
@@ -765,12 +763,10 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
         }
     }
 
-    @Override
     public void hideObject() {
         dialogShell.dispose();
     }
 
-    @Override
     public void showObject() {
         open();
     }

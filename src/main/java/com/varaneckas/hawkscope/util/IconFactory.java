@@ -1,12 +1,9 @@
 package com.varaneckas.hawkscope.util;
 
-import java.awt.SystemTray;
 import java.io.File;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.swing.filechooser.FileSystemView;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -109,8 +106,8 @@ public abstract class IconFactory<IconType> {
                 return icon;
             }
         }
-        if (FileSystemView.getFileSystemView().isFileSystemRoot(targetFile)) {
-            if (FileSystemView.getFileSystemView().isFloppyDrive(targetFile)) {
+        if (OperatingSystemUtils.isFileSystemRoot(targetFile)) {
+            if (OperatingSystemUtils.isFloppyDrive(targetFile)) {
                 return getIcon("floppy");
             }
             return getIcon("drive");
@@ -129,10 +126,7 @@ public abstract class IconFactory<IconType> {
      * @return tray icon name
      */
     protected String getBestTrayIcon() {
-        float height = 24;
-        if (SystemTray.isSupported()) {
-            height = SystemTray.getSystemTray().getTrayIconSize().height;
-        }
+        float height = OperatingSystemUtils.getTrayIconSize().height;
         int[] sizes = new int[] { 64, 48, 32, 24, 16 };
         int best = 64;
         for (int i = 0; i < sizes.length; i++) {

@@ -54,7 +54,6 @@ public class FolderMenuItemListener implements MenuItemListener {
         this.file = file;
     }
 
-    @Override
     public synchronized void itemSelected() {
         if (!loaded && file != null && file.isDirectory()) {
             final File[] files = file.listFiles(DynamicFileFilter.getInstance());
@@ -92,7 +91,6 @@ public class FolderMenuItemListener implements MenuItemListener {
         }
     }
     
-    @Override
     public void itemClicked() {
         Program.launch(file.getAbsolutePath());
     }

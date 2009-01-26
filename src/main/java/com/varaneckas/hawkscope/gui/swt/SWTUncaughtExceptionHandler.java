@@ -27,7 +27,6 @@ public class SWTUncaughtExceptionHandler implements UncaughtExceptionHandler {
     private static final Log log = LogFactory
             .getLog(SWTUncaughtExceptionHandler.class);
     
-    @Override
     public void uncaughtException(final Thread t, final Throwable e) {
         Display display = Display.getCurrent();
         Shell shell = new Shell (display);

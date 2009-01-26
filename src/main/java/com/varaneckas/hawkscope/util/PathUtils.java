@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.filechooser.FileSystemView;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -101,8 +99,7 @@ public abstract class PathUtils {
      * @return friendly file name
      */
     public static String getFileName(final File file) {
-        final FileSystemView fsw = FileSystemView.getFileSystemView();
-        String name = fsw.getSystemDisplayName(file);
+    	String name = OperatingSystemUtils.getSystemDisplayName(file);
         if (name == null || name.equals("")) {
             name = file.getName();
         } 
@@ -122,6 +119,6 @@ public abstract class PathUtils {
      * @return is floppy
      */
     public static boolean isFloppy(final File file) {
-        return FileSystemView.getFileSystemView().isFloppyDrive(file);
+    	return OperatingSystemUtils.isFloppyDrive(file);
     }
 }

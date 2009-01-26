@@ -38,8 +38,7 @@ public class SWTTrayManager implements TrayManager {
      * Shell in use
      */
     private static final Shell sh = new Shell(d);
-    
-    @Override
+
     public TrayItem getTrayIcon() {
         return trayIcon;
     }
@@ -53,7 +52,6 @@ public class SWTTrayManager implements TrayManager {
         return sh;
     }
     
-    @Override
     public void load() {
         trayIcon = new TrayItem(d.getSystemTray(), SWT.NONE);
         trayIcon.setImage((Image) IconFactory.getIconFactory().getTrayIcon());
@@ -61,7 +59,6 @@ public class SWTTrayManager implements TrayManager {
         trayIcon.addListener (SWT.Selection, listener);
         trayIcon.addListener (SWT.MenuDetect, listener);
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
             public void run() {
                 log.debug("Removing Tray Icon");
                 IconFactory.getIconFactory().cleanup();

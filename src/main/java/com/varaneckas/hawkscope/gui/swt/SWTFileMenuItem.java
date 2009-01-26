@@ -59,7 +59,6 @@ public class SWTFileMenuItem implements FileMenuItem, SWTMenuItem {
         this.file = file;
     }
     
-    @Override
     public void createMenuItem(final Menu parent) {
         menuItem = new MenuItem(parent, SWT.PUSH);
         menuItem.setImage((Image) icon);
@@ -76,22 +75,18 @@ public class SWTFileMenuItem implements FileMenuItem, SWTMenuItem {
         });
     }
     
-    @Override
     public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }
 
-    @Override
     public void setIcon(final Object icon) {
         this.icon = icon;
     }
 
-    @Override
     public void setText(final String text) {
         this.text = text;
     }
 
-    @Override
     public void setToolTipText(final String text) {
         //unsupported feature
     }

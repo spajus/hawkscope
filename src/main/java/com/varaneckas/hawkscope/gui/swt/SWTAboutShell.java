@@ -284,7 +284,6 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                 logoCanvasLData.top =  new FormAttachment(0, 1000, 12);
                 logoCanvas = new Canvas(dialogShell, SWT.RESIZE);
                 logoCanvas.addPaintListener(new PaintListener() {
-                    @Override
                     public void paintControl(PaintEvent e) {
                         e.gc.drawImage((Image) IconFactory.getIconFactory()
                                 .getUncachedIcon("hawkscope128.png"), 0, 0, 128, 
@@ -314,12 +313,10 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
         }
     }
 
-    @Override
     public void hideObject() {
         dialogShell.dispose();
     }
 
-    @Override
     public void showObject() {
         open();
     }

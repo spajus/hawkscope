@@ -47,10 +47,8 @@ public class SWTMainMenu extends MainMenu {
         menu = new Menu(((SWTTrayManager) TrayManagerFactory.getTrayManager())
                 .getShell(), SWT.POP_UP);
         menu.addListener(SWT.Hide, new Listener() {
-            @Override
             public void handleEvent(Event event) {
                 new Thread(new Runnable() {
-                    @Override
                     public void run() {
                         menu.getDisplay().syncExec(new Runnable() {
                             public void run() {
@@ -123,7 +121,6 @@ public class SWTMainMenu extends MainMenu {
         if (!isReloading) {
             isReloading = true;
             new Thread(new Runnable() {
-                @Override
                 public void run() {
                     try {
                         Thread.sleep(ConfigurationFactory
@@ -143,7 +140,6 @@ public class SWTMainMenu extends MainMenu {
      */
     private void doReload() {
         menu.getDisplay().asyncExec(new Runnable() {
-            @Override
             public void run() {
                 try {
                     if (hiddenSince == 0L) {

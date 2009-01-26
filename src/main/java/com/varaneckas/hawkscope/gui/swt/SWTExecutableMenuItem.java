@@ -38,46 +38,38 @@ public class SWTExecutableMenuItem implements ExecutableMenuItem, SWTMenuItem {
      */
     private boolean enabled = true;
     
-    @Override
     public void createMenuItem(final Menu parent) {
         final MenuItem mi = new MenuItem(parent, SWT.PUSH);
         mi.setImage((Image) icon);
         mi.setText(text);
         mi.setEnabled(enabled);
         mi.addListener(SWT.Selection, new Listener() {
-            @Override
             public void handleEvent(Event event) {
                 command.execute();
             }
         });
     }
 
-    @Override
     public void setCommand(final Command command) {
         this.command = command;
     }
 
-    @Override
     public void setIcon(final Object icon) {
         this.icon = icon;
     }
 
-    @Override
     public void setText(final String text) {
         this.text = text;
     }
 
-    @Override
     public void setToolTipText(final String text) {
         //unsupported feature
     }
 
-    @Override
     public Command getCommand() {
         return command;
     }
 
-    @Override
     public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }

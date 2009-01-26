@@ -19,7 +19,6 @@ public class SimpleUncaughtExceptionHandlerTest {
     @Test
     public void testShortException() throws Exception {
         new Thread(new Runnable() {
-            @Override
             public void run() {
                 throw new RuntimeException("This is how short error looks.");
             }
@@ -30,7 +29,6 @@ public class SimpleUncaughtExceptionHandlerTest {
     @Test
     public void testLongException() throws Exception {
         new Thread(new Runnable() {
-            @Override
             public void run() {
                 throw new RuntimeException("This is how loooong error looks: " +
                 		"A quick brown fox jumps over a lazy dog! " +
@@ -50,7 +48,6 @@ public class SimpleUncaughtExceptionHandlerTest {
     @Test
     public void testExceptionWithLongStackTrace() throws Exception {
         new Thread(new Runnable() {
-            @Override
             public void run() {
                 try {
                     MessageDigest.getInstance("456").digest("test".getBytes(),

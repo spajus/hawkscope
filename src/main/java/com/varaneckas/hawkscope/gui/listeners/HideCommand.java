@@ -13,7 +13,6 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
  */
 public class HideCommand implements Command {
 
-    @Override
     public void execute() {
         MenuFactory.getMenuFactory().getMainMenu().forceHide();
     }
