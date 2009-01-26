@@ -1,5 +1,7 @@
 package com.varaneckas.hawkscope.gui.swt;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
@@ -17,6 +19,11 @@ import com.varaneckas.hawkscope.util.IconFactory;
  */
 public class SWTTrayManager implements TrayManager {
 
+    /**
+     * Logger
+     */
+    private static final Log log = LogFactory.getLog(SWTTrayManager.class);
+    
     /**
      * Tray Icon object
      */
@@ -53,6 +60,14 @@ public class SWTTrayManager implements TrayManager {
         SWTTrayIconListener listener = new SWTTrayIconListener();
         trayIcon.addListener (SWT.Selection, listener);
         trayIcon.addListener (SWT.MenuDetect, listener);
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                log.debug("Removing Tray Icon");
+                trayIcon.dispose();
+                d.dispose();
+            }
+        }, "icon-disposer-hook"));
         while (!sh.isDisposed()) {
             try {
                 if (!d.readAndDispatch ()) {
@@ -63,14 +78,5 @@ public class SWTTrayManager implements TrayManager {
                         .uncaughtException(Thread.currentThread(), e);
             }
         }
-        d.dispose();
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            @Override
-            public void run() {
-                trayIcon.dispose();
-            }
-        }, "icon-disposer-hook"));
     }
-    
-    
 }

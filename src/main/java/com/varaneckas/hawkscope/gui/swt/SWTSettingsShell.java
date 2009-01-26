@@ -683,6 +683,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
     @Override
     public void showObject() {
         open();
+        dialogShell.forceFocus();
     }
     
     private void showMoveWarnDialog() {

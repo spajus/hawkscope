@@ -321,6 +321,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
     @Override
     public void showObject() {
         open();
+        dialogShell.forceFocus();
     }
     
 }
