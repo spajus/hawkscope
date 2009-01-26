@@ -64,8 +64,7 @@ public class SWTTrayManager implements TrayManager {
             @Override
             public void run() {
                 log.debug("Removing Tray Icon");
-                trayIcon.dispose();
-                d.dispose();
+                IconFactory.getIconFactory().cleanup();
             }
         }, "icon-disposer-hook"));
         while (!sh.isDisposed()) {
@@ -78,5 +77,6 @@ public class SWTTrayManager implements TrayManager {
                         .uncaughtException(Thread.currentThread(), e);
             }
         }
+        d.dispose();
     }
 }

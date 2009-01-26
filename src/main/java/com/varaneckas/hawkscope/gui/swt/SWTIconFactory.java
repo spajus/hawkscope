@@ -1,6 +1,8 @@
 package com.varaneckas.hawkscope.gui.swt;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.Icon;
 
@@ -20,7 +22,9 @@ import com.varaneckas.hawkscope.util.IconFactory;
  * @version $Id$
  */
 public class SWTIconFactory extends IconFactory<Image> {
-
+    
+    private final Map<String, Image> resourcePool = new HashMap<String, Image>();
+    
     /**
      * Logger
      */
@@ -39,7 +43,12 @@ public class SWTIconFactory extends IconFactory<Image> {
      */
     public Image getIcon(final String name) {
         try {
-            return new Image(display, resources.get(name).openStream());
+            if (resourcePool.containsKey(name)) {
+                return resourcePool.get(name);
+            } 
+            final Image i = new Image(display, resources.get(name).openStream());
+            resourcePool.put(name, i);
+            return i;
         } catch (final Exception e) {
             log.error("Failed getting icon: " + name, e);
         }
@@ -53,8 +62,13 @@ public class SWTIconFactory extends IconFactory<Image> {
      * @return icon
      */
     public Image getUncachedIcon(final String name) {
-        return new Image(display, SWTIconFactory.class.getClassLoader()
+        if (resourcePool.containsKey(name)) {
+            return resourcePool.get(name);
+        } 
+        final Image i = new Image(display, SWTIconFactory.class.getClassLoader()
                 .getResourceAsStream("icons/" + name));
+        resourcePool.put(name, i);
+        return i;
     }
 
     /**
@@ -68,9 +82,13 @@ public class SWTIconFactory extends IconFactory<Image> {
         Image image = null;
         Program p = Program.findProgram(file.getName().replaceAll(".*\\.", "."));
         if (p != null) {
+            if (resourcePool.containsKey(p.getName())) {
+                return resourcePool.get(p.getName());
+            }
             ImageData data = p.getImageData();
             if (data != null) {
                 image = new Image(display, data);
+                resourcePool.put(p.getName(), image);
             }
         }
         return image;
@@ -82,7 +100,25 @@ public class SWTIconFactory extends IconFactory<Image> {
      * @return tray icon
      */
     public Image getTrayIcon() {
-        return new Image(display, SWTIconFactory.class.getClassLoader()
+        String name = "HawkscopeTrayIcon";
+        if (resourcePool.containsKey(name)) {
+            resourcePool.get(name);
+        }
+        final Image trayIcon = new Image(display, SWTIconFactory.class.getClassLoader()
                 .getResourceAsStream(getBestTrayIcon()));
+        resourcePool.put(name, trayIcon);
+        return trayIcon;
+    }
+    
+    @Override
+    public synchronized void cleanup() {
+        for (final String im : resourcePool.keySet()) {
+            try {
+                log.debug("Releasing icon: " + im);
+                resourcePool.get(im).dispose();
+            } catch (final Exception e) {
+                log.debug("Failed releasing icon", e);
+            }
+        }        
     }
 }

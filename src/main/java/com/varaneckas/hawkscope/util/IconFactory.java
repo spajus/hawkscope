@@ -58,7 +58,6 @@ public abstract class IconFactory<IconType> {
         }
     }
     
-    
     /**
      * Gets the {@link IconFactory} instance
      * 
@@ -161,4 +160,9 @@ public abstract class IconFactory<IconType> {
     public IconType getFileSystemIcon(final File file) {
         return null;
     }
+    
+    /**
+     * Cleanup resources
+     */
+    public abstract void cleanup();
 }

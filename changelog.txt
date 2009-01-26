@@ -6,6 +6,10 @@ http://hawkscope.googlecode.com
 
 Changes in version 0.4.0 (2009-??-??)
 -------------------------------------
+* HTTP proxy authentication for update checks
+  http://code.google.com/p/hawkscope/issues/detail?id=26
+* Better handling of resources and smaller memory consumption
+  http://code.google.com/p/hawkscope/issues/detail?id=28
 * Added possibility to use operating system icons if they are available
   http://code.google.com/p/hawkscope/issues/detail?id=24 
 * Swing GUI implementation is now discontinued and removed
