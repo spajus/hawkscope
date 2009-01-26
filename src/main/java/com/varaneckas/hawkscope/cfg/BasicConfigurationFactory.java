@@ -39,6 +39,12 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         data.put(Configuration.HTTP_PROXY_HOST, "");
         //8080 default proxy port
         data.put(Configuration.HTTP_PROXY_PORT, "8080");
+        //no proxy auth by default
+        data.put(Configuration.HTTP_PROXY_AUTH_USE, "0");
+        //no proxy auth username by default
+        data.put(Configuration.HTTP_PROXY_AUTH_USERNAME, "");
+        //no proxy auth password by default
+        data.put(Configuration.HTTP_PROXY_AUTH_PASSWORD, "");
         //use OS icons - off by default
         data.put(Configuration.USE_OS_ICONS, "0");
         return data;

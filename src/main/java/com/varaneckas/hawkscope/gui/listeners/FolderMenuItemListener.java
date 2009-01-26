@@ -3,6 +3,8 @@ package com.varaneckas.hawkscope.gui.listeners;
 import java.io.File;
 import java.util.Arrays;
 
+import org.eclipse.swt.program.Program;
+
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.menu.DynamicFileFilter;
 import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
@@ -92,6 +94,6 @@ public class FolderMenuItemListener implements MenuItemListener {
     
     @Override
     public void itemClicked() {
-        //Unsupported in SWT
+        Program.launch(file.getAbsolutePath());
     }
 }

@@ -76,6 +76,11 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
     private List listBlacklist;
     private Button checkDisplayHidden;
     private Composite containerBlacklist;
+    private Text textHttpProxyPassword;
+    private Label labelAuthPassword;
+    private Text textHttpProxyUsername;
+    private Label labelAuthUsername;
+    private Button checkUseHttpProxyAuth;
     private Button checkUseOsIcons;
     private Button buttonQuickItemDown;
     private Button buttonQuickItemUp;
@@ -115,13 +120,13 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             dialogShell.setLayout(new FormLayout());
             dialogShell.layout();
             dialogShell.pack();
-            dialogShell.setSize(418, 311);
+            dialogShell.setSize(418, 331);
             //Settings tab folder: [General][Quick Access][Blacklist][Network]
             {
                 settingsTabFolder = new TabFolder(dialogShell, SWT.NONE);
                 FormData settingsTabFolderLData = new FormData();
                 settingsTabFolderLData.width = 382;
-                settingsTabFolderLData.height = 197;
+                settingsTabFolderLData.height = 211;
                 settingsTabFolderLData.left =  new FormAttachment(0, 1000, 12);
                 settingsTabFolderLData.top =  new FormAttachment(0, 1000, 11);
                 settingsTabFolder.setLayoutData(settingsTabFolderLData);
@@ -156,7 +161,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
         buttonOKLData.width = 30;
         buttonOKLData.height = 29;
         buttonOKLData.left =  new FormAttachment(0, 1000, 299);
-        buttonOKLData.top =  new FormAttachment(0, 1000, 247);
+        buttonOKLData.top =  new FormAttachment(0, 1000, 261);
         buttonOK.setLayoutData(buttonOKLData);
         buttonOK.setText("&OK");
         buttonOK.addSelectionListener(new SelectionAdapter() {
@@ -174,7 +179,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
         buttonCancelLData.width = 55;
         buttonCancelLData.height = 29;
         buttonCancelLData.left =  new FormAttachment(0, 1000, 341);
-        buttonCancelLData.top =  new FormAttachment(0, 1000, 247);
+        buttonCancelLData.top =  new FormAttachment(0, 1000, 261);
         buttonCancel.setLayoutData(buttonCancelLData);
         buttonCancel.setText("&Cancel");
         buttonCancel.addSelectionListener(new SelectionAdapter() {
@@ -220,6 +225,11 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                 public void widgetSelected(SelectionEvent event) {
                     textHttpProxyHost.setEnabled(buttonUseHttpProxy.getSelection());
                     textHttpProxyPort.setEnabled(buttonUseHttpProxy.getSelection());
+                    checkUseHttpProxyAuth.setEnabled(buttonUseHttpProxy.getSelection());
+                    textHttpProxyUsername.setEnabled(buttonUseHttpProxy.getSelection() 
+                            && checkUseHttpProxyAuth.getSelection());
+                    textHttpProxyPassword.setEnabled(buttonUseHttpProxy.getSelection() 
+                            && checkUseHttpProxyAuth.getSelection());
                 }
             });
         }  
@@ -267,6 +277,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             textHttpProxyPortLData.top =  new FormAttachment(0, 1000, 89);
             textHttpProxyPort.setLayoutData(textHttpProxyPortLData);
             textHttpProxyPort.setText("" + cfg.getHttpProxyPort());
+            textHttpProxyPort.setTextLimit(5);
             textHttpProxyPort.setEnabled(cfg.isHttpProxyInUse());
             textHttpProxyPort.addListener(SWT.FocusOut, new Listener() {
                 @Override
@@ -284,6 +295,78 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                     }
                 }
             });
+            
+        }
+        //Check: Use HTTP Proxy Auth
+        {
+            checkUseHttpProxyAuth = new Button(containerNetwork, SWT.CHECK | SWT.LEFT);
+            checkUseHttpProxyAuth.setText("Enable Authentication");
+            FormData checkUseHttpProxyAuthLData = new FormData();
+            checkUseHttpProxyAuthLData.width = 164;
+            checkUseHttpProxyAuthLData.height = 22;
+            checkUseHttpProxyAuthLData.left =  new FormAttachment(0, 1000, 24);
+            checkUseHttpProxyAuthLData.top =  new FormAttachment(0, 1000, 121);
+            checkUseHttpProxyAuth.setLayoutData(checkUseHttpProxyAuthLData);
+            checkUseHttpProxyAuth.setEnabled(cfg.isHttpProxyInUse());
+            checkUseHttpProxyAuth.setSelection(cfg.isHttpProxyAuthInUse());
+            checkUseHttpProxyAuth.addSelectionListener(new SelectionAdapter() {
+                @Override
+                public void widgetSelected(SelectionEvent event) {
+                    textHttpProxyUsername.setEnabled(buttonUseHttpProxy.getSelection() 
+                            && checkUseHttpProxyAuth.getSelection());
+                    textHttpProxyPassword.setEnabled(buttonUseHttpProxy.getSelection() 
+                            && checkUseHttpProxyAuth.getSelection());
+                }
+            });            
+        }
+        //Label: Auth user name
+        {
+            labelAuthUsername = new Label(containerNetwork, SWT.NONE);
+            labelAuthUsername.setText("Username:");
+            FormData labelAuthUsernameLData = new FormData();
+            labelAuthUsernameLData.width = 119;
+            labelAuthUsernameLData.height = 17;
+            labelAuthUsernameLData.left =  new FormAttachment(0, 1000, 24);
+            labelAuthUsernameLData.top =  new FormAttachment(0, 1000, 149);
+            labelAuthUsername.setLayoutData(labelAuthUsernameLData);
+        }   
+        //Text: Http auth user name input
+        {
+            textHttpProxyUsername = new Text(containerNetwork, SWT.BORDER);
+            FormData textHttpProxyUsernameLData = new FormData();
+            textHttpProxyUsernameLData.width = 197;
+            textHttpProxyUsernameLData.height = 17;
+            textHttpProxyUsernameLData.left =  new FormAttachment(0, 1000, 161);
+            textHttpProxyUsernameLData.top =  new FormAttachment(0, 1000, 144);
+            textHttpProxyUsername.setLayoutData(textHttpProxyUsernameLData);
+            textHttpProxyUsername.setText(cfg.getHttpProxyAuthUsername());
+            textHttpProxyUsername.setEnabled(cfg.isHttpProxyInUse() 
+                    && cfg.isHttpProxyAuthInUse());
+        }  
+        //Label: auth password
+        {
+            labelAuthPassword = new Label(containerNetwork, SWT.NONE);
+            labelAuthPassword.setText("Password:");
+            FormData labelAuthPasswordLData = new FormData();
+            labelAuthPasswordLData.width = 119;
+            labelAuthPasswordLData.height = 17;
+            labelAuthPasswordLData.left =  new FormAttachment(0, 1000, 24);
+            labelAuthPasswordLData.top =  new FormAttachment(0, 1000, 178);
+            labelAuthPassword.setLayoutData(labelAuthPasswordLData);
+        }        
+        //Text: Http proxy password input
+        {
+            textHttpProxyPassword = new Text(containerNetwork, SWT.BORDER);
+            FormData textHttpProxyPasswordLData = new FormData();
+            textHttpProxyPasswordLData.width = 197;
+            textHttpProxyPasswordLData.height = 17;
+            textHttpProxyPasswordLData.left =  new FormAttachment(0, 1000, 161);
+            textHttpProxyPasswordLData.top =  new FormAttachment(0, 1000, 174);
+            textHttpProxyPassword.setLayoutData(textHttpProxyPasswordLData);
+            textHttpProxyPassword.setEchoChar('*');
+            textHttpProxyPassword.setText(cfg.getHttpProxyAuthPassword());
+            textHttpProxyPassword.setEnabled(cfg.isHttpProxyInUse() 
+                    && cfg.isHttpProxyAuthInUse());
         }
     }
 
@@ -647,6 +730,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             textMenuReloadDelayLData.top =  new FormAttachment(0, 1000, 82);
             textMenuReloadDelay.setLayoutData(textMenuReloadDelayLData);
             textMenuReloadDelay.setText("" + (cfg.getMenuReloadDelay() / 1000.0));
+            textMenuReloadDelay.setTextLimit(4);
             textMenuReloadDelay.addListener(SWT.FocusOut, new Listener() {
                 @Override
                 public void handleEvent(Event event) {
@@ -736,6 +820,12 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                 textHttpProxyHost.getText());
         cfg.getProperties().put(Configuration.HTTP_PROXY_PORT, 
                 textHttpProxyPort.getText());
+        cfg.getProperties().put(Configuration.HTTP_PROXY_AUTH_USE,
+                checkUseHttpProxyAuth.getSelection() ? "1" : "0");
+        cfg.getProperties().put(Configuration.HTTP_PROXY_AUTH_USERNAME,
+                textHttpProxyUsername.getText());
+        cfg.getProperties().put(Configuration.HTTP_PROXY_AUTH_PASSWORD,
+                textHttpProxyPassword.getText());
         ConfigurationFactory.getConfigurationFactory().write(cfg);
     }
 

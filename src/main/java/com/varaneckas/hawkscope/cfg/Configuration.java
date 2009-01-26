@@ -70,6 +70,21 @@ public class Configuration {
     public static final String HTTP_PROXY_PORT = "http.proxy.port";
     
     /**
+     * Use HTTP Proxy authentication
+     */
+    public static final String HTTP_PROXY_AUTH_USE = "http.proxy.auth.use";
+    
+    /**
+     * HTTP Proxy authentication username
+     */
+    public static final String HTTP_PROXY_AUTH_USERNAME = "http.proxy.auth.username";
+    
+    /**
+     * HTTP Proxy authentication password
+     */
+    public static final String HTTP_PROXY_AUTH_PASSWORD = "http.proxy.auth.password";
+    
+    /**
      * Tells Hawkscope to use operating system icons where possible;
      */
     public static final String USE_OS_ICONS = "use.os.icons";
@@ -211,6 +226,33 @@ public class Configuration {
      */
     public String getHttpProxyHost() {
         return properties.get(HTTP_PROXY_HOST);
+    }
+    
+    /**
+     * Tells if HTTP proxy authentication is in use
+     * 
+     * @return
+     */
+    public boolean isHttpProxyAuthInUse() {
+        return properties.get(HTTP_PROXY_AUTH_USE).equals("1");
+    }
+    
+    /**
+     * Gets HTTP Proxy authentication username
+     * 
+     * @return
+     */
+    public String getHttpProxyAuthUsername() {
+        return properties.get(HTTP_PROXY_AUTH_USERNAME);
+    }
+    
+    /**
+     * Gets HTTP Proxy authentication password
+     * 
+     * @return
+     */
+    public String getHttpProxyAuthPassword() {
+        return properties.get(HTTP_PROXY_AUTH_PASSWORD);
     }
     
     /**

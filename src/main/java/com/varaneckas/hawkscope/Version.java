@@ -4,7 +4,9 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.net.Authenticator;
 import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.URLConnection;
@@ -203,6 +205,21 @@ public class Version {
             URLConnection conn = null;
             final URL versionCheckUrl = new URL(VERSION_CHECK_URL);
             if (cfg.isHttpProxyInUse()) {
+                if (cfg.isHttpProxyAuthInUse()) {
+                    Authenticator.setDefault(new Authenticator() {
+                        @Override
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            if (getRequestorType().equals(RequestorType.PROXY)) {
+                                log.debug("Performing HTTP Proxy Authentication");
+                                return new PasswordAuthentication(
+                                        cfg.getHttpProxyAuthUsername(), 
+                                        cfg.getHttpProxyAuthPassword().toCharArray());
+                            } else {
+                                return null;
+                            }
+                        }
+                    });
+                }
                 final Proxy proxy = new Proxy(Type.HTTP, InetSocketAddress
                         .createUnresolved(cfg.getHttpProxyHost()
                                 , cfg.getHttpProxyPort()));

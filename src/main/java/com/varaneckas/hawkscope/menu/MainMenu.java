@@ -134,7 +134,12 @@ public abstract class MainMenu {
                 .getConfiguration().getQuickAccessList();
         if (quick != null && quick.size() > 0) {
             for (final File custom : quick) {
-                addMenuItem(MenuFactory.getMenuFactory().newFolderMenu(custom));
+                try {
+                    addMenuItem(MenuFactory.getMenuFactory()
+                            .newFolderMenu(custom));
+                } catch (final Exception e) {
+                    log.warn("Skipping unloadable Quick Access List item", e);
+                }
             }
             addSeparator();
         }
