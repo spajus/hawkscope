@@ -93,6 +93,10 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
     }
 
     public void open() {
+        if (dialogShell != null && !dialogShell.isDisposed()) {
+            dialogShell.setVisible(true);
+            return;
+        }
         try {
             final Shell parent = getParent();
             dialogShell = new Shell(parent, SWT.DIALOG_TRIM
