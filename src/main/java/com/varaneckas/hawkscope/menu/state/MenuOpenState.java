@@ -48,7 +48,7 @@ public class MenuOpenState extends State {
     @Override
     public void init() {
         if (log.isDebugEnabled()) {
-            log.info("Menu open. Free mem: " 
+            log.debug("Menu open. Free mem: " 
                     + Runtime.getRuntime().freeMemory() / (1024*1024));
         }
     }

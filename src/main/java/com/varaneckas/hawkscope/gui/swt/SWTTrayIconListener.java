@@ -46,16 +46,22 @@ public class SWTTrayIconListener implements Listener {
         final Display d = Display.getDefault();
         final StateEvent se = new StateEvent();
         final Point loc = d.getCursorLocation();
-        final Dimension traySize = SystemTray.getSystemTray().getTrayIconSize();
-        int y = loc.y;
-        //assume click is in the middle of the icon
-        int x = loc.x - traySize.width / 2;
-        if (loc.y < traySize.height + 2) {
-            //tray is on top side of the screen
-            y = traySize.height;
+        int x, y;
+        x = loc.x;
+        y = loc.y;
+        if (!System.getProperty("os.name").toLowerCase().startsWith("win")) {
+            final Dimension traySize = SystemTray.getSystemTray().getTrayIconSize();
+            //assume click is in the middle of the icon
+            x = loc.x - traySize.width / 2;
+            if (loc.y < traySize.height + 2) {
+                //tray is on top side of the screen
+                y = traySize.height;
+            } else {
+                //tray is on bottom side of the screen
+                y = d.getBounds().height - traySize.height;
+            }
         } else {
-            //tray is on bottom side of the screen
-            y = d.getBounds().height - traySize.height;
+            loc.y -= 2;
         }
         se.setX(x);
         se.setY(y);

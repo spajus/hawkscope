@@ -46,7 +46,7 @@ public abstract class PathUtils {
         for (final String location : locations) {
             File f = null;
             if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
-                f = new File(location.replaceAll("/", "\\"));
+                f = new File(location.replaceAll("/", "\\\\"));
             } else {
                 f = new File(location);
             }

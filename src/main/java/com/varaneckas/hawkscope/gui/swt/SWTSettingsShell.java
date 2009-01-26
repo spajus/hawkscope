@@ -707,6 +707,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
         for (String item : listQuickAccess.getItems()) {
             quickAccess.append(item.replaceFirst(".+<", "")
                     .replaceFirst(">", "").replaceAll("\\\\", "/"));
+            quickAccess.append(';');
         }
         cfg.getProperties().put(Configuration.QUICK_ACCESS_LIST, 
                 quickAccess.toString());
