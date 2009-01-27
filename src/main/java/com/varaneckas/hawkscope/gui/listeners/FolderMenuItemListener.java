@@ -77,7 +77,7 @@ public class FolderMenuItemListener implements MenuItemListener {
                     } else {
                         workMenu.addMenuItem(MenuFactory.getMenuFactory().newFileMenuItem(ff));
                     }
-                    if (++counter % MENU_SIZE == 0) {
+                    if (++counter % MENU_SIZE == 0 && counter < files.length) {
                         FolderMenu more = MenuFactory.getMenuFactory().newFolderMenu(null);
                         more.setIcon(IconFactory.getIconFactory().getIcon("more"));
                         more.setText("More");

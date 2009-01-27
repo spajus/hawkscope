@@ -1,7 +1,5 @@
 package com.varaneckas.hawkscope.test;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MenuDetectEvent;
 import org.eclipse.swt.events.MenuDetectListener;
@@ -17,8 +15,6 @@ import org.eclipse.swt.widgets.TrayItem;
 
 public class MacTrayTest {
 
-	private static final Log log = LogFactory.getLog(MacTrayTest.class);
-	
   private static final String MENU_ITEM_TEXT = "Menu Item";
 
   private static final String ICON_IMAGE = "icons/hawkscope16.png";

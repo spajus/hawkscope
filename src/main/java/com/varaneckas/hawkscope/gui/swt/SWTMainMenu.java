@@ -102,6 +102,7 @@ public class SWTMainMenu extends MainMenu {
         hiddenSince = 0L;
         menu.setLocation(x, y);
         menu.setVisible(true);
+        menu.setDefaultItem(menu.getItems()[0]);
     }
 
     @Override

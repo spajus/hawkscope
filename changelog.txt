@@ -6,6 +6,8 @@ http://hawkscope.googlecode.com
 
 Changes in version 0.4.0 (2009-??-??)
 -------------------------------------
+* Made Hawkscope Java 5 compatible, now it runs on Mac OS X 10.4+
+  http://code.google.com/p/hawkscope/issues/detail?id=9
 * HTTP proxy authentication for update checks
   http://code.google.com/p/hawkscope/issues/detail?id=26
 * Better handling of resources and smaller memory consumption

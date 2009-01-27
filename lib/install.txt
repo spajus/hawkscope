@@ -1,7 +1,14 @@
+#Maven SWT dependency installation. Please execute your line:
+
+#Linux GTK amd64
 mvn install:install-file -DgroupId=org.eclipse.swt -DartifactId=swt-linux-64 -Dversion=3.4 -DgeneratePom=true -Dpackaging=jar -Dfile=swt-linux-64.jar 
+
+#Linux GTK i386
 mvn install:install-file -DgroupId=org.eclipse.swt -DartifactId=swt-linux-32 -Dversion=3.4 -DgeneratePom=true -Dpackaging=jar -Dfile=swt-linux-32.jar
+
+#Windows x86
 mvn install:install-file -DgroupId=org.eclipse.swt -DartifactId=swt-win-32 -Dversion=3.4 -DgeneratePom=true -Dpackaging=jar -Dfile=swt-win-32.jar 
+
+#Mac i386
 mvn install:install-file -DgroupId=org.eclipse.swt -DartifactId=swt-mac-32 -Dversion=3.4 -DgeneratePom=true -Dpackaging=jar -Dfile=swt-mac-32.jar 
- 
-mvn install:install-file -DgroupId=org.eclipse.swt -DartifactId=swt-mac-32 -Dversion=3.5M4 -DgeneratePom=true -Dpackaging=jar -Dfile=swt-mac-32-3.5M4.jar 
  
