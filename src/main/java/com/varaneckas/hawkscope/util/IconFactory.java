@@ -44,6 +44,7 @@ public abstract class IconFactory<IconType> {
             resources.put("folder", IconFactory.class.getClassLoader().getResource("icons/folder24.png"));
             resources.put("folder.open", IconFactory.class.getClassLoader().getResource("icons/folder.open.24.png"));
             resources.put("file",   IconFactory.class.getClassLoader().getResource("icons/file24.png"));
+            resources.put("executable",   IconFactory.class.getClassLoader().getResource("icons/executable24.png"));
             resources.put("exit",   IconFactory.class.getClassLoader().getResource("icons/exit24.png"));
             resources.put("hide",   IconFactory.class.getClassLoader().getResource("icons/down24.png"));
             resources.put("more",   IconFactory.class.getClassLoader().getResource("icons/more24.png"));
@@ -124,8 +125,16 @@ public abstract class IconFactory<IconType> {
             }
             return getIcon("drive");
         } else if (targetFile.isFile()) {
+            if (targetFile.canExecute()) {
+                return getIcon("executable");
+            }
             return getIcon("file");
         } else if (targetFile.isDirectory()) {
+            //mac app
+            if (OSUtils.CURRENT_OS.equals(OSUtils.OS.MAC) 
+                    && targetFile.getName().endsWith(".app")) {
+                return getIcon("executable");  
+            } 
             return getIcon("folder");
         } else {
             return getIcon("unknown");
