@@ -11,19 +11,25 @@
                 <include name="*jar-with-dependencies.jar" />
             </fileset>
         </copy>
+    	<!-- seems to hang and irritates me
     	<delete dir="dist/output" failonerror="no" quiet="true"/>
-    	<mkdir dir="dist/output/mac"/>
+    	so let's get rude -->
+    	<exec executable="rm"><arg line="-rf dist/output"/></exec>
+    	<mkdir dir="dist/output/Hawkscope-${hawkscope.version}"/>
     	<filter token="hawkscope.version" value="${hawkscope.version}"/>
     	<filter token="copyright.year" value="${copyright.year}"/>
-    	<copy overwrite="true" todir="dist/output/mac" filtering="true">
+    	<copy overwrite="true" todir="dist/output/Hawkscope-${hawkscope.version}" filtering="true">
     	    <fileset dir="dist/mac">
     	        <filename name="**/*"/>
     	    	<exclude name=".*"/>
     	    </fileset>	
         </copy>
-    	<chmod perm="a+x" file="dist/output/mac/Hawkscope.app/Contents/MacOS/hawkscope"/>
+    	<chmod perm="a+x" file="dist/output/Hawkscope-${hawkscope.version}/Hawkscope.app/Contents/MacOS/hawkscope"/>
+    	<exec executable="ln">
+    		<arg line="-s /Applications dist/output/Hawkscope-${hawkscope.version}/Applications"/>
+    	</exec>
     	<exec executable="hdiutil">
-    		<arg line="create -srcfolder dist/output/mac dist/output/Hawkscope-${hawkscope.version}.dmg"/>
+    		<arg line="create -srcfolder dist/output/Hawkscope-${hawkscope.version} dist/output/Hawkscope-${hawkscope.version}.dmg"/>
     	</exec>
     	<exec executable="hdiutil">
     		<arg line="internet-enable -yes dist/output/Hawkscope-${hawkscope.version}.dmg"/>

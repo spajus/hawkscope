@@ -79,6 +79,9 @@ public class SWTIconFactory extends IconFactory<Image> {
      */
     @Override
     public Image getFileSystemIcon(final File file) {
+    	if (file.isDirectory() || !file.getName().contains(".")) {
+    		return null;
+    	}
         Image image = null;
         Program p = Program.findProgram(file.getName().replaceAll(".*\\.", "."));
         if (p != null) {
