@@ -31,7 +31,7 @@ import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.SettingsWindow;
 import com.varaneckas.hawkscope.menu.MenuFactory;
-import com.varaneckas.hawkscope.util.OperatingSystemUtils;
+import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -165,7 +165,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
         buttonOKLData.top =  new FormAttachment(0, 1000, 261);
         buttonOK.setLayoutData(buttonOKLData);
         buttonOK.setText("&OK");
-        OperatingSystemUtils.adjustButton(buttonOK);
+        OSUtils.adjustButton(buttonOK);
         buttonOK.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent event) {
@@ -183,7 +183,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
         buttonCancelLData.left =  new FormAttachment(0, 1000, 341);
         buttonCancelLData.top =  new FormAttachment(0, 1000, 261);
         buttonCancel.setLayoutData(buttonCancelLData);
-        OperatingSystemUtils.adjustButton(buttonCancel);
+        OSUtils.adjustButton(buttonCancel);
         buttonCancel.setText("&Cancel");
         buttonCancel.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -460,7 +460,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             buttonAddToBlacklistLData.top =  new FormAttachment(0, 1000, 115);
             buttonAddToBlacklist.setLayoutData(buttonAddToBlacklistLData);
             buttonAddToBlacklist.setText("+");
-            OperatingSystemUtils.adjustButton(buttonAddToBlacklist);
+            OSUtils.adjustButton(buttonAddToBlacklist);
             buttonAddToBlacklist.addSelectionListener(new SelectionAdapter() {
                @Override
                 public void widgetSelected(SelectionEvent event) {
@@ -489,7 +489,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             buttonRemoveFromBlacklistLData.top =  new FormAttachment(0, 1000, 150);
             buttonRemoveFromBlacklist.setLayoutData(buttonRemoveFromBlacklistLData);
             buttonRemoveFromBlacklist.setText("-");
-            OperatingSystemUtils.adjustButton(buttonRemoveFromBlacklist);
+            OSUtils.adjustButton(buttonRemoveFromBlacklist);
             buttonRemoveFromBlacklist.addSelectionListener(new SelectionAdapter() {
                @Override
                 public void widgetSelected(SelectionEvent event) {
@@ -566,7 +566,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             buttonAddQuickAccessLData.top =  new FormAttachment(0, 1000, 36);
             buttonAddQuickAccess.setLayoutData(buttonAddQuickAccessLData);
             buttonAddQuickAccess.setText("+");
-            OperatingSystemUtils.adjustButton(buttonAddQuickAccess);
+            OSUtils.adjustButton(buttonAddQuickAccess);
             buttonAddQuickAccess.addSelectionListener(new SelectionAdapter() {
                @Override
                 public void widgetSelected(SelectionEvent event) {
@@ -595,7 +595,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             buttonDelQuickAccessLData.top =  new FormAttachment(0, 1000, 71);
             buttonDelQuickAccess.setLayoutData(buttonDelQuickAccessLData);
             buttonDelQuickAccess.setText("-");
-            OperatingSystemUtils.adjustButton(buttonDelQuickAccess);
+            OSUtils.adjustButton(buttonDelQuickAccess);
             buttonDelQuickAccess.addSelectionListener(new SelectionAdapter() {
                @Override
                 public void widgetSelected(SelectionEvent event) {
@@ -616,7 +616,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             buttonQuickItemUpLData.top =  new FormAttachment(0, 1000, 118);
             buttonQuickItemUp.setLayoutData(buttonQuickItemUpLData);
             buttonQuickItemUp.setText("Up");
-            OperatingSystemUtils.adjustButton(buttonQuickItemUp);
+            OSUtils.adjustButton(buttonQuickItemUp);
             buttonQuickItemUp.addSelectionListener(new SelectionAdapter() {
                @Override
                 public void widgetSelected(SelectionEvent event) {
@@ -646,7 +646,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             buttonQuickItemDownLData.top =  new FormAttachment(0, 1000, 153);
             buttonQuickItemDown.setLayoutData(buttonQuickItemDownLData);
             buttonQuickItemDown.setText("Dn");
-            OperatingSystemUtils.adjustButton(buttonQuickItemDown);
+            OSUtils.adjustButton(buttonQuickItemDown);
             buttonQuickItemDown.addSelectionListener(new SelectionAdapter() {
                @Override
                 public void widgetSelected(SelectionEvent event) {

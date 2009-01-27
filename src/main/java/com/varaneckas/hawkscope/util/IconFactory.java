@@ -106,8 +106,8 @@ public abstract class IconFactory<IconType> {
                 return icon;
             }
         }
-        if (OperatingSystemUtils.isFileSystemRoot(targetFile)) {
-            if (OperatingSystemUtils.isFloppyDrive(targetFile)) {
+        if (OSUtils.isFileSystemRoot(targetFile)) {
+            if (OSUtils.isFloppyDrive(targetFile)) {
                 return getIcon("floppy");
             }
             return getIcon("drive");
@@ -126,7 +126,7 @@ public abstract class IconFactory<IconType> {
      * @return tray icon name
      */
     protected String getBestTrayIcon() {
-        float height = OperatingSystemUtils.getTrayIconSize();
+        float height = OSUtils.getTrayIconSize();
         int[] sizes = new int[] { 64, 48, 32, 24, 16 };
         int best = 64;
         for (int i = 0; i < sizes.length; i++) {

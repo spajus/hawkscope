@@ -99,7 +99,7 @@ public abstract class PathUtils {
      * @return friendly file name
      */
     public static String getFileName(final File file) {
-    	String name = OperatingSystemUtils.getSystemDisplayName(file);
+    	String name = OSUtils.getSystemDisplayName(file);
         if (name == null || name.equals("")) {
             name = file.getName();
         } 
@@ -119,6 +119,6 @@ public abstract class PathUtils {
      * @return is floppy
      */
     public static boolean isFloppy(final File file) {
-    	return OperatingSystemUtils.isFloppyDrive(file);
+    	return OSUtils.isFloppyDrive(file);
     }
 }

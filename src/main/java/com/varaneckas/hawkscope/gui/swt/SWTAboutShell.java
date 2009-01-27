@@ -28,7 +28,7 @@ import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.gui.AboutWindow;
 import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.IconFactory;
-import com.varaneckas.hawkscope.util.OperatingSystemUtils;
+import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
  * {@link AboutWindow} - SWT implementation 
@@ -122,7 +122,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                    } 
                 });
                 copyReportButton.setText("Co&py to Clipboard");
-                OperatingSystemUtils.adjustButton(copyReportButton);
+                OSUtils.adjustButton(copyReportButton);
             }
             {
                 closeButton = new Button(dialogShell, SWT.PUSH | SWT.CENTER);
@@ -139,7 +139,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                     } 
                 });
                 closeButton.setText("&Close");
-                OperatingSystemUtils.adjustButton(closeButton);
+                OSUtils.adjustButton(closeButton);
             }
             {
                 environmentLabel = new Label(dialogShell, SWT.NONE);

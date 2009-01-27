@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Listener;
 
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.menu.state.StateEvent;
-import com.varaneckas.hawkscope.util.OperatingSystemUtils;
+import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
  * Tray Icon listener for SWT GUI implementation
@@ -47,7 +47,7 @@ public class SWTTrayIconListener implements Listener {
         x = loc.x;
         y = loc.y;
         if (!System.getProperty("os.name").toLowerCase().startsWith("win")) {
-            final int traySize = OperatingSystemUtils.getTraySize();
+            final int traySize = OSUtils.getTraySize();
             //assume click is in the middle of the icon
             x = loc.x - traySize / 2;
             if (loc.y < traySize * 4) {

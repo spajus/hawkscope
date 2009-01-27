@@ -17,6 +17,7 @@ import com.varaneckas.hawkscope.gui.listeners.UpdateCommand;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
 import com.varaneckas.hawkscope.menu.state.State;
 import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
@@ -53,7 +54,7 @@ public abstract class MainMenu {
     /**
      * Root partitions
      */
-    protected File[] roots = File.listRoots();
+    protected List<File> roots = OSUtils.getFileSystemRoots();
     
     /**
      * Gets current {@link State}
@@ -110,7 +111,7 @@ public abstract class MainMenu {
      */
     protected void reloadRoots() {
         log.debug("Performing root partition listing");
-        roots = File.listRoots();
+        roots = OSUtils.getFileSystemRoots();
         log.debug("Root partition listing complete");
     }
 
