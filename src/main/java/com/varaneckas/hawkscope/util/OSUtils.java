@@ -97,17 +97,27 @@ public abstract class OSUtils {
 		switch (CURRENT_OS) {
 		case MAC: {
 			roots.add(new File("/"));
-			for (File f : new File("/Volumes").listFiles()) {
-				roots.add(f);
+			for (final File f : new File("/Volumes").listFiles()) {
+				if (f.canRead()) {
+				    roots.add(f);
+				}
 			}
 			return roots;
 		}
 		case UNIX:
 			roots.add(new File("/"));
-			for (final File f : new File("/mnt").listFiles()) {
-				if (f.isDirectory()) {
-					roots.add(f);
-				}
+			//Ubuntu
+			File media = new File("/media");
+			if (!media.exists()) {
+			    //Old School Unix fallback
+			    media = new File("/mnt");
+			} 
+			if (media.exists()) {
+    			for (final File f : media.listFiles()) {
+    				if (f.isDirectory() && f.canRead()) {
+    					roots.add(f);
+    				}
+    			}
 			}
 			return roots;
 		default: {
