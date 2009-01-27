@@ -1,0 +1,18 @@
+<project name="Hawkscope" basedir=".">
+
+	<target name="dist-mac" description="Builds a Mac distributable. Find it in dist/mac.">
+		<exec executable="mvn">
+		  <arg line="clean package -Dmaven.test.skip"/>
+		</exec>
+		<copy overwrite="true" tofile="dist/mac/Hawkscope.app/Contents/MacOS/hawkscope.jar">
+			<fileset dir="target">
+				<include name="*jar-with-dependencies.jar" />
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="dist-win" description="Builds a Windows distributable.">
+	
+	</target>
+
+</project>
