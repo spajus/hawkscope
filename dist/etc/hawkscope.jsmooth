@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<jsmoothproject>
+<JVMSearchPath>registry</JVMSearchPath>
+<JVMSearchPath>javahome</JVMSearchPath>
+<JVMSearchPath>jrepath</JVMSearchPath>
+<JVMSearchPath>jdkpath</JVMSearchPath>
+<JVMSearchPath>exepath</JVMSearchPath>
+<JVMSearchPath>jview</JVMSearchPath>
+<arguments></arguments>
+<currentDirectory>${EXECUTABLEPATH}</currentDirectory>
+<embeddedJar>true</embeddedJar>
+<executableName>hawkscope.exe</executableName>
+<iconLocation>hawkscope.ico</iconLocation>
+<initialMemoryHeap>2097152</initialMemoryHeap>
+<jarLocation>..\..\target\hawkscope.jar</jarLocation>
+<mainClassName>com.varaneckas.hawkscope.Launcher</mainClassName>
+<maximumMemoryHeap>4194304</maximumMemoryHeap>
+<maximumVersion></maximumVersion>
+<minimumVersion>1.5.0</minimumVersion>
+<skeletonName>Windowed Wrapper</skeletonName>
+<skeletonProperties>
+<key>Message</key>
+<value>Java 6+ has not been found on your computer. Do you want to download it?</value>
+</skeletonProperties>
+<skeletonProperties>
+<key>URL</key>
+<value>http://java.sun.com/javase/downloads/index.jsp</value>
+</skeletonProperties>
+<skeletonProperties>
+<key>SingleProcess</key>
+<value>1</value>
+</skeletonProperties>
+<skeletonProperties>
+<key>SingleInstance</key>
+<value>1</value>
+</skeletonProperties>
+<skeletonProperties>
+<key>JniSmooth</key>
+<value>0</value>
+</skeletonProperties>
+<skeletonProperties>
+<key>Debug</key>
+<value>0</value>
+</skeletonProperties>
+</jsmoothproject>

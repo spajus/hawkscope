@@ -1,5 +1,9 @@
 <project name="Hawkscope" basedir=".">
-
+    
+    <taskdef name="jsmoothgen"
+         classname="net.charabia.jsmoothgen.ant.JSmoothGen"
+         classpath="dist/tools/jsmoothgen-ant.jar"/>
+    
 	<target name="dist-mac" description="Builds a Mac distributable. Find it in dist/mac.">
 		<exec executable="mvn">
 		  <arg line="clean package -Dmaven.test.skip"/>
@@ -12,7 +16,16 @@
 	</target>
 	
 	<target name="dist-win" description="Builds a Windows distributable.">
-	
+	    <exec executable="cmd">
+	        <arg line="/c mvn clean package -Dmaven.test.skip"/>
+	    </exec>
+        <copy overwrite="true" tofile="target/hawkscope.jar">
+            <fileset dir="target">
+                <include name="*jar-with-dependencies.jar" />
+            </fileset>
+        </copy>
+	    <jsmoothgen project="dist/etc/hawkscope.jsmooth" 
+	        skeletonroot="dist/etc/skeletons" destdir="dist/win"/>
 	</target>
 
 </project>
