@@ -136,5 +136,45 @@ public abstract class OSUtils {
 		}
 		}
 	}
+	
+	public static boolean isOpticalDrive(final File file) {
+	    if (!file.isDirectory()) {
+	        return false;
+	    }
+	    String name = null;
+	    if (CURRENT_OS.equals(OS.WIN)) {
+	        name = FileSystemView.getFileSystemView().getSystemDisplayName(file)
+	                .toLowerCase();
+	    }
+	    if (name == null) {
+	        name = file.getName().toLowerCase();
+	    }
+	    return name.matches(".*(cdrom|dvd).*");
+	}
+	
+	public static boolean isNetworkDrive(final File file) {
+	    if (!file.isDirectory()) {
+	        return false;
+	    }
+	    if (CURRENT_OS.equals(OS.WIN)) {
+	        return FileSystemView.getFileSystemView().isComputerNode(file);
+	    } 
+	    return file.getAbsolutePath().toLowerCase()
+	        .matches(".*(server|network|remote).*");
+	}
 
+	public static boolean isRemovableDrive(final File file) {
+	    if (!file.isDirectory()) {
+	        return false;
+	    }
+        String name = null;
+        if (CURRENT_OS.equals(OS.WIN)) {
+            name = FileSystemView.getFileSystemView().getSystemDisplayName(file)
+                    .toLowerCase();
+        }
+        if (name == null) {
+            name = file.getName().toLowerCase();
+        }
+        return name.matches(".*(usb|flash|removable).*");
+	}
 }

@@ -38,6 +38,9 @@ public abstract class IconFactory<IconType> {
             //initialize resources
             resources.put("drive",  IconFactory.class.getClassLoader().getResource("icons/hdd24.png"));
             resources.put("floppy",  IconFactory.class.getClassLoader().getResource("icons/fdd24.png"));
+            resources.put("cdrom",  IconFactory.class.getClassLoader().getResource("icons/cdrom24.png"));
+            resources.put("network",  IconFactory.class.getClassLoader().getResource("icons/network24.png"));
+            resources.put("removable",  IconFactory.class.getClassLoader().getResource("icons/removable24.png"));
             resources.put("folder", IconFactory.class.getClassLoader().getResource("icons/folder24.png"));
             resources.put("folder.open", IconFactory.class.getClassLoader().getResource("icons/folder.open.24.png"));
             resources.put("file",   IconFactory.class.getClassLoader().getResource("icons/file24.png"));
@@ -109,6 +112,15 @@ public abstract class IconFactory<IconType> {
         if (OSUtils.isFileSystemRoot(targetFile)) {
             if (OSUtils.isFloppyDrive(targetFile)) {
                 return getIcon("floppy");
+            }
+            if (OSUtils.isOpticalDrive(targetFile)) {
+                return getIcon("cdrom");
+            } 
+            if (OSUtils.isNetworkDrive(targetFile)) {
+                return getIcon("network");
+            }
+            if (OSUtils.isRemovableDrive(targetFile)) {
+                return getIcon("removable");
             }
             return getIcon("drive");
         } else if (targetFile.isFile()) {
