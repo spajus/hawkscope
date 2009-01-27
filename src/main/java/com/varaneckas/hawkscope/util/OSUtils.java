@@ -56,7 +56,7 @@ public abstract class OSUtils {
 	}
 
 	public static String getSystemDisplayName(final File file) {
-		if (!System.getProperty("os.name").startsWith("Mac")) {
+		if (!CURRENT_OS.equals(OS.MAC)) {
 			final FileSystemView fsw = FileSystemView.getFileSystemView();
 			return fsw.getSystemDisplayName(file);
 		}
@@ -64,24 +64,35 @@ public abstract class OSUtils {
 	}
 
 	public static boolean isFloppyDrive(final File file) {
-		if (System.getProperty("os.name").startsWith("Win")) {
+		if (CURRENT_OS.equals(OS.WIN)) {
 			return FileSystemView.getFileSystemView().isFloppyDrive(file);
 		}
 		return false;
 	}
 
 	public static boolean isFileSystemRoot(final File file) {
-		if (System.getProperty("os.name").startsWith("Mac")) {
-			if (file.getAbsolutePath().equals("/")) {
-				return true;
-			}
-			return false;
+		switch (CURRENT_OS) {
+		case MAC: {
+		    if (file.getAbsolutePath().equals("/") || file.getAbsolutePath()
+		            .matches("^/Volumes/[^/]+$")) {
+		        return true;
+		    }
+		    return false;
 		}
-		return FileSystemView.getFileSystemView().isFileSystemRoot(file);
+		case UNIX: {
+		    if (file.getAbsolutePath().equals("/") 
+		            || file.getAbsolutePath().matches("^/(media|mnt)/[^/]+$")) {
+		        return true;
+		    }
+		    return false;
+		}
+		default: 
+		    return FileSystemView.getFileSystemView().isFileSystemRoot(file);
+		}
 	}
 
 	public static void adjustButton(final Button button) {
-		if (!System.getProperty("os.name").startsWith("Mac")) {
+		if (!CURRENT_OS.equals(OS.MAC)) {
 			return;
 		}
 		final Object layout = button.getLayoutData();

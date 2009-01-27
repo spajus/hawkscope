@@ -171,7 +171,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             public void widgetSelected(SelectionEvent event) {
                 saveConfiguration();
                 hideObject();
-                MenuFactory.getMenuFactory().getMainMenu().reloadMenu();
+                MenuFactory.getMenuFactory().getMainMenu().reloadMenu(false);
             }
         });
         

@@ -118,19 +118,24 @@ public class SWTMainMenu extends MainMenu {
     }
     
     @Override
-    public void reloadMenu() {
-        if (!isReloading) {
+    public void reloadMenu(final boolean canWait) {
+        if (!canWait && log.isDebugEnabled()) {
+            log.debug("Forcing menu reload now.");
+        }
+        if (!isReloading || !canWait) {
             isReloading = true;
             new Thread(new Runnable() {
                 public void run() {
                     try {
-                        Thread.sleep(ConfigurationFactory
-                                .getConfigurationFactory()
-                                .getConfiguration().getMenuReloadDelay());
+                        if (canWait) {
+                            Thread.sleep(ConfigurationFactory
+                                    .getConfigurationFactory()
+                                    .getConfiguration().getMenuReloadDelay());
+                        }
                     } catch (InterruptedException e1) {
                     	log.warn("Could not sleep", e1);
                     }
-                    doReload();
+                    doReload(canWait);
                 }
             }).start();
         }
@@ -139,28 +144,37 @@ public class SWTMainMenu extends MainMenu {
     /**
      * Does the actual reload of Main Menu
      */
-    private void doReload() {
+    private void doReload(final boolean canWait) {
         menu.getDisplay().asyncExec(new Runnable() {
             public void run() {
                 try {
-                    if (hiddenSince == 0L) {
-                        log.debug("Menu now open, reload skipped");
-                        isReloading = false;
-                        return;
-                    } else if (System.currentTimeMillis() 
-                            - hiddenSince < ConfigurationFactory
-                                    .getConfigurationFactory()
-                                    .getConfiguration().getMenuReloadDelay()) {
-                        //menu is actively used, try reloading later
-                        if (log.isDebugEnabled()) {
-                            log.debug("Reloading later, menu is not sleeping " +
-                            		"long enough: (" 
-                                    + ((System.currentTimeMillis() - hiddenSince) 
-                                            / 1000.0 ) + " seconds)");
+                    if (canWait) {
+                        if (hiddenSince == -1) {
+                            log.debug("Skipping planned reload as it was forced a while ago.");
+                            return;
                         }
-                        isReloading = false;
-                        reloadMenu();
-                        return;
+                        if (hiddenSince == 0L) {
+                            log.debug("Menu now open, reload skipped");
+                            isReloading = false;
+                            return;
+                        } else if (System.currentTimeMillis() 
+                                - hiddenSince < ConfigurationFactory
+                                        .getConfigurationFactory()
+                                        .getConfiguration().getMenuReloadDelay()) {
+                            //menu is actively used, try reloading later
+                            if (log.isDebugEnabled()) {
+                                log.debug("Reloading later, menu is not sleeping " +
+                                		"long enough: (" 
+                                        + ((System.currentTimeMillis() - hiddenSince) 
+                                                / 1000.0 ) + " seconds)");
+                            }
+                            isReloading = false;
+                            reloadMenu(true);
+                            return;
+                        }
+                    } else {
+                        //way of telling other reloader threads to stay the f*** away :)
+                        hiddenSince = -1; 
                     }
                     clearMenu();
                     loadMenu();

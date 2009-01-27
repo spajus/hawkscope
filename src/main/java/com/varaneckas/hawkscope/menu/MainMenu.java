@@ -185,8 +185,10 @@ public abstract class MainMenu {
     /**
      * Reloads the main menu. Can be overloaded in concrete class for 
      * performance gain
+     * 
+     * @param canWait can the reload wait?
      */
-    public void reloadMenu() {
+    public void reloadMenu(final boolean canWait) {
         clearMenu();
         loadMenu();
     }

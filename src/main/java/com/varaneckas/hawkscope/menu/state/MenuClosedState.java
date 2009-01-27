@@ -53,7 +53,7 @@ public class MenuClosedState extends State {
             log.debug("Menu closed. Free mem before cleanup: "
                     + Runtime.getRuntime().freeMemory() / (1024 * 1024));
         }
-        MenuFactory.getMenuFactory().getMainMenu().reloadMenu();
+        MenuFactory.getMenuFactory().getMainMenu().reloadMenu(true);
     }
     
 }

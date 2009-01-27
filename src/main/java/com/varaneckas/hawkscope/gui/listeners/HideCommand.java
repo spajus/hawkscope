@@ -15,6 +15,7 @@ public class HideCommand implements Command {
 
     public void execute() {
         MenuFactory.getMenuFactory().getMainMenu().forceHide();
+        MenuFactory.getMenuFactory().getMainMenu().reloadMenu(false);
     }
 
 }
