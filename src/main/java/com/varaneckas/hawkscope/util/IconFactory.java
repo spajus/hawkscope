@@ -1,6 +1,7 @@
 package com.varaneckas.hawkscope.util;
 
 import java.io.File;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -125,9 +126,17 @@ public abstract class IconFactory<IconType> {
             }
             return getIcon("drive");
         } else if (targetFile.isFile()) {
-            if (targetFile.canExecute()) {
-                return getIcon("executable");
-            }
+        	if (System.getProperty("java.version").compareTo("1.6") >= 0) {
+        		//we can check if it's executable
+				try {
+					Method m = targetFile.getClass().getMethod("canExecute", new Class[] {});
+					if (m != null && m.invoke(targetFile, new Object[] {}) == Boolean.TRUE) {
+						return getIcon("executable");
+					}
+				} catch (final Exception e) {
+					log.warn("Failed dynamically calling File.canExecute", e);
+				}
+        	}
             return getIcon("file");
         } else if (targetFile.isDirectory()) {
             //mac app

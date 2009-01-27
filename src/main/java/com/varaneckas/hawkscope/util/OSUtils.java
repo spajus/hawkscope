@@ -1,16 +1,22 @@
 package com.varaneckas.hawkscope.util;
 
+import java.awt.Dimension;
 import java.io.File;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.filechooser.FileSystemView;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
 
 public abstract class OSUtils {
+	
+	private static final Log log = LogFactory.getLog(OSUtils.class);
 
 	public enum OS {
 		MAC, WIN, UNIX, UNKNOWN
@@ -34,8 +40,20 @@ public abstract class OSUtils {
 	}
 
 	public static int getTrayIconSize() {
-		// FIXME use where possible!
-		// SystemTray.getSystemTray().getTrayIconSize();
+		//experimental
+		if (System.getProperty("java.version").compareTo("1.6") >= 0) {
+			try {
+				log.debug("Java > 1.6, trying java.awt.SystemTray");
+				Class<?> systemTrayClass = Class.forName("java.awt.SystemTray");
+				Method m = systemTrayClass.getMethod("getSystemTray", new Class[] {});
+				Object systemTray = m.invoke(systemTrayClass, new Object[] {});
+				m = systemTray.getClass().getMethod("getTrayIconSize", new Class[] {});
+				Dimension size = (Dimension) m.invoke(systemTray, new Object[] {});
+				return size.height;
+			} catch (final Exception e) {
+				log.warn("Failed calling java.awt.SystemTray object", e);
+			}
+		}
 		if (CURRENT_OS.equals(OS.WIN)) {
 			return 16;
 		}
