@@ -18,7 +18,7 @@ import com.varaneckas.hawkscope.tray.TrayManagerFactory;
  * @version $Id$
  */
 public class SWTMainMenu extends MainMenu {
-
+	
     /**
      * Singleton instance
      */
@@ -56,7 +56,7 @@ public class SWTMainMenu extends MainMenu {
                                     Thread.sleep(10l);
                                     hiddenSince = System.currentTimeMillis();
                                 } catch (InterruptedException e) {
-                                    e.printStackTrace();
+                                	log.warn("Could not sleep", e);
                                 }
                                 if (!(state instanceof MenuClosedState)) {
                                     setState(MenuClosedState.getInstance());
@@ -128,7 +128,7 @@ public class SWTMainMenu extends MainMenu {
                                 .getConfigurationFactory()
                                 .getConfiguration().getMenuReloadDelay());
                     } catch (InterruptedException e1) {
-                        e1.printStackTrace();
+                    	log.warn("Could not sleep", e1);
                     }
                     doReload();
                 }

@@ -28,6 +28,7 @@ public class SWTTrayIconListener implements Listener {
     private static final Log log = LogFactory.getLog(SWTTrayIconListener.class);
     
     public void handleEvent(final Event event) {
+    	log.debug("Event: " + event);
         try {
             final StateEvent se = findPopupMenuLocation();
             MenuFactory.getMenuFactory().getMainMenu().getState().act(se);
@@ -52,7 +53,7 @@ public class SWTTrayIconListener implements Listener {
             final Dimension traySize = OperatingSystemUtils.getTrayIconSize();
             //assume click is in the middle of the icon
             x = loc.x - traySize.width / 2;
-            if (loc.y < traySize.height + 2) {
+            if (loc.y < traySize.height * 4) {
                 //tray is on top side of the screen
                 y = traySize.height;
             } else {

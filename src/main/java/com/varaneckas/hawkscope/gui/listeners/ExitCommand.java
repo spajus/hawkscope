@@ -19,7 +19,10 @@ public class ExitCommand implements Command {
 
     public void execute() {
         IconFactory.getIconFactory().cleanup();
-        Display.getDefault().dispose();
+        final Display d = Display.getDefault();
+        if (!d.isDisposed()) {
+        	d.dispose();
+        }
         System.exit(0);
     }
 

@@ -56,8 +56,9 @@ public class SWTTrayManager implements TrayManager {
         trayIcon = new TrayItem(d.getSystemTray(), SWT.NONE);
         trayIcon.setImage((Image) IconFactory.getIconFactory().getTrayIcon());
         SWTTrayIconListener listener = new SWTTrayIconListener();
-        trayIcon.addListener (SWT.Selection, listener);
-        trayIcon.addListener (SWT.MenuDetect, listener);
+        trayIcon.addListener(SWT.Selection, listener);
+        trayIcon.addListener(SWT.MenuDetect, listener);
+        log.debug(trayIcon.getListeners(SWT.NONE).length);
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
                 log.debug("Removing Tray Icon");

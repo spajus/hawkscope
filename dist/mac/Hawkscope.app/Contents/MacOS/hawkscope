@@ -1,5 +1,4 @@
 #!/bin/sh
-  BASEDIR=`dirname $0`
-#  exec java -XstartOnFirstThread -classpath $BASEDIR/Java -Djava.library.path=$BASEDIR/Java com.varaneckas.hawkscope.Launcher
-exec java -XstartOnFirstThread -classpath $BASEDIR/hawkscope.jar -Djava.library.path=$BASEDIR com.varaneckas.hawkscope.Launcher
+BASEDIR=`dirname $0`
+exec java -XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.noFocusRing -Dorg.eclipse.swt.internal.carbon.smallFonts -classpath $BASEDIR/hawkscope.jar -Djava.library.path=$BASEDIR com.varaneckas.hawkscope.Launcher
        

@@ -5,6 +5,9 @@ import java.io.File;
 
 import javax.swing.filechooser.FileSystemView;
 
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.widgets.Button;
+
 public abstract class OperatingSystemUtils {
 	
 	public static Dimension getTrayIconSize() {
@@ -36,5 +39,19 @@ public abstract class OperatingSystemUtils {
 		}  
 		return FileSystemView.getFileSystemView().isFileSystemRoot(file);
 	}
+	
+	public static void adjustButton(final Button button) {
+		if (!System.getProperty("os.name").startsWith("Mac")) {
+			return;
+		}
+		final Object layout = button.getLayoutData();
+		int offset = 15;
+		if (layout instanceof FormData) {
+			((FormData) layout).width += offset;
+			((FormData) layout).left.offset -= offset / 2;
+		}
+	}
+	                                                  
+	
 	
 }
