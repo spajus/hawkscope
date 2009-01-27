@@ -9,7 +9,7 @@
 <arguments></arguments>
 <currentDirectory>${EXECUTABLEPATH}</currentDirectory>
 <embeddedJar>true</embeddedJar>
-<executableName>hawkscope.exe</executableName>
+<executableName>Hawkscope.exe</executableName>
 <iconLocation>hawkscope.ico</iconLocation>
 <initialMemoryHeap>2097152</initialMemoryHeap>
 <jarLocation>..\..\target\hawkscope.jar</jarLocation>
@@ -20,7 +20,7 @@
 <skeletonName>Windowed Wrapper</skeletonName>
 <skeletonProperties>
 <key>Message</key>
-<value>Java 6+ has not been found on your computer. Do you want to download it?</value>
+<value>Java Runtime Environment was not found on your computer. Do you want to download it?</value>
 </skeletonProperties>
 <skeletonProperties>
 <key>URL</key>

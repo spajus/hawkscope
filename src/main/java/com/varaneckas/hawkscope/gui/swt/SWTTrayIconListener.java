@@ -1,8 +1,6 @@
 package com.varaneckas.hawkscope.gui.swt;
 
 
-import java.awt.Dimension;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.graphics.Point;
@@ -28,7 +26,6 @@ public class SWTTrayIconListener implements Listener {
     private static final Log log = LogFactory.getLog(SWTTrayIconListener.class);
     
     public void handleEvent(final Event event) {
-    	log.debug("Event: " + event);
         try {
             final StateEvent se = findPopupMenuLocation();
             MenuFactory.getMenuFactory().getMainMenu().getState().act(se);
@@ -50,15 +47,15 @@ public class SWTTrayIconListener implements Listener {
         x = loc.x;
         y = loc.y;
         if (!System.getProperty("os.name").toLowerCase().startsWith("win")) {
-            final Dimension traySize = OperatingSystemUtils.getTrayIconSize();
+            final int traySize = OperatingSystemUtils.getTraySize();
             //assume click is in the middle of the icon
-            x = loc.x - traySize.width / 2;
-            if (loc.y < traySize.height * 4) {
+            x = loc.x - traySize / 2;
+            if (loc.y < traySize * 4) {
                 //tray is on top side of the screen
-                y = traySize.height;
+                y = traySize;
             } else {
                 //tray is on bottom side of the screen
-                y = d.getBounds().height - traySize.height;
+                y = d.getBounds().height - traySize;
             }
         } else {
             loc.y -= 2;

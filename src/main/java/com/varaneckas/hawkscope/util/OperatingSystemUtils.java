@@ -1,6 +1,5 @@
 package com.varaneckas.hawkscope.util;
 
-import java.awt.Dimension;
 import java.io.File;
 
 import javax.swing.filechooser.FileSystemView;
@@ -10,9 +9,46 @@ import org.eclipse.swt.widgets.Button;
 
 public abstract class OperatingSystemUtils {
 	
-	public static Dimension getTrayIconSize() {
+	public enum OS {
+		MAC, WIN, UNIX, UNKNOWN
+	}
+	
+	public static final OS CURRENT_OS = getCurrentOS();
+	
+	private static OS getCurrentOS() {
+		String os = System.getProperty("os.name", "unknown").toLowerCase();
+		if (os.startsWith("win")) {
+			return OS.WIN;
+		}
+		if (os.startsWith("mac")) {
+			return OS.MAC;
+		}
+		if (os.startsWith("linux") || os.startsWith("unix") || os.startsWith("bsd")) {
+			return OS.UNIX;
+		}
+		return OS.UNKNOWN;
+	}
+	
+	public static int getTrayIconSize() {
+		//FIXME use where possible!
 		//SystemTray.getSystemTray().getTrayIconSize();
-		return new Dimension(16, 16);
+		if (CURRENT_OS.equals(OS.WIN)) {
+			return 16;
+		}
+  		if (CURRENT_OS.equals(OS.UNIX)) {
+			return 24;
+		}
+		if (CURRENT_OS.equals(OS.MAC)) {
+			return 16;
+		}
+		return 16;
+	}
+	
+	public static int getTraySize() {
+		if (CURRENT_OS.equals(OS.MAC)) {
+			return 26;
+		}
+		return getTrayIconSize();
 	}
 	
 	public static String getSystemDisplayName(final File file) {

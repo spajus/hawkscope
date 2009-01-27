@@ -126,7 +126,7 @@ public abstract class IconFactory<IconType> {
      * @return tray icon name
      */
     protected String getBestTrayIcon() {
-        float height = OperatingSystemUtils.getTrayIconSize().height;
+        float height = OperatingSystemUtils.getTrayIconSize();
         int[] sizes = new int[] { 64, 48, 32, 24, 16 };
         int best = 64;
         for (int i = 0; i < sizes.length; i++) {

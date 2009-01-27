@@ -31,12 +31,12 @@
     </target>
 
     <target name="dist-win" description="Builds a Windows distributable.">
-        <taskdef name="jsmoothgen" 
+    	<taskdef name="jsmoothgen" 
             classname="net.charabia.jsmoothgen.ant.JSmoothGen" 
-            classpath="dist/tools/jsmoothgen-ant.jar" />
+            classpath="dist/win/tools/jsmoothgen-ant.jar" />
         <taskdef name="nsis" 
             classname="net.sf.nsisant.Task" 
-            classpath="dist/tools/nsisant-1.2.jar" />
+            classpath="dist/win/tools/nsisant-1.2.jar" />
         <exec executable="cmd">
             <arg line="/c mvn clean package -Dmaven.test.skip" />
         </exec>
@@ -45,9 +45,11 @@
                 <include name="*jar-with-dependencies.jar" />
             </fileset>
         </copy>
-        <jsmoothgen project="dist/etc/hawkscope.jsmooth" skeletonroot="dist/etc/skeletons" destdir="dist/win" />
-        <nsis path="C:/Program Files/NSIS" script="dist/etc/hawkscope.nsi" nocd="yes" 
-            verbosity="4" out="target/nsis.log">
+    	<delete dir="dist/output" failonerror="no" quiet="true"/>
+    	<mkdir dir="dist/output/win"/>
+        <jsmoothgen project="dist/win/hawkscope.jsmooth" skeletonroot="dist/win/skeletons" destdir="dist/win" />
+        <nsis path="C:/Program Files/NSIS" script="dist/win/hawkscope.nsi" nocd="yes" 
+            verbosity="4" out="dist/output/nsis.log">
             <define name="VERSION" value="0.3.1-DEV"/>
             <scriptcmd cmd="AutoCloseWindow true"/>
             </nsis>
