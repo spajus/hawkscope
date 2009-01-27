@@ -130,8 +130,10 @@ public abstract class IconFactory<IconType> {
         		//we can check if it's executable
 				try {
 					Method m = targetFile.getClass().getMethod("canExecute", new Class[] {});
-					if (m != null && m.invoke(targetFile, new Object[] {}) == Boolean.TRUE) {
-						return getIcon("executable");
+					if (m != null) { 
+    					if ((Boolean) m.invoke(targetFile, new Object[] {})) {
+    						return getIcon("executable");
+    					}
 					}
 				} catch (final Exception e) {
 					log.warn("Failed dynamically calling File.canExecute", e);
