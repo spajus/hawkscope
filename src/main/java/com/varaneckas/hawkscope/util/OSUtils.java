@@ -107,10 +107,15 @@ public abstract class OSUtils {
 		final List<File> roots = new LinkedList<File>();
 		switch (CURRENT_OS) {
 		case MAC: {
-			roots.add(new File("/"));
-			for (final File f : new File("/Volumes").listFiles()) {
-				if (f.canRead()) {
-				    roots.add(f);
+			final File[] volumes = new File("/Volumes").listFiles();
+			if (volumes.length == 0) {
+				//something's wrong..
+				roots.add(new File("/"));
+			} else {
+				for (final File f : volumes) {
+					if (f.canRead()) {
+					    roots.add(f);
+					}
 				}
 			}
 			return roots;
