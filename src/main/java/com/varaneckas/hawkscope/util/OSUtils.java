@@ -200,4 +200,42 @@ public abstract class OSUtils {
         }
         return name.matches(".*(usb|flash|removable).*");
 	}
+	
+	public static boolean isExecutable(final File file) {
+	    final String filePath = file.getAbsolutePath().toLowerCase();
+	    switch (CURRENT_OS) {
+        case WIN:
+            if (filePath.endsWith(".exe") 
+                    || filePath.endsWith(".bat")
+                    || filePath.endsWith(".msi")) {
+                
+                return true;
+            } else {
+                return false;
+            }
+        default:
+            if (System.getProperty("java.version").compareTo("1.6") >= 0) {
+                //we can check if it's executable
+                try {
+                    Method m = file.getClass().getMethod("canExecute", new Class[] {});
+                    if (m != null) { 
+                        return ((Boolean) m.invoke(file, new Object[] {}));
+                        
+                    }
+                } catch (final Exception e) {
+                    log.warn("Failed dynamically calling File.canExecute", e);
+                    return false;
+                }
+            } 
+            return filePath.contains("/bin/");
+        }
+	}
+	
+	public static boolean isMacApp(final File file) {
+	    if (CURRENT_OS.equals(OS.MAC) && file != null) {
+	        return file.isDirectory() 
+	            && file.getName().toLowerCase().endsWith(".app");
+	    } 
+	    return false;
+	}
 }

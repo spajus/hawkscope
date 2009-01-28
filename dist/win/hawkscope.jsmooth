@@ -6,15 +6,14 @@
 <JVMSearchPath>jdkpath</JVMSearchPath>
 <JVMSearchPath>exepath</JVMSearchPath>
 <JVMSearchPath>jview</JVMSearchPath>
-<arguments></arguments>
 <currentDirectory>${EXECUTABLEPATH}</currentDirectory>
 <embeddedJar>true</embeddedJar>
-<executableName>Hawkscope.exe</executableName>
+<executableName>../output/win/Hawkscope.exe</executableName>
 <iconLocation>hawkscope.ico</iconLocation>
 <initialMemoryHeap>2097152</initialMemoryHeap>
 <jarLocation>..\..\target\hawkscope.jar</jarLocation>
 <mainClassName>com.varaneckas.hawkscope.Launcher</mainClassName>
-<maximumMemoryHeap>4194304</maximumMemoryHeap>
+<maximumMemoryHeap>8388608</maximumMemoryHeap>
 <maximumVersion></maximumVersion>
 <minimumVersion>1.5.0</minimumVersion>
 <skeletonName>Windowed Wrapper</skeletonName>

@@ -1,6 +1,6 @@
 <project name="Hawkscope" basedir=".">
 
-	<property file="build.properties"/>
+    <property file="build.properties" />
 
     <target name="dist-mac" description="Builds a Mac distributable. Find it in dist/mac.">
         <exec executable="mvn">
@@ -11,38 +11,36 @@
                 <include name="*jar-with-dependencies.jar" />
             </fileset>
         </copy>
-    	<!-- seems to hang and irritates me
+        <!-- seems to hang and irritates me
     	<delete dir="dist/output" failonerror="no" quiet="true"/>
     	so let's get rude -->
-    	<exec executable="rm"><arg line="-rf dist/output"/></exec>
-    	<mkdir dir="dist/output/Hawkscope-${hawkscope.version}"/>
-    	<filter token="hawkscope.version" value="${hawkscope.version}"/>
-    	<filter token="copyright.year" value="${copyright.year}"/>
-    	<copy overwrite="true" todir="dist/output/Hawkscope-${hawkscope.version}" filtering="true">
-    	    <fileset dir="dist/mac">
-    	        <filename name="**/*"/>
-    	    	<exclude name=".*"/>
-    	    </fileset>	
+        <exec executable="rm">
+            <arg line="-rf dist/output" />
+        </exec>
+        <mkdir dir="dist/output/Hawkscope-${hawkscope.version}" />
+        <filter token="hawkscope.version" value="${hawkscope.version}" />
+        <filter token="copyright.year" value="${copyright.year}" />
+        <copy overwrite="true" todir="dist/output/Hawkscope-${hawkscope.version}" filtering="true">
+            <fileset dir="dist/mac">
+                <filename name="**/*" />
+                <exclude name=".*" />
+            </fileset>
         </copy>
-    	<chmod perm="a+x" file="dist/output/Hawkscope-${hawkscope.version}/Hawkscope.app/Contents/MacOS/hawkscope"/>
-    	<exec executable="ln">
-    		<arg line="-s /Applications dist/output/Hawkscope-${hawkscope.version}/Applications"/>
-    	</exec>
-    	<exec executable="hdiutil">
-    		<arg line="create -srcfolder dist/output/Hawkscope-${hawkscope.version} dist/output/Hawkscope-${hawkscope.version}.dmg"/>
-    	</exec>
-    	<exec executable="hdiutil">
-    		<arg line="internet-enable -yes dist/output/Hawkscope-${hawkscope.version}.dmg"/>
-    	</exec>
+        <chmod perm="a+x" file="dist/output/Hawkscope-${hawkscope.version}/Hawkscope.app/Contents/MacOS/hawkscope" />
+        <exec executable="ln">
+            <arg line="-s /Applications dist/output/Hawkscope-${hawkscope.version}/Applications" />
+        </exec>
+        <exec executable="hdiutil">
+            <arg line="create -srcfolder dist/output/Hawkscope-${hawkscope.version} dist/output/Hawkscope-${hawkscope.version}.dmg" />
+        </exec>
+        <exec executable="hdiutil">
+            <arg line="internet-enable -yes dist/output/Hawkscope-${hawkscope.version}.dmg" />
+        </exec>
     </target>
 
     <target name="dist-win" description="Builds a Windows distributable.">
-    	<taskdef name="jsmoothgen" 
-            classname="net.charabia.jsmoothgen.ant.JSmoothGen" 
-            classpath="dist/win/tools/jsmoothgen-ant.jar" />
-        <taskdef name="nsis" 
-            classname="net.sf.nsisant.Task" 
-            classpath="dist/win/tools/nsisant-1.2.jar" />
+        <taskdef name="jsmoothgen" classname="net.charabia.jsmoothgen.ant.JSmoothGen" classpath="dist/win/tools/jsmoothgen-ant.jar" />
+        <taskdef name="nsis" classname="net.sf.nsisant.Task" classpath="dist/win/tools/nsisant-1.2.jar" />
         <exec executable="cmd">
             <arg line="/c mvn clean package -Dmaven.test.skip" />
         </exec>
@@ -51,14 +49,13 @@
                 <include name="*jar-with-dependencies.jar" />
             </fileset>
         </copy>
-    	<delete dir="dist/output" failonerror="no" quiet="true"/>
-    	<mkdir dir="dist/output/win"/>
+        <delete dir="dist/output" failonerror="no" quiet="true" />
+        <mkdir dir="dist/output/win" />
         <jsmoothgen project="dist/win/hawkscope.jsmooth" skeletonroot="dist/win/skeletons" destdir="dist/win" />
-        <nsis path="C:/Program Files/NSIS" script="dist/win/hawkscope.nsi" nocd="yes" 
-            verbosity="4" out="dist/output/nsis.log">
-            <define name="VERSION" value="0.3.1-DEV"/>
-            <scriptcmd cmd="AutoCloseWindow true"/>
-            </nsis>
+        <nsis path="C:/Program Files/NSIS" 
+            script="dist/win/hawkscope.nsi" nocd="yes" verbosity="4">
+            <define name="VERSION" value="0.3.1-DEV" />
+        </nsis>
     </target>
 
 </project>

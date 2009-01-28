@@ -117,6 +117,10 @@ public class SWTMainMenu extends MainMenu {
         new MenuItem(menu, SWT.SEPARATOR);
     }
     
+    public void setHiddenSince(final long timestamp) {
+        hiddenSince = timestamp;
+    }
+    
     @Override
     public void reloadMenu(final boolean canWait) {
         if (!canWait && log.isDebugEnabled()) {

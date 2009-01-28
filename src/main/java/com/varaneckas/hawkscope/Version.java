@@ -142,7 +142,12 @@ public class Version {
                 .getConfigurationFactory()
                 .getConfiguration().getProperties().entrySet()) {
             props.append(entry.getKey()).append(": ");
-            props.append(entry.getValue()).append('\n');
+            //we don't want user passwords in bug reports...
+            if (entry.getKey().contains("pass")) {
+                props.append("******\n");
+            } else {
+                props.append(entry.getValue()).append('\n');
+            }
         }
         return props.toString().trim();
     }

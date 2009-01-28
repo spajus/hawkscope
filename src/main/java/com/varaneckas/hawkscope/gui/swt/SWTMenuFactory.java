@@ -19,7 +19,7 @@ public class SWTMenuFactory extends MenuFactory {
     /**
      * Gets the SWT imlementation of {@link MainMenu} 
      */
-    public MainMenu getMainMenu() {
+    public SWTMainMenu getMainMenu() {
         return SWTMainMenu.getInstance();
     }
 

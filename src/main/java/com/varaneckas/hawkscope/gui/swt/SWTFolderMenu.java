@@ -8,12 +8,14 @@ import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Menu;
 
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MenuItem;
 import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
@@ -55,6 +57,9 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
         final FolderMenuItemListener listener = new FolderMenuItemListener(this, 
                 this.file);
         addOpenAction(listener);
+        if (OSUtils.isMacApp(file)) {
+            addExecuteAction(listener);
+        }
         menu.setMenu(submenu);
         menu.setText(text);
         menu.setEnabled(enabled);
@@ -84,6 +89,21 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
                 @Override
                 public void widgetSelected(final SelectionEvent e) {
                     listener.itemClicked();
+                }
+            });
+        }
+    }
+    
+    private void addExecuteAction(final FolderMenuItemListener listener) {
+        if (file != null) {
+            org.eclipse.swt.widgets.MenuItem exec =
+                new org.eclipse.swt.widgets.MenuItem(submenu, SWT.PUSH);
+            exec.setImage((Image) IconFactory.getIconFactory().getIcon("execute"));
+            exec.setText("Run Application");
+            exec.addSelectionListener(new SelectionAdapter() {
+                @Override
+                public void widgetSelected(SelectionEvent event) {
+                    Program.launch(file.getAbsolutePath());
                 }
             });
         }
