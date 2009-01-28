@@ -1,54 +1,43 @@
 ;$Id$
 ;(c) 2009 by Tomas Varaneckas
 
-# define name of installer
-outFile "dist\output\hawkscope-installer.exe"
-
- 
-# define installation directory
+!include "MUI.nsh"
+Name "Hawkscope"
+outFile "dist\output\hawkscope-${VERSION}-installer.exe"
 installDir $PROGRAMFILES\Hawkscope\
- 
-# start default section
-section
- 
-    
-    # set the installation directory as the destination for the following actions
-    setOutPath $INSTDIR
- 
-    file dist\output\win\Hawkscope.exe
+BrandingText " "
 
-    # create the uninstaller
-    writeUninstaller "$INSTDIR\uninstall.exe"
+!define MUI_ABORTWARNING
+!define MUI_FINISHPAGE_NOAUTOCLOSE
+!define MUI_LICENSEPAGE_TEXT_TOP "Please read the Licence Agreement:"
+!define MUI_LICENSEPAGE_TEXT_BOTTOM "For more information visit http://hawkscope.googlecode.com"
+!define MUI_LICENSEPAGE_BUTTON "I agree"
+!insertmacro MUI_PAGE_LICENSE "license.txt"
+!insertmacro MUI_PAGE_DIRECTORY
+!insertmacro MUI_PAGE_INSTFILES
+!insertmacro MUI_LANGUAGE "English"
  
-    # create a shortcut named "new shortcut" in the start menu programs directory
-    # point the new shortcut at the program uninstaller
-    
+section
+    setOutPath $INSTDIR
+    file dist\output\win\Hawkscope.exe
+    writeUninstaller "$INSTDIR\uninstall.exe"
     createShortCut "$SMPROGRAMS\Startup\Hawkscope.lnk" "$INSTDIR\Hawkscope.exe"
     createDirectory "$SMPROGRAMS\Hawkscope"
     createShortCut "$SMPROGRAMS\Hawkscope\Hawkscope.lnk" "$INSTDIR\Hawkscope.exe"
     createShortCut "$SMPROGRAMS\Hawkscope\Uninstall.lnk" "$INSTDIR\uninstall.exe"
-    
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Hawkscope" \
-                 "DisplayName" "Hawkscope - Access anything with single click!"
+                 "DisplayName" "Hawkscope ${VERSION} - Access anything with single click!"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Hawkscope" \
                  "UninstallString" "$INSTDIR\uninstall.exe"
 sectionEnd
  
-# uninstaller section start
 section "uninstall"
- 
-    # first, delete the uninstaller
     delete "$INSTDIR\Hawkscope.exe"
     delete "$INSTDIR\uninstall.exe"
     RMDir /r "$INSTDIR"
- 
-    # second, remove the link from the start menu
     delete "$SMPROGRAMS\Startup\Hawkscope.lnk"
     delete "$SMPROGRAMS\Hawkscope\Hawkscope.lnk"
     delete "$SMPROGRAMS\Hawkscope\Uninstall.lnk"
     RMDir /r "$SMPROGRAMS\Hawkscope"
-    
     DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Hawkscope"
- 
-# uninstaller section end
 sectionEnd
