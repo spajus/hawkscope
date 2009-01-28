@@ -92,7 +92,7 @@
             </fileset>
         </copy>
 	    <desktopentry
-	            toFile="dist/output/deb/Hawkscope.desktop"
+	            toFile="dist/output/deb/hawkscope.desktop"
 	            name="Hawkscope"
 	            comment="Access anything with single click!"
 	            exec="hawkscope"
@@ -121,7 +121,7 @@
         	    	<include name="hawkscope32.png"/>
         	    </tarfileset>
         	    <tarfileset file="dist/deb/hawkscope" prefix="usr/bin" />
-	            <tarfileset file="dist/output/deb/Hawkscope.desktop" 
+	            <tarfileset file="dist/output/deb/hawkscope.desktop" 
 	            	prefix="usr/share/applications"/>
         	    <tarfileset file="changelog.txt" prefix="usr/share/hawkscope"/>
         	    <tarfileset file="license.txt" prefix="usr/share/hawkscope"/>
