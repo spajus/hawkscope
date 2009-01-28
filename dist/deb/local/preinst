@@ -1,0 +1,6 @@
+#!/bin/sh
+set -e
+if [ -e /usr/share/applications/Hawkscope.desktop ] ; then
+  rm /usr/share/applications/Hawkscope.desktop
+fi
+exit 0

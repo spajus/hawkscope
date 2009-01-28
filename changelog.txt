@@ -4,7 +4,7 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
-Changes in version 0.4.0 (2009-??-??)
+Changes in version 0.4.0 (2009-01-29)
 -------------------------------------
 * Made Hawkscope Java 5 compatible, now it runs on Mac OS X 10.4+
   http://code.google.com/p/hawkscope/issues/detail?id=9

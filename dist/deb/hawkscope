@@ -1,0 +1,2 @@
+#!/bin/sh
+java -Xms2m -Xmx8m -XX:PermSize=2m -XX:MaxPermSize=8m -jar /usr/share/hawkscope/hawkscope.jar

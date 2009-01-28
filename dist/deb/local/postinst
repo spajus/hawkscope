@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e 
+chmod a+x /usr/bin/hawkscope
+chmod a+r /usr/share/hawkscope/hawkscope.jar
+exit 0
