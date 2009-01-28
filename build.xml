@@ -1,12 +1,21 @@
 <project name="Hawkscope" basedir=".">
-
+    
+    <!-- $Id$ -->
+    <!--  
+         This build file is Operating System dependent and is used only for 
+         creating Hawkscope installer packages for various platforms. 
+         All the java building magic should be done with Maven. 
+     -->
+    
     <property file="build.properties" />
 
-    <target name="dist-mac" description="Builds a Mac distributable. Find it in dist/mac.">
+    <target name="dist-mac" 
+        description="Builds a Mac distributable. Find it in dist/output.">
         <exec executable="mvn">
             <arg line="clean package -Dmaven.test.skip" />
         </exec>
-        <copy overwrite="true" tofile="dist/mac/Hawkscope.app/Contents/MacOS/hawkscope.jar">
+        <copy overwrite="true" 
+            tofile="dist/mac/Hawkscope.app/Contents/MacOS/hawkscope.jar">
             <fileset dir="target">
                 <include name="*jar-with-dependencies.jar" />
             </fileset>
@@ -20,16 +29,20 @@
         <mkdir dir="dist/output/Hawkscope-${hawkscope.version}" />
         <filter token="hawkscope.version" value="${hawkscope.version}" />
         <filter token="copyright.year" value="${copyright.year}" />
-        <copy overwrite="true" todir="dist/output/Hawkscope-${hawkscope.version}" filtering="true">
+        <copy overwrite="true" 
+            todir="dist/output/Hawkscope-${hawkscope.version}" filtering="true">
             <fileset dir="dist/mac">
                 <filename name="**/*" />
                 <exclude name=".*" />
             </fileset>
         </copy>
-        <chmod perm="a+x" file="dist/output/Hawkscope-${hawkscope.version}/Hawkscope.app/Contents/MacOS/hawkscope" />
+        <chmod perm="a+x" 
+            file="dist/output/Hawkscope-${hawkscope.version}/Hawkscope.app/Contents/MacOS/hawkscope" />
         <exec executable="ln">
             <arg line="-s /Applications dist/output/Hawkscope-${hawkscope.version}/Applications" />
         </exec>
+        <copy file="license.txt" todir="dist/output/Hawkscope-${hawkscope.version}"/>
+        <copy file="changelog.txt" todir="dist/output/Hawkscope-${hawkscope.version}"/>
         <exec executable="hdiutil">
             <arg line="create -srcfolder dist/output/Hawkscope-${hawkscope.version} dist/output/Hawkscope-${hawkscope.version}.dmg" />
         </exec>
@@ -39,8 +52,11 @@
     </target>
 
     <target name="dist-win" description="Builds a Windows distributable.">
-        <taskdef name="jsmoothgen" classname="net.charabia.jsmoothgen.ant.JSmoothGen" classpath="dist/win/tools/jsmoothgen-ant.jar" />
-        <taskdef name="nsis" classname="net.sf.nsisant.Task" classpath="dist/win/tools/nsisant-1.2.jar" />
+        <taskdef name="jsmoothgen" 
+            classname="net.charabia.jsmoothgen.ant.JSmoothGen" 
+            classpath="dist/win/tools/jsmoothgen-ant.jar" />
+        <taskdef name="nsis" classname="net.sf.nsisant.Task" 
+            classpath="dist/win/tools/nsisant-1.2.jar" />
         <exec executable="cmd">
             <arg line="/c mvn clean package -Dmaven.test.skip" />
         </exec>
@@ -51,10 +67,11 @@
         </copy>
         <delete dir="dist/output" failonerror="no" quiet="true" />
         <mkdir dir="dist/output/win" />
-        <jsmoothgen project="dist/win/hawkscope.jsmooth" skeletonroot="dist/win/skeletons" destdir="dist/win" />
+        <jsmoothgen project="dist/win/hawkscope.jsmooth" 
+            skeletonroot="dist/win/skeletons" destdir="dist/win" />
         <nsis path="C:/Program Files/NSIS" 
             script="dist/win/hawkscope.nsi" nocd="yes" verbosity="4">
-            <define name="VERSION" value="0.3.1-DEV" />
+            <define name="VERSION" value="${hawkscope.version}" />
         </nsis>
     </target>
 

@@ -24,6 +24,7 @@ BrandingText " "
 section
     setOutPath $INSTDIR
     file dist\output\win\Hawkscope.exe
+    file changelog.txt
     writeUninstaller "$INSTDIR\uninstall.exe"
     createShortCut "$SMPROGRAMS\Startup\Hawkscope.lnk" "$INSTDIR\Hawkscope.exe"
     createDirectory "$SMPROGRAMS\Hawkscope"
@@ -37,6 +38,7 @@ sectionEnd
  
 section "uninstall"
     delete "$INSTDIR\Hawkscope.exe"
+    delete "$INSTDIR\changelog.txt"
     delete "$INSTDIR\uninstall.exe"
     RMDir /r "$INSTDIR"
     delete "$SMPROGRAMS\Startup\Hawkscope.lnk"
