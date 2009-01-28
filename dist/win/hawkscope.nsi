@@ -2,9 +2,13 @@
 ;(c) 2009 by Tomas Varaneckas
 
 !include "MUI.nsh"
+
 Name "Hawkscope"
+
 outFile "dist\output\hawkscope-${VERSION}-installer.exe"
+
 installDir $PROGRAMFILES\Hawkscope\
+
 BrandingText " "
 
 !define MUI_ABORTWARNING

@@ -122,7 +122,7 @@ public class SWTMainMenu extends MainMenu {
     }
     
     @Override
-    public void reloadMenu(final boolean canWait) {
+    public synchronized void reloadMenu(final boolean canWait) {
         if (!canWait && log.isDebugEnabled()) {
             log.debug("Forcing menu reload now.");
         }
@@ -148,7 +148,7 @@ public class SWTMainMenu extends MainMenu {
     /**
      * Does the actual reload of Main Menu
      */
-    private void doReload(final boolean canWait) {
+    private synchronized void doReload(final boolean canWait) {
         menu.getDisplay().asyncExec(new Runnable() {
             public void run() {
                 try {
