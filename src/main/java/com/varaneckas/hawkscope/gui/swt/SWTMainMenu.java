@@ -149,6 +149,7 @@ public class SWTMainMenu extends MainMenu {
      * Does the actual reload of Main Menu
      */
     private synchronized void doReload(final boolean canWait) {
+        if (menu.getDisplay().isDisposed()) return;
         menu.getDisplay().asyncExec(new Runnable() {
             public void run() {
                 try {
