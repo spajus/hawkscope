@@ -98,7 +98,7 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
         if (file != null) {
             org.eclipse.swt.widgets.MenuItem exec =
                 new org.eclipse.swt.widgets.MenuItem(submenu, SWT.PUSH);
-            exec.setImage((Image) IconFactory.getIconFactory().getIcon("execute"));
+            exec.setImage((Image) IconFactory.getIconFactory().getIcon("executable"));
             exec.setText("Run Application");
             exec.addSelectionListener(new SelectionAdapter() {
                 @Override
