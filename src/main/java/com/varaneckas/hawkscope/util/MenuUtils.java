@@ -21,9 +21,15 @@ public abstract class MenuUtils {
      * @return number of menu items
      */
     public static int getAutoMenuSize() {
-        int screenHeight = GraphicsEnvironment.getLocalGraphicsEnvironment()
-                .getDefaultScreenDevice().getDisplayMode().getHeight();
-        return (screenHeight / MENU_ITEM_SIZE) * 9 / 10; //menu gets cut at 90%
+        try {
+            int screenHeight = GraphicsEnvironment.getLocalGraphicsEnvironment()
+                    .getDefaultScreenDevice().getDisplayMode().getHeight();
+            return (screenHeight / MENU_ITEM_SIZE) * 9 / 10; //menu gets cut at 90%
+        } catch (final Exception e) {
+            //for some weird reason sometimes display mode is null on Ubuntu 
+            //running in VirtualBox 
+            return 10;
+        }
     }
     
 }
