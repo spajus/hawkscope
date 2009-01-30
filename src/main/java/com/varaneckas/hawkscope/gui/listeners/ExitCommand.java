@@ -1,14 +1,12 @@
 package com.varaneckas.hawkscope.gui.listeners;
 
-import java.awt.event.ActionListener;
-
 import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.menu.Command;
 import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
- * Exit {@link ActionListener}
+ * Exit {@link Command}
  * 
  * Quits the application on left click
  *

@@ -1,6 +1,6 @@
 package com.varaneckas.hawkscope.util;
 
-import java.awt.GraphicsEnvironment;
+import org.eclipse.swt.widgets.Display;
 
 /**
  * Utilities related to menus and menu items 
@@ -22,8 +22,7 @@ public abstract class MenuUtils {
      */
     public static int getAutoMenuSize() {
         try {
-            int screenHeight = GraphicsEnvironment.getLocalGraphicsEnvironment()
-                    .getDefaultScreenDevice().getDisplayMode().getHeight();
+            int screenHeight = Display.getDefault().getPrimaryMonitor().getBounds().height;
             return (screenHeight / MENU_ITEM_SIZE) * 9 / 10; //menu gets cut at 90%
         } catch (final Exception e) {
             //for some weird reason sometimes display mode is null on Ubuntu 

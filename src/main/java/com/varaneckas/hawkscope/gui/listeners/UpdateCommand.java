@@ -1,14 +1,12 @@
 package com.varaneckas.hawkscope.gui.listeners;
 
-import java.awt.event.ActionListener;
-
 import org.eclipse.swt.program.Program;
 
 import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.menu.Command;
 
 /**
- * Update Hawkscope Menu Item {@link ActionListener}
+ * Update Hawkscope Menu Item {@link Command}
  *
  * @author Tomas Varaneckas
  * @version $Id$

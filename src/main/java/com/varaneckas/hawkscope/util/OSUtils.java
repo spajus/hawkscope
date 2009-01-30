@@ -1,6 +1,5 @@
 package com.varaneckas.hawkscope.util;
 
-import java.awt.Dimension;
 import java.io.File;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -48,8 +47,8 @@ public abstract class OSUtils {
 				Method m = systemTrayClass.getMethod("getSystemTray", new Class[] {});
 				Object systemTray = m.invoke(systemTrayClass, new Object[] {});
 				m = systemTray.getClass().getMethod("getTrayIconSize", new Class[] {});
-				Dimension size = (Dimension) m.invoke(systemTray, new Object[] {});
-				return size.height;
+				Object size = m.invoke(systemTray, new Object[] {});
+				return ((java.awt.Dimension) size).height;
 			} catch (final Exception e) {
 				log.warn("Failed calling java.awt.SystemTray object", e);
 			}
