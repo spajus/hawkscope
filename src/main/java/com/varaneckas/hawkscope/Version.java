@@ -19,6 +19,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
  * Hawkscope Version information
@@ -68,7 +69,8 @@ public class Version {
      * URL where latest Hawkscope version is stored
      */
     public static final String VERSION_CHECK_URL 
-            = "http://hawkscope.googlecode.com/svn/trunk/version";
+            = "http://hawkscope.googlecode.com/svn/trunk/dist/version/" 
+            	+ OSUtils.CURRENT_OS.toString().toLowerCase();
     
     /**
      * URL where more recent version of Hawkscope can be downloaded
@@ -79,7 +81,7 @@ public class Version {
     /**
      * Tells if update is available
      */
-    private static boolean isUpdateAvailable = false; 
+    private static Boolean isUpdateAvailable = null; 
     
     /**
      * Asynchronious update check on startup.
@@ -248,6 +250,7 @@ public class Version {
             } else {
                 log.info("You have the latest available version of Hawkscope: " 
                         + VERSION_NUMBER);
+                isUpdateAvailable = false;
             }
         } catch (final Exception e) {
             log.info("Failed checking for update: " + e.getMessage());
@@ -259,7 +262,7 @@ public class Version {
      * 
      * @return
      */
-    public static boolean isUpdateAvailable() {
+    public static Boolean isUpdateAvailable() {
         return isUpdateAvailable;
     }
     

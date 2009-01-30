@@ -150,7 +150,7 @@ public abstract class MainMenu {
      * Adds static menu items
      */
     private void addStaticItems() {
-        if (Version.isUpdateAvailable()) {
+        if (Version.isUpdateAvailable() != null && Version.isUpdateAvailable()) {
             addExecutableMenuItem("update", "Update Available!", 
                     new UpdateCommand());
         }
