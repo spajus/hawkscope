@@ -260,7 +260,7 @@ public class Version {
     /**
      * Tells is update is available
      * 
-     * @return
+     * @return null if unavailable, otherwise a Boolean
      */
     public static Boolean isUpdateAvailable() {
         return isUpdateAvailable;
