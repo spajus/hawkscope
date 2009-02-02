@@ -12,6 +12,7 @@ import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.MenuUtils;
+import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
  * Folder Menu Item Listener
@@ -69,11 +70,16 @@ public class FolderMenuItemListener implements MenuItemListener {
                 Arrays.sort(files);
                 for (final File ff : files) {
                     if (ff.isDirectory()) {
-                        if (ConfigurationFactory.getConfigurationFactory()
+                        if (OSUtils.isMacApp(ff)) {
+                            workMenu.addMenuItem(MenuFactory.getMenuFactory()
+                                    .newFileMenuItem(ff));
+                        } else {
+                            if (ConfigurationFactory.getConfigurationFactory()
                                 .getConfiguration().getBlackList().contains(ff)) {
-                            continue;
+                                continue;
+                            }
+                            workMenu.addMenuItem(MenuFactory.getMenuFactory().newFolderMenu(ff));
                         }
-                        workMenu.addMenuItem(MenuFactory.getMenuFactory().newFolderMenu(ff));
                     } else {
                         workMenu.addMenuItem(MenuFactory.getMenuFactory().newFileMenuItem(ff));
                     }
