@@ -6,10 +6,10 @@ import java.util.Arrays;
 import org.eclipse.swt.program.Program;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+import com.varaneckas.hawkscope.gui.swt.SWTMenuFactory;
 import com.varaneckas.hawkscope.menu.DynamicFileFilter;
 import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 import com.varaneckas.hawkscope.menu.FolderMenu;
-import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.MenuUtils;
 import com.varaneckas.hawkscope.util.OSUtils;
@@ -61,7 +61,7 @@ public class FolderMenuItemListener implements MenuItemListener {
             long counter = 0L;
             FolderMenu workMenu = folderMenu;
             if (files == null || files.length == 0) {                
-                final ExecutableMenuItem empty = MenuFactory.getMenuFactory().newExecutableMenuItem();
+                final ExecutableMenuItem empty = SWTMenuFactory.newExecutableMenuItem();
                 empty.setIcon(IconFactory.getIconFactory().getIcon("empty"));
                 empty.setText("Empty...");
                 empty.setEnabled(false);
@@ -71,20 +71,19 @@ public class FolderMenuItemListener implements MenuItemListener {
                 for (final File ff : files) {
                     if (ff.isDirectory()) {
                         if (OSUtils.isMacApp(ff)) {
-                            workMenu.addMenuItem(MenuFactory.getMenuFactory()
-                                    .newFileMenuItem(ff));
+                            workMenu.addMenuItem(SWTMenuFactory.newFileMenuItem(ff));
                         } else {
                             if (ConfigurationFactory.getConfigurationFactory()
                                 .getConfiguration().getBlackList().contains(ff)) {
                                 continue;
                             }
-                            workMenu.addMenuItem(MenuFactory.getMenuFactory().newFolderMenu(ff));
+                            workMenu.addMenuItem(SWTMenuFactory.newFolderMenu(ff));
                         }
                     } else {
-                        workMenu.addMenuItem(MenuFactory.getMenuFactory().newFileMenuItem(ff));
+                        workMenu.addMenuItem(SWTMenuFactory.newFileMenuItem(ff));
                     }
                     if (++counter % MENU_SIZE == 0 && counter < files.length) {
-                        FolderMenu more = MenuFactory.getMenuFactory().newFolderMenu(null);
+                        FolderMenu more = SWTMenuFactory.newFolderMenu(null);
                         more.setIcon(IconFactory.getIconFactory().getIcon("more"));
                         more.setText("More");
                         workMenu.addSeparator();

@@ -5,7 +5,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.WindowFactory;
-import com.varaneckas.hawkscope.menu.MenuFactory;
+import com.varaneckas.hawkscope.gui.swt.SWTMenuFactory;
 import com.varaneckas.hawkscope.tray.SWTTrayManager;
 
 /**
@@ -46,7 +46,7 @@ public class Launcher {
      */
     private static void preload() {
 		log.debug("Preloading data");
-		MenuFactory.getMenuFactory().getMainMenu().loadMenu();
+		SWTMenuFactory.getMainMenu().loadMenu();
 		log.debug("Preloaded...");
     }
 

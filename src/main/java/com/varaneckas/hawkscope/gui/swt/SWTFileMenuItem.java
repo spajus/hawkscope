@@ -11,7 +11,6 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
 import com.varaneckas.hawkscope.menu.FileMenuItem;
-import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.PathUtils;
@@ -71,7 +70,7 @@ public class SWTFileMenuItem implements FileMenuItem, SWTMenuItem {
                 if (!Program.launch(file.getAbsolutePath())) {
                     throw new RuntimeException("Cannot find program for opening " + file);
                 }
-                MenuFactory.getMenuFactory().getMainMenu().forceHide();
+                SWTMenuFactory.getMainMenu().forceHide();
             } 
         });
         PluginManager.getInstance().enhanceFileMenuItem(menuItem, this.file);

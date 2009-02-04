@@ -8,7 +8,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 
-import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.menu.state.StateEvent;
 import com.varaneckas.hawkscope.util.OSUtils;
 
@@ -28,7 +27,7 @@ public class SWTTrayIconListener implements Listener {
     public void handleEvent(final Event event) {
         try {
             final StateEvent se = findPopupMenuLocation();
-            MenuFactory.getMenuFactory().getMainMenu().getState().act(se);
+            SWTMenuFactory.getMainMenu().getState().act(se);
         } catch (final Exception e) {
             log.error(e, e);
         }

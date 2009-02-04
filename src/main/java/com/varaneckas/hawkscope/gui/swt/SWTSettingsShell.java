@@ -30,7 +30,6 @@ import com.cloudgarden.resource.SWTResourceManager;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.SettingsWindow;
-import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
@@ -171,7 +170,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
             public void widgetSelected(SelectionEvent event) {
                 saveConfiguration();
                 hideObject();
-                MenuFactory.getMenuFactory().getMainMenu().reloadMenu(false);
+                SWTMenuFactory.getMainMenu().reloadMenu(false);
             }
         });
         

@@ -3,8 +3,8 @@ package com.varaneckas.hawkscope.menu.state;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.varaneckas.hawkscope.menu.MainMenu;
-import com.varaneckas.hawkscope.menu.MenuFactory;
+import com.varaneckas.hawkscope.gui.swt.SWTMainMenu;
+import com.varaneckas.hawkscope.gui.swt.SWTMenuFactory;
 
 /**
  * State when {@link MainMenu} is closed (invisible)
@@ -42,7 +42,7 @@ public class MenuClosedState extends State {
 
     @Override
     public void act(final StateEvent event) {
-        final MainMenu menu = MenuFactory.getMenuFactory().getMainMenu();
+        final SWTMainMenu menu = SWTMenuFactory.getMainMenu();
         menu.showMenu(event.getX(), event.getY());
         menu.setState(MenuOpenState.getInstance());
     }
@@ -53,7 +53,7 @@ public class MenuClosedState extends State {
             log.debug("Menu closed. Free mem before cleanup: "
                     + Runtime.getRuntime().freeMemory() / (1024 * 1024));
         }
-        MenuFactory.getMenuFactory().getMainMenu().reloadMenu(true);
+        SWTMenuFactory.getMainMenu().reloadMenu(true);
     }
     
 }

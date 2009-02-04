@@ -1,8 +1,8 @@
 package com.varaneckas.hawkscope.command;
 
 import com.varaneckas.hawkscope.gui.WindowFactory;
+import com.varaneckas.hawkscope.gui.swt.SWTMenuFactory;
 import com.varaneckas.hawkscope.menu.Command;
-import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
  * Settings {@link Command}
@@ -16,7 +16,7 @@ public class SettingsCommand implements Command {
 
     public void execute() {
         WindowFactory.getSettingsWindow().showObject();
-        MenuFactory.getMenuFactory().getMainMenu().forceHide();
+        SWTMenuFactory.getMainMenu().forceHide();
     }
 
 }

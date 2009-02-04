@@ -1,7 +1,7 @@
 package com.varaneckas.hawkscope.command;
 
+import com.varaneckas.hawkscope.gui.swt.SWTMenuFactory;
 import com.varaneckas.hawkscope.menu.Command;
-import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
  * Hide Menu Item {@link Command}
@@ -12,7 +12,7 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
 public class HideCommand implements Command {
 
     public void execute() {
-        MenuFactory.getMenuFactory().getMainMenu().forceHide();
+        SWTMenuFactory.getMainMenu().forceHide();
     }
 
 }

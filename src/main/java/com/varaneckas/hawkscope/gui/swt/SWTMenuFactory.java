@@ -5,8 +5,6 @@ import java.io.File;
 import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 import com.varaneckas.hawkscope.menu.FileMenuItem;
 import com.varaneckas.hawkscope.menu.FolderMenu;
-import com.varaneckas.hawkscope.menu.MainMenu;
-import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
  * SWT {@link MainMenu} factory
@@ -14,27 +12,24 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTMenuFactory extends MenuFactory {
-
+public class SWTMenuFactory {
+	
     /**
      * Gets the SWT imlementation of {@link MainMenu} 
      */
-    public SWTMainMenu getMainMenu() {
+    public static SWTMainMenu getMainMenu() {
         return SWTMainMenu.getInstance();
     }
 
-    @Override
-    public ExecutableMenuItem newExecutableMenuItem() {
+    public static ExecutableMenuItem newExecutableMenuItem() {
         return new SWTExecutableMenuItem();
     }
 
-    @Override
-    public FileMenuItem newFileMenuItem(final File file) {
+    public static FileMenuItem newFileMenuItem(final File file) {
         return new SWTFileMenuItem(file);
     }
 
-    @Override
-    public FolderMenu newFolderMenu(final File file) {
+    public static FolderMenu newFolderMenu(final File file) {
         return new SWTFolderMenu(file);
     }
     

@@ -1,15 +1,34 @@
 package com.varaneckas.hawkscope.gui.swt;
 
+import java.io.File;
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
+import com.varaneckas.hawkscope.Version;
+import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.menu.MainMenu;
+import com.varaneckas.hawkscope.command.AboutCommand;
+import com.varaneckas.hawkscope.command.ExitCommand;
+import com.varaneckas.hawkscope.command.HideCommand;
+import com.varaneckas.hawkscope.command.SettingsCommand;
+import com.varaneckas.hawkscope.command.UpdateCommand;
+import com.varaneckas.hawkscope.menu.Command;
+import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
+import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
+import com.varaneckas.hawkscope.menu.state.State;
+import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.tray.SWTTrayManager;
+import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.OSUtils;
+import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
  * {@link MainMenu} - SWT implementation
@@ -17,7 +36,7 @@ import com.varaneckas.hawkscope.tray.SWTTrayManager;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTMainMenu extends MainMenu {
+public class SWTMainMenu {
 	
     /**
      * Singleton instance
@@ -80,7 +99,6 @@ public class SWTMainMenu extends MainMenu {
         return instance;
     }
 
-    @Override
     public void clearMenu() {
         for (MenuItem item : menu.getItems()) {
             if (!item.isDisposed()) {
@@ -89,14 +107,12 @@ public class SWTMainMenu extends MainMenu {
         }
     }
 
-    @Override
     public void forceHide() {
         hiddenSince = System.currentTimeMillis();
         setState(MenuClosedState.getInstance());
         menu.setVisible(false);
     }
 
-    @Override
     public void showMenu(final int x, final int y) {
         hiddenSince = 0L;
         menu.setLocation(x, y);
@@ -104,14 +120,12 @@ public class SWTMainMenu extends MainMenu {
         menu.setDefaultItem(menu.getItems()[0]);
     }
 
-    @Override
     public void addMenuItem(final com.varaneckas.hawkscope.menu.MenuItem item) {
         if (item instanceof SWTMenuItem) {
             ((SWTMenuItem) item).createMenuItem(menu);
         }
     }
 
-    @Override
     public void addSeparator() {
         new MenuItem(menu, SWT.SEPARATOR);
     }
@@ -120,7 +134,6 @@ public class SWTMainMenu extends MainMenu {
         hiddenSince = timestamp;
     }
     
-    @Override
     public synchronized void reloadMenu(final boolean canWait) {
         if (!canWait && log.isDebugEnabled()) {
             log.debug("Forcing menu reload now.");
@@ -190,4 +203,129 @@ public class SWTMainMenu extends MainMenu {
             }
         });
     }
+    /**
+     * Current menu state
+     */
+    protected State state = MenuClosedState.getInstance();
+    
+    /**
+     * Logger
+     */
+    protected Log log = LogFactory.getLog(getClass());
+    
+    /**
+     * Root partitions
+     */
+    protected List<File> roots = OSUtils.getFileSystemRoots();
+    
+    /**
+     * Gets current {@link State}
+     * 
+     * @return current state
+     */
+    public State getState() {
+        return state;
+    }
+
+    /**
+     * Sets menu {@link State}
+     * 
+     * @param state new state
+     */
+    public void setState(final State state) {
+        if (!this.state.equals(state)) {
+            this.state = state;
+            state.init();
+        }
+    }
+
+    /**
+     * Loads the menu
+     */
+    public void loadMenu() {
+        Configuration cfg = ConfigurationFactory.getConfigurationFactory()
+                .getConfiguration();
+        PluginManager.getInstance().beforeQuickAccess(this);
+        loadQuickAccessMenu();
+        boolean addSeparator = false;
+        for (final File root : roots) {
+            if (cfg.getBlackList().contains(root)) {
+                continue;
+            }
+            if (cfg.isFloppyDrivesDisplayed() || !PathUtils.isFloppy(root)) {
+            log.debug("Generating menu for: " + root.getAbsolutePath());
+                final FolderMenu item = SWTMenuFactory.newFolderMenu(root);
+                item.setText(PathUtils.getFileName(root));
+                item.setIcon(IconFactory.getIconFactory().getIcon(root));
+                addMenuItem(item);
+                addSeparator = true;
+            }
+        }
+        if (addSeparator) {
+            addSeparator();
+        }
+        addStaticItems();
+        reloadRoots();
+    }
+    
+    /**
+     * Lazy reload of root partitions
+     */
+    protected void reloadRoots() {
+        log.debug("Performing root partition listing");
+        roots = OSUtils.getFileSystemRoots();
+        log.debug("Root partition listing complete");
+    }
+
+    /**
+     * Loads quick access menu
+     */
+    private void loadQuickAccessMenu() {
+        final List<File> quick = ConfigurationFactory.getConfigurationFactory()
+                .getConfiguration().getQuickAccessList();
+        if (quick != null && quick.size() > 0) {
+            for (final File custom : quick) {
+                try {
+                    FolderMenu fm = SWTMenuFactory.newFolderMenu(custom);
+                    PluginManager.getInstance().enhanceQuickAccessItem(fm, custom);
+                    addMenuItem(fm);
+                } catch (final Exception e) {
+                    log.warn("Skipping unloadable Quick Access List item", e);
+                }
+            }
+            addSeparator();
+        }
+    }   
+    
+    /**
+     * Adds static menu items
+     */
+    private void addStaticItems() {
+        if (Version.isUpdateAvailable() != null && Version.isUpdateAvailable()) {
+            addExecutableMenuItem("update", "Update Available!", 
+                    new UpdateCommand());
+        }
+        addExecutableMenuItem("hide", "Hide", new HideCommand());
+        PluginManager.getInstance().beforeAboutMenuItem(this);
+        addExecutableMenuItem("about", "About", new AboutCommand());
+        addExecutableMenuItem("settings", "Settings", new SettingsCommand());
+        addExecutableMenuItem("exit", "Exit", new ExitCommand());
+    }
+
+    /**
+     * Adds an executable menu item 
+     * 
+     * @param name Item name
+     * @param text Text on menu item
+     * @param command Command to execute
+     */
+    public void addExecutableMenuItem(final String name, 
+            final String text, final Command command) {
+        final ExecutableMenuItem item = SWTMenuFactory.newExecutableMenuItem();
+        item.setCommand(command);
+        item.setText(text);
+        item.setIcon(IconFactory.getIconFactory().getIcon(name));
+        addMenuItem(item);
+    }    
+    
 }

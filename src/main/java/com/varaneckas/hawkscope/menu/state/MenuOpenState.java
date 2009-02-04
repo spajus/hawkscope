@@ -3,8 +3,7 @@ package com.varaneckas.hawkscope.menu.state;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.varaneckas.hawkscope.menu.MainMenu;
-import com.varaneckas.hawkscope.menu.MenuFactory;
+import com.varaneckas.hawkscope.gui.swt.SWTMenuFactory;
 
 /**
  * State when {@link MainMenu} is open (visible)
@@ -42,7 +41,7 @@ public class MenuOpenState extends State {
     
     @Override
     public void act(final StateEvent event) {
-        MenuFactory.getMenuFactory().getMainMenu().forceHide();
+        SWTMenuFactory.getMainMenu().forceHide();
     }
     
     @Override

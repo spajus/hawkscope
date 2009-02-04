@@ -1,6 +1,5 @@
 package com.varaneckas.hawkscope.menu.state;
 
-import com.varaneckas.hawkscope.menu.MainMenu;
 
 /**
  * State of {@link MainMenu} 
