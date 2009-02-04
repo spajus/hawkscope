@@ -5,7 +5,7 @@ import java.io.File;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
-import com.varaneckas.hawkscope.gui.listeners.AboutCommand;
+import com.varaneckas.hawkscope.command.AboutCommand;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.gui.swt.SWTExecutableMenuItem;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;

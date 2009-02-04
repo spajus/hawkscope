@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.listeners;
+package com.varaneckas.hawkscope.command;
 
 import org.eclipse.swt.widgets.Display;
 

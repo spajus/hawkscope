@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.swt;
+package com.varaneckas.hawkscope.tray;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -8,7 +8,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TrayItem;
 
-import com.varaneckas.hawkscope.tray.TrayManager;
+import com.varaneckas.hawkscope.gui.swt.SWTTrayIconListener;
+import com.varaneckas.hawkscope.gui.swt.SWTUncaughtExceptionHandler;
 import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
@@ -17,7 +18,15 @@ import com.varaneckas.hawkscope.util.IconFactory;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTTrayManager implements TrayManager {
+public class SWTTrayManager {
+	
+	private static final SWTTrayManager instance = new SWTTrayManager();
+	
+	private SWTTrayManager() {}
+	
+	public static SWTTrayManager getInstance() {
+		return instance;
+	}
 
     /**
      * Logger

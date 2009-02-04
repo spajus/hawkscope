@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
-import com.varaneckas.hawkscope.tray.TrayManagerFactory;
+import com.varaneckas.hawkscope.tray.SWTTrayManager;
 
 /**
  * {@link MainMenu} - SWT implementation
@@ -44,8 +44,7 @@ public class SWTMainMenu extends MainMenu {
      * Initializing singleton constructor
      */
     private SWTMainMenu() {
-        menu = new Menu(((SWTTrayManager) TrayManagerFactory.getTrayManager())
-                .getShell(), SWT.POP_UP);
+        menu = new Menu(SWTTrayManager.getInstance().getShell(), SWT.POP_UP);
         menu.addListener(SWT.Hide, new Listener() {
             public void handleEvent(Event event) {
                 new Thread(new Runnable() {

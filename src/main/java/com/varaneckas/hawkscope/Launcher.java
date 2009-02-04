@@ -6,7 +6,7 @@ import org.apache.commons.logging.LogFactory;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.WindowFactory;
 import com.varaneckas.hawkscope.menu.MenuFactory;
-import com.varaneckas.hawkscope.tray.TrayManagerFactory;
+import com.varaneckas.hawkscope.tray.SWTTrayManager;
 
 /**
  * Hawkscope Application Launcher
@@ -38,7 +38,7 @@ public class Launcher {
             log.fatal("Failed starting Hawkscope", e);
         }
         preload();
-        TrayManagerFactory.getTrayManager().load();
+        SWTTrayManager.getInstance().load();
     }
     
     /**

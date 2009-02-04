@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.listeners;
+package com.varaneckas.hawkscope.command;
 
 import com.varaneckas.hawkscope.gui.WindowFactory;
 import com.varaneckas.hawkscope.menu.Command;

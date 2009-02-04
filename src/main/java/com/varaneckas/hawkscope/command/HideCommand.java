@@ -1,21 +1,17 @@
-package com.varaneckas.hawkscope.gui.listeners;
+package com.varaneckas.hawkscope.command;
 
-import com.varaneckas.hawkscope.gui.WindowFactory;
 import com.varaneckas.hawkscope.menu.Command;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
- * About {@link Command}
- * 
- * Displays About dialog
+ * Hide Menu Item {@link Command}
  *
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class AboutCommand implements Command {
+public class HideCommand implements Command {
 
     public void execute() {
-        WindowFactory.getAboutWindow().showObject();
         MenuFactory.getMenuFactory().getMainMenu().forceHide();
     }
 
