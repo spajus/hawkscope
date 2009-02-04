@@ -13,7 +13,37 @@ import com.varaneckas.hawkscope.menu.MainMenu;
 
 public abstract class PluginAdapter implements Plugin {
     
-    private static final Log log = LogFactory.getLog(PluginAdapter.class);
+    protected Log log = LogFactory.getLog(getClass());
+    
+    protected boolean canEnhanceFileMenuItem = false;
+    
+    protected boolean canEnhanceFolderMenu = false;
+    
+    protected boolean canEnhanceQuickAccessItem = false;
+    
+    protected boolean canHookBeforeAboutMenuItem = false;
+    
+    protected boolean canHookBeforeQuickAccessList = false;
+    
+    public boolean canEnhanceFileMenuItem() {
+        return canEnhanceFileMenuItem;
+    }
+    
+    public boolean canEnhanceFolderMenu() {
+        return canEnhanceFolderMenu;
+    }
+    
+    public boolean canEnhanceQuickAccessItem() {
+        return canEnhanceQuickAccessItem;
+    }
+    
+    public boolean canHookBeforeAboutMenuItem() {
+        return canHookBeforeAboutMenuItem;
+    }
+    
+    public boolean canHookBeforeQuickAccessList() {
+        return canHookBeforeQuickAccessList;
+    }
 
     public void beforeAboutMenuItem(MainMenu mainMenu) {
         log.debug("hooking before about menu item");

@@ -10,6 +10,16 @@ import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MainMenu;
 
 public interface Plugin {
+    
+    public boolean canEnhanceFolderMenu();
+    
+    public boolean canEnhanceFileMenuItem();
+    
+    public boolean canEnhanceQuickAccessItem();
+    
+    public boolean canHookBeforeAboutMenuItem();
+    
+    public boolean canHookBeforeQuickAccessList();
 
     void enhanceFolderMenu(File file, MenuItem menu, Menu submenu,
             FolderMenuItemListener listener);

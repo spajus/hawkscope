@@ -16,7 +16,8 @@ public class PluginManager {
     private static final PluginManager instance = new PluginManager();
     
     private PluginManager() {
-        plugins.add(new PluginAdapter() {});
+        //FIXME playing around
+        //plugins.add(new OpenWithPlugin());
     }
     
     private final List<Plugin> plugins = new ArrayList<Plugin>();
@@ -32,31 +33,36 @@ public class PluginManager {
     public void enhanceFolderMenu(File file, MenuItem menu, Menu submenu,
             FolderMenuItemListener listener) {
         for (Plugin plugin : getActivePlugins()) {
-            plugin.enhanceFolderMenu(file, menu, submenu, listener);
+            if (plugin.canEnhanceFolderMenu())
+                plugin.enhanceFolderMenu(file, menu, submenu, listener);
         }
     }
 
     public void enhanceFileMenuItem(MenuItem menuItem, File file) {
         for (Plugin plugin : getActivePlugins()) {
-            plugin.enhanceFileMenuItem(menuItem, file);
+            if (plugin.canEnhanceFileMenuItem())
+                plugin.enhanceFileMenuItem(menuItem, file);
         }
     }
 
     public void beforeQuickAccess(MainMenu mainMenu) {
         for (Plugin plugin : getActivePlugins()) {
-            plugin.beforeQuickAccess(mainMenu);
+            if (plugin.canHookBeforeQuickAccessList())
+                plugin.beforeQuickAccess(mainMenu);
         }
     }
 
     public void enhanceQuickAccessItem(FolderMenu fm, File custom) {
         for (Plugin plugin : getActivePlugins()) {
-            plugin.enhanceQuickAccessItem(fm, custom);
+            if (plugin.canEnhanceQuickAccessItem())
+                plugin.enhanceQuickAccessItem(fm, custom);
         }
     }
 
     public void beforeAboutMenuItem(MainMenu mainMenu) {
         for (Plugin plugin : getActivePlugins()) {
-            plugin.beforeAboutMenuItem(mainMenu);
+            if (plugin.canHookBeforeAboutMenuItem())
+                plugin.beforeAboutMenuItem(mainMenu);
         }
     }
 
