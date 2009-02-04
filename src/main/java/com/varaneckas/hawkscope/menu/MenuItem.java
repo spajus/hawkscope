@@ -1,5 +1,7 @@
 package com.varaneckas.hawkscope.menu;
 
+import org.eclipse.swt.graphics.Image;
+
 /**
  * Hawkscope Menu Item
  * 
@@ -13,7 +15,7 @@ public interface MenuItem {
      * 
      * @param icon icon
      */
-    public void setIcon(final Object icon);
+    public void setIcon(final Image icon);
     
     /**
      * Sets the menu item text

@@ -14,7 +14,6 @@ import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MenuItem;
 import com.varaneckas.hawkscope.plugin.PluginManager;
-import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
@@ -33,7 +32,7 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
     /**
      * Menu icon
      */
-    private Object icon;
+    private Image icon;
     
     /**
      * Is menu enabled?
@@ -81,7 +80,7 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
         if (file != null) {
             org.eclipse.swt.widgets.MenuItem open = 
                 new org.eclipse.swt.widgets.MenuItem(submenu, SWT.PUSH);
-            open.setImage((Image) IconFactory.getIconFactory().getIcon("open"));
+            open.setImage(SWTIconFactory.getInstance().getIcon("open"));
             open.setText("Open");
             open.addSelectionListener(new SelectionAdapter() {
                 @Override
@@ -101,7 +100,7 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
         super(file);
         if (file != null) {
             this.text = PathUtils.getFileName(file);
-            this.icon = IconFactory.getIconFactory().getIcon(file);
+            this.icon = SWTIconFactory.getInstance().getIcon(file);
         } 
     }
     
@@ -121,7 +120,7 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
         this.enabled = enabled;
     }
 
-    public void setIcon(final Object icon) {
+    public void setIcon(final Image icon) {
         this.icon = icon;
     }
 

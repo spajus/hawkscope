@@ -26,7 +26,7 @@ public class SWTExecutableMenuItem implements ExecutableMenuItem, SWTMenuItem {
     /**
      * Menu item icon
      */
-    private Object icon;
+    private Image icon;
 
     /**
      * Menu item command
@@ -54,7 +54,7 @@ public class SWTExecutableMenuItem implements ExecutableMenuItem, SWTMenuItem {
         this.command = command;
     }
 
-    public void setIcon(final Object icon) {
+    public void setIcon(final Image icon) {
         this.icon = icon;
     }
 

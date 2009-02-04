@@ -11,7 +11,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -26,9 +25,7 @@ import org.eclipse.swt.widgets.Text;
 import com.cloudgarden.resource.SWTResourceManager;
 import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.gui.AboutWindow;
 import com.varaneckas.hawkscope.util.IOUtils;
-import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
@@ -50,8 +47,7 @@ import com.varaneckas.hawkscope.util.OSUtils;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog 
-        implements AboutWindow {
+public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog {
     
     /**
      * Logger
@@ -100,8 +96,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                 //handle the obtaining and disposing of resources
                 SWTResourceManager.registerResourceUser(dialogShell);
             }
-            dialogShell.setImage((Image) SWTIconFactory.getIconFactory()
-                    .getUncachedIcon("hawkscope16.png"));
+            dialogShell.setImage(SWTIconFactory.getInstance().getUncachedIcon("hawkscope16.png"));
             dialogShell.setText("About");
             
             dialogShell.setLayout(new FormLayout());
@@ -297,8 +292,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog
                 logoCanvas = new Canvas(dialogShell, SWT.RESIZE);
                 logoCanvas.addPaintListener(new PaintListener() {
                     public void paintControl(PaintEvent e) {
-                        e.gc.drawImage((Image) IconFactory.getIconFactory()
-                                .getUncachedIcon("hawkscope128.png"), 0, 0, 128, 
+                        e.gc.drawImage(SWTIconFactory.getInstance().getUncachedIcon("hawkscope128.png"), 0, 0, 128, 
                                 128, 0, 0, 114, 109);
                     }
                 });

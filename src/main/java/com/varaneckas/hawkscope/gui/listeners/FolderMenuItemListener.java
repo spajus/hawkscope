@@ -6,11 +6,11 @@ import java.util.Arrays;
 import org.eclipse.swt.program.Program;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+import com.varaneckas.hawkscope.gui.swt.SWTIconFactory;
 import com.varaneckas.hawkscope.gui.swt.SWTMenuFactory;
 import com.varaneckas.hawkscope.menu.DynamicFileFilter;
 import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 import com.varaneckas.hawkscope.menu.FolderMenu;
-import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.MenuUtils;
 import com.varaneckas.hawkscope.util.OSUtils;
 
@@ -62,7 +62,7 @@ public class FolderMenuItemListener implements MenuItemListener {
             FolderMenu workMenu = folderMenu;
             if (files == null || files.length == 0) {                
                 final ExecutableMenuItem empty = SWTMenuFactory.newExecutableMenuItem();
-                empty.setIcon(IconFactory.getIconFactory().getIcon("empty"));
+                empty.setIcon(SWTIconFactory.getInstance().getIcon("empty"));
                 empty.setText("Empty...");
                 empty.setEnabled(false);
                 workMenu.addMenuItem(empty);
@@ -84,7 +84,7 @@ public class FolderMenuItemListener implements MenuItemListener {
                     }
                     if (++counter % MENU_SIZE == 0 && counter < files.length) {
                         FolderMenu more = SWTMenuFactory.newFolderMenu(null);
-                        more.setIcon(IconFactory.getIconFactory().getIcon("more"));
+                        more.setIcon(SWTIconFactory.getInstance().getIcon("more"));
                         more.setText("More");
                         workMenu.addSeparator();
                         workMenu.addMenuItem(more);

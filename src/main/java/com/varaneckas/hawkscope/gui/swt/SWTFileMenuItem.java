@@ -12,7 +12,6 @@ import org.eclipse.swt.widgets.MenuItem;
 
 import com.varaneckas.hawkscope.menu.FileMenuItem;
 import com.varaneckas.hawkscope.plugin.PluginManager;
-import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
@@ -31,7 +30,7 @@ public class SWTFileMenuItem implements FileMenuItem, SWTMenuItem {
     /**
      * Menu item icon
      */
-    private Object icon;
+    private Image icon;
     
     /**
      * Is menu item enabled?
@@ -55,7 +54,7 @@ public class SWTFileMenuItem implements FileMenuItem, SWTMenuItem {
      */
     public SWTFileMenuItem(final File file) {
         text = PathUtils.getFileName(file);
-        icon = IconFactory.getIconFactory().getIcon(file);
+        icon = SWTIconFactory.getInstance().getIcon(file);
         this.file = file;
     }
     
@@ -80,7 +79,7 @@ public class SWTFileMenuItem implements FileMenuItem, SWTMenuItem {
         this.enabled = enabled;
     }
 
-    public void setIcon(final Object icon) {
+    public void setIcon(final Image icon) {
         this.icon = icon;
     }
 

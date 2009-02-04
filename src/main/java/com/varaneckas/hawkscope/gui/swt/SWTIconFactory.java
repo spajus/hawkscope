@@ -1,6 +1,7 @@
 package com.varaneckas.hawkscope.gui.swt;
 
 import java.io.File;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,8 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Display;
 
-import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
  * {@link IconFactory} - SWT implmementation
@@ -21,8 +23,16 @@ import com.varaneckas.hawkscope.util.IconFactory;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTIconFactory extends IconFactory<Image> {
-    
+public class SWTIconFactory {
+
+	private static final SWTIconFactory instance = new SWTIconFactory();
+	
+	private SWTIconFactory() {}
+	
+	public static SWTIconFactory getInstance() {
+		return instance;
+	}
+	
     private final Map<String, Image> resourcePool = new HashMap<String, Image>();
     
     /**
@@ -77,7 +87,6 @@ public class SWTIconFactory extends IconFactory<Image> {
      * @param file source
      * @return icon
      */
-    @Override
     public Image getFileSystemIcon(final File file) {
     	if (file.isDirectory() || !file.getName().contains(".")) {
     		return null;
@@ -113,7 +122,6 @@ public class SWTIconFactory extends IconFactory<Image> {
         return trayIcon;
     }
     
-    @Override
     public synchronized void cleanup() {
         for (final String im : resourcePool.keySet()) {
             try {
@@ -124,4 +132,106 @@ public class SWTIconFactory extends IconFactory<Image> {
             }
         }        
     }
+    
+    
+    /**
+     * Preloaded resources
+     */
+    protected static final Map<String, URL> resources = new HashMap<String, URL>();
+    
+    static {
+        try {
+            //initialize resources
+            resources.put("drive",  SWTIconFactory.class.getClassLoader().getResource("icons/hdd24.png"));
+            resources.put("floppy",  SWTIconFactory.class.getClassLoader().getResource("icons/fdd24.png"));
+            resources.put("cdrom",  SWTIconFactory.class.getClassLoader().getResource("icons/cdrom24.png"));
+            resources.put("network",  SWTIconFactory.class.getClassLoader().getResource("icons/network24.png"));
+            resources.put("removable",  SWTIconFactory.class.getClassLoader().getResource("icons/removable24.png"));
+            resources.put("folder", SWTIconFactory.class.getClassLoader().getResource("icons/folder24.png"));
+            resources.put("folder.open", SWTIconFactory.class.getClassLoader().getResource("icons/folder.open.24.png"));
+            resources.put("file",   SWTIconFactory.class.getClassLoader().getResource("icons/file24.png"));
+            resources.put("executable",   SWTIconFactory.class.getClassLoader().getResource("icons/executable24.png"));
+            resources.put("exit",   SWTIconFactory.class.getClassLoader().getResource("icons/exit24.png"));
+            resources.put("hide",   SWTIconFactory.class.getClassLoader().getResource("icons/down24.png"));
+            resources.put("more",   SWTIconFactory.class.getClassLoader().getResource("icons/more24.png"));
+            resources.put("unknown", SWTIconFactory.class.getClassLoader().getResource("icons/unknown24.png"));  
+            resources.put("about",  SWTIconFactory.class.getClassLoader().getResource("icons/about24.png"));  
+            resources.put("open",  SWTIconFactory.class.getClassLoader().getResource("icons/open24.png")); 
+            resources.put("empty",  SWTIconFactory.class.getClassLoader().getResource("icons/empty24.png")); 
+            resources.put("update", SWTIconFactory.class.getClassLoader().getResource("icons/update24.png"));
+            resources.put("settings", SWTIconFactory.class.getClassLoader().getResource("icons/settings24.png"));
+        } catch (final Exception e) {
+            log.warn("Cannot find icon", e);
+        }
+    }
+    
+    /**
+     * Gets icon for {@link File}
+     * 
+     * @param targetFile any file
+     * @return icon
+     */    
+    public Image getIcon(final File targetFile) {
+        if (ConfigurationFactory.getConfigurationFactory().getConfiguration()
+                .useOsIcons()) {
+            Image icon = getFileSystemIcon(targetFile);
+            if (icon != null) {
+                return icon;
+            }
+        }
+        if (OSUtils.isFileSystemRoot(targetFile)) {
+            if (OSUtils.isFloppyDrive(targetFile)) {
+                return getIcon("floppy");
+            }
+            if (OSUtils.isOpticalDrive(targetFile)) {
+                return getIcon("cdrom");
+            } 
+            if (OSUtils.isNetworkDrive(targetFile)) {
+                return getIcon("network");
+            }
+            if (OSUtils.isRemovableDrive(targetFile)) {
+                return getIcon("removable");
+            }
+            return getIcon("drive");
+        } else if (targetFile.isFile()) {
+        	if (OSUtils.isExecutable(targetFile)) {
+        	    return getIcon("executable");
+        	}
+            return getIcon("file");
+        } else if (targetFile.isDirectory()) {
+            //mac app
+            if (OSUtils.CURRENT_OS.equals(OSUtils.OS.MAC) 
+                    && targetFile.getName().endsWith(".app")) {
+                return getIcon("executable");  
+            } 
+            return getIcon("folder");
+        } else {
+            return getIcon("unknown");
+        }
+    }
+    
+    /**
+     * Gets best sized tray icon name for current setup
+     * 
+     * @return tray icon name
+     */
+    protected String getBestTrayIcon() {
+        float height = OSUtils.getTrayIconSize();
+        int[] sizes = new int[] { 64, 48, 32, 24, 16 };
+        int best = 64;
+        for (int i = 0; i < sizes.length; i++) {
+            if (sizes[i] / height >= 1) {
+                best = sizes[i];
+            }
+            else {
+                break;
+            }
+        }
+        final String res = "icons/hawkscope" + best + ".png";
+        if (log.isDebugEnabled()) {
+            log.debug("Chose best icon for " + (int) height 
+                    + " pixel tray: " + res);
+        }
+        return res;
+    }   
 }

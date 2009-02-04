@@ -2,8 +2,8 @@ package com.varaneckas.hawkscope.command;
 
 import org.eclipse.swt.widgets.Display;
 
+import com.varaneckas.hawkscope.gui.swt.SWTIconFactory;
 import com.varaneckas.hawkscope.menu.Command;
-import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
  * Exit {@link Command}
@@ -16,7 +16,7 @@ import com.varaneckas.hawkscope.util.IconFactory;
 public class ExitCommand implements Command {
 
     public void execute() {
-        IconFactory.getIconFactory().cleanup();
+        SWTIconFactory.getInstance().cleanup();
         final Display d = Display.getDefault();
         if (!d.isDisposed()) {
         	d.dispose();

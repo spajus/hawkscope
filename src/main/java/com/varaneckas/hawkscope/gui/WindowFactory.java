@@ -21,12 +21,12 @@ public class WindowFactory {
     /**
      * AboutWindow instance
      */
-    private static AboutWindow aboutWindow = null;
+    private static SWTAboutShell aboutWindow = null;
     
     /**
      * SettingsWindow instance
      */
-    private static SettingsWindow settingsWindow = null;
+    private static SWTSettingsShell settingsWindow = null;
 
     /**
      * Initializes the application GUI 
@@ -40,7 +40,7 @@ public class WindowFactory {
      * 
      * @return instance of About Window
      */
-    public static AboutWindow getAboutWindow() {
+    public static SWTAboutShell getAboutWindow() {
         if (aboutWindow == null) {
             aboutWindow = new SWTAboutShell(SWTTrayManager.getInstance().getShell(), 0);
         }
@@ -52,7 +52,7 @@ public class WindowFactory {
      * 
      * @return instance of Settings Window
      */
-    public static SettingsWindow getSettingsWindow() {
+    public static SWTSettingsShell getSettingsWindow() {
         if (settingsWindow == null) {
             settingsWindow = new SWTSettingsShell(SWTTrayManager.getInstance().getShell(), 0);
         }

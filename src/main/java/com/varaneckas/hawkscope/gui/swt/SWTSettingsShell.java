@@ -8,7 +8,6 @@ import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
@@ -29,7 +28,6 @@ import org.eclipse.swt.widgets.Text;
 import com.cloudgarden.resource.SWTResourceManager;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.gui.SettingsWindow;
 import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
@@ -42,8 +40,7 @@ import com.varaneckas.hawkscope.util.OSUtils;
  * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
  * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
-public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
-    SettingsWindow {
+public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog {
 
     private static final Log log = LogFactory.getLog(SWTSettingsShell.class);
     
@@ -113,7 +110,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog implements
                 SWTResourceManager.registerResourceUser(dialogShell);
             }
             dialogShell.setText("Settings");
-            dialogShell.setImage((Image) SWTIconFactory.getIconFactory()
+            dialogShell.setImage(SWTIconFactory.getInstance()
                     .getUncachedIcon("hawkscope16.png"));
             
             
