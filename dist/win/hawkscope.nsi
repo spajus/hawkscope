@@ -33,7 +33,7 @@ section
     createShortCut "$SMPROGRAMS\Hawkscope\Hawkscope.lnk" "$INSTDIR\Hawkscope.exe"
     createShortCut "$SMPROGRAMS\Hawkscope\Uninstall.lnk" "$INSTDIR\uninstall.exe"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Hawkscope" \
-                 "DisplayName" "Hawkscope ${VERSION} - Access anything with single click!"
+                 "DisplayName" "Hawkscope - Access anything with single click!"
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\Hawkscope" \
                  "UninstallString" "$INSTDIR\uninstall.exe"
 sectionEnd

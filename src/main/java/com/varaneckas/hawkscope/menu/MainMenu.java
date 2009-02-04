@@ -16,6 +16,7 @@ import com.varaneckas.hawkscope.gui.listeners.SettingsCommand;
 import com.varaneckas.hawkscope.gui.listeners.UpdateCommand;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
 import com.varaneckas.hawkscope.menu.state.State;
+import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.PathUtils;
@@ -83,6 +84,7 @@ public abstract class MainMenu {
     public void loadMenu() {
         Configuration cfg = ConfigurationFactory.getConfigurationFactory()
                 .getConfiguration();
+        PluginManager.getInstance().beforeQuickAccess(this);
         loadQuickAccessMenu();
         boolean addSeparator = false;
         for (final File root : roots) {
@@ -136,8 +138,10 @@ public abstract class MainMenu {
         if (quick != null && quick.size() > 0) {
             for (final File custom : quick) {
                 try {
-                    addMenuItem(MenuFactory.getMenuFactory()
-                            .newFolderMenu(custom));
+                    FolderMenu fm = MenuFactory.getMenuFactory()
+                            .newFolderMenu(custom);
+                    PluginManager.getInstance().enhanceQuickAccessItem(fm, custom);
+                    addMenuItem(fm);
                 } catch (final Exception e) {
                     log.warn("Skipping unloadable Quick Access List item", e);
                 }
@@ -155,6 +159,7 @@ public abstract class MainMenu {
                     new UpdateCommand());
         }
         addExecutableMenuItem("hide", "Hide", new HideCommand());
+        PluginManager.getInstance().beforeAboutMenuItem(this);
         addExecutableMenuItem("about", "About", new AboutCommand());
         addExecutableMenuItem("settings", "Settings", new SettingsCommand());
         addExecutableMenuItem("exit", "Exit", new ExitCommand());
@@ -167,7 +172,7 @@ public abstract class MainMenu {
      * @param text Text on menu item
      * @param command Command to execute
      */
-    private void addExecutableMenuItem(final String name, 
+    public void addExecutableMenuItem(final String name, 
             final String text, final Command command) {
         final ExecutableMenuItem item = MenuFactory.getMenuFactory()
                 .newExecutableMenuItem();

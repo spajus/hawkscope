@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.MenuItem;
 
 import com.varaneckas.hawkscope.menu.FileMenuItem;
 import com.varaneckas.hawkscope.menu.MenuFactory;
+import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.PathUtils;
 
@@ -73,6 +74,7 @@ public class SWTFileMenuItem implements FileMenuItem, SWTMenuItem {
                 MenuFactory.getMenuFactory().getMainMenu().forceHide();
             } 
         });
+        PluginManager.getInstance().enhanceFileMenuItem(menuItem, this.file);
     }
     
     public void setEnabled(final boolean enabled) {
