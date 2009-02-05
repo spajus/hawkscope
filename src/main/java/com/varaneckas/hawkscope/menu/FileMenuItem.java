@@ -1,17 +1,16 @@
-package com.varaneckas.hawkscope.gui.swt;
+package com.varaneckas.hawkscope.menu;
 
 import java.io.File;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
+import com.varaneckas.hawkscope.gui.listeners.FileMenuItemListener;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.PathUtils;
+import com.varaneckas.hawkscope.util.SWTIconFactory;
 
 /**
  * {@link FileMenuItem} - SWT implementation
@@ -19,7 +18,7 @@ import com.varaneckas.hawkscope.util.PathUtils;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTFileMenuItem implements SWTMenuItem {
+public class FileMenuItem implements com.varaneckas.hawkscope.menu.MenuItem {
 
     /**
      * Menu item text
@@ -51,7 +50,7 @@ public class SWTFileMenuItem implements SWTMenuItem {
      * 
      * @param file associated target {@link File}
      */
-    public SWTFileMenuItem(final File file) {
+    public FileMenuItem(final File file) {
         text = PathUtils.getFileName(file);
         icon = SWTIconFactory.getInstance().getIcon(file);
         this.file = file;
@@ -62,15 +61,7 @@ public class SWTFileMenuItem implements SWTMenuItem {
         menuItem.setImage((Image) icon);
         menuItem.setText(text);
         menuItem.setEnabled(enabled);
-        menuItem.addSelectionListener(new SelectionAdapter() {
-           @Override
-            public void widgetSelected(SelectionEvent e) {
-                if (!Program.launch(file.getAbsolutePath())) {
-                    throw new RuntimeException("Cannot find program for opening " + file);
-                }
-                SWTMenuFactory.getMainMenu().forceHide();
-            } 
-        });
+        menuItem.addSelectionListener(new FileMenuItemListener(this.file));
         PluginManager.getInstance().enhanceFileMenuItem(menuItem, this.file);
     }
     

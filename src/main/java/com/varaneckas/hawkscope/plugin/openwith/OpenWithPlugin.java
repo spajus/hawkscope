@@ -7,9 +7,9 @@ import org.eclipse.swt.widgets.MenuItem;
 
 import com.varaneckas.hawkscope.command.AboutCommand;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
-import com.varaneckas.hawkscope.gui.swt.SWTExecutableMenuItem;
-import com.varaneckas.hawkscope.gui.swt.SWTIconFactory;
+import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;
+import com.varaneckas.hawkscope.util.SWTIconFactory;
 
 public class OpenWithPlugin extends PluginAdapter {
 
@@ -22,7 +22,7 @@ public class OpenWithPlugin extends PluginAdapter {
             FolderMenuItemListener listener) {
         log.debug("open with...");
         
-        SWTExecutableMenuItem openWith = new SWTExecutableMenuItem();
+        ExecutableMenuItem openWith = new ExecutableMenuItem();
         openWith.setIcon(SWTIconFactory.getInstance().getIcon("open"));
         openWith.setText("Open With...");
         openWith.setCommand(new AboutCommand());

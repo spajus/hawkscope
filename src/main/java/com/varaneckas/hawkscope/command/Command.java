@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.menu;
+package com.varaneckas.hawkscope.command;
 
 /**
  * Executable Menu Command interface

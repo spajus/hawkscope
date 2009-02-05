@@ -6,8 +6,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
-import com.varaneckas.hawkscope.gui.swt.SWTFolderMenu;
-import com.varaneckas.hawkscope.gui.swt.SWTMainMenu;
+import com.varaneckas.hawkscope.menu.FolderMenu;
+import com.varaneckas.hawkscope.menu.MainMenu;
 
 public interface Plugin {
     
@@ -28,11 +28,11 @@ public interface Plugin {
 
     void enhanceFileMenuItem(MenuItem menuItem, File file);
 
-    void beforeQuickAccess(SWTMainMenu mainMenu);
+    void beforeQuickAccess(MainMenu mainMenu);
 
-    void enhanceQuickAccessItem(SWTFolderMenu fm, File custom);
+    void enhanceQuickAccessItem(FolderMenu fm, File custom);
 
-    void beforeAboutMenuItem(SWTMainMenu mainMenu);
+    void beforeAboutMenuItem(MainMenu mainMenu);
 
     public boolean interceptClick(File file);
 

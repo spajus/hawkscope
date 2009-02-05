@@ -4,7 +4,7 @@ import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import com.varaneckas.hawkscope.gui.swt.SWTIconFactory;
+import com.varaneckas.hawkscope.util.SWTIconFactory;
 
 public class IconFactoryTest {
 

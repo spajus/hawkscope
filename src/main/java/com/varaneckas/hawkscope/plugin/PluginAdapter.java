@@ -8,8 +8,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
-import com.varaneckas.hawkscope.gui.swt.SWTFolderMenu;
-import com.varaneckas.hawkscope.gui.swt.SWTMainMenu;
+import com.varaneckas.hawkscope.menu.FolderMenu;
+import com.varaneckas.hawkscope.menu.MainMenu;
 
 public abstract class PluginAdapter implements Plugin {
     
@@ -51,11 +51,11 @@ public abstract class PluginAdapter implements Plugin {
         return canInterceptClick;
     }
 
-    public void beforeAboutMenuItem(SWTMainMenu mainMenu) {
+    public void beforeAboutMenuItem(MainMenu mainMenu) {
         log.debug("hooking before about menu item");
     }
 
-    public void beforeQuickAccess(SWTMainMenu mainMenu) {
+    public void beforeQuickAccess(MainMenu mainMenu) {
         log.debug("hooking before quick access");
     }
 
@@ -68,7 +68,7 @@ public abstract class PluginAdapter implements Plugin {
         log.debug("hooking before folder menu item");
     }
 
-    public void enhanceQuickAccessItem(SWTFolderMenu fm, File custom) {
+    public void enhanceQuickAccessItem(FolderMenu fm, File custom) {
         log.debug("hhooking into quick access item");
     }
     

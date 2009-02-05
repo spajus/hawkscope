@@ -8,8 +8,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
-import com.varaneckas.hawkscope.gui.swt.SWTFolderMenu;
-import com.varaneckas.hawkscope.gui.swt.SWTMainMenu;
+import com.varaneckas.hawkscope.menu.FolderMenu;
+import com.varaneckas.hawkscope.menu.MainMenu;
 
 public class PluginManager {
     
@@ -45,21 +45,21 @@ public class PluginManager {
         }
     }
 
-    public void beforeQuickAccess(SWTMainMenu mainMenu) {
+    public void beforeQuickAccess(MainMenu mainMenu) {
         for (Plugin plugin : getActivePlugins()) {
             if (plugin.canHookBeforeQuickAccessList())
                 plugin.beforeQuickAccess(mainMenu);
         }
     }
 
-    public void enhanceQuickAccessItem(SWTFolderMenu fm, File custom) {
+    public void enhanceQuickAccessItem(FolderMenu fm, File custom) {
         for (Plugin plugin : getActivePlugins()) {
             if (plugin.canEnhanceQuickAccessItem())
                 plugin.enhanceQuickAccessItem(fm, custom);
         }
     }
 
-    public void beforeAboutMenuItem(SWTMainMenu mainMenu) {
+    public void beforeAboutMenuItem(MainMenu mainMenu) {
         for (Plugin plugin : getActivePlugins()) {
             if (plugin.canHookBeforeAboutMenuItem())
                 plugin.beforeAboutMenuItem(mainMenu);

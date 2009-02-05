@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.menu;
+package com.varaneckas.hawkscope.util;
 
 import java.io.File;
 import java.io.FileFilter;

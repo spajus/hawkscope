@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.swt;
+package com.varaneckas.hawkscope.util;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
@@ -10,7 +10,6 @@ import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
 import com.varaneckas.hawkscope.Version;
-import com.varaneckas.hawkscope.util.IOUtils;
 
 /**
  * Registers uncaught exception handler that displays error message inside

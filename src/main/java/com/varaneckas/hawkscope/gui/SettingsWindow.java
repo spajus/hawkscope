@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.swt;
+package com.varaneckas.hawkscope.gui;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -28,7 +28,9 @@ import org.eclipse.swt.widgets.Text;
 import com.cloudgarden.resource.SWTResourceManager;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.util.OSUtils;
+import com.varaneckas.hawkscope.util.SWTIconFactory;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -40,9 +42,9 @@ import com.varaneckas.hawkscope.util.OSUtils;
  * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
  * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
-public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog {
+public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
 
-    private static final Log log = LogFactory.getLog(SWTSettingsShell.class);
+    private static final Log log = LogFactory.getLog(SettingsWindow.class);
     
     private Shell dialogShell;
     private TabFolder settingsTabFolder;
@@ -90,7 +92,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog {
     private Configuration cfg = ConfigurationFactory.getConfigurationFactory()
             .getConfiguration();
     
-    public SWTSettingsShell(Shell parent, int style) {
+    public SettingsWindow(Shell parent, int style) {
         super(parent, style);
     }
 
@@ -167,7 +169,7 @@ public class SWTSettingsShell extends org.eclipse.swt.widgets.Dialog {
             public void widgetSelected(SelectionEvent event) {
                 saveConfiguration();
                 hideObject();
-                SWTMenuFactory.getMainMenu().reloadMenu(false);
+                MenuFactory.getMainMenu().reloadMenu(false);
             }
         });
         

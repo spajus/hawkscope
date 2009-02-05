@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.swt;
+package com.varaneckas.hawkscope.menu;
 
 import java.io.File;
 import java.util.List;
@@ -9,23 +9,23 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
-import org.eclipse.swt.widgets.MenuItem;
 
 import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.command.AboutCommand;
+import com.varaneckas.hawkscope.command.Command;
 import com.varaneckas.hawkscope.command.ExitCommand;
 import com.varaneckas.hawkscope.command.HideCommand;
 import com.varaneckas.hawkscope.command.SettingsCommand;
 import com.varaneckas.hawkscope.command.UpdateCommand;
-import com.varaneckas.hawkscope.menu.Command;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
 import com.varaneckas.hawkscope.menu.state.State;
 import com.varaneckas.hawkscope.plugin.PluginManager;
-import com.varaneckas.hawkscope.tray.SWTTrayManager;
+import com.varaneckas.hawkscope.tray.TrayManager;
 import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.PathUtils;
+import com.varaneckas.hawkscope.util.SWTIconFactory;
 
 /**
  * {@link MainMenu} - SWT implementation
@@ -33,12 +33,12 @@ import com.varaneckas.hawkscope.util.PathUtils;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTMainMenu {
+public class MainMenu {
 	
     /**
      * Singleton instance
      */
-    private static SWTMainMenu instance = null;
+    private static MainMenu instance = null;
 
     /**
      * SWT Menu object
@@ -59,8 +59,8 @@ public class SWTMainMenu {
     /**
      * Initializing singleton constructor
      */
-    private SWTMainMenu() {
-        menu = new Menu(SWTTrayManager.getInstance().getShell(), SWT.POP_UP);
+    private MainMenu() {
+        menu = new Menu(TrayManager.getInstance().getShell(), SWT.POP_UP);
         menu.addListener(SWT.Hide, new Listener() {
             public void handleEvent(Event event) {
                 new Thread(new Runnable() {
@@ -89,15 +89,15 @@ public class SWTMainMenu {
      * 
      * @return instance of SWTMainMenu
      */
-    public static SWTMainMenu getInstance() {
+    public static MainMenu getInstance() {
         if (instance == null) {
-            instance = new SWTMainMenu();
+            instance = new MainMenu();
         }
         return instance;
     }
 
     public void clearMenu() {
-        for (MenuItem item : menu.getItems()) {
+        for (org.eclipse.swt.widgets.MenuItem item : menu.getItems()) {
             if (!item.isDisposed()) {
                 item.dispose();
             }
@@ -117,12 +117,12 @@ public class SWTMainMenu {
         menu.setDefaultItem(menu.getItems()[0]);
     }
 
-    public void addMenuItem(final SWTMenuItem item) {
+    public void addMenuItem(final com.varaneckas.hawkscope.menu.MenuItem item) {
         item.createMenuItem(menu);
     }
 
     public void addSeparator() {
-        new MenuItem(menu, SWT.SEPARATOR);
+        new org.eclipse.swt.widgets.MenuItem(menu, SWT.SEPARATOR);
     }
     
     public void setHiddenSince(final long timestamp) {
@@ -249,7 +249,7 @@ public class SWTMainMenu {
             }
             if (cfg.isFloppyDrivesDisplayed() || !PathUtils.isFloppy(root)) {
             log.debug("Generating menu for: " + root.getAbsolutePath());
-                final SWTFolderMenu item = SWTMenuFactory.newFolderMenu(root);
+                final FolderMenu item = MenuFactory.newFolderMenu(root);
                 item.setText(PathUtils.getFileName(root));
                 item.setIcon(SWTIconFactory.getInstance().getIcon(root));
                 addMenuItem(item);
@@ -281,7 +281,7 @@ public class SWTMainMenu {
         if (quick != null && quick.size() > 0) {
             for (final File custom : quick) {
                 try {
-                    SWTFolderMenu fm = SWTMenuFactory.newFolderMenu(custom);
+                    FolderMenu fm = MenuFactory.newFolderMenu(custom);
                     PluginManager.getInstance().enhanceQuickAccessItem(fm, custom);
                     addMenuItem(fm);
                 } catch (final Exception e) {
@@ -316,7 +316,7 @@ public class SWTMainMenu {
      */
     public void addExecutableMenuItem(final String name, 
             final String text, final Command command) {
-        final SWTExecutableMenuItem item = SWTMenuFactory.newExecutableMenuItem();
+        final ExecutableMenuItem item = MenuFactory.newExecutableMenuItem();
         item.setCommand(command);
         item.setText(text);
         item.setIcon(SWTIconFactory.getInstance().getIcon(name));

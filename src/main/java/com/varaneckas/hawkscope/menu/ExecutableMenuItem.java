@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.swt;
+package com.varaneckas.hawkscope.menu;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -7,13 +7,13 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
-import com.varaneckas.hawkscope.menu.Command;
+import com.varaneckas.hawkscope.command.Command;
 
 /**
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTExecutableMenuItem implements SWTMenuItem {
+public class ExecutableMenuItem implements com.varaneckas.hawkscope.menu.MenuItem {
 
     /**
      * Menu item text

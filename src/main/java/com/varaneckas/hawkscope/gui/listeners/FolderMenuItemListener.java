@@ -5,14 +5,14 @@ import java.util.Arrays;
 
 import org.eclipse.swt.program.Program;
 
-import com.varaneckas.hawkscope.gui.swt.SWTExecutableMenuItem;
-import com.varaneckas.hawkscope.gui.swt.SWTFolderMenu;
-import com.varaneckas.hawkscope.gui.swt.SWTIconFactory;
-import com.varaneckas.hawkscope.gui.swt.SWTMenuFactory;
-import com.varaneckas.hawkscope.menu.DynamicFileFilter;
+import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
+import com.varaneckas.hawkscope.menu.FolderMenu;
+import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.plugin.PluginManager;
+import com.varaneckas.hawkscope.util.DynamicFileFilter;
 import com.varaneckas.hawkscope.util.MenuUtils;
 import com.varaneckas.hawkscope.util.OSUtils;
+import com.varaneckas.hawkscope.util.SWTIconFactory;
 
 /**
  * Folder Menu Item Listener
@@ -22,7 +22,7 @@ import com.varaneckas.hawkscope.util.OSUtils;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class FolderMenuItemListener implements MenuItemListener {
+public class FolderMenuItemListener {
     
     /**
      * Lazy loading flag
@@ -32,7 +32,7 @@ public class FolderMenuItemListener implements MenuItemListener {
     /**
      * Target menu
      */
-    private final SWTFolderMenu folderMenu;
+    private final FolderMenu folderMenu;
     
     /**
      * Target folder
@@ -50,7 +50,7 @@ public class FolderMenuItemListener implements MenuItemListener {
      * @param menu tagert
      * @param file target
      */
-    public FolderMenuItemListener(final SWTFolderMenu menu, final File file) {
+    public FolderMenuItemListener(final FolderMenu menu, final File file) {
         this.folderMenu = menu;
         this.file = file;
     }
@@ -59,9 +59,9 @@ public class FolderMenuItemListener implements MenuItemListener {
         if (!loaded && file != null && file.isDirectory()) {
             final File[] files = file.listFiles(DynamicFileFilter.getInstance());
             long counter = 0L;
-            SWTFolderMenu workMenu = folderMenu;
+            FolderMenu workMenu = folderMenu;
             if (files == null || files.length == 0) {                
-                final SWTExecutableMenuItem empty = SWTMenuFactory.newExecutableMenuItem();
+                final ExecutableMenuItem empty = MenuFactory.newExecutableMenuItem();
                 empty.setIcon(SWTIconFactory.getInstance().getIcon("empty"));
                 empty.setText("Empty...");
                 empty.setEnabled(false);
@@ -71,15 +71,15 @@ public class FolderMenuItemListener implements MenuItemListener {
                 for (final File ff : files) {
                     if (ff.isDirectory()) {
                         if (OSUtils.isMacApp(ff)) {
-                            workMenu.addMenuItem(SWTMenuFactory.newFileMenuItem(ff));
+                            workMenu.addMenuItem(MenuFactory.newFileMenuItem(ff));
                         } else {
-                            workMenu.addMenuItem(SWTMenuFactory.newFolderMenu(ff));
+                            workMenu.addMenuItem(MenuFactory.newFolderMenu(ff));
                         }
                     } else {
-                        workMenu.addMenuItem(SWTMenuFactory.newFileMenuItem(ff));
+                        workMenu.addMenuItem(MenuFactory.newFileMenuItem(ff));
                     }
                     if (++counter % MENU_SIZE == 0 && counter < files.length) {
-                        SWTFolderMenu more = SWTMenuFactory.newFolderMenu(null);
+                        FolderMenu more = MenuFactory.newFolderMenu(null);
                         more.setIcon(SWTIconFactory.getInstance().getIcon("more"));
                         more.setText("More");
                         workMenu.addSeparator();

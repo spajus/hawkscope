@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.swt;
+package com.varaneckas.hawkscope.menu;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Menu;
@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Menu;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public interface SWTMenuItem {
+public interface MenuItem {
 
     /**
      * Creates menu item

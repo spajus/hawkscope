@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.swt;
+package com.varaneckas.hawkscope.util;
 
 import java.io.File;
 import java.net.URL;
@@ -15,7 +15,6 @@ import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
  * {@link IconFactory} - SWT implmementation

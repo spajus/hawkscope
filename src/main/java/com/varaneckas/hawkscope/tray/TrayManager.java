@@ -7,8 +7,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TrayItem;
 
-import com.varaneckas.hawkscope.gui.swt.SWTIconFactory;
-import com.varaneckas.hawkscope.gui.swt.SWTUncaughtExceptionHandler;
+import com.varaneckas.hawkscope.util.SWTIconFactory;
+import com.varaneckas.hawkscope.util.SWTUncaughtExceptionHandler;
 
 /**
  * {@link TrayManager} - SWT Implementation
@@ -16,20 +16,20 @@ import com.varaneckas.hawkscope.gui.swt.SWTUncaughtExceptionHandler;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTTrayManager {
+public class TrayManager {
 	
-	private static final SWTTrayManager instance = new SWTTrayManager();
+	private static final TrayManager instance = new TrayManager();
 	
-	private SWTTrayManager() {}
+	private TrayManager() {}
 	
-	public static SWTTrayManager getInstance() {
+	public static TrayManager getInstance() {
 		return instance;
 	}
 
     /**
      * Logger
      */
-    private static final Log log = LogFactory.getLog(SWTTrayManager.class);
+    private static final Log log = LogFactory.getLog(TrayManager.class);
     
     /**
      * Tray Icon object
@@ -62,7 +62,7 @@ public class SWTTrayManager {
     public void load() {
         trayIcon = new TrayItem(d.getSystemTray(), SWT.NONE);
         trayIcon.setImage(SWTIconFactory.getInstance().getTrayIcon());
-        SWTTrayIconListener listener = new SWTTrayIconListener();
+        TrayIconListener listener = new TrayIconListener();
         trayIcon.addListener(SWT.Selection, listener);
         trayIcon.addListener(SWT.MenuDetect, listener);
         log.debug(trayIcon.getListeners(SWT.NONE).length);

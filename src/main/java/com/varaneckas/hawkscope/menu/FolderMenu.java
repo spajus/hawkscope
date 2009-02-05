@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.swt;
+package com.varaneckas.hawkscope.menu;
 
 import java.io.File;
 
@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Menu;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.PathUtils;
+import com.varaneckas.hawkscope.util.SWTIconFactory;
 
 /**
  * {@link FolderMenu} - SWT implementation
@@ -20,7 +21,7 @@ import com.varaneckas.hawkscope.util.PathUtils;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTFolderMenu implements SWTMenuItem {
+public class FolderMenu implements MenuItem {
     
     /**
      * Target folder
@@ -99,7 +100,7 @@ public class SWTFolderMenu implements SWTMenuItem {
      * 
      * @param file target folder
      */
-    public SWTFolderMenu(final File file) {
+    public FolderMenu(final File file) {
         this.file = file;
         if (file != null) {
             this.text = PathUtils.getFileName(file);
@@ -107,7 +108,7 @@ public class SWTFolderMenu implements SWTMenuItem {
         } 
     }
     
-    public void addMenuItem(final SWTMenuItem item) {
+    public void addMenuItem(final com.varaneckas.hawkscope.menu.MenuItem item) {
         item.createMenuItem(submenu);
     }
 

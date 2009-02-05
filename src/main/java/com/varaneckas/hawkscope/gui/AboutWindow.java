@@ -1,4 +1,4 @@
-package com.varaneckas.hawkscope.gui.swt;
+package com.varaneckas.hawkscope.gui;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -27,6 +27,7 @@ import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.OSUtils;
+import com.varaneckas.hawkscope.util.SWTIconFactory;
 
 /**
  * {@link AboutWindow} - SWT implementation 

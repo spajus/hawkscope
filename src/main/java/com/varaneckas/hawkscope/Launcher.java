@@ -5,8 +5,8 @@ import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.WindowFactory;
-import com.varaneckas.hawkscope.gui.swt.SWTMenuFactory;
-import com.varaneckas.hawkscope.tray.SWTTrayManager;
+import com.varaneckas.hawkscope.menu.MenuFactory;
+import com.varaneckas.hawkscope.tray.TrayManager;
 
 /**
  * Hawkscope Application Launcher
@@ -38,7 +38,7 @@ public class Launcher {
             log.fatal("Failed starting Hawkscope", e);
         }
         preload();
-        SWTTrayManager.getInstance().load();
+        TrayManager.getInstance().load();
     }
     
     /**
@@ -46,7 +46,7 @@ public class Launcher {
      */
     private static void preload() {
 		log.debug("Preloading data");
-		SWTMenuFactory.getMainMenu().loadMenu();
+		MenuFactory.getMainMenu().loadMenu();
 		log.debug("Preloaded...");
     }
 

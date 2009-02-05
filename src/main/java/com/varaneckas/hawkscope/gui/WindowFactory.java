@@ -5,10 +5,8 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.Version;
-import com.varaneckas.hawkscope.gui.swt.AboutWindow;
-import com.varaneckas.hawkscope.gui.swt.SWTSettingsShell;
-import com.varaneckas.hawkscope.gui.swt.SWTUncaughtExceptionHandler;
-import com.varaneckas.hawkscope.tray.SWTTrayManager;
+import com.varaneckas.hawkscope.tray.TrayManager;
+import com.varaneckas.hawkscope.util.SWTUncaughtExceptionHandler;
 
 /**
  * Window factory for switching among multiple GUI implementations
@@ -26,7 +24,7 @@ public class WindowFactory {
     /**
      * SettingsWindow instance
      */
-    private static SWTSettingsShell settingsWindow = null;
+    private static SettingsWindow settingsWindow = null;
 
     /**
      * Initializes the application GUI 
@@ -42,7 +40,7 @@ public class WindowFactory {
      */
     public static AboutWindow getAboutWindow() {
         if (aboutWindow == null) {
-            aboutWindow = new AboutWindow(SWTTrayManager.getInstance().getShell(), 0);
+            aboutWindow = new AboutWindow(TrayManager.getInstance().getShell(), 0);
         }
         return aboutWindow;
     }
@@ -52,9 +50,9 @@ public class WindowFactory {
      * 
      * @return instance of Settings Window
      */
-    public static SWTSettingsShell getSettingsWindow() {
+    public static SettingsWindow getSettingsWindow() {
         if (settingsWindow == null) {
-            settingsWindow = new SWTSettingsShell(SWTTrayManager.getInstance().getShell(), 0);
+            settingsWindow = new SettingsWindow(TrayManager.getInstance().getShell(), 0);
         }
         return settingsWindow;
     }
