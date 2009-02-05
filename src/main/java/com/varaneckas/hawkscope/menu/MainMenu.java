@@ -25,7 +25,7 @@ import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.tray.TrayManager;
 import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.PathUtils;
-import com.varaneckas.hawkscope.util.SWTIconFactory;
+import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
  * {@link MainMenu} - SWT implementation
@@ -251,7 +251,7 @@ public class MainMenu {
             log.debug("Generating menu for: " + root.getAbsolutePath());
                 final FolderMenu item = MenuFactory.newFolderMenu(root);
                 item.setText(PathUtils.getFileName(root));
-                item.setIcon(SWTIconFactory.getInstance().getIcon(root));
+                item.setIcon(IconFactory.getInstance().getIcon(root));
                 addMenuItem(item);
                 addSeparator = true;
             }
@@ -319,7 +319,7 @@ public class MainMenu {
         final ExecutableMenuItem item = MenuFactory.newExecutableMenuItem();
         item.setCommand(command);
         item.setText(text);
-        item.setIcon(SWTIconFactory.getInstance().getIcon(name));
+        item.setIcon(IconFactory.getInstance().getIcon(name));
         addMenuItem(item);
     }    
     

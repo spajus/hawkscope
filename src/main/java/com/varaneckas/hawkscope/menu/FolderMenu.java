@@ -13,7 +13,7 @@ import org.eclipse.swt.widgets.Menu;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.PathUtils;
-import com.varaneckas.hawkscope.util.SWTIconFactory;
+import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
  * {@link FolderMenu} - SWT implementation
@@ -84,7 +84,7 @@ public class FolderMenu implements MenuItem {
         if (file != null) {
             org.eclipse.swt.widgets.MenuItem open = 
                 new org.eclipse.swt.widgets.MenuItem(submenu, SWT.PUSH);
-            open.setImage(SWTIconFactory.getInstance().getIcon("open"));
+            open.setImage(IconFactory.getInstance().getIcon("open"));
             open.setText("Open");
             open.addSelectionListener(new SelectionAdapter() {
                 @Override
@@ -104,7 +104,7 @@ public class FolderMenu implements MenuItem {
         this.file = file;
         if (file != null) {
             this.text = PathUtils.getFileName(file);
-            this.icon = SWTIconFactory.getInstance().getIcon(file);
+            this.icon = IconFactory.getInstance().getIcon(file);
         } 
     }
     

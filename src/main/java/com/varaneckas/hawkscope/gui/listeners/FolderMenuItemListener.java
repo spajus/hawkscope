@@ -12,7 +12,7 @@ import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.DynamicFileFilter;
 import com.varaneckas.hawkscope.util.MenuUtils;
 import com.varaneckas.hawkscope.util.OSUtils;
-import com.varaneckas.hawkscope.util.SWTIconFactory;
+import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
  * Folder Menu Item Listener
@@ -62,7 +62,7 @@ public class FolderMenuItemListener {
             FolderMenu workMenu = folderMenu;
             if (files == null || files.length == 0) {                
                 final ExecutableMenuItem empty = MenuFactory.newExecutableMenuItem();
-                empty.setIcon(SWTIconFactory.getInstance().getIcon("empty"));
+                empty.setIcon(IconFactory.getInstance().getIcon("empty"));
                 empty.setText("Empty...");
                 empty.setEnabled(false);
                 workMenu.addMenuItem(empty);
@@ -80,7 +80,7 @@ public class FolderMenuItemListener {
                     }
                     if (++counter % MENU_SIZE == 0 && counter < files.length) {
                         FolderMenu more = MenuFactory.newFolderMenu(null);
-                        more.setIcon(SWTIconFactory.getInstance().getIcon("more"));
+                        more.setIcon(IconFactory.getInstance().getIcon("more"));
                         more.setText("More");
                         workMenu.addSeparator();
                         workMenu.addMenuItem(more);

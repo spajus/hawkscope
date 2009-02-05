@@ -1,7 +1,5 @@
 package com.varaneckas.hawkscope.util;
 
-import java.lang.Thread.UncaughtExceptionHandler;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
@@ -18,13 +16,13 @@ import com.varaneckas.hawkscope.Version;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTUncaughtExceptionHandler implements UncaughtExceptionHandler {
+public class UncaughtExceptionHandler implements java.lang.Thread.UncaughtExceptionHandler {
 
     /**
      * Logger
      */
     private static final Log log = LogFactory
-            .getLog(SWTUncaughtExceptionHandler.class);
+            .getLog(UncaughtExceptionHandler.class);
     
     public void uncaughtException(final Thread t, final Throwable e) {
         Display display = Display.getCurrent();
@@ -37,5 +35,6 @@ public class SWTUncaughtExceptionHandler implements UncaughtExceptionHandler {
         if (message.open() == SWT.OK) {
             IOUtils.copyToClipboard(Version.getBugReport(e));
         }
+        shell.dispose();
     }
 }

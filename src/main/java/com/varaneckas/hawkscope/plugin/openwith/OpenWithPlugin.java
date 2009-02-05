@@ -9,7 +9,7 @@ import com.varaneckas.hawkscope.command.AboutCommand;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;
-import com.varaneckas.hawkscope.util.SWTIconFactory;
+import com.varaneckas.hawkscope.util.IconFactory;
 
 public class OpenWithPlugin extends PluginAdapter {
 
@@ -23,7 +23,7 @@ public class OpenWithPlugin extends PluginAdapter {
         log.debug("open with...");
         
         ExecutableMenuItem openWith = new ExecutableMenuItem();
-        openWith.setIcon(SWTIconFactory.getInstance().getIcon("open"));
+        openWith.setIcon(IconFactory.getInstance().getIcon("open"));
         openWith.setText("Open With...");
         openWith.setCommand(new AboutCommand());
         openWith.createMenuItem(submenu);

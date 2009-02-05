@@ -6,7 +6,6 @@ import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.tray.TrayManager;
-import com.varaneckas.hawkscope.util.SWTUncaughtExceptionHandler;
 
 /**
  * Window factory for switching among multiple GUI implementations
@@ -63,7 +62,7 @@ public class WindowFactory {
      * @return instance of Uncaught Exception Handler
      */
     public static UncaughtExceptionHandler getUncaughtExceptionHandler() {
-        return new SWTUncaughtExceptionHandler();
+        return new com.varaneckas.hawkscope.util.UncaughtExceptionHandler();
     }
     
 }

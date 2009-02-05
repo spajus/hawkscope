@@ -27,7 +27,7 @@ import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.OSUtils;
-import com.varaneckas.hawkscope.util.SWTIconFactory;
+import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
  * {@link AboutWindow} - SWT implementation 
@@ -97,7 +97,7 @@ public class AboutWindow extends org.eclipse.swt.widgets.Dialog {
                 //handle the obtaining and disposing of resources
                 SWTResourceManager.registerResourceUser(dialogShell);
             }
-            dialogShell.setImage(SWTIconFactory.getInstance().getUncachedIcon("hawkscope16.png"));
+            dialogShell.setImage(IconFactory.getInstance().getUncachedIcon("hawkscope16.png"));
             dialogShell.setText("About");
             
             dialogShell.setLayout(new FormLayout());
@@ -293,7 +293,7 @@ public class AboutWindow extends org.eclipse.swt.widgets.Dialog {
                 logoCanvas = new Canvas(dialogShell, SWT.RESIZE);
                 logoCanvas.addPaintListener(new PaintListener() {
                     public void paintControl(PaintEvent e) {
-                        e.gc.drawImage(SWTIconFactory.getInstance().getUncachedIcon("hawkscope128.png"), 0, 0, 128, 
+                        e.gc.drawImage(IconFactory.getInstance().getUncachedIcon("hawkscope128.png"), 0, 0, 128, 
                                 128, 0, 0, 114, 109);
                     }
                 });

@@ -7,8 +7,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TrayItem;
 
-import com.varaneckas.hawkscope.util.SWTIconFactory;
-import com.varaneckas.hawkscope.util.SWTUncaughtExceptionHandler;
+import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.UncaughtExceptionHandler;
 
 /**
  * {@link TrayManager} - SWT Implementation
@@ -61,7 +61,7 @@ public class TrayManager {
     
     public void load() {
         trayIcon = new TrayItem(d.getSystemTray(), SWT.NONE);
-        trayIcon.setImage(SWTIconFactory.getInstance().getTrayIcon());
+        trayIcon.setImage(IconFactory.getInstance().getTrayIcon());
         TrayIconListener listener = new TrayIconListener();
         trayIcon.addListener(SWT.Selection, listener);
         trayIcon.addListener(SWT.MenuDetect, listener);
@@ -69,7 +69,7 @@ public class TrayManager {
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
                 log.debug("Removing Tray Icon");
-                SWTIconFactory.getInstance().cleanup();
+                IconFactory.getInstance().cleanup();
             }
         }, "icon-disposer-hook"));
         while (!sh.isDisposed()) {
@@ -78,7 +78,7 @@ public class TrayManager {
                     d.sleep();
                 }
             } catch (final Exception e) {
-                new SWTUncaughtExceptionHandler()
+                new UncaughtExceptionHandler()
                         .uncaughtException(Thread.currentThread(), e);
             }
         }

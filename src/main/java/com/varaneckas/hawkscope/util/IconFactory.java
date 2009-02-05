@@ -22,13 +22,13 @@ import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTIconFactory {
+public class IconFactory {
 
-	private static final SWTIconFactory instance = new SWTIconFactory();
+	private static final IconFactory instance = new IconFactory();
 	
-	private SWTIconFactory() {}
+	private IconFactory() {}
 	
-	public static SWTIconFactory getInstance() {
+	public static IconFactory getInstance() {
 		return instance;
 	}
 	
@@ -37,7 +37,7 @@ public class SWTIconFactory {
     /**
      * Logger
      */
-    private static final Log log = LogFactory.getLog(SWTIconFactory.class);
+    private static final Log log = LogFactory.getLog(IconFactory.class);
     
     /**
      * Default {@link Display}
@@ -74,7 +74,7 @@ public class SWTIconFactory {
         if (resourcePool.containsKey(name)) {
             return resourcePool.get(name);
         } 
-        final Image i = new Image(display, SWTIconFactory.class.getClassLoader()
+        final Image i = new Image(display, IconFactory.class.getClassLoader()
                 .getResourceAsStream("icons/" + name));
         resourcePool.put(name, i);
         return i;
@@ -115,7 +115,7 @@ public class SWTIconFactory {
         if (resourcePool.containsKey(name)) {
             resourcePool.get(name);
         }
-        final Image trayIcon = new Image(display, SWTIconFactory.class.getClassLoader()
+        final Image trayIcon = new Image(display, IconFactory.class.getClassLoader()
                 .getResourceAsStream(getBestTrayIcon()));
         resourcePool.put(name, trayIcon);
         return trayIcon;
@@ -141,24 +141,24 @@ public class SWTIconFactory {
     static {
         try {
             //initialize resources
-            resources.put("drive",  SWTIconFactory.class.getClassLoader().getResource("icons/hdd24.png"));
-            resources.put("floppy",  SWTIconFactory.class.getClassLoader().getResource("icons/fdd24.png"));
-            resources.put("cdrom",  SWTIconFactory.class.getClassLoader().getResource("icons/cdrom24.png"));
-            resources.put("network",  SWTIconFactory.class.getClassLoader().getResource("icons/network24.png"));
-            resources.put("removable",  SWTIconFactory.class.getClassLoader().getResource("icons/removable24.png"));
-            resources.put("folder", SWTIconFactory.class.getClassLoader().getResource("icons/folder24.png"));
-            resources.put("folder.open", SWTIconFactory.class.getClassLoader().getResource("icons/folder.open.24.png"));
-            resources.put("file",   SWTIconFactory.class.getClassLoader().getResource("icons/file24.png"));
-            resources.put("executable",   SWTIconFactory.class.getClassLoader().getResource("icons/executable24.png"));
-            resources.put("exit",   SWTIconFactory.class.getClassLoader().getResource("icons/exit24.png"));
-            resources.put("hide",   SWTIconFactory.class.getClassLoader().getResource("icons/down24.png"));
-            resources.put("more",   SWTIconFactory.class.getClassLoader().getResource("icons/more24.png"));
-            resources.put("unknown", SWTIconFactory.class.getClassLoader().getResource("icons/unknown24.png"));  
-            resources.put("about",  SWTIconFactory.class.getClassLoader().getResource("icons/about24.png"));  
-            resources.put("open",  SWTIconFactory.class.getClassLoader().getResource("icons/open24.png")); 
-            resources.put("empty",  SWTIconFactory.class.getClassLoader().getResource("icons/empty24.png")); 
-            resources.put("update", SWTIconFactory.class.getClassLoader().getResource("icons/update24.png"));
-            resources.put("settings", SWTIconFactory.class.getClassLoader().getResource("icons/settings24.png"));
+            resources.put("drive",  IconFactory.class.getClassLoader().getResource("icons/hdd24.png"));
+            resources.put("floppy",  IconFactory.class.getClassLoader().getResource("icons/fdd24.png"));
+            resources.put("cdrom",  IconFactory.class.getClassLoader().getResource("icons/cdrom24.png"));
+            resources.put("network",  IconFactory.class.getClassLoader().getResource("icons/network24.png"));
+            resources.put("removable",  IconFactory.class.getClassLoader().getResource("icons/removable24.png"));
+            resources.put("folder", IconFactory.class.getClassLoader().getResource("icons/folder24.png"));
+            resources.put("folder.open", IconFactory.class.getClassLoader().getResource("icons/folder.open.24.png"));
+            resources.put("file",   IconFactory.class.getClassLoader().getResource("icons/file24.png"));
+            resources.put("executable",   IconFactory.class.getClassLoader().getResource("icons/executable24.png"));
+            resources.put("exit",   IconFactory.class.getClassLoader().getResource("icons/exit24.png"));
+            resources.put("hide",   IconFactory.class.getClassLoader().getResource("icons/down24.png"));
+            resources.put("more",   IconFactory.class.getClassLoader().getResource("icons/more24.png"));
+            resources.put("unknown", IconFactory.class.getClassLoader().getResource("icons/unknown24.png"));  
+            resources.put("about",  IconFactory.class.getClassLoader().getResource("icons/about24.png"));  
+            resources.put("open",  IconFactory.class.getClassLoader().getResource("icons/open24.png")); 
+            resources.put("empty",  IconFactory.class.getClassLoader().getResource("icons/empty24.png")); 
+            resources.put("update", IconFactory.class.getClassLoader().getResource("icons/update24.png"));
+            resources.put("settings", IconFactory.class.getClassLoader().getResource("icons/settings24.png"));
         } catch (final Exception e) {
             log.warn("Cannot find icon", e);
         }

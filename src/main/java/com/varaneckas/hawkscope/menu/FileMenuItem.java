@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.MenuItem;
 import com.varaneckas.hawkscope.gui.listeners.FileMenuItemListener;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.PathUtils;
-import com.varaneckas.hawkscope.util.SWTIconFactory;
+import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
  * {@link FileMenuItem} - SWT implementation
@@ -52,7 +52,7 @@ public class FileMenuItem implements com.varaneckas.hawkscope.menu.MenuItem {
      */
     public FileMenuItem(final File file) {
         text = PathUtils.getFileName(file);
-        icon = SWTIconFactory.getInstance().getIcon(file);
+        icon = IconFactory.getInstance().getIcon(file);
         this.file = file;
     }
     

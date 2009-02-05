@@ -30,7 +30,7 @@ import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.util.OSUtils;
-import com.varaneckas.hawkscope.util.SWTIconFactory;
+import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -112,7 +112,7 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
                 SWTResourceManager.registerResourceUser(dialogShell);
             }
             dialogShell.setText("Settings");
-            dialogShell.setImage(SWTIconFactory.getInstance()
+            dialogShell.setImage(IconFactory.getInstance()
                     .getUncachedIcon("hawkscope16.png"));
             
             
