@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XML_DIZ_INFO>
+	<MASTER_PAD_VERSION_INFO>
+		<MASTER_PAD_VERSION>3.01</MASTER_PAD_VERSION>
+		<MASTER_PAD_EDITOR>PADGen 3.0.1.38 http://www.padgen.org</MASTER_PAD_EDITOR>
+		<MASTER_PAD_INFO>Portable Application Description, or PAD for short, is a data set that is used by shareware authors to disseminate information to anyone interested in their software products. To find out more go to http://www.asp-shareware.org/pad</MASTER_PAD_INFO>
+	</MASTER_PAD_VERSION_INFO>
+	<Company_Info>
+		<Company_Name>Varaneckas Software</Company_Name>
+		<Address_1 />
+		<Address_2 />
+		<City_Town />
+		<State_Province />
+		<Zip_Postal_Code />
+		<Country />
+		<Company_WebSite_URL />
+		<Contact_Info>
+			<Author_First_Name>Tomas</Author_First_Name>
+			<Author_Last_Name>Varaneckas</Author_Last_Name>
+			<Author_Email>tomas.varaneckas@gmail.com</Author_Email>
+			<Contact_First_Name />
+			<Contact_Last_Name />
+			<Contact_Email />
+		</Contact_Info>
+		<Support_Info>
+			<Sales_Email />
+			<Support_Email />
+			<General_Email>tomas.varaneckas@gmail.com</General_Email>
+			<Sales_Phone />
+			<Support_Phone />
+			<General_Phone />
+			<Fax_Phone />
+		</Support_Info>
+	</Company_Info>
+	<Program_Info>
+		<Program_Name>Hawkscope</Program_Name>
+		<Program_Version>0.4.0</Program_Version>
+		<Program_Release_Month>01</Program_Release_Month>
+		<Program_Release_Day>29</Program_Release_Day>
+		<Program_Release_Year>2009</Program_Release_Year>
+		<Program_Cost_Dollars />
+		<Program_Cost_Other_Code />
+		<Program_Cost_Other />
+		<Program_Type>Freeware</Program_Type>
+		<Program_Release_Status>Major Update</Program_Release_Status>
+		<Program_Install_Support>Install and Uninstall</Program_Install_Support>
+		<Program_OS_Support>Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64,Linux,Linux Gnome,Linux GPL,Linux Open Source,Mac OS X,Mac OS X 10.4,Mac OS X 10.5,Java</Program_OS_Support>
+		<Program_Language>English</Program_Language>
+		<Program_Change_Info>http://code.google.com/p/hawkscope/wiki/Changelog</Program_Change_Info>
+		<Program_Specific_Category>Utilities</Program_Specific_Category>
+		<Program_Category_Class>System Utilities::File &amp; Disk Management</Program_Category_Class>
+		<Program_System_Requirements />
+		<File_Info>
+			<File_Size_Bytes>1790400</File_Size_Bytes>
+			<File_Size_K>1748</File_Size_K>
+			<File_Size_MB>1.71</File_Size_MB>
+		</File_Info>
+		<Expire_Info>
+			<Has_Expire_Info>N</Has_Expire_Info>
+			<Expire_Count />
+			<Expire_Based_On>Days</Expire_Based_On>
+			<Expire_Other_Info />
+			<Expire_Month />
+			<Expire_Day />
+			<Expire_Year />
+		</Expire_Info>
+	</Program_Info>
+	<Program_Descriptions>
+		<English>
+			<Keywords>system tray disk navigator file browser</Keywords>
+			<Char_Desc_45>Access anything with single click!</Char_Desc_45>
+			<Char_Desc_80>Hawkscope - Access anything with single click!</Char_Desc_80>
+			<Char_Desc_250>Hawkscope is a productivity tool that allows you to access your hard drive contents quickly via system tray icon with dynamic pop-up menu. </Char_Desc_250>
+			<Char_Desc_450>Hawkscope is a productivity tool that allows you to access your hard drive contents quickly via system tray icon with dynamic pop-up menu. </Char_Desc_450>
+			<Char_Desc_2000>Hawkscope is a productivity tool that allows you to access your hard drive contents quickly via system tray icon with dynamic pop-up menu. </Char_Desc_2000>
+		</English>
+	</Program_Descriptions>
+	<Web_Info>
+		<Application_URLs>
+			<Application_Info_URL>http://hawkscope.googlecode.com</Application_Info_URL>
+			<Application_Order_URL />
+			<Application_Screenshot_URL>http://lh4.ggpht.com/_nP8Aa6cTHpo/SYB1jUyeKxI/AAAAAAAABBs/lESsU5EYQcE/hs-0.4.0-win.png</Application_Screenshot_URL>
+			<Application_Icon_URL>http://hawkscope.googlecode.com/svn/trunk/dist/win/hawkscope.ico</Application_Icon_URL>
+			<Application_XML_File_URL />
+		</Application_URLs>
+		<Download_URLs>
+			<Primary_Download_URL>http://code.google.com/p/hawkscope/downloads/list</Primary_Download_URL>
+			<Secondary_Download_URL />
+			<Additional_Download_URL_1 />
+			<Additional_Download_URL_2 />
+		</Download_URLs>
+	</Web_Info>
+	<Permissions>
+		<Distribution_Permissions>Hawkscope - Access anything with single click!
+Copyright (C) 2008-2009 Tomas Varaneckas
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see &lt;http://www.gnu.org/licenses/>.
+</Distribution_Permissions>
+		<EULA>Hawkscope - Access anything with single click!
+Copyright (C) 2008-2009 Tomas Varaneckas
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see &lt;http://www.gnu.org/licenses/>.
+</EULA>
+	</Permissions>
+</XML_DIZ_INFO>
