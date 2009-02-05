@@ -5,12 +5,12 @@ import java.util.Arrays;
 
 import org.eclipse.swt.program.Program;
 
-import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+import com.varaneckas.hawkscope.gui.swt.SWTExecutableMenuItem;
+import com.varaneckas.hawkscope.gui.swt.SWTFolderMenu;
 import com.varaneckas.hawkscope.gui.swt.SWTIconFactory;
 import com.varaneckas.hawkscope.gui.swt.SWTMenuFactory;
 import com.varaneckas.hawkscope.menu.DynamicFileFilter;
-import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
-import com.varaneckas.hawkscope.menu.FolderMenu;
+import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.MenuUtils;
 import com.varaneckas.hawkscope.util.OSUtils;
 
@@ -32,7 +32,7 @@ public class FolderMenuItemListener implements MenuItemListener {
     /**
      * Target menu
      */
-    private final FolderMenu folderMenu;
+    private final SWTFolderMenu folderMenu;
     
     /**
      * Target folder
@@ -50,7 +50,7 @@ public class FolderMenuItemListener implements MenuItemListener {
      * @param menu tagert
      * @param file target
      */
-    public FolderMenuItemListener(final FolderMenu menu, final File file) {
+    public FolderMenuItemListener(final SWTFolderMenu menu, final File file) {
         this.folderMenu = menu;
         this.file = file;
     }
@@ -59,9 +59,9 @@ public class FolderMenuItemListener implements MenuItemListener {
         if (!loaded && file != null && file.isDirectory()) {
             final File[] files = file.listFiles(DynamicFileFilter.getInstance());
             long counter = 0L;
-            FolderMenu workMenu = folderMenu;
+            SWTFolderMenu workMenu = folderMenu;
             if (files == null || files.length == 0) {                
-                final ExecutableMenuItem empty = SWTMenuFactory.newExecutableMenuItem();
+                final SWTExecutableMenuItem empty = SWTMenuFactory.newExecutableMenuItem();
                 empty.setIcon(SWTIconFactory.getInstance().getIcon("empty"));
                 empty.setText("Empty...");
                 empty.setEnabled(false);
@@ -73,17 +73,13 @@ public class FolderMenuItemListener implements MenuItemListener {
                         if (OSUtils.isMacApp(ff)) {
                             workMenu.addMenuItem(SWTMenuFactory.newFileMenuItem(ff));
                         } else {
-                            if (ConfigurationFactory.getConfigurationFactory()
-                                .getConfiguration().getBlackList().contains(ff)) {
-                                continue;
-                            }
                             workMenu.addMenuItem(SWTMenuFactory.newFolderMenu(ff));
                         }
                     } else {
                         workMenu.addMenuItem(SWTMenuFactory.newFileMenuItem(ff));
                     }
                     if (++counter % MENU_SIZE == 0 && counter < files.length) {
-                        FolderMenu more = SWTMenuFactory.newFolderMenu(null);
+                        SWTFolderMenu more = SWTMenuFactory.newFolderMenu(null);
                         more.setIcon(SWTIconFactory.getInstance().getIcon("more"));
                         more.setText("More");
                         workMenu.addSeparator();
@@ -97,6 +93,9 @@ public class FolderMenuItemListener implements MenuItemListener {
     }
     
     public void itemClicked() {
-        Program.launch(file.getAbsolutePath());
+        boolean launch = PluginManager.getInstance().interceptClick(file);
+        if (launch) {
+            Program.launch(file.getAbsolutePath());
+        }
     }
 }

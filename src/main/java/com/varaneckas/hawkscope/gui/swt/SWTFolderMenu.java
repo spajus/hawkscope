@@ -11,8 +11,6 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Menu;
 
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
-import com.varaneckas.hawkscope.menu.FolderMenu;
-import com.varaneckas.hawkscope.menu.MenuItem;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.PathUtils;
 
@@ -22,7 +20,12 @@ import com.varaneckas.hawkscope.util.PathUtils;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
+public class SWTFolderMenu implements SWTMenuItem {
+    
+    /**
+     * Target folder
+     */
+    final protected File file;
     
     /**
      * Menu text
@@ -97,21 +100,17 @@ public class SWTFolderMenu extends FolderMenu implements SWTMenuItem {
      * @param file target folder
      */
     public SWTFolderMenu(final File file) {
-        super(file);
+        this.file = file;
         if (file != null) {
             this.text = PathUtils.getFileName(file);
             this.icon = SWTIconFactory.getInstance().getIcon(file);
         } 
     }
     
-    @Override
-    public void addMenuItem(final MenuItem item) {
-        if (item instanceof SWTMenuItem) {
-            ((SWTMenuItem) item).createMenuItem(submenu);
-        }
+    public void addMenuItem(final SWTMenuItem item) {
+        item.createMenuItem(submenu);
     }
 
-    @Override
     public void addSeparator() {
         new org.eclipse.swt.widgets.MenuItem(menu.getMenu(), SWT.SEPARATOR);
     }

@@ -20,8 +20,6 @@ import com.varaneckas.hawkscope.command.HideCommand;
 import com.varaneckas.hawkscope.command.SettingsCommand;
 import com.varaneckas.hawkscope.command.UpdateCommand;
 import com.varaneckas.hawkscope.menu.Command;
-import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
-import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.state.MenuClosedState;
 import com.varaneckas.hawkscope.menu.state.State;
 import com.varaneckas.hawkscope.plugin.PluginManager;
@@ -119,10 +117,8 @@ public class SWTMainMenu {
         menu.setDefaultItem(menu.getItems()[0]);
     }
 
-    public void addMenuItem(final com.varaneckas.hawkscope.menu.MenuItem item) {
-        if (item instanceof SWTMenuItem) {
-            ((SWTMenuItem) item).createMenuItem(menu);
-        }
+    public void addMenuItem(final SWTMenuItem item) {
+        item.createMenuItem(menu);
     }
 
     public void addSeparator() {
@@ -253,7 +249,7 @@ public class SWTMainMenu {
             }
             if (cfg.isFloppyDrivesDisplayed() || !PathUtils.isFloppy(root)) {
             log.debug("Generating menu for: " + root.getAbsolutePath());
-                final FolderMenu item = SWTMenuFactory.newFolderMenu(root);
+                final SWTFolderMenu item = SWTMenuFactory.newFolderMenu(root);
                 item.setText(PathUtils.getFileName(root));
                 item.setIcon(SWTIconFactory.getInstance().getIcon(root));
                 addMenuItem(item);
@@ -285,7 +281,7 @@ public class SWTMainMenu {
         if (quick != null && quick.size() > 0) {
             for (final File custom : quick) {
                 try {
-                    FolderMenu fm = SWTMenuFactory.newFolderMenu(custom);
+                    SWTFolderMenu fm = SWTMenuFactory.newFolderMenu(custom);
                     PluginManager.getInstance().enhanceQuickAccessItem(fm, custom);
                     addMenuItem(fm);
                 } catch (final Exception e) {
@@ -320,7 +316,7 @@ public class SWTMainMenu {
      */
     public void addExecutableMenuItem(final String name, 
             final String text, final Command command) {
-        final ExecutableMenuItem item = SWTMenuFactory.newExecutableMenuItem();
+        final SWTExecutableMenuItem item = SWTMenuFactory.newExecutableMenuItem();
         item.setCommand(command);
         item.setText(text);
         item.setIcon(SWTIconFactory.getInstance().getIcon(name));

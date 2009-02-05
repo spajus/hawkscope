@@ -8,8 +8,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
+import com.varaneckas.hawkscope.gui.swt.SWTFolderMenu;
 import com.varaneckas.hawkscope.gui.swt.SWTMainMenu;
-import com.varaneckas.hawkscope.menu.FolderMenu;
 
 public class PluginManager {
     
@@ -52,7 +52,7 @@ public class PluginManager {
         }
     }
 
-    public void enhanceQuickAccessItem(FolderMenu fm, File custom) {
+    public void enhanceQuickAccessItem(SWTFolderMenu fm, File custom) {
         for (Plugin plugin : getActivePlugins()) {
             if (plugin.canEnhanceQuickAccessItem())
                 plugin.enhanceQuickAccessItem(fm, custom);
@@ -64,6 +64,17 @@ public class PluginManager {
             if (plugin.canHookBeforeAboutMenuItem())
                 plugin.beforeAboutMenuItem(mainMenu);
         }
+    }
+    
+    public boolean interceptClick(File file) {
+        boolean proceed = true;
+        for (Plugin plugin : getActivePlugins()) {
+            if (plugin.canInterceptClick()) {
+                proceed = plugin.interceptClick(file);
+                if (!proceed) break;
+            }
+        }
+        return proceed;
     }
 
 }

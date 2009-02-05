@@ -48,6 +48,9 @@ public class DynamicFileFilter implements FileFilter {
                 return false;
             }
         }
+        if (file.isDirectory() && cfg.getBlackList().contains(file)) {
+            return false;
+        }
         return true;
     }
 }

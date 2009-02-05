@@ -5,7 +5,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.Version;
-import com.varaneckas.hawkscope.gui.swt.SWTAboutShell;
+import com.varaneckas.hawkscope.gui.swt.AboutWindow;
 import com.varaneckas.hawkscope.gui.swt.SWTSettingsShell;
 import com.varaneckas.hawkscope.gui.swt.SWTUncaughtExceptionHandler;
 import com.varaneckas.hawkscope.tray.SWTTrayManager;
@@ -21,7 +21,7 @@ public class WindowFactory {
     /**
      * AboutWindow instance
      */
-    private static SWTAboutShell aboutWindow = null;
+    private static AboutWindow aboutWindow = null;
     
     /**
      * SettingsWindow instance
@@ -40,9 +40,9 @@ public class WindowFactory {
      * 
      * @return instance of About Window
      */
-    public static SWTAboutShell getAboutWindow() {
+    public static AboutWindow getAboutWindow() {
         if (aboutWindow == null) {
-            aboutWindow = new SWTAboutShell(SWTTrayManager.getInstance().getShell(), 0);
+            aboutWindow = new AboutWindow(SWTTrayManager.getInstance().getShell(), 0);
         }
         return aboutWindow;
     }

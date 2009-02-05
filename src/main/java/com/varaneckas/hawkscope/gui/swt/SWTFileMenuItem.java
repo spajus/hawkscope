@@ -10,7 +10,6 @@ import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
-import com.varaneckas.hawkscope.menu.FileMenuItem;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.PathUtils;
 
@@ -20,7 +19,7 @@ import com.varaneckas.hawkscope.util.PathUtils;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTFileMenuItem implements FileMenuItem, SWTMenuItem {
+public class SWTFileMenuItem implements SWTMenuItem {
 
     /**
      * Menu item text

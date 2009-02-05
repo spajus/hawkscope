@@ -8,15 +8,12 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
 import com.varaneckas.hawkscope.menu.Command;
-import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
 
 /**
- * {@link ExecutableMenuItem} - SWT implementation
- * 
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTExecutableMenuItem implements ExecutableMenuItem, SWTMenuItem {
+public class SWTExecutableMenuItem implements SWTMenuItem {
 
     /**
      * Menu item text

@@ -2,10 +2,6 @@ package com.varaneckas.hawkscope.gui.swt;
 
 import java.io.File;
 
-import com.varaneckas.hawkscope.menu.ExecutableMenuItem;
-import com.varaneckas.hawkscope.menu.FileMenuItem;
-import com.varaneckas.hawkscope.menu.FolderMenu;
-
 /**
  * SWT {@link MainMenu} factory
  * 
@@ -21,15 +17,15 @@ public class SWTMenuFactory {
         return SWTMainMenu.getInstance();
     }
 
-    public static ExecutableMenuItem newExecutableMenuItem() {
+    public static SWTExecutableMenuItem newExecutableMenuItem() {
         return new SWTExecutableMenuItem();
     }
 
-    public static FileMenuItem newFileMenuItem(final File file) {
+    public static SWTFileMenuItem newFileMenuItem(final File file) {
         return new SWTFileMenuItem(file);
     }
 
-    public static FolderMenu newFolderMenu(final File file) {
+    public static SWTFolderMenu newFolderMenu(final File file) {
         return new SWTFolderMenu(file);
     }
     

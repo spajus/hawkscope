@@ -47,12 +47,12 @@ import com.varaneckas.hawkscope.util.OSUtils;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog {
+public class AboutWindow extends org.eclipse.swt.widgets.Dialog {
     
     /**
      * Logger
      */
-    private static final Log log = LogFactory.getLog(SWTAboutShell.class);
+    private static final Log log = LogFactory.getLog(AboutWindow.class);
 
     private Shell dialogShell;
     private Canvas logoCanvas;
@@ -75,7 +75,7 @@ public class SWTAboutShell extends org.eclipse.swt.widgets.Dialog {
      * @param parent
      * @param style
      */
-    public SWTAboutShell(final Shell parent, final int style) {
+    public AboutWindow(final Shell parent, final int style) {
         super(parent, style);
     }
 
