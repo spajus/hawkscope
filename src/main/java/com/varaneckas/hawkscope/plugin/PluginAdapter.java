@@ -6,7 +6,9 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.TabFolder;
 
+import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MainMenu;
@@ -77,5 +79,17 @@ public abstract class PluginAdapter implements Plugin {
         //continue with other actions
         return true;
     }
+    
+    public void applySettings(Configuration cfg, TabFolder settingsTabFolder) {
+        log.debug("Skipping apply settings on plugin");
+    }
+    
+    public void enhanceSettings(TabFolder settingsTabFolder) {
+        log.debug("Skipping enhance settings on plugin");
+    }
 
+    public String getId() {
+        return getClass().getSimpleName();
+    }
+    
 }

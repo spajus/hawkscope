@@ -225,7 +225,7 @@ public class AboutWindow extends org.eclipse.swt.widgets.Dialog {
                 	appVersionValue.setText(Version.VERSION_NUMBER);
                 	if (ConfigurationFactory.getConfigurationFactory()
                 			.getConfiguration().checkForUpdates()) {
-                		appVersionValue.setToolTipText("Could not get version information");
+                		appVersionValue.setToolTipText("Could not get version information.");
                 	}
                 } else {
                 	if (Version.isUpdateAvailable()) {

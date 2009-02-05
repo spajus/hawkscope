@@ -4,20 +4,27 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.TabFolder;
 
+import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MainMenu;
+import com.varaneckas.hawkscope.plugin.openwith.OpenWithPlugin;
 
 public class PluginManager {
     
     private static final PluginManager instance = new PluginManager();
     
+    private static final Log log = LogFactory.getLog(PluginManager.class);
+    
     private PluginManager() {
         //FIXME playing around
-        //plugins.add(new OpenWithPlugin());
+        plugins.add(new OpenWithPlugin());
     }
     
     private final List<Plugin> plugins = new ArrayList<Plugin>();
@@ -75,6 +82,23 @@ public class PluginManager {
             }
         }
         return proceed;
+    }
+
+    public void applySettings(Configuration cfg, TabFolder settingsTabFolder) {
+        for (Plugin plugin : getActivePlugins()) {
+            plugin.applySettings(cfg, settingsTabFolder);
+        }
+    }
+
+    public void enhanceSettings(TabFolder settingsTabFolder) {
+        for (Plugin plugin : getActivePlugins()) {
+            try {
+                plugin.enhanceSettings(settingsTabFolder);
+            } catch (final Exception e) {
+                log.warn("Failed enhancing settings tab for plugin: " 
+                        + plugin.getId(), e);
+            }
+        }
     }
 
 }

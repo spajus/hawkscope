@@ -29,8 +29,9 @@ import com.cloudgarden.resource.SWTResourceManager;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.menu.MenuFactory;
-import com.varaneckas.hawkscope.util.OSUtils;
+import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -48,6 +49,10 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
     
     private Shell dialogShell;
     private TabFolder settingsTabFolder;
+    public TabFolder getSettingsTabFolder() {
+        return settingsTabFolder;
+    }
+
     private TabItem tabNetwork;
     private Button checkDisplayFloppy;
     private List listQuickAccess;
@@ -137,6 +142,7 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
                 createBlacklistTab();
                 //[Network] tab
                 createNetworkTab();
+                PluginManager.getInstance().enhanceSettings(settingsTabFolder);
                 settingsTabFolder.setSelection(0);
             }
             createButtons();            
@@ -148,8 +154,8 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
                     display.sleep();
             }
         } catch (final Exception e) {
-            log.error("Failed loading SWTSettingsShell", e);
-            throw new RuntimeException("Failed loading SWTSettingsSHell", e);
+            log.error("Failed loading Settings Window", e);
+            throw new RuntimeException("Failed loading Settings Window", e);
         }
     }
 
@@ -430,7 +436,7 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
         //List: Blacklist
         {
             FormData listBlacklistLData = new FormData();
-            listBlacklistLData.width = 271;
+            listBlacklistLData.width = 273;
             listBlacklistLData.height = 66;
             listBlacklistLData.left =  new FormAttachment(0, 1000, 24);
             listBlacklistLData.top =  new FormAttachment(0, 1000, 114);
@@ -829,6 +835,7 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
                 textHttpProxyUsername.getText());
         cfg.getProperties().put(Configuration.HTTP_PROXY_AUTH_PASSWORD,
                 textHttpProxyPassword.getText());
+        PluginManager.getInstance().applySettings(cfg, settingsTabFolder);
         ConfigurationFactory.getConfigurationFactory().write(cfg);
     }
 

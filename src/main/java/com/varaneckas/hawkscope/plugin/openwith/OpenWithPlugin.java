@@ -4,6 +4,7 @@ import java.io.File;
 
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.TabFolder;
 
 import com.varaneckas.hawkscope.command.AboutCommand;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
@@ -12,7 +13,7 @@ import com.varaneckas.hawkscope.plugin.PluginAdapter;
 import com.varaneckas.hawkscope.util.IconFactory;
 
 public class OpenWithPlugin extends PluginAdapter {
-
+    
     public OpenWithPlugin() {
         canEnhanceFolderMenu = true;
     }
@@ -29,4 +30,9 @@ public class OpenWithPlugin extends PluginAdapter {
         openWith.createMenuItem(submenu);
     }
     
+    @Override
+    public void enhanceSettings(TabFolder settingsTabFolder) {
+         OpenWithPluginSettings.enhance(settingsTabFolder);
+    }
+   
 }

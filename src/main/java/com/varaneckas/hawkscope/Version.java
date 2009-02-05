@@ -242,9 +242,11 @@ public class Version {
             while ((c = io.read()) != -1) {
                 version.append((char) c);
             }
-            log.debug("Check complete. Latest version: " + version.toString());
+            log.debug("Check complete. Latest " + OSUtils.CURRENT_OS 
+                    + " version: " + version.toString());
             if (VERSION_NUMBER.compareTo(version.toString()) < 0) {
-                log.info("Newer version available (" + version.toString() 
+                log.info("Newer " + OSUtils.CURRENT_OS + " version available (" 
+                        + version.toString() 
                         + "). You should update Hawkscope!");
                 isUpdateAvailable = true;
             } else {

@@ -4,12 +4,16 @@ import java.io.File;
 
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.TabFolder;
 
+import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MainMenu;
 
 public interface Plugin {
+    
+    public String getId();
     
     public boolean canEnhanceFolderMenu();
     
@@ -35,6 +39,10 @@ public interface Plugin {
     void beforeAboutMenuItem(MainMenu mainMenu);
 
     public boolean interceptClick(File file);
+
+    public void applySettings(Configuration cfg, TabFolder settingsTabFolder);
+
+    public void enhanceSettings(TabFolder settingsTabFolder);
 
     
 }
