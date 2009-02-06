@@ -7,6 +7,7 @@ http://hawkscope.googlecode.com
 Changes in version 0.4.1 (2009-02-06)
 -------------------------------------
 * Separate versions for each operating system
+  http://code.google.com/p/hawkscope/issues/detail?id=37
 * Mac application contents are no longer shown
   http://code.google.com/p/hawkscope/issues/detail?id=38
 * Fixed Mac OS X Dock Quit problem
