@@ -58,7 +58,7 @@ public class Version {
     /**
      * Application version date
      */
-    public static final String VERSION_DATE = "2009-02-??";
+    public static final String VERSION_DATE = "2009-02-06";
     
     /**
      * Application Homepage URL

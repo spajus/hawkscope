@@ -93,7 +93,7 @@ public class OpenWithPluginSettings {
                     if (tablePrefered.getSelectionCount() > 0) {
                         index = tablePrefered.getSelectionIndices()[0];
                     }
-                    TableItem ti = new TableItem(tablePrefered, SWT.NONE, index);
+                    new TableItem(tablePrefered, SWT.NONE, index);
                     tablePrefered.clearAll();
                     tablePrefered.select(index);
                     tablePrefered.getVerticalBar().setSelection(0);

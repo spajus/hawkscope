@@ -107,7 +107,9 @@ public class MainMenu {
     public void forceHide() {
         hiddenSince = System.currentTimeMillis();
         setState(MenuClosedState.getInstance());
-        menu.setVisible(false);
+        if (!menu.isDisposed()) {
+        	menu.setVisible(false);
+        }
     }
 
     public void showMenu(final int x, final int y) {

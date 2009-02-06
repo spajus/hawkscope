@@ -14,7 +14,6 @@ import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MainMenu;
-import com.varaneckas.hawkscope.plugin.openwith.OpenWithPlugin;
 
 public class PluginManager {
     
@@ -24,7 +23,7 @@ public class PluginManager {
     
     private PluginManager() {
         //FIXME playing around
-        plugins.add(new OpenWithPlugin());
+        //plugins.add(new OpenWithPlugin());
     }
     
     private final List<Plugin> plugins = new ArrayList<Plugin>();

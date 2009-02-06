@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.varaneckas.hawkscope.util.OSUtils;
+import com.varaneckas.hawkscope.util.OSUtils.OS;
+
 /**
  * Basic Configuration Factory
  *
@@ -24,7 +27,11 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         data.put(Configuration.HIDDEN_FILES_DISPLAYED, "0");
         //quick access list contains one entry - user home, 
         //read from system properties
-        data.put(Configuration.QUICK_ACCESS_LIST, "${user.home}");
+        if (OSUtils.CURRENT_OS.equals(OS.MAC)) {
+        	data.put(Configuration.QUICK_ACCESS_LIST, "${user.home};/Applications");
+        } else {
+        	data.put(Configuration.QUICK_ACCESS_LIST, "${user.home}");
+        }
         //floppy drives are not displayed
         data.put(Configuration.FLOPPY_DRIVES_DISPLAYED, "0");
         //blacklist is empty
