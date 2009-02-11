@@ -103,7 +103,7 @@ public class OpenWithPluginSettings {
             textFolderNavLData.width = 150;
             textFolderNavLData.height = 17;
             textFolderNavLData.left = new FormAttachment(labelFolderNav, 6);
-            textFolderNavLData.top = new FormAttachment(labelSpecialApps, 4);
+            textFolderNavLData.top = new FormAttachment(labelSpecialApps, 3);
             textFolderNav.setLayoutData(textFolderNavLData);
         }
         Button buttonChooseNav;
@@ -112,13 +112,47 @@ public class OpenWithPluginSettings {
             buttonChooseNav = new Button(containerOpenWith, SWT.PUSH); 
             FormData layout = new FormData();
             layout.height = 29;
-            layout.width = 80;
+            layout.width = 77;
             layout.left = new FormAttachment(textFolderNav, 6);
-            layout.top = new FormAttachment(labelSpecialApps, 3);
+            layout.top = new FormAttachment(labelSpecialApps, 2);
             buttonChooseNav.setLayoutData(layout);
-            buttonChooseNav.setText("C&hoose");
+            buttonChooseNav.setText("Choose");
         }
         
+        Label labelFileDef;
+        //Label File Def
+        {
+            labelFileDef = new Label(containerOpenWith, SWT.NONE);
+            FormData layout = new FormData();
+            layout.height = 17;
+            layout.left = new FormAttachment(0, 12);
+            layout.top = new FormAttachment(textFolderNav, 8);
+            labelFileDef.setLayoutData(layout);
+            labelFileDef.setText("Unknown files:");
+        }
+        Text textFileDef;
+        //Text: folder nav
+        {
+            textFileDef = new Text(containerOpenWith, SWT.BORDER);
+            FormData layout = new FormData();
+            layout.width = 150;
+            layout.height = 17;
+            layout.left = new FormAttachment(labelFolderNav, 6);
+            layout.top = new FormAttachment(textFolderNav, 3);
+            textFileDef.setLayoutData(layout);
+        }
+        Button buttonChooseFileDef;
+        //Button: Nav
+        {
+            buttonChooseFileDef = new Button(containerOpenWith, SWT.PUSH); 
+            FormData layout = new FormData();
+            layout.height = 29;
+            layout.width = 77;
+            layout.left = new FormAttachment(textFileDef, 6);
+            layout.top = new FormAttachment(textFolderNav, 2);
+            buttonChooseFileDef.setLayoutData(layout);
+            buttonChooseFileDef.setText("Choose");
+        }        
         
         Label labelPreferredApps;
         // Label: Preferred Applications
@@ -128,7 +162,7 @@ public class OpenWithPluginSettings {
             labelPrefAppsLData.width = 358;
             labelPrefAppsLData.height = 17;
             labelPrefAppsLData.left = new FormAttachment(0, 0);
-            labelPrefAppsLData.top = new FormAttachment(textFolderNav, 4);
+            labelPrefAppsLData.top = new FormAttachment(textFileDef, 4);
             labelPreferredApps.setLayoutData(labelPrefAppsLData);
             labelPreferredApps.setText("Prefered Applications");
             labelPreferredApps.setFont(SWTResourceManager.getFont("Sans", 10,
