@@ -71,31 +71,57 @@ public class OpenWithPluginSettings {
         openWith.setImage(IconFactory.getInstance().getIcon("open"));
         openWith.setText("&Open With");
         
-        Label labelFolderNavigator;
-        //Label Folder Navigator
+        Label labelSpecialApps;
+        //Label Special Apps
         {
-            labelFolderNavigator = new Label(containerOpenWith, SWT.NONE);
-            FormData labelFolderNavigatorLData = new FormData();
-            labelFolderNavigatorLData.width = 358;
-            labelFolderNavigatorLData.height = 17;
-            labelFolderNavigatorLData.left = new FormAttachment(0, 0);
-            labelFolderNavigatorLData.top = new FormAttachment(0, 0);
-            labelFolderNavigator.setLayoutData(labelFolderNavigatorLData);
-            labelFolderNavigator.setText("Folder Navigator");
-            labelFolderNavigator.setFont(SWTResourceManager.getFont("Sans", 10,
+            labelSpecialApps = new Label(containerOpenWith, SWT.NONE);
+            FormData labelSpecialAppsLData = new FormData();
+            labelSpecialAppsLData.width = 358;
+            labelSpecialAppsLData.height = 17;
+            labelSpecialAppsLData.left = new FormAttachment(0, 0);
+            labelSpecialAppsLData.top = new FormAttachment(0, 0);
+            labelSpecialApps.setLayoutData(labelSpecialAppsLData);
+            labelSpecialApps.setText("Special Applications");
+            labelSpecialApps.setFont(SWTResourceManager.getFont("Sans", 10,
                     1, false, false));           
+        }
+        Label labelFolderNav;
+        //Label Folder Nav
+        {
+            labelFolderNav = new Label(containerOpenWith, SWT.NONE);
+            FormData layout = new FormData();
+            layout.height = 17;
+            layout.left = new FormAttachment(0, 12);
+            layout.top = new FormAttachment(labelSpecialApps, 8);
+            labelFolderNav.setLayoutData(layout);
+            labelFolderNav.setText("For directories:");
         }
         Text textFolderNav;
         //Text: folder nav
         {
             textFolderNav = new Text(containerOpenWith, SWT.BORDER);
             FormData textFolderNavLData = new FormData();
-            textFolderNavLData.width = 200;
+            textFolderNavLData.width = 150;
             textFolderNavLData.height = 17;
-            textFolderNavLData.left = new FormAttachment(0, 12);
-            textFolderNavLData.top = new FormAttachment(labelFolderNavigator, 12);
+            textFolderNavLData.left = new FormAttachment(labelFolderNav, 6);
+            textFolderNavLData.top = new FormAttachment(labelSpecialApps, 4);
             textFolderNav.setLayoutData(textFolderNavLData);
         }
+        Button buttonChooseNav;
+        //Button: Nav
+        {
+            buttonChooseNav = new Button(containerOpenWith, SWT.PUSH); 
+            FormData layout = new FormData();
+            layout.height = 29;
+//            layout.width = 30;
+//            layout.right = new FormAttachment(0, 0);
+            layout.left = new FormAttachment(textFolderNav, 6);
+            layout.top = new FormAttachment(labelSpecialApps, 3);
+            buttonChooseNav.setLayoutData(layout);
+            buttonChooseNav.setText("C&hoose");
+            OSUtils.adjustButton(buttonChooseNav);
+        }
+        
         
         Label labelPreferredApps;
         // Label: Preferred Applications
@@ -105,7 +131,7 @@ public class OpenWithPluginSettings {
             labelPrefAppsLData.width = 358;
             labelPrefAppsLData.height = 17;
             labelPrefAppsLData.left = new FormAttachment(0, 0);
-            labelPrefAppsLData.top = new FormAttachment(textFolderNav, 12);
+            labelPrefAppsLData.top = new FormAttachment(textFolderNav, 4);
             labelPreferredApps.setLayoutData(labelPrefAppsLData);
             labelPreferredApps.setText("Prefered Applications");
             labelPreferredApps.setFont(SWTResourceManager.getFont("Sans", 10,
@@ -119,7 +145,7 @@ public class OpenWithPluginSettings {
             tablePreferedLData.width = 273;
             tablePreferedLData.height = 56;
             tablePreferedLData.left = new FormAttachment(0, 12);
-            tablePreferedLData.top = new FormAttachment(labelPreferredApps, 12);
+            tablePreferedLData.top = new FormAttachment(labelPreferredApps, 6);
             tablePrefered.setLinesVisible(true);
             tablePrefered.setHeaderVisible(true);
             tablePrefered.setLayoutData(tablePreferedLData);
@@ -150,7 +176,7 @@ public class OpenWithPluginSettings {
             buttonAddLData.width = 39;
             buttonAddLData.height = 29;
             buttonAddLData.left = new FormAttachment(tablePrefered, 12);
-            buttonAddLData.top = new FormAttachment(labelPreferredApps, 12);
+            buttonAddLData.top = new FormAttachment(labelPreferredApps, 6);
             buttonAdd.setLayoutData(buttonAddLData);
             buttonAdd.setText("+");
             OSUtils.adjustButton(buttonAdd);
