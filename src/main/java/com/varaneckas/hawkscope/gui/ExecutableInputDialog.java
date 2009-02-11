@@ -40,7 +40,7 @@ public class ExecutableInputDialog {
         label.setLayoutData(data);
 
         Button cancel = new Button(dialog, SWT.PUSH);
-        cancel.setText("Cancel");
+        cancel.setText("&Cancel");
         data = new FormData();
         data.width = 60;
         data.right = new FormAttachment(100, 0);
@@ -64,7 +64,7 @@ public class ExecutableInputDialog {
         text.setLayoutData(data);
         
         Button ok = new Button(dialog, SWT.PUSH);
-        ok.setText("OK");
+        ok.setText("&OK");
         data = new FormData();
         data.width = 60;
         data.right = new FormAttachment(cancel, 0, SWT.DEFAULT);
@@ -79,7 +79,7 @@ public class ExecutableInputDialog {
         OSUtils.adjustButton(ok);
         
         Button choose = new Button(dialog, SWT.PUSH);
-        choose.setText("Choose");
+        choose.setText("&Browse");
         data = new FormData();
         data.width = 60;
         data.right = new FormAttachment(ok, 0, SWT.DEFAULT);

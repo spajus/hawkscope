@@ -109,8 +109,7 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
         }
         try {
             final Shell parent = getParent();
-            dialogShell = new Shell(parent, SWT.DIALOG_TRIM
-                    | SWT.APPLICATION_MODAL);
+            dialogShell = new Shell(parent);
             {
                 //Register as a resource user - SWTResourceManager will
                 //handle the obtaining and disposing of resources
@@ -122,8 +121,8 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
             
             
             dialogShell.setLayout(new FormLayout());
-            dialogShell.layout();
-            dialogShell.pack();
+//            dialogShell.layout();
+//            dialogShell.pack();
             dialogShell.setSize(418, 331);
             //Settings tab folder: [General][Quick Access][Blacklist][Network]
             {

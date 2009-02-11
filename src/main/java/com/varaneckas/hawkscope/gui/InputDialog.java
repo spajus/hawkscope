@@ -39,7 +39,7 @@ public class InputDialog {
         label.setLayoutData(data);
 
         Button cancel = new Button(dialog, SWT.PUSH);
-        cancel.setText("Cancel");
+        cancel.setText("&Cancel");
         data = new FormData();
         data.width = 60;
         data.right = new FormAttachment(100, 0);
@@ -63,7 +63,7 @@ public class InputDialog {
         text.setTextLimit(maxLength);
         
         Button ok = new Button(dialog, SWT.PUSH);
-        ok.setText("OK");
+        ok.setText("&OK");
         data = new FormData();
         data.width = 60;
         data.right = new FormAttachment(cancel, 0, SWT.DEFAULT);
