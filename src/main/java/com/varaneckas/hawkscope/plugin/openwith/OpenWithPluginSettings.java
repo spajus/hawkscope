@@ -28,7 +28,6 @@ import com.varaneckas.hawkscope.gui.InputDialog;
 import com.varaneckas.hawkscope.gui.SettingsWindow;
 import com.varaneckas.hawkscope.gui.WindowFactory;
 import com.varaneckas.hawkscope.util.IconFactory;
-import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.Updater;
 
 public class OpenWithPluginSettings {
@@ -113,13 +112,11 @@ public class OpenWithPluginSettings {
             buttonChooseNav = new Button(containerOpenWith, SWT.PUSH); 
             FormData layout = new FormData();
             layout.height = 29;
-//            layout.width = 30;
-//            layout.right = new FormAttachment(0, 0);
+            layout.width = 80;
             layout.left = new FormAttachment(textFolderNav, 6);
             layout.top = new FormAttachment(labelSpecialApps, 3);
             buttonChooseNav.setLayoutData(layout);
             buttonChooseNav.setText("C&hoose");
-            OSUtils.adjustButton(buttonChooseNav);
         }
         
         
@@ -179,7 +176,6 @@ public class OpenWithPluginSettings {
             buttonAddLData.top = new FormAttachment(labelPreferredApps, 6);
             buttonAdd.setLayoutData(buttonAddLData);
             buttonAdd.setText("+");
-            OSUtils.adjustButton(buttonAdd);
             buttonAdd.addListener(SWT.Selection, new Listener() {
                 public void handleEvent(Event arg0) {
                     int index = 0;
@@ -210,7 +206,6 @@ public class OpenWithPluginSettings {
             buttonDelLData.top = new FormAttachment(buttonAdd, 12);
             buttonDel.setLayoutData(buttonDelLData);
             buttonDel.setText("-");
-            OSUtils.adjustButton(buttonDel);
             buttonDel.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(SelectionEvent event) {
