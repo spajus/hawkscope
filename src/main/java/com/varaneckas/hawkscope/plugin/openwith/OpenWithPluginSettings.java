@@ -32,13 +32,21 @@ import com.varaneckas.hawkscope.util.Updater;
 
 public class OpenWithPluginSettings {
 
-    private static Table tablePrefered;
+    private Table tablePrefered;
+    private Label labelSpecialApps;
+    private Label labelFolderNav;
+    private Text textFolderNav;
+    private Button buttonChooseNav;
+    private Label labelFileDef;
+    private Text textFileDef;
+    private Button buttonChooseFileDef;
 
-    public static void apply(final Configuration cfg, final CTabFolder folder) {
+
+    public void apply(final Configuration cfg, final CTabFolder folder) {
         // cleanup
         List<String> toRemove = new ArrayList<String>();
         for (String app : cfg.getProperties().keySet()) {
-            if (app.startsWith("plugin.openwith.type.")) {
+            if (app.startsWith(OpenWithPlugin.PROP_FILE_TYPE_PREFIX)) {
                 toRemove.add(app);
             }
         }
@@ -51,15 +59,21 @@ public class OpenWithPluginSettings {
             if (item.getText(0) != null && item.getText().length() > 0) {
                 if (item.getText(1) != null && item.getText(1).length() > 0) {
                     cfg.getProperties().put(
-                            "plugin.openwith.type." + item.getText(0),
+                            OpenWithPlugin.PROP_FILE_TYPE_PREFIX + item.getText(0),
                             item.getText(1));
                 }
             }
         }
-        OpenWithPlugin.refresh();
+        if (textFileDef.getText() != null && textFileDef.getText().length() > 0) {
+            cfg.getProperties().put("plugin.openwith.unknown.files", textFileDef.getText());
+        }
+        if (textFolderNav.getText() != null && textFolderNav.getText().length() > 0) {
+            cfg.getProperties().put("plugin.openwith.folder.navigator", textFolderNav.getText());
+        }
+        OpenWithPlugin.getInstance().refresh();
     }
 
-    public static void enhance(final Configuration cfg, final CTabFolder folder) {
+    public void enhance(final Configuration cfg, final CTabFolder folder) {
         final CTabItem openWith = new CTabItem(folder, SWT.NONE);
         Composite containerOpenWith = new Composite(folder, SWT.NONE);
         FormLayout containerOpenWithLayout = new FormLayout();
@@ -70,7 +84,6 @@ public class OpenWithPluginSettings {
         openWith.setImage(IconFactory.getInstance().getIcon("open"));
         openWith.setText("&Open With");
         
-        Label labelSpecialApps;
         //Label Special Apps
         {
             labelSpecialApps = new Label(containerOpenWith, SWT.NONE);
@@ -84,7 +97,6 @@ public class OpenWithPluginSettings {
             labelSpecialApps.setFont(SWTResourceManager.getFont("Sans", 10,
                     1, false, false));           
         }
-        Label labelFolderNav;
         //Label Folder Nav
         {
             labelFolderNav = new Label(containerOpenWith, SWT.NONE);
@@ -95,7 +107,6 @@ public class OpenWithPluginSettings {
             labelFolderNav.setLayoutData(layout);
             labelFolderNav.setText("For directories:");
         }
-        Text textFolderNav;
         //Text: folder nav
         {
             textFolderNav = new Text(containerOpenWith, SWT.BORDER);
@@ -105,8 +116,11 @@ public class OpenWithPluginSettings {
             textFolderNavLData.left = new FormAttachment(labelFolderNav, 6);
             textFolderNavLData.top = new FormAttachment(labelSpecialApps, 3);
             textFolderNav.setLayoutData(textFolderNavLData);
+            String folderNav = cfg.getProperties().get(OpenWithPlugin.PROP_FOLDER_NAVIGATOR);
+            if (folderNav != null) {
+                textFolderNav.setText(folderNav);
+            }
         }
-        Button buttonChooseNav;
         //Button: Nav
         {
             buttonChooseNav = new Button(containerOpenWith, SWT.PUSH); 
@@ -117,9 +131,19 @@ public class OpenWithPluginSettings {
             layout.top = new FormAttachment(labelSpecialApps, 2);
             buttonChooseNav.setLayoutData(layout);
             buttonChooseNav.setText("Choose");
+            buttonChooseNav.addListener(SWT.Selection, new Listener() {
+                public void handleEvent(Event ev) {
+                    ExecutableInputDialog.getString("Choose executable for opening directories", 
+                            textFolderNav.getText(), 
+                            textFolderNav.getShell(), new Updater() {
+                                public void setValue(String value) {
+                                    textFolderNav.setText(value);
+                                }
+                    });
+                }
+            });
         }
         
-        Label labelFileDef;
         //Label File Def
         {
             labelFileDef = new Label(containerOpenWith, SWT.NONE);
@@ -130,8 +154,7 @@ public class OpenWithPluginSettings {
             labelFileDef.setLayoutData(layout);
             labelFileDef.setText("Unknown files:");
         }
-        Text textFileDef;
-        //Text: folder nav
+        //Text: file def
         {
             textFileDef = new Text(containerOpenWith, SWT.BORDER);
             FormData layout = new FormData();
@@ -140,9 +163,12 @@ public class OpenWithPluginSettings {
             layout.left = new FormAttachment(labelFolderNav, 6);
             layout.top = new FormAttachment(textFolderNav, 3);
             textFileDef.setLayoutData(layout);
+            String fileDef = cfg.getProperties().get(OpenWithPlugin.PROP_UNKNOWN_FILE_APP);
+            if (fileDef != null) {
+                textFileDef.setText(fileDef);
+            }
         }
-        Button buttonChooseFileDef;
-        //Button: Nav
+        //Button: Choose file def
         {
             buttonChooseFileDef = new Button(containerOpenWith, SWT.PUSH); 
             FormData layout = new FormData();
@@ -152,6 +178,16 @@ public class OpenWithPluginSettings {
             layout.top = new FormAttachment(textFolderNav, 2);
             buttonChooseFileDef.setLayoutData(layout);
             buttonChooseFileDef.setText("Choose");
+            buttonChooseFileDef.addListener(SWT.Selection, new Listener() {
+                public void handleEvent(Event ev) {
+                    ExecutableInputDialog.getString("Choose executable for opening unknown files", 
+                            textFileDef.getText(), textFileDef.getShell(), new Updater() {
+                                public void setValue(String value) {
+                                    textFileDef.setText(value);
+                                }
+                    });
+                }
+            });
         }        
         
         Label labelPreferredApps;
@@ -162,7 +198,7 @@ public class OpenWithPluginSettings {
             labelPrefAppsLData.width = 358;
             labelPrefAppsLData.height = 17;
             labelPrefAppsLData.left = new FormAttachment(0, 0);
-            labelPrefAppsLData.top = new FormAttachment(textFileDef, 4);
+            labelPrefAppsLData.top = new FormAttachment(textFileDef, 3);
             labelPreferredApps.setLayoutData(labelPrefAppsLData);
             labelPreferredApps.setText("Prefered Applications");
             labelPreferredApps.setFont(SWTResourceManager.getFont("Sans", 10,
@@ -171,7 +207,7 @@ public class OpenWithPluginSettings {
         // Table: Prefered Apps
         {
             tablePrefered = new Table(containerOpenWith, SWT.MULTI | SWT.BORDER
-                    | SWT.FULL_SELECTION);
+                    | SWT.FULL_SELECTION | SWT.VERTICAL);
             FormData tablePreferedLData = new FormData();
             tablePreferedLData.width = 273;
             tablePreferedLData.height = 56;
@@ -187,10 +223,10 @@ public class OpenWithPluginSettings {
             colApp.setText("Application");
             // load apps
             for (String appEntry : cfg.getProperties().keySet()) {
-                if (appEntry.startsWith("plugin.openwith.type.")) {
+                if (appEntry.startsWith(OpenWithPlugin.PROP_FILE_TYPE_PREFIX)) {
                     TableItem item = new TableItem(tablePrefered, SWT.NONE);
                     item.setText(0, appEntry.replaceFirst(
-                            "plugin.openwith.type.", ""));
+                            OpenWithPlugin.PROP_FILE_TYPE_PREFIX, ""));
                     item.setText(1, cfg.getProperties().get(appEntry));
                 }
             }
@@ -252,7 +288,7 @@ public class OpenWithPluginSettings {
         new AppTableEditor(tablePrefered);
     }
 
-    private static void addApplication(final CTabFolder folder,
+    private void addApplication(final CTabFolder folder,
             final TableItem newTi) {
         InputDialog.getString("Please enter file extension", 30,
                 folder.getShell(), new Updater() {

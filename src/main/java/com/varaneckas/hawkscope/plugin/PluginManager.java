@@ -24,7 +24,7 @@ public class PluginManager {
     
     private PluginManager() {
         //FIXME playing around
-        plugins.add(new OpenWithPlugin());
+        plugins.add(OpenWithPlugin.getInstance());
     }
     
     private final List<Plugin> plugins = new ArrayList<Plugin>();

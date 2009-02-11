@@ -20,38 +20,64 @@ import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.PathUtils;
 
 public class OpenWithPlugin extends PluginAdapter {
+    
+    public static final String PROP_FOLDER_NAVIGATOR = "plugin.openwith.folder.navigator";
+    
+    public static final String PROP_UNKNOWN_FILE_APP = "plugin.openwith.unknown.files";
+    
+    public static final String PROP_FILE_TYPE_PREFIX = "plugin.openwith.type.";
 	
     private static final Map<String, String> apps = new HashMap<String, String>();
     
-    private static String folderNavigator = null;
+    private String folderNavigator = null;
     
-    public OpenWithPlugin() {
+    private String unknownFileApp = null;
+    
+    private final OpenWithPluginSettings settings;
+    
+    private static final OpenWithPlugin instance = new OpenWithPlugin();
+    
+    public static final OpenWithPlugin getInstance() {
+        return instance;
+    }
+    
+    private OpenWithPlugin() {
         canEnhanceFolderMenu = true;
         canInterceptClick = true;
         refresh();
+        settings = new OpenWithPluginSettings();
     }
     
-    public static void refresh() {
+    public void refresh() {
         Configuration cfg = ConfigurationFactory.getConfigurationFactory()
                 .getConfiguration();
         apps.clear();
         for (String key : cfg.getProperties().keySet()) {
-            if (key.startsWith("plugin.openwith.type.")) {
+            if (key.startsWith(PROP_FILE_TYPE_PREFIX)) {
                 String runner = cfg.getProperties().get(key);
-                apps.put(key.replaceFirst("plugin.openwith.type.", ""), 
+                apps.put(key.replaceFirst(PROP_FILE_TYPE_PREFIX, ""), 
                         PathUtils.sanitizePath(runner));
             }
         }
-        folderNavigator = cfg.getProperties().get("plugin.openwith.folder.navigator");
-
+        folderNavigator = cfg.getProperties().get(PROP_FOLDER_NAVIGATOR);
+        unknownFileApp = cfg.getProperties().get(PROP_UNKNOWN_FILE_APP);
     }
     
     @Override
     public boolean interceptClick(File file) {
         String ext = file.getName().replaceAll(".*\\.", ".");
+        if (ext.equals(file.getName())) {
+            ext = "";
+        }
         log.debug("intercepting click on " + ext);
         if (apps.containsKey(ext)) {
         	return OSUtils.exec(apps.get(ext), file.getAbsolutePath());
+        } else if (unknownFileApp != null && unknownFileApp.length() > 0){
+            final Program p = Program.findProgram(file.getAbsolutePath());
+            if (p == null) {
+                log.debug("Opening unknown file: " + file.getAbsolutePath());
+                return OSUtils.exec(unknownFileApp, file.getAbsolutePath());
+            }
         }
         return true;
     }
@@ -60,13 +86,10 @@ public class OpenWithPlugin extends PluginAdapter {
     public void enhanceFolderMenu(final File file, MenuItem menu, Menu submenu,
             FolderMenuItemListener listener) {
         if (folderNavigator == null || folderNavigator.length() == 0) return;
-        log.debug("open with...");
         if (submenu.getItemCount() < 1) return;
         MenuItem open = submenu.getItem(0);
-        
         open.removeListener(SWT.Selection, 
                 open.getListeners(SWT.Selection)[0]);
-        
         open.addListener(SWT.Selection, new Listener() {
             public void handleEvent(Event ev) {
             	if (OSUtils.exec(folderNavigator, file.getAbsolutePath())) {
@@ -78,12 +101,12 @@ public class OpenWithPlugin extends PluginAdapter {
     
     @Override
     public void enhanceSettings(final Configuration cfg, CTabFolder settingsTabFolder) {
-         OpenWithPluginSettings.enhance(cfg, settingsTabFolder);
+         settings.enhance(cfg, settingsTabFolder);
     }
     
     @Override
     public void applySettings(final Configuration cfg, CTabFolder settingsTabFolder) {
-        OpenWithPluginSettings.apply(cfg, settingsTabFolder);
+        settings.apply(cfg, settingsTabFolder);
     }
    
 }
