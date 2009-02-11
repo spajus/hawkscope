@@ -144,7 +144,7 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
                 createBlacklistTab();
                 //[Network] tab
                 createNetworkTab();
-                PluginManager.getInstance().enhanceSettings(settingsTabFolder);
+                PluginManager.getInstance().enhanceSettings(cfg, settingsTabFolder);
                 settingsTabFolder.setSelection(0);
             }
             createButtons();            

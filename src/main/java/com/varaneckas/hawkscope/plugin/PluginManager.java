@@ -25,9 +25,6 @@ public class PluginManager {
     private PluginManager() {
         //FIXME playing around
         plugins.add(new OpenWithPlugin());
-        plugins.add(new OpenWithPlugin());
-        plugins.add(new OpenWithPlugin());
-        plugins.add(new OpenWithPlugin());
     }
     
     private final List<Plugin> plugins = new ArrayList<Plugin>();
@@ -87,16 +84,16 @@ public class PluginManager {
         return proceed;
     }
 
-    public void applySettings(Configuration cfg, CTabFolder settingsTabFolder) {
+    public void applySettings(final Configuration cfg, final CTabFolder settingsTabFolder) {
         for (Plugin plugin : getActivePlugins()) {
             plugin.applySettings(cfg, settingsTabFolder);
         }
     }
 
-    public void enhanceSettings(CTabFolder settingsTabFolder) {
+    public void enhanceSettings(final Configuration cfg, final CTabFolder settingsTabFolder) {
         for (Plugin plugin : getActivePlugins()) {
             try {
-                plugin.enhanceSettings(settingsTabFolder);
+                plugin.enhanceSettings(cfg, settingsTabFolder);
             } catch (final Exception e) {
                 log.warn("Failed enhancing settings tab for plugin: " 
                         + plugin.getId(), e);

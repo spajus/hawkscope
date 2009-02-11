@@ -9,7 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -19,6 +18,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.util.IOUtils;
+import com.varaneckas.hawkscope.util.UTF8ResourceBundle;
 
 /**
  * Hawkscope configuration factory
@@ -104,8 +104,8 @@ public abstract class ConfigurationFactory {
         final Map<String, String> cfg = getDefaults();
         try {
             
-            final ResourceBundle data = ResourceBundle
-                    .getBundle(CONFIG_FILE_NAME, Locale.ENGLISH
+            final ResourceBundle data = UTF8ResourceBundle
+                    .getBundle(CONFIG_FILE_NAME
                             , new ClassLoader() {
                 @Override
                 protected URL findResource(final String name) {

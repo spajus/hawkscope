@@ -84,7 +84,7 @@ public abstract class PluginAdapter implements Plugin {
         log.debug("Skipping apply settings on plugin");
     }
     
-    public void enhanceSettings(CTabFolder settingsTabFolder) {
+    public void enhanceSettings(final Configuration cfg, CTabFolder settingsTabFolder) {
         log.debug("Skipping enhance settings on plugin");
     }
 

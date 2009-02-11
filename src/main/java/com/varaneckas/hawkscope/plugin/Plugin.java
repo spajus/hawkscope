@@ -42,7 +42,7 @@ public interface Plugin {
 
     public void applySettings(Configuration cfg, CTabFolder settingsTabFolder);
 
-    public void enhanceSettings(CTabFolder settingsTabFolder);
+    public void enhanceSettings(Configuration cfg, CTabFolder settingsTabFolder);
 
     
 }
