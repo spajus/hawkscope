@@ -4,9 +4,9 @@ import java.io.File;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.TabFolder;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
@@ -80,11 +80,11 @@ public abstract class PluginAdapter implements Plugin {
         return true;
     }
     
-    public void applySettings(Configuration cfg, TabFolder settingsTabFolder) {
+    public void applySettings(Configuration cfg, CTabFolder settingsTabFolder) {
         log.debug("Skipping apply settings on plugin");
     }
     
-    public void enhanceSettings(TabFolder settingsTabFolder) {
+    public void enhanceSettings(CTabFolder settingsTabFolder) {
         log.debug("Skipping enhance settings on plugin");
     }
 

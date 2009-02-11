@@ -2,9 +2,9 @@ package com.varaneckas.hawkscope.plugin;
 
 import java.io.File;
 
+import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.TabFolder;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
@@ -40,9 +40,9 @@ public interface Plugin {
 
     public boolean interceptClick(File file);
 
-    public void applySettings(Configuration cfg, TabFolder settingsTabFolder);
+    public void applySettings(Configuration cfg, CTabFolder settingsTabFolder);
 
-    public void enhanceSettings(TabFolder settingsTabFolder);
+    public void enhanceSettings(CTabFolder settingsTabFolder);
 
     
 }

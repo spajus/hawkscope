@@ -6,6 +6,8 @@ import java.util.Iterator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FormAttachment;
@@ -21,8 +23,6 @@ import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 
 import com.cloudgarden.resource.SWTResourceManager;
@@ -48,12 +48,12 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
     private static final Log log = LogFactory.getLog(SettingsWindow.class);
     
     private Shell dialogShell;
-    private TabFolder settingsTabFolder;
-    public TabFolder getSettingsTabFolder() {
+    private CTabFolder settingsTabFolder;
+    public CTabFolder getSettingsTabFolder() {
         return settingsTabFolder;
     }
 
-    private TabItem tabNetwork;
+    private CTabItem tabNetwork;
     private Button checkDisplayFloppy;
     private List listQuickAccess;
     private Label labelQuickAccessList;
@@ -90,9 +90,9 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
     private Button buttonQuickItemUp;
     private Button buttonOK;
     private Button buttonCancel;
-    private TabItem tabBlacklist;
-    private TabItem tabGeneral;
-    private TabItem tabQuickAccess;
+    private CTabItem tabBlacklist;
+    private CTabItem tabGeneral;
+    private CTabItem tabQuickAccess;
 
     private Configuration cfg = ConfigurationFactory.getConfigurationFactory()
             .getConfiguration();
@@ -127,7 +127,7 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
             dialogShell.setSize(418, 331);
             //Settings tab folder: [General][Quick Access][Blacklist][Network]
             {
-                settingsTabFolder = new TabFolder(dialogShell, SWT.NONE);
+                settingsTabFolder = new CTabFolder(dialogShell, SWT.BORDER);
                 FormData settingsTabFolderLData = new FormData();
                 settingsTabFolderLData.width = 382;
                 settingsTabFolderLData.height = 211;
@@ -198,7 +198,7 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
     }
 
     private void createNetworkTab() {
-        tabNetwork = new TabItem(settingsTabFolder, SWT.NONE);
+        tabNetwork = new CTabItem(settingsTabFolder, SWT.NONE);
         tabNetwork.setText("&Network");
         containerNetwork = new Composite(settingsTabFolder, SWT.NONE);
         FormLayout containerNetworkLayout = new FormLayout();
@@ -377,7 +377,7 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
     }
 
     private void createBlacklistTab() {
-        tabBlacklist = new TabItem(settingsTabFolder, SWT.NONE);
+        tabBlacklist = new CTabItem(settingsTabFolder, SWT.NONE);
         tabBlacklist.setText("&Blacklist");
         containerBlacklist = new Composite(settingsTabFolder, SWT.NONE);
         FormLayout containerBlacklistLayout = new FormLayout();
@@ -507,7 +507,7 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
     }
 
     private void createQuickAccessTab() {
-        tabQuickAccess = new TabItem(settingsTabFolder, SWT.NONE);
+        tabQuickAccess = new CTabItem(settingsTabFolder, SWT.NONE);
         tabQuickAccess.setText("&Quick Access");
         containerQuickAccess = new Composite(settingsTabFolder, SWT.NONE);
         FormLayout containerQuickAccessLayout = new FormLayout();
@@ -672,7 +672,7 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
     }
 
     private void createGeneralTab() {
-        tabGeneral = new TabItem(settingsTabFolder, SWT.NONE);
+        tabGeneral = new CTabItem(settingsTabFolder, SWT.NONE);
         tabGeneral.setText("&General");
         contanerGeneral = new Composite(settingsTabFolder, SWT.NONE);
         FormLayout contanerGeneralLayout = new FormLayout();

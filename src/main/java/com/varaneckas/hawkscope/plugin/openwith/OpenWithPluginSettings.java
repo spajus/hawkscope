@@ -1,6 +1,8 @@
 package com.varaneckas.hawkscope.plugin.openwith;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -15,8 +17,6 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -30,8 +30,8 @@ import com.varaneckas.hawkscope.util.OSUtils;
 
 public class OpenWithPluginSettings {
 
-    public static void enhance(final TabFolder folder) {
-        TabItem openWith = new TabItem(folder, SWT.NONE);
+    public static void enhance(final CTabFolder folder) {
+        CTabItem openWith = new CTabItem(folder, SWT.NONE);
         Composite containerOpenWith = new Composite(folder, SWT.NONE);
         FormLayout containerOpenWithLayout = new FormLayout();
         containerOpenWith.setLayout(containerOpenWithLayout);

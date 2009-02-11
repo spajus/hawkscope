@@ -2,9 +2,9 @@ package com.varaneckas.hawkscope.plugin.openwith;
 
 import java.io.File;
 
+import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
-import org.eclipse.swt.widgets.TabFolder;
 
 import com.varaneckas.hawkscope.command.AboutCommand;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
@@ -31,7 +31,7 @@ public class OpenWithPlugin extends PluginAdapter {
     }
     
     @Override
-    public void enhanceSettings(TabFolder settingsTabFolder) {
+    public void enhanceSettings(CTabFolder settingsTabFolder) {
          OpenWithPluginSettings.enhance(settingsTabFolder);
     }
    
