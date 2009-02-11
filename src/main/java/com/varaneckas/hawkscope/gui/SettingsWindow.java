@@ -127,7 +127,9 @@ public class SettingsWindow extends org.eclipse.swt.widgets.Dialog {
             dialogShell.setSize(418, 331);
             //Settings tab folder: [General][Quick Access][Blacklist][Network]
             {
-                settingsTabFolder = new CTabFolder(dialogShell, SWT.BORDER);
+                settingsTabFolder = new CTabFolder(dialogShell, SWT.BORDER | SWT.FLAT);
+                settingsTabFolder.setSimple(true);
+                settingsTabFolder.setUnselectedImageVisible(false);
                 FormData settingsTabFolderLData = new FormData();
                 settingsTabFolderLData.width = 382;
                 settingsTabFolderLData.height = 211;
