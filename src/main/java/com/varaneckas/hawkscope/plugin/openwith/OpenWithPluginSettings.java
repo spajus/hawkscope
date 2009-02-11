@@ -140,30 +140,11 @@ public class OpenWithPluginSettings {
                             SWT.NONE, index);
                     tablePrefered.select(index);
                     tablePrefered.getVerticalBar().setSelection(0);
-                    InputDialog.getString("Please enter file extension", 10,
-                            folder.getShell(), new Updater() {
-                                public void setValue(String ext) {
-                                    if (ext == null || ext.length() == 0)
-                                        return;
-                                    if (!ext.startsWith("."))
-                                        ext = "." + ext;
-                                    newTi.setText(0, ext);
-                                    ExecutableInputDialog.getString(
-                                            "Please enter executable for handling "
-                                                    + ext, null, folder
-                                                    .getShell(), new Updater() {
-                                                public void setValue(String app) {
-                                                    newTi.setText(1, app);
-                                                    tablePrefered.getColumn(0)
-                                                            .pack();
-                                                    tablePrefered.getColumn(1)
-                                                            .pack();
-                                                }
-                                            });
-                                }
-                            });
+                    addApplication(folder, newTi);
 
                 }
+
+                
             });
         }
         // Button [-] (QA list)
@@ -262,6 +243,32 @@ public class OpenWithPluginSettings {
             }
         });
 
+    }
+    
+    private static void addApplication(final CTabFolder folder,
+            final TableItem newTi) {
+        InputDialog.getString("Please enter file extension", 30,
+                folder.getShell(), new Updater() {
+                    public void setValue(String ext) {
+                        if (ext == null || ext.length() == 0)
+                            return;
+                        if (!ext.startsWith("."))
+                            ext = "." + ext;
+                        newTi.setText(0, ext);
+                        ExecutableInputDialog.getString(
+                                "Please enter executable for handling "
+                                        + ext, null, folder
+                                        .getShell(), new Updater() {
+                                    public void setValue(String app) {
+                                        newTi.setText(1, app);
+                                        tablePrefered.getColumn(0)
+                                                .pack();
+                                        tablePrefered.getColumn(1)
+                                                .pack();
+                                    }
+                                });
+                    }
+                });
     }
 
     public static void main(String[] args) {
