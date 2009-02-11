@@ -17,6 +17,7 @@ import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;
+import com.varaneckas.hawkscope.util.PathUtils;
 
 public class OpenWithPlugin extends PluginAdapter {
     
@@ -35,11 +36,13 @@ public class OpenWithPlugin extends PluginAdapter {
                 .getConfiguration();
         for (String key : cfg.getProperties().keySet()) {
             if (key.startsWith("plugin.openwith.type.")) {
+                String runner = cfg.getProperties().get(key);
                 apps.put(key.replaceFirst("plugin.openwith.type.", ""), 
-                        cfg.getProperties().get(key));
+                        PathUtils.sanitizePath(runner));
             }
         }
         folderNavigator = cfg.getProperties().get("plugin.openwith.folder.navigator");
+
     }
     
     @Override
@@ -62,6 +65,7 @@ public class OpenWithPlugin extends PluginAdapter {
             FolderMenuItemListener listener) {
         if (folderNavigator == null || folderNavigator.length() == 0) return;
         log.debug("open with...");
+        if (submenu.getItemCount() < 1) return;
         MenuItem open = submenu.getItem(0);
         
         open.removeListener(SWT.Selection, 

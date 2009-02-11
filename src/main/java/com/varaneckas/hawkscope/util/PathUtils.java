@@ -42,13 +42,7 @@ public abstract class PathUtils {
         final String[] locations = interpret(path).split(delimiter);
         final List<File> files = new ArrayList<File>();
         for (final String location : locations) {
-            File f = null;
-            if (System.getProperty("os.name").toLowerCase().startsWith("win")) {
-                f = new File(location.replaceAll("/", "\\\\"));
-            } else {
-                f = new File(location);
-            }
-            
+            File f = new File(unsanitizePath(location));
             if (!f.isDirectory()) {
                 log.warn(f.getAbsolutePath() + " is not a directory!");
             } else if (!f.canRead()) {
@@ -120,5 +114,19 @@ public abstract class PathUtils {
      */
     public static boolean isFloppy(final File file) {
     	return OSUtils.isFloppyDrive(file);
+    }
+    
+    public static String unsanitizePath(final String path) {
+        if (OSUtils.CURRENT_OS.equals(OSUtils.OS.WIN)) {
+            return path.replaceAll("/", "\\\\");
+        }
+        return path;
+    }
+    
+    public static String sanitizePath(final String path) {
+        if (OSUtils.CURRENT_OS.equals(OSUtils.OS.WIN)) {
+            return path.replaceAll("\\\\", "/");
+        }
+        return path;
     }
 }
