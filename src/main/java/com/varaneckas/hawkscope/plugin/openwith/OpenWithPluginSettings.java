@@ -112,8 +112,6 @@ public class OpenWithPluginSettings {
                 }
             }
 
-            // for (int i = 0; i < 128; i++) {
-            // }
             colType.pack();
             colApp.pack();
         }

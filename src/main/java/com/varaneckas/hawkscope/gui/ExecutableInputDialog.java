@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.Updater;
 
 public class ExecutableInputDialog {
@@ -50,6 +51,7 @@ public class ExecutableInputDialog {
                 dialog.close();
             }
         });
+        OSUtils.adjustButton(cancel);
 
         final Text text = new Text(dialog, SWT.BORDER);
         if (defaultApp != null) text.setText(defaultApp);
@@ -74,6 +76,7 @@ public class ExecutableInputDialog {
                 dialog.close();
             }
         });
+        OSUtils.adjustButton(ok);
         
         Button choose = new Button(dialog, SWT.PUSH);
         choose.setText("Choose");
@@ -95,6 +98,7 @@ public class ExecutableInputDialog {
                 }
             }
         });
+        OSUtils.adjustButton(choose);
         
         dialog.setDefaultButton(ok);
         dialog.setTabList(new Control[] { text, choose, ok, cancel });

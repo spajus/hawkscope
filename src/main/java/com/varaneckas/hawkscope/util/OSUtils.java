@@ -109,14 +109,16 @@ public abstract class OSUtils {
 	}
 
 	public static void adjustButton(final Button button) {
-		if (!CURRENT_OS.equals(OS.MAC)) {
+		if (!CURRENT_OS.equals(OS.MAC) || button == null) {
 			return;
 		}
 		final Object layout = button.getLayoutData();
 		int offset = 15;
 		if (layout instanceof FormData) {
 			((FormData) layout).width += offset;
-			((FormData) layout).left.offset -= offset / 2;
+			if (((FormData) layout).left != null) {
+				((FormData) layout).left.offset -= offset / 2;
+			}
 		}
 	}
 
@@ -236,5 +238,25 @@ public abstract class OSUtils {
 	            && file.getName().toLowerCase().endsWith(".app");
 	    } 
 	    return false;
+	}
+
+	public static boolean exec(String app, String params) {
+		try {
+			switch (CURRENT_OS) {
+			case MAC:
+				if (app.toLowerCase().endsWith(".app")) {
+					app = "open -a " + app;
+				}
+			default:
+				if (log.isDebugEnabled()) {
+					log.debug("Executing: " + app + " " + params);
+				}
+				Runtime.getRuntime().exec(app + " " + params);
+				return false;
+			}
+		} catch (final Exception e) {
+			log.warn("Failed executing app " + app + " with params: " + params, e);
+		}
+		return true;
 	}
 }

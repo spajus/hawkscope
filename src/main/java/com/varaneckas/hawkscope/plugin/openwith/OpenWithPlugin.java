@@ -1,7 +1,6 @@
 package com.varaneckas.hawkscope.plugin.openwith;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,10 +16,11 @@ import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;
+import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.PathUtils;
 
 public class OpenWithPlugin extends PluginAdapter {
-    
+	
     private static final Map<String, String> apps = new HashMap<String, String>();
     
     private static String folderNavigator = null;
@@ -34,6 +34,7 @@ public class OpenWithPlugin extends PluginAdapter {
     public static void refresh() {
         Configuration cfg = ConfigurationFactory.getConfigurationFactory()
                 .getConfiguration();
+        apps.clear();
         for (String key : cfg.getProperties().keySet()) {
             if (key.startsWith("plugin.openwith.type.")) {
                 String runner = cfg.getProperties().get(key);
@@ -48,14 +49,9 @@ public class OpenWithPlugin extends PluginAdapter {
     @Override
     public boolean interceptClick(File file) {
         String ext = file.getName().replaceAll(".*\\.", ".");
+        log.debug("intercepting click on " + ext);
         if (apps.containsKey(ext)) {
-            try {
-                Runtime.getRuntime().exec(apps.get(ext) + " " + file.getAbsolutePath());
-                return false;
-            } catch (IOException e) {
-                log.warn("Failed opening file: " + file.getAbsolutePath() 
-                        + " with program: " + apps.get(ext));
-            }
+        	return OSUtils.exec(apps.get(ext), file.getAbsolutePath());
         }
         return true;
     }
@@ -73,22 +69,11 @@ public class OpenWithPlugin extends PluginAdapter {
         
         open.addListener(SWT.Selection, new Listener() {
             public void handleEvent(Event ev) {
-                try {
-                    Runtime.getRuntime().exec(folderNavigator + " " + file.getAbsolutePath());
-                } catch (IOException e) {
-                    log.warn("Failed opening folder: " 
-                            + file.getAbsolutePath() + " with navigator: " + folderNavigator);
-                    Program.launch(file.getAbsolutePath());
-                }
+            	if (OSUtils.exec(folderNavigator, file.getAbsolutePath())) {
+            		Program.launch(file.getAbsolutePath());
+            	}
             }
         });
-        
-        
-//        ExecutableMenuItem openWith = new ExecutableMenuItem();
-//        openWith.setIcon(IconFactory.getInstance().getIcon("open"));
-//        openWith.setText("Open With...");
-//        openWith.setCommand(new AboutCommand());
-//        openWith.createMenuItem(submenu);
     }
     
     @Override

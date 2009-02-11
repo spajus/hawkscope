@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.Updater;
 
 public class InputDialog {
@@ -49,6 +50,7 @@ public class InputDialog {
                 dialog.close();
             }
         });
+        OSUtils.adjustButton(cancel);
 
         final Text text = new Text(dialog, SWT.BORDER);
         data = new FormData();
@@ -73,6 +75,7 @@ public class InputDialog {
                 dialog.close();
             }
         });
+        OSUtils.adjustButton(ok);
         dialog.setDefaultButton(ok);
         dialog.setTabList(new Control[] { text, ok, cancel });
         dialog.pack();
