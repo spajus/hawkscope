@@ -247,18 +247,19 @@ public abstract class OSUtils {
 				if (app.toLowerCase().endsWith(".app")) {
 					app = "open -a " + app;
 				}
+				break;
 			case WIN:
 			    if (app.contains(" ")) {
 			        app = "\"" + app + "\"";
 			    }
 			    params = "\"" + params + "\"";
-			default:
-				if (log.isDebugEnabled()) {
-					log.debug("Executing: " + app + " " + params);
-				}
-				Runtime.getRuntime().exec(app + " " + params);
-				return false;
+			    break;
 			}
+			if (log.isDebugEnabled()) {
+				log.debug("Executing: " + app + " " + params);
+			}
+			Runtime.getRuntime().exec(app + " " + params);
+			return false;
 		} catch (final Exception e) {
 			log.warn("Failed executing app " + app + " with params: " + params, e);
 		}
