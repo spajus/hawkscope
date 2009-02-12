@@ -23,9 +23,9 @@ import com.varaneckas.hawkscope.menu.state.MenuClosedState;
 import com.varaneckas.hawkscope.menu.state.State;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.tray.TrayManager;
+import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.PathUtils;
-import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
  * {@link MainMenu} - SWT implementation
@@ -65,19 +65,21 @@ public class MainMenu {
             public void handleEvent(Event event) {
                 new Thread(new Runnable() {
                     public void run() {
-                        menu.getDisplay().syncExec(new Runnable() {
-                            public void run() {
-                                try {
-                                    Thread.sleep(10l);
-                                    hiddenSince = System.currentTimeMillis();
-                                } catch (InterruptedException e) {
-                                	log.warn("Could not sleep", e);
+                        if (!menu.isDisposed()) {
+                            menu.getDisplay().syncExec(new Runnable() {
+                                public void run() {
+                                    try {
+                                        Thread.sleep(10l);
+                                        hiddenSince = System.currentTimeMillis();
+                                    } catch (InterruptedException e) {
+                                    	log.warn("Could not sleep", e);
+                                    }
+                                    if (!(state instanceof MenuClosedState)) {
+                                        setState(MenuClosedState.getInstance());
+                                    }
                                 }
-                                if (!(state instanceof MenuClosedState)) {
-                                    setState(MenuClosedState.getInstance());
-                                }
-                            }
-                        });
+                            });
+                        }
                     }
                 }).start();
             }
