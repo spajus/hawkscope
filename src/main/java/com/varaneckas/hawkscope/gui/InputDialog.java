@@ -18,7 +18,7 @@ import com.varaneckas.hawkscope.util.Updater;
 
 public class InputDialog {
     
-    public static void getString(final String prompt, 
+    public static void open(final String prompt, 
             final int maxLength, 
             final Shell parent, 
             final Updater updater) {

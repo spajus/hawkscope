@@ -247,6 +247,11 @@ public abstract class OSUtils {
 				if (app.toLowerCase().endsWith(".app")) {
 					app = "open -a " + app;
 				}
+			case WIN:
+			    if (app.contains(" ")) {
+			        app = "\"" + app + "\"";
+			    }
+			    params = "\"" + params + "\"";
 			default:
 				if (log.isDebugEnabled()) {
 					log.debug("Executing: " + app + " " + params);

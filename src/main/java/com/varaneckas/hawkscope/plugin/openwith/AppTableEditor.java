@@ -34,7 +34,7 @@ public class AppTableEditor {
                             final int column = i;
                             // executable
                             if (column == 1) {
-                                ExecutableInputDialog.getString(
+                                ExecutableInputDialog.open(
                                         "Please enter executable", item
                                                 .getText(column), table
                                                 .getShell(), new Updater() {

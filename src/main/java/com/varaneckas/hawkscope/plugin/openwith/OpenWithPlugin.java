@@ -106,7 +106,7 @@ public class OpenWithPlugin extends PluginAdapter {
     
     @Override
     public void applySettings(final Configuration cfg, CTabFolder settingsTabFolder) {
-        settings.apply(cfg, settingsTabFolder);
+        settings.apply(cfg);
     }
    
 }

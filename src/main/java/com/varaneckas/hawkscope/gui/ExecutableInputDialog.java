@@ -19,7 +19,7 @@ import com.varaneckas.hawkscope.util.Updater;
 
 public class ExecutableInputDialog {
     
-    public static void getString(final String prompt, 
+    public static void open(final String prompt, 
             final String defaultApp,
              final Shell parent, 
             final Updater updater) {

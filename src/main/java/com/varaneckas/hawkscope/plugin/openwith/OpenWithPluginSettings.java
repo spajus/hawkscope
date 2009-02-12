@@ -26,297 +26,406 @@ import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.ExecutableInputDialog;
 import com.varaneckas.hawkscope.gui.InputDialog;
 import com.varaneckas.hawkscope.gui.SettingsWindow;
-import com.varaneckas.hawkscope.gui.WindowFactory;
 import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.PathUtils;
 import com.varaneckas.hawkscope.util.Updater;
 
+/**
+ * Open With Plugin settings window supplements
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class OpenWithPluginSettings {
 
-    private Table tablePrefered;
+    /**
+     * Table with .ext -> application that overrides default associations
+     */
+    private Table tablePreferred;
+    
+    /**
+     * Label: "Special Applications"
+     */
     private Label labelSpecialApps;
+    
+    /**
+     * Label: "For directories:"
+     */
     private Label labelFolderNav;
+    
+    /**
+     * Text input for folder navigator application
+     */
     private Text textFolderNav;
-    private Button buttonChooseNav;
+    
+    /**
+     * Label: "Unknown files:"
+     */
     private Label labelFileDef;
+    
+    /**
+     * Text input for unknown file application
+     */
     private Text textFileDef;
-    private Button buttonChooseFileDef;
+    
+    /**
+     * Settings tab item 
+     */
+    private CTabItem tabItem;
+    
+    /**
+     * Label: "Preferred Applications"
+     */
+    private Label labelPreferredApps;
+    
+    /**
+     * Container with {@link FormLayout} that this {@link CTabItem} uses
+     */
+    private Composite container;
+    
+    /**
+     * Button that adds application to preferred app table
+     */
+    private Button buttonAdd;
+    
+    /**
+     * Button that removes application from preferred app table
+     */
+    private Button buttonDel;
 
 
-    public void apply(final Configuration cfg, final CTabFolder folder) {
+    /**
+     * Loads the {@link Configuration} with values from this tab item. 
+     * Refreshes the {@link OpenWithPlugin}.
+     * 
+     * @param cfg Configuration object
+     */
+    public void apply(final Configuration cfg) {
         // cleanup
-        List<String> toRemove = new ArrayList<String>();
-        for (String app : cfg.getProperties().keySet()) {
+        final List<String> toRemove = new ArrayList<String>();
+        for (final String app : cfg.getProperties().keySet()) {
             if (app.startsWith(OpenWithPlugin.PROP_FILE_TYPE_PREFIX)) {
                 toRemove.add(app);
             }
         }
         // avoiding concurrent modification
-        for (String app : toRemove) {
+        for (final String app : toRemove) {
             cfg.getProperties().remove(app);
         }
         // then add
-        for (TableItem item : tablePrefered.getItems()) {
+        for (final TableItem item : tablePreferred.getItems()) {
             if (item.getText(0) != null && item.getText().length() > 0) {
                 if (item.getText(1) != null && item.getText(1).length() > 0) {
-                    cfg.getProperties().put(
-                            OpenWithPlugin.PROP_FILE_TYPE_PREFIX + item.getText(0),
-                            item.getText(1));
+                    cfg.getProperties().put(OpenWithPlugin.PROP_FILE_TYPE_PREFIX 
+                            + item.getText(0), item.getText(1));
                 }
             }
         }
-        if (textFileDef.getText() != null && textFileDef.getText().length() > 0) {
-            cfg.getProperties().put("plugin.openwith.unknown.files", textFileDef.getText());
+        //unknown file app
+        if (textFileDef.getText() != null 
+                && textFileDef.getText().length() > 0) {
+            cfg.getProperties().put(OpenWithPlugin.PROP_UNKNOWN_FILE_APP, 
+                    PathUtils.sanitizePath(textFileDef.getText()));
         }
-        if (textFolderNav.getText() != null && textFolderNav.getText().length() > 0) {
-            cfg.getProperties().put("plugin.openwith.folder.navigator", textFolderNav.getText());
+        //folder navigator
+        if (textFolderNav.getText() != null 
+                && textFolderNav.getText().length() > 0) {
+            cfg.getProperties().put(OpenWithPlugin.PROP_FOLDER_NAVIGATOR, 
+                    PathUtils.sanitizePath(textFolderNav.getText()));
         }
         OpenWithPlugin.getInstance().refresh();
     }
 
+    /**
+     * Enhances the {@link SettingsWindow}'s {@link CTabFolder} with OpenWith 
+     * plugin's tab. 
+     * 
+     * @param cfg Configuration object
+     * @param folder Settings {@link CTabFolder}
+     */
     public void enhance(final Configuration cfg, final CTabFolder folder) {
-        final CTabItem openWith = new CTabItem(folder, SWT.NONE);
-        Composite containerOpenWith = new Composite(folder, SWT.NONE);
-        FormLayout containerOpenWithLayout = new FormLayout();
-        containerOpenWithLayout.marginWidth = 12;
-        containerOpenWithLayout.marginHeight = 12;
-        containerOpenWith.setLayout(containerOpenWithLayout);
-        openWith.setControl(containerOpenWith);
-        openWith.setImage(IconFactory.getInstance().getIcon("open"));
-        openWith.setText("&Open With");
-        
-        //Label Special Apps
-        {
-            labelSpecialApps = new Label(containerOpenWith, SWT.NONE);
-            FormData labelSpecialAppsLData = new FormData();
-            labelSpecialAppsLData.width = 358;
-            labelSpecialAppsLData.height = 17;
-            labelSpecialAppsLData.left = new FormAttachment(0, 0);
-            labelSpecialAppsLData.top = new FormAttachment(0, 0);
-            labelSpecialApps.setLayoutData(labelSpecialAppsLData);
-            labelSpecialApps.setText("Special Applications");
-            labelSpecialApps.setFont(SWTResourceManager.getFont("Sans", 10,
-                    1, false, false));           
-        }
-        //Label Folder Nav
-        {
-            labelFolderNav = new Label(containerOpenWith, SWT.NONE);
-            FormData layout = new FormData();
-            layout.height = 17;
-            layout.left = new FormAttachment(0, 12);
-            layout.top = new FormAttachment(labelSpecialApps, 8);
-            labelFolderNav.setLayoutData(layout);
-            labelFolderNav.setText("For directories:");
-        }
-        //Text: folder nav
-        {
-            textFolderNav = new Text(containerOpenWith, SWT.BORDER);
-            FormData textFolderNavLData = new FormData();
-            textFolderNavLData.width = 150;
-            textFolderNavLData.height = 17;
-            textFolderNavLData.left = new FormAttachment(labelFolderNav, 6);
-            textFolderNavLData.top = new FormAttachment(labelSpecialApps, 3);
-            textFolderNav.setLayoutData(textFolderNavLData);
-            String folderNav = cfg.getProperties().get(OpenWithPlugin.PROP_FOLDER_NAVIGATOR);
-            if (folderNav != null) {
-                textFolderNav.setText(folderNav);
-            }
-        }
-        //Button: Nav
-        {
-            buttonChooseNav = new Button(containerOpenWith, SWT.PUSH); 
-            FormData layout = new FormData();
-            layout.height = 29;
-            layout.width = 77;
-            layout.left = new FormAttachment(textFolderNav, 6);
-            layout.top = new FormAttachment(labelSpecialApps, 2);
-            buttonChooseNav.setLayoutData(layout);
-            buttonChooseNav.setText("Choose");
-            buttonChooseNav.addListener(SWT.Selection, new Listener() {
-                public void handleEvent(Event ev) {
-                    ExecutableInputDialog.getString("Choose executable for opening directories", 
-                            textFolderNav.getText(), 
-                            textFolderNav.getShell(), new Updater() {
-                                public void setValue(String value) {
-                                    textFolderNav.setText(value);
-                                }
-                    });
-                }
-            });
-        }
-        
-        //Label File Def
-        {
-            labelFileDef = new Label(containerOpenWith, SWT.NONE);
-            FormData layout = new FormData();
-            layout.height = 17;
-            layout.left = new FormAttachment(0, 12);
-            layout.top = new FormAttachment(textFolderNav, 8);
-            labelFileDef.setLayoutData(layout);
-            labelFileDef.setText("Unknown files:");
-        }
-        //Text: file def
-        {
-            textFileDef = new Text(containerOpenWith, SWT.BORDER);
-            FormData layout = new FormData();
-            layout.width = 150;
-            layout.height = 17;
-            layout.left = new FormAttachment(labelFolderNav, 6);
-            layout.top = new FormAttachment(textFolderNav, 3);
-            textFileDef.setLayoutData(layout);
-            String fileDef = cfg.getProperties().get(OpenWithPlugin.PROP_UNKNOWN_FILE_APP);
-            if (fileDef != null) {
-                textFileDef.setText(fileDef);
-            }
-        }
-        //Button: Choose file def
-        {
-            buttonChooseFileDef = new Button(containerOpenWith, SWT.PUSH); 
-            FormData layout = new FormData();
-            layout.height = 29;
-            layout.width = 77;
-            layout.left = new FormAttachment(textFileDef, 6);
-            layout.top = new FormAttachment(textFolderNav, 2);
-            buttonChooseFileDef.setLayoutData(layout);
-            buttonChooseFileDef.setText("Choose");
-            buttonChooseFileDef.addListener(SWT.Selection, new Listener() {
-                public void handleEvent(Event ev) {
-                    ExecutableInputDialog.getString("Choose executable for opening unknown files", 
-                            textFileDef.getText(), textFileDef.getShell(), new Updater() {
-                                public void setValue(String value) {
-                                    textFileDef.setText(value);
-                                }
-                    });
-                }
-            });
-        }        
-        
-        Label labelPreferredApps;
-        // Label: Preferred Applications
-        {
-            labelPreferredApps = new Label(containerOpenWith, SWT.NONE);
-            FormData labelPrefAppsLData = new FormData();
-            labelPrefAppsLData.width = 358;
-            labelPrefAppsLData.height = 17;
-            labelPrefAppsLData.left = new FormAttachment(0, 0);
-            labelPrefAppsLData.top = new FormAttachment(textFileDef, 3);
-            labelPreferredApps.setLayoutData(labelPrefAppsLData);
-            labelPreferredApps.setText("Prefered Applications");
-            labelPreferredApps.setFont(SWTResourceManager.getFont("Sans", 10,
-                    1, false, false));
-        }
-        // Table: Prefered Apps
-        {
-            tablePrefered = new Table(containerOpenWith, SWT.MULTI | SWT.BORDER
-                    | SWT.FULL_SELECTION | SWT.VERTICAL);
-            FormData tablePreferedLData = new FormData();
-            tablePreferedLData.width = 273;
-            tablePreferedLData.height = 56;
-            tablePreferedLData.left = new FormAttachment(0, 12);
-            tablePreferedLData.top = new FormAttachment(labelPreferredApps, 6);
-            tablePrefered.setLinesVisible(true);
-            tablePrefered.setHeaderVisible(true);
-            tablePrefered.setLayoutData(tablePreferedLData);
-            TableColumn colType = new TableColumn(tablePrefered, SWT.NONE);
-            colType.setText("Type");
-            colType.setWidth(5);
-            TableColumn colApp = new TableColumn(tablePrefered, SWT.NONE);
-            colApp.setText("Application");
-            // load apps
-            for (String appEntry : cfg.getProperties().keySet()) {
-                if (appEntry.startsWith(OpenWithPlugin.PROP_FILE_TYPE_PREFIX)) {
-                    TableItem item = new TableItem(tablePrefered, SWT.NONE);
-                    item.setText(0, appEntry.replaceFirst(
-                            OpenWithPlugin.PROP_FILE_TYPE_PREFIX, ""));
-                    item.setText(1, cfg.getProperties().get(appEntry));
-                }
-            }
-
-            colType.pack();
-            colApp.pack();
-        }
-        Button buttonAdd;
-        // Button [+] (QA list)
-        {
-            buttonAdd = new Button(containerOpenWith, SWT.PUSH
-                    | SWT.CENTER);
-            FormData buttonAddLData = new FormData();
-            buttonAddLData.width = 39;
-            buttonAddLData.height = 29;
-            buttonAddLData.left = new FormAttachment(tablePrefered, 12);
-            buttonAddLData.top = new FormAttachment(labelPreferredApps, 6);
-            buttonAdd.setLayoutData(buttonAddLData);
-            buttonAdd.setText("+");
-            buttonAdd.addListener(SWT.Selection, new Listener() {
-                public void handleEvent(Event arg0) {
-                    int index = 0;
-                    if (tablePrefered.getSelectionCount() > 0) {
-                        index = tablePrefered.getSelectionIndices()[0];
-                    }
-                    tablePrefered.deselectAll();
-                    final TableItem newTi = new TableItem(tablePrefered,
-                            SWT.NONE, index);
-                    tablePrefered.select(index);
-                    tablePrefered.getVerticalBar().setSelection(0);
-                    addApplication(folder, newTi);
-
-                }
-
-                
-            });
-        }
-        Button buttonDel;
-        // Button [-] (QA list)       
-        {
-            buttonDel = new Button(containerOpenWith, SWT.PUSH
-                    | SWT.CENTER);
-            FormData buttonDelLData = new FormData();
-            buttonDelLData.width = 39;
-            buttonDelLData.height = 29;
-            buttonDelLData.left = new FormAttachment(tablePrefered, 12);
-            buttonDelLData.top = new FormAttachment(buttonAdd, 12);
-            buttonDel.setLayoutData(buttonDelLData);
-            buttonDel.setText("-");
-            buttonDel.addSelectionListener(new SelectionAdapter() {
-                @Override
-                public void widgetSelected(SelectionEvent event) {
-                    for (TableItem s : tablePrefered.getSelection()) {
-                        s.dispose();
-                    }
-                }
-            });
-        }
-        new AppTableEditor(tablePrefered);
+        //presenting the cast in order of appearance:
+        createTabItem(folder);
+        createLabelSpecialApps();           
+        createLabelFolderNav();
+        createTextFolderNav(cfg);
+        createLabelUnknownFiles();
+        createTextUnknownFiles(cfg);
+        createLabelPreferredApps();
+        createTablePreferredApps(cfg);
+        createButtonAddApp();
+        createButtonDelApp();
     }
 
-    private void addApplication(final CTabFolder folder,
-            final TableItem newTi) {
-        InputDialog.getString("Please enter file extension", 30,
-                folder.getShell(), new Updater() {
-                    public void setValue(String ext) {
-                        if (ext == null || ext.length() == 0)
-                            return;
-                        if (!ext.startsWith("."))
-                            ext = "." + ext;
-                        newTi.setText(0, ext);
-                        ExecutableInputDialog.getString(
-                                "Please enter executable for handling "
-                                        + ext, null, folder
-                                        .getShell(), new Updater() {
-                                    public void setValue(String app) {
-                                        newTi.setText(1, app);
-                                        tablePrefered.getColumn(0)
-                                                .pack();
-                                        tablePrefered.getColumn(1)
-                                                .pack();
-                                    }
-                                });
+    /**
+     * Creates button that deletes application from preferred app table
+     * 
+     * @see #buttonDel
+     */
+    private void createButtonDelApp() {
+        buttonDel = new Button(container, SWT.PUSH
+                | SWT.CENTER);
+        final FormData layout = new FormData();
+        layout.width = 39;
+        layout.height = 29;
+        layout.left = new FormAttachment(tablePreferred, 12);
+        layout.top = new FormAttachment(buttonAdd, 12);
+        buttonDel.setLayoutData(layout);
+        buttonDel.setText("-");
+        buttonDel.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(final SelectionEvent event) {
+                for (final TableItem s : tablePreferred.getSelection()) {
+                    s.dispose();
+                }
+            }
+        });
+    }
+
+    /**
+     * Creates button that adds application to preferred app table
+     * 
+     * @see #buttonAdd
+     */    
+    private void createButtonAddApp() {
+        buttonAdd = new Button(container, SWT.PUSH
+                | SWT.CENTER);
+        final FormData layout = new FormData();
+        layout.width = 39;
+        layout.height = 29;
+        layout.left = new FormAttachment(tablePreferred, 12);
+        layout.top = new FormAttachment(labelPreferredApps, 6);
+        buttonAdd.setLayoutData(layout);
+        buttonAdd.setText("+");
+        buttonAdd.addListener(SWT.Selection, new Listener() {
+            public void handleEvent(final Event ev) {
+                int index = 0;
+                if (tablePreferred.getSelectionCount() > 0) {
+                    index = tablePreferred.getSelectionIndices()[0];
+                }
+                tablePreferred.deselectAll();
+                addApplication(new TableItem(tablePreferred, SWT.NONE, index));
+                tablePreferred.select(index);
+                tablePreferred.getVerticalBar().setSelection(0);
+            }
+        });
+    }
+
+    /**
+     * Creates {@link Table} for storing preferred applications
+     * 
+     * @see #tablePreferred
+     * @param cfg Configuration object
+     */
+    private void createTablePreferredApps(final Configuration cfg) {
+        tablePreferred = new Table(container, SWT.MULTI | SWT.BORDER
+                | SWT.FULL_SELECTION | SWT.VERTICAL);
+        final FormData laoyout = new FormData();
+        laoyout.width = 273;
+        laoyout.height = 56;
+        laoyout.left = new FormAttachment(0, 12);
+        laoyout.top = new FormAttachment(labelPreferredApps, 6);
+        tablePreferred.setLinesVisible(true);
+        tablePreferred.setHeaderVisible(true);
+        tablePreferred.setLayoutData(laoyout);
+        final TableColumn colType = new TableColumn(tablePreferred, SWT.NONE);
+        colType.setText("Type");
+        colType.setWidth(5);
+        final TableColumn colApp = new TableColumn(tablePreferred, SWT.NONE);
+        colApp.setText("Application");
+        // load apps
+        for (final String appEntry : cfg.getProperties().keySet()) {
+            if (appEntry.startsWith(OpenWithPlugin.PROP_FILE_TYPE_PREFIX)) {
+                final TableItem item = new TableItem(tablePreferred, SWT.NONE);
+                item.setText(0, appEntry.replaceFirst(
+                        OpenWithPlugin.PROP_FILE_TYPE_PREFIX, ""));
+                item.setText(1, cfg.getProperties().get(appEntry));
+            }
+        }
+        colType.pack();
+        colApp.pack();
+        new AppTableEditor(tablePreferred);
+    }
+
+    /**
+     * Creates label that says "Preferred Applications"
+     * 
+     * @see #labelPreferredApps
+     */
+    private void createLabelPreferredApps() {
+        labelPreferredApps = new Label(container, SWT.NONE);
+        final FormData layout = new FormData();
+        layout.width = 358;
+        layout.height = 17;
+        layout.left = new FormAttachment(0, 0);
+        layout.top = new FormAttachment(textFileDef, 3);
+        labelPreferredApps.setLayoutData(layout);
+        labelPreferredApps.setText("Prefered Applications");
+        labelPreferredApps.setFont(SWTResourceManager.getFont("Sans", 10,
+                1, false, false));
+    }
+
+    /**
+     * Creates text input for unknown file applications
+     * 
+     * @see #textFileDef
+     * @param cfg Configuration object
+     */
+    private void createTextUnknownFiles(final Configuration cfg) {
+        textFileDef = new Text(container, SWT.BORDER);
+        final FormData layout = new FormData();
+        layout.width = 200;
+        layout.height = 17;
+        layout.left = new FormAttachment(labelFolderNav, 6);
+        layout.top = new FormAttachment(textFolderNav, 3);
+        textFileDef.setLayoutData(layout);
+        final String fileDef = cfg.getProperties()
+                .get(OpenWithPlugin.PROP_UNKNOWN_FILE_APP);
+        if (fileDef != null) {
+            textFileDef.setText(fileDef);
+        }
+        textFileDef.addListener(SWT.MouseDoubleClick, new Listener() {
+            public void handleEvent(final Event ev) {
+                ExecutableInputDialog.open(
+                        "Choose executable for opening unknown files", 
+                        textFileDef.getText(), textFileDef.getShell(), 
+                        new Updater() {
+                    public void setValue(final String value) {
+                        textFileDef.setText(PathUtils.sanitizePath(value));
                     }
                 });
+            }
+        });
+        textFileDef.setToolTipText("Double-click to choose an executable");
     }
 
-    public static void main(String[] args) {
-        SettingsWindow sw = WindowFactory.getSettingsWindow();
-        sw.showObject();
+    /**
+     * Creates label that says "Unknown files:"
+     * 
+     * @see #labelFileDef
+     */
+    private void createLabelUnknownFiles() {
+        labelFileDef = new Label(container, SWT.NONE);
+        final FormData layout = new FormData();
+        layout.height = 17;
+        layout.left = new FormAttachment(0, 12);
+        layout.top = new FormAttachment(textFolderNav, 8);
+        labelFileDef.setLayoutData(layout);
+        labelFileDef.setText("Unknown files:");
+    }
+
+    /**
+     * Creates text input for folder navigator application
+     * 
+     * @see #textFolderNav
+     * @param cfg Configuration object
+     */
+    private void createTextFolderNav(final Configuration cfg) {
+        textFolderNav = new Text(container, SWT.BORDER);
+        final FormData layout = new FormData();
+        layout.width = 200;
+        layout.height = 17;
+        layout.left = new FormAttachment(labelFolderNav, 6);
+        layout.top = new FormAttachment(labelSpecialApps, 3);
+        textFolderNav.setLayoutData(layout);
+        final String folderNav = cfg.getProperties().get(
+                OpenWithPlugin.PROP_FOLDER_NAVIGATOR);
+        if (folderNav != null) {
+            textFolderNav.setText(folderNav);
+        }
+        textFolderNav.addListener(SWT.MouseDoubleClick, new Listener() {
+            public void handleEvent(final Event ev) {
+                ExecutableInputDialog.open(
+                        "Choose executable for opening directories", 
+                        textFolderNav.getText(), 
+                        textFolderNav.getShell(), new Updater() {
+                    public void setValue(final String value) {
+                        textFolderNav.setText(PathUtils.sanitizePath(value));
+                    }
+                });
+            }
+        });
+        textFolderNav.setToolTipText("Double-click to choose an executable");
+    }
+
+    /**
+     * Creates label that says "For directories:"
+     * 
+     * @see #labelFolderNav
+     */
+    private void createLabelFolderNav() {
+        labelFolderNav = new Label(container, SWT.NONE);
+        final FormData layout = new FormData();
+        layout.height = 17;
+        layout.left = new FormAttachment(0, 12);
+        layout.top = new FormAttachment(labelSpecialApps, 8);
+        labelFolderNav.setLayoutData(layout);
+        labelFolderNav.setText("For directories:");
+    }
+
+    /**
+     * Creates label that says "Special Applications"
+     * 
+     * @see #labelSpecialApps
+     */
+    private void createLabelSpecialApps() {
+        labelSpecialApps = new Label(container, SWT.NONE);
+        final FormData laout = new FormData();
+        laout.width = 358;
+        laout.height = 17;
+        laout.left = new FormAttachment(0, 0);
+        laout.top = new FormAttachment(0, 0);
+        labelSpecialApps.setLayoutData(laout);
+        labelSpecialApps.setText("Special Applications");
+        labelSpecialApps.setFont(SWTResourceManager.getFont("Sans", 10,
+                1, false, false));
+    }
+
+    /**
+     * Creates {@link OpenWithPlugin} tab item in {@link SettingsWindow}'s 
+     * {@link CTabFolder}.
+     * 
+     * @param folder Settings CTabFolder
+     */
+    private void createTabItem(final CTabFolder folder) {
+        tabItem = new CTabItem(folder, SWT.NONE);
+        container = new Composite(folder, SWT.NONE);
+        final FormLayout layout = new FormLayout();
+        layout.marginWidth = 12;
+        layout.marginHeight = 12;
+        container.setLayout(layout);
+        tabItem.setControl(container);
+        tabItem.setImage(IconFactory.getInstance().getIcon("open"));
+        tabItem.setText("&Open With");
+    }
+
+    /**
+     * Adds application to {@link TableItem} of {@link #tablePreferred}
+     * 
+     * @see #tablePreferred
+     * @see #createButtonAddApp()
+     * @param tableItem TableItem to fill in
+     */
+    private void addApplication(final TableItem tableItem) {
+        InputDialog.open("Please enter file extension", 30,
+                tablePreferred.getShell(), new Updater() {
+            public void setValue(String ext) {
+                if (ext == null || ext.length() == 0)
+                    return;
+                if (!ext.startsWith("."))
+                    ext = "." + ext;
+                tableItem.setText(0, ext);
+                ExecutableInputDialog.open(
+                        "Please enter executable for handling " + ext, null, 
+                        tablePreferred.getShell(), new Updater() {
+                    public void setValue(final String app) {
+                        tableItem.setText(1, app);
+                        tablePreferred.getColumn(0).pack();
+                        tablePreferred.getColumn(1).pack();
+                    }
+                });
+            }
+        });
     }
 
 }
