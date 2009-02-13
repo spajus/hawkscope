@@ -1,6 +1,8 @@
 package com.varaneckas.hawkscope.gui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.DisposeEvent;
+import org.eclipse.swt.events.DisposeListener;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.PaintEvent;
@@ -28,29 +30,117 @@ import com.varaneckas.hawkscope.tray.TrayManager;
 import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.IconFactory;
 
-public class AboutShell {
+/**
+ * About Window
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
+public class AboutWindow {
     
+	/**
+	 * The Shell 
+	 */
     private Shell shell;
+    
+    /**
+     * Main layout
+     */
     private FormData layout;
+    
+    /**
+     * Bold font
+     */
     private Font bold;
+    
+    /**
+     * Red color
+     */
     private Color red;
+    
+    /**
+     * Green color
+     */
     private Color green;
+    
+    /**
+     * Blue color
+     */
     private Color blue;
+    
+    /**
+     * Hand cursor
+     */
     private Cursor hand;
+    
+    /**
+     * Canvas for drawing the logo
+     */
     private Canvas logo;
+    
+    /**
+     * Label with application name
+     */
     private Label labelAppName;
+    
+    /**
+     * Label with application slogan
+     */
     private Label labelAppSlogan;
+    
+    /**
+     * Label that says "Version"
+     */
     private Label labelVersion;
+    
+    /**
+     * Label that says "Released"
+     */
     private Label labelReleased;
+    
+    /**
+     * Label that says "Homepage"
+     */
     private Label labelHomePage;
+    
+    /**
+     * Label with application version
+     */
     private Label labelAppVersion;
+    
+    /**
+     * Label with application release date
+     */
     private Label labelAppReleased;
+    
+    /**
+     * Label with application home page URL
+     */
     private Label labelAppHomePage;
+    
+    /**
+     * Label that says "Environment"
+     */
     private Label labelEnvironment;
+    
+    /**
+     * Text area for displaying environmental information
+     */
     private Text textEnvironment;
+    
+    /**
+     * Button for copying environmental report to clipboard
+     */
     private Button buttonCopyToClipboard;
+    
+    /**
+     * Button for closing the window
+     */
     private Button buttonClose;
     
+    /**
+     * Opens the window or makes it visible if it's hidden but not disposed
+     */
     public void open() {
         if (shell != null && !shell.isDisposed()) {
             shell.setVisible(true);
@@ -76,6 +166,9 @@ public class AboutShell {
         shell.open();
     }
     
+    /**
+     * Creates shared resources
+     */
     private void createResources() {
         final FontData data = new FontData();
         data.setHeight(10);
@@ -87,12 +180,32 @@ public class AboutShell {
         hand = new Cursor(shell.getDisplay(), SWT.CURSOR_HAND);
     }
     
+    /**
+     * Releases shared resources
+     */
+    private void releaseResources() {
+    	bold.dispose();
+    	red.dispose();
+    	green.dispose();
+    	blue.dispose();
+    	hand.dispose();
+    }
+    
+    /**
+     * Creates the main {@link Shell}
+     */
     private void createShell() {
         shell = new Shell(TrayManager.getInstance().getShell(), SWT.SHELL_TRIM);
         final FormLayout layout = new FormLayout();
         layout.spacing = 6;
         layout.marginHeight = 12;
         layout.marginWidth = 12;
+        shell.setMinimumSize(400, 300);
+        shell.addDisposeListener(new DisposeListener() {
+			public void widgetDisposed(final DisposeEvent ev) {
+				releaseResources();
+			}
+        });
         shell.setLocation(shell.getParent().toDisplay(100, 100));
         shell.setImage(IconFactory.getInstance()
                 .getUncachedIcon("hawkscope16.png"));
@@ -101,6 +214,14 @@ public class AboutShell {
         shell.layout();
     }
     
+    /**
+     * Gets layout data ({@link FormData}) for a Widget that should be 
+     * positioned relative to top-left corner.
+     * 
+     * @param top Control above the target Widget
+     * @param left Control in the left of target Widget
+     * @return layout data
+     */
     private FormData relativeTo(final Control top, final Control left) {
         layout = new FormData();
         layout.top = new FormAttachment(top);
@@ -108,6 +229,13 @@ public class AboutShell {
         return layout;
     }
     
+    /**
+     * Gets layout data ({@link FormData}) for a Widget that should be 
+     * positioned relative to botom-right corner.
+     * 
+     * @param right Control in the right of target Widget
+     * @return layout data
+     */
     private FormData relativeToBottomRight(final Control right) {
         layout = new FormData();
         layout.bottom = new FormAttachment(100, 0);
@@ -119,6 +247,11 @@ public class AboutShell {
         return layout;
     }    
     
+    /**
+     * Draws the logo on logo canvas
+     * 
+     * @see #logo
+     */
     private void createLogo() {
         logo = new Canvas(shell, SWT.NONE);
         logo.addPaintListener(new PaintListener() {
@@ -141,6 +274,9 @@ public class AboutShell {
         logo.setLayoutData(layout);
     }
     
+    /**
+     * Creates label with application name
+     */
     private void createLabelAppName() {
         labelAppName = new Label(shell, SWT.NONE);
         labelAppName.setText(Version.APP_NAME);
@@ -148,12 +284,18 @@ public class AboutShell {
         labelAppName.setFont(bold);
     }
     
+    /**
+     * Creates label with application slogan
+     */
     private void createLabelAppSlogan() {
         labelAppSlogan = new Label(shell, SWT.NONE);
         labelAppSlogan.setLayoutData(relativeTo(labelAppName, logo));
         labelAppSlogan.setText(Version.APP_SLOGAN);
     }
     
+    /**
+     * Creates label that says "Version"
+     */
     private void createLabelVersion() {
         labelVersion = new Label(shell, SWT.NONE);
         labelVersion.setText("Version:");
@@ -161,6 +303,9 @@ public class AboutShell {
         labelVersion.setLayoutData(relativeTo(labelAppSlogan, logo));
     }
     
+    /**
+     * Creates label with application version
+     */
     private void createLabelAppVersion() {
         labelAppVersion = new Label(shell, SWT.NONE);
         labelAppVersion.setText(Version.VERSION_NUMBER);
@@ -168,6 +313,9 @@ public class AboutShell {
         updateLabelAppVersion();
     }
     
+    /**
+     * Updates {@link #labelAppVersion} with current verson information
+     */
     private void updateLabelAppVersion() {
         if (Version.isUpdateAvailable() == null) {
             if (ConfigurationFactory.getConfigurationFactory()
@@ -197,6 +345,9 @@ public class AboutShell {
         }
     }
     
+    /**
+     * Creates label that says "Released"
+     */
     private void createLabelReleased() {
         labelReleased = new Label(shell, SWT.NONE); 
         labelReleased.setText("Released:");
@@ -204,12 +355,18 @@ public class AboutShell {
         labelReleased.setLayoutData(relativeTo(labelVersion, logo));
     }
     
+    /**
+     * Creates label with application release date
+     */
     private void createLabelAppReleased() {
         labelAppReleased = new Label(shell, SWT.NONE);
         labelAppReleased.setText(Version.VERSION_DATE);
         labelAppReleased.setLayoutData(relativeTo(labelVersion, labelHomePage));
     }
     
+    /**
+     * Creates label that says "Homepage"
+     */
     private void createLabelHomePage() {
         labelHomePage = new Label(shell, SWT.NONE); 
         labelHomePage.setText("Homepage:");
@@ -217,6 +374,9 @@ public class AboutShell {
         labelHomePage.setLayoutData(relativeTo(labelReleased, logo));
     }    
     
+    /**
+     * Creates label with application homepage URL
+     */
     private void createLabelAppHomePage() {
         labelAppHomePage = new Label(shell, SWT.NONE);
         labelAppHomePage.setText(Version.HOMEPAGE);
@@ -228,10 +388,14 @@ public class AboutShell {
             @Override
             public void mouseUp(final MouseEvent event) {
                 Program.launch(Version.HOMEPAGE);
+                shell.dispose();
             } 
         });
     }
     
+    /**
+     * Creates label that says "Environment"
+     */
     private void createLabelEnvironment() {
         labelEnvironment = new Label(shell, SWT.NONE);
         labelEnvironment.setText("Environment");
@@ -239,6 +403,9 @@ public class AboutShell {
         labelEnvironment.setLayoutData(relativeTo(logo, null));
     }
 
+    /**
+     * Creates button for closing the window
+     */
     private void createButtonClose() {
         buttonClose = new Button(shell, SWT.PUSH);
         buttonClose.setText("&Close");
@@ -251,6 +418,9 @@ public class AboutShell {
          });
     }
     
+    /**
+     * Creates button for copying environmental data report to clipboard
+     */
     private void createButtonCopyToClipboard() {
         buttonCopyToClipboard = new Button(shell, SWT.PUSH);
         buttonCopyToClipboard.setText("C&opy to Clipboard");
@@ -263,6 +433,9 @@ public class AboutShell {
          });
     }
     
+    /**
+     * Creates text area for displaying application environment info
+     */
     private void createTextEnvironment() {
         textEnvironment = new Text(shell, SWT.MULTI | SWT.WRAP 
                 | SWT.V_SCROLL | SWT.BORDER);
