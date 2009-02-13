@@ -18,7 +18,7 @@ public class WindowFactory {
     /**
      * AboutWindow instance
      */
-    private static AboutWindow aboutWindow = null;
+    private static AboutShell aboutWindow = null;
     
     /**
      * SettingsWindow instance
@@ -37,9 +37,9 @@ public class WindowFactory {
      * 
      * @return instance of About Window
      */
-    public static AboutWindow getAboutWindow() {
+    public static AboutShell getAboutWindow() {
         if (aboutWindow == null) {
-            aboutWindow = new AboutWindow(TrayManager.getInstance().getShell(), 0);
+            aboutWindow = new AboutShell();
         }
         return aboutWindow;
     }

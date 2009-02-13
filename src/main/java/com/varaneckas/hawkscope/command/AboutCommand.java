@@ -14,7 +14,7 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
 public class AboutCommand implements Command {
 
     public void execute() {
-        WindowFactory.getAboutWindow().showObject();
+        WindowFactory.getAboutWindow().open();
         MenuFactory.getMainMenu().forceHide();
     }
 
