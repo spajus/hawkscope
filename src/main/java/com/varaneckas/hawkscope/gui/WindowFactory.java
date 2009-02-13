@@ -14,7 +14,7 @@ import com.varaneckas.hawkscope.tray.TrayManager;
  * @version $Id$
  */
 public class WindowFactory {
-
+	
     /**
      * AboutWindow instance
      */
@@ -51,7 +51,8 @@ public class WindowFactory {
      */
     public static SettingsWindow getSettingsWindow() {
         if (settingsWindow == null) {
-            settingsWindow = new SettingsWindow(TrayManager.getInstance().getShell(), 0);
+            settingsWindow = new SettingsWindow(TrayManager.getInstance()
+            		.getShell(), 0);
         }
         return settingsWindow;
     }
