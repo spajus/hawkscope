@@ -12,12 +12,10 @@ import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
-import com.varaneckas.hawkscope.tray.TrayManager;
 import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.IconFactory;
 
@@ -37,16 +35,9 @@ import com.varaneckas.hawkscope.util.IconFactory;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class AboutWindow {
+public class AboutWindow extends AbstractWindow {
 	
 	/**
-	 * The Shell 
-	 * 
-	 * @see #createShell()
-	 */
-    private Shell shell;
-    
-    /**
      * Canvas for drawing the logo
      * 
      * @see #createLogo()
@@ -131,22 +122,16 @@ public class AboutWindow {
     private Button buttonCopyToClipboard;
     
     /**
-     * Button for closing the window
-     * 
-     * @see #createButtonClose()
-     */
-    private Button buttonClose;
-    
-    /**
      * Opens the window or makes it visible if it's hidden but not disposed
      */
+    @Override
     public void open() {
         if (shell != null && !shell.isDisposed()) {
             shell.setVisible(true);
             shell.forceFocus();
             return;
         }       
-        createShell();
+        createShell("About", 400, 300);
         createLogo();  
         createLabelAppName();
         createLabelAppSlogan();
@@ -162,20 +147,6 @@ public class AboutWindow {
         createTextEnvironment();
         shell.pack();
         shell.open();
-    }
-    
-    /**
-     * Creates the main {@link Shell}
-     */
-    private void createShell() {
-        shell = new Shell(TrayManager.getInstance().getShell(), SWT.SHELL_TRIM);
-        shell.setMinimumSize(400, 300);
-        shell.setLocation(shell.getParent().toDisplay(100, 100));
-        shell.setImage(IconFactory.getInstance()
-                .getUncachedIcon("hawkscope16.png"));
-        shell.setText("About");
-        shell.setLayout(SharedStyle.LAYOUT);
-        shell.layout();
     }
     
     /**
@@ -238,7 +209,8 @@ public class AboutWindow {
     private void createLabelAppVersion() {
         labelAppVersion = new Label(shell, SWT.NONE);
         labelAppVersion.setText(Version.VERSION_NUMBER);
-        labelAppVersion.setLayoutData(SharedStyle.relativeTo(labelAppSlogan, labelHomePage));
+        labelAppVersion.setLayoutData(
+        		SharedStyle.relativeTo(labelAppSlogan, labelHomePage));
         updateLabelAppVersion();
     }
     
@@ -249,7 +221,8 @@ public class AboutWindow {
         if (Version.isUpdateAvailable() == null) {
             if (ConfigurationFactory.getConfigurationFactory()
                     .getConfiguration().checkForUpdates()) {
-                labelAppVersion.setToolTipText("Could not get version information.");
+                labelAppVersion.setToolTipText(
+                		"Could not get version information.");
             }
         } else {
             if (Version.isUpdateAvailable()) {
@@ -290,7 +263,8 @@ public class AboutWindow {
     private void createLabelAppReleased() {
         labelAppReleased = new Label(shell, SWT.NONE);
         labelAppReleased.setText(Version.VERSION_DATE);
-        labelAppReleased.setLayoutData(SharedStyle.relativeTo(labelVersion, labelHomePage));
+        labelAppReleased.setLayoutData(SharedStyle
+        		.relativeTo(labelVersion, labelHomePage));
     }
     
     /**
@@ -309,7 +283,8 @@ public class AboutWindow {
     private void createLabelAppHomePage() {
         labelAppHomePage = new Label(shell, SWT.NONE);
         labelAppHomePage.setText(Version.HOMEPAGE);
-        labelAppHomePage.setLayoutData(SharedStyle.relativeTo(labelReleased, labelHomePage));
+        labelAppHomePage.setLayoutData(SharedStyle
+        		.relativeTo(labelReleased, labelHomePage));
         labelAppHomePage.setCursor(SharedStyle.CURSOR_HAND);
         labelAppHomePage.setForeground(SharedStyle.COLOR_BLUE);
         labelAppHomePage.setToolTipText("Click to open in browser");
@@ -333,27 +308,13 @@ public class AboutWindow {
     }
 
     /**
-     * Creates button for closing the window
-     */
-    private void createButtonClose() {
-        buttonClose = new Button(shell, SWT.PUSH);
-        buttonClose.setText("&Close");
-        buttonClose.setLayoutData(SharedStyle.relativeToBottomRight(null));
-        buttonClose.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent event) {
-                shell.dispose();
-            } 
-         });
-    }
-    
-    /**
      * Creates button for copying environmental data report to clipboard
      */
     private void createButtonCopyToClipboard() {
         buttonCopyToClipboard = new Button(shell, SWT.PUSH);
-        buttonCopyToClipboard.setText("C&opy to Clipboard");
-        buttonCopyToClipboard.setLayoutData(SharedStyle.relativeToBottomRight(buttonClose));
+        buttonCopyToClipboard.setText("Co&py to Clipboard");
+        buttonCopyToClipboard.setLayoutData(SharedStyle
+        		.relativeToBottomRight(buttonClose));
         buttonCopyToClipboard.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent event) {

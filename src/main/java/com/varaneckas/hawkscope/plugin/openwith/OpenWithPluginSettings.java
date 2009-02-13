@@ -25,7 +25,7 @@ import com.cloudgarden.resource.SWTResourceManager;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.ExecutableInputDialog;
 import com.varaneckas.hawkscope.gui.InputDialog;
-import com.varaneckas.hawkscope.gui.SettingsWindow;
+import com.varaneckas.hawkscope.gui.SettingsShell;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.PathUtils;
 import com.varaneckas.hawkscope.util.Updater;
@@ -137,7 +137,7 @@ public class OpenWithPluginSettings {
     }
 
     /**
-     * Enhances the {@link SettingsWindow}'s {@link CTabFolder} with OpenWith 
+     * Enhances the {@link SettingsShell}'s {@link CTabFolder} with OpenWith 
      * plugin's tab. 
      * 
      * @param cfg Configuration object
@@ -382,7 +382,7 @@ public class OpenWithPluginSettings {
     }
 
     /**
-     * Creates {@link OpenWithPlugin} tab item in {@link SettingsWindow}'s 
+     * Creates {@link OpenWithPlugin} tab item in {@link SettingsShell}'s 
      * {@link CTabFolder}.
      * 
      * @param folder Settings CTabFolder

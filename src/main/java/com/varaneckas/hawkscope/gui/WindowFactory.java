@@ -18,12 +18,12 @@ public class WindowFactory {
     /**
      * AboutWindow instance
      */
-    private static AboutWindow aboutWindow = null;
+    private static AbstractWindow aboutWindow = null;
     
     /**
      * SettingsWindow instance
      */
-    private static SettingsWindow settingsWindow = null;
+    private static SettingsShell settingsWindow = null;
 
     /**
      * Initializes the application GUI 
@@ -37,7 +37,7 @@ public class WindowFactory {
      * 
      * @return instance of About Window
      */
-    public static AboutWindow getAboutWindow() {
+    public static AbstractWindow getAboutWindow() {
         if (aboutWindow == null) {
             aboutWindow = new AboutWindow();
         }
@@ -49,9 +49,9 @@ public class WindowFactory {
      * 
      * @return instance of Settings Window
      */
-    public static SettingsWindow getSettingsWindow() {
+    public static SettingsShell getSettingsWindow() {
         if (settingsWindow == null) {
-            settingsWindow = new SettingsWindow(TrayManager.getInstance()
+            settingsWindow = new SettingsShell(TrayManager.getInstance()
             		.getShell(), 0);
         }
         return settingsWindow;
