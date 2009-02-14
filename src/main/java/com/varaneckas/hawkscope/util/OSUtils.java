@@ -265,4 +265,12 @@ public abstract class OSUtils {
 		}
 		return true;
 	}
+	
+	public static void sleep(final long millis) {
+		try {
+			Thread.sleep(millis);
+		} catch (InterruptedException e) {
+			log.warn("Thread sleep interrupted", e);
+		}
+	}
 }
