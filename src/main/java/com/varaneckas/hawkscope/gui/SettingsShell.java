@@ -744,7 +744,7 @@ public class SettingsShell extends org.eclipse.swt.widgets.Dialog {
             textMenuReloadDelay.setText("" + (cfg.getMenuReloadDelay() / 1000.0));
             textMenuReloadDelay.setTextLimit(4);
             textMenuReloadDelay.addListener(SWT.FocusOut, new Listener() {
-                public void handleEvent(Event event) {
+                public void handleEvent(final Event event) {
                     try {
                         double d = Double.valueOf(textMenuReloadDelay.getText());
                         if (d <= 0) {

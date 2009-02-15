@@ -1,6 +1,9 @@
 package com.varaneckas.hawkscope.gui.settings;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.TabFolder;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
@@ -21,11 +24,12 @@ public class SettingsWindow extends AbstractWindow {
 		createShell("Settings");
 		createButtonClose();
 		createTabFolderSettings();
+		createButtonCancel();
 		packAndSetMinSize();
 		shell.open();
 	}
 	
-	public void createTabFolderSettings() {
+	private void createTabFolderSettings() {
 		tabFolderSettings = new TabFolder(shell, SWT.NONE);
 		tabFolderSettings.setLayoutData(SharedStyle.relativeTo(null, null, 
 				buttonClose, null));
@@ -37,6 +41,20 @@ public class SettingsWindow extends AbstractWindow {
 		PluginManager.getInstance().enhanceSettings(cfg, tabFolderSettings);
 	}
 	
+	/**
+	 * Creates button for closing the window
+	 */
+	protected void createButtonCancel() {
+	    final Button cancel = new Button(shell, SWT.PUSH);
+	    cancel.setText("Cancel");
+	    cancel.setLayoutData(SharedStyle.relativeToBottomRight(buttonClose));
+	    cancel.addSelectionListener(new SelectionAdapter() {
+	        @Override
+	        public void widgetSelected(final SelectionEvent event) {
+	            shell.dispose();
+	        } 
+	     });
+	}
 	
 	public static void main(String[] args) {
 		SettingsWindow w = new SettingsWindow();
