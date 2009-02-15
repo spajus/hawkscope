@@ -32,10 +32,11 @@ public abstract class AbstractWindow {
 
 	/**
 	 * Creates the main {@link Shell}
+	 * 
+	 * @param title Window title
 	 */
-	protected void createShell(final String title, int minWidth, int minHeight) {
+	protected void createShell(final String title) {
 	    shell = new Shell(TrayManager.getInstance().getShell(), SWT.SHELL_TRIM);
-	    shell.setMinimumSize(minWidth, minHeight);
 	    shell.setLocation(shell.getParent().toDisplay(100, 100));
 	    shell.setImage(IconFactory.getInstance()
 	            .getUncachedIcon("hawkscope16.png"));
@@ -57,6 +58,14 @@ public abstract class AbstractWindow {
 	            shell.dispose();
 	        } 
 	     });
+	}
+	
+	/**
+	 * Packs shell and sets the minimum size
+	 */
+	protected void packAndSetMinSize() {
+		shell.pack();
+		shell.setMinimumSize(shell.getSize());
 	}
 	
 	/**

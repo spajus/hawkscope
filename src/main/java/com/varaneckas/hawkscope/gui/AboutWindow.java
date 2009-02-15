@@ -131,7 +131,7 @@ public class AboutWindow extends AbstractWindow {
             shell.forceFocus();
             return;
         }       
-        createShell("About", 400, 300);
+        createShell("About");
         createLogo();  
         createLabelAppName();
         createLabelAppSlogan();
@@ -145,7 +145,7 @@ public class AboutWindow extends AbstractWindow {
         createButtonClose();
         createButtonCopyToClipboard();
         createTextEnvironment();
-        shell.pack();
+        packAndSetMinSize();
         shell.open();
     }
     

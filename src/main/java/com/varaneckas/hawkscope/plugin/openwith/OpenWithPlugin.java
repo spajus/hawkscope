@@ -5,12 +5,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.TabFolder;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
@@ -100,12 +100,12 @@ public class OpenWithPlugin extends PluginAdapter {
     }
     
     @Override
-    public void enhanceSettings(final Configuration cfg, CTabFolder settingsTabFolder) {
+    public void enhanceSettings(final Configuration cfg, TabFolder settingsTabFolder) {
          settings.enhance(cfg, settingsTabFolder);
     }
     
     @Override
-    public void applySettings(final Configuration cfg, CTabFolder settingsTabFolder) {
+    public void applySettings(final Configuration cfg, TabFolder settingsTabFolder) {
         settings.apply(cfg);
     }
    

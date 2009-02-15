@@ -16,6 +16,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -71,7 +73,7 @@ public class OpenWithPluginSettings {
     /**
      * Settings tab item 
      */
-    private CTabItem tabItem;
+    private TabItem tabItem;
     
     /**
      * Label: "Preferred Applications"
@@ -143,7 +145,7 @@ public class OpenWithPluginSettings {
      * @param cfg Configuration object
      * @param folder Settings {@link CTabFolder}
      */
-    public void enhance(final Configuration cfg, final CTabFolder folder) {
+    public void enhance(final Configuration cfg, final TabFolder folder) {
         //presenting the cast in order of appearance:
         createTabItem(folder);
         createLabelSpecialApps();           
@@ -387,8 +389,8 @@ public class OpenWithPluginSettings {
      * 
      * @param folder Settings CTabFolder
      */
-    private void createTabItem(final CTabFolder folder) {
-        tabItem = new CTabItem(folder, SWT.NONE);
+    private void createTabItem(final TabFolder folder) {
+        tabItem = new TabItem(folder, SWT.NONE);
         container = new Composite(folder, SWT.NONE);
         final FormLayout layout = new FormLayout();
         layout.marginWidth = 12;

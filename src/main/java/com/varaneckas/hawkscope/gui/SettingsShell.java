@@ -29,7 +29,6 @@ import com.cloudgarden.resource.SWTResourceManager;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.menu.MenuFactory;
-import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.OSUtils;
 
@@ -143,7 +142,7 @@ public class SettingsShell extends org.eclipse.swt.widgets.Dialog {
                 createBlacklistTab();
                 //[Network] tab
                 createNetworkTab();
-                PluginManager.getInstance().enhanceSettings(cfg, settingsTabFolder);
+//                PluginManager.getInstance().enhanceSettings(cfg, settingsTabFolder);
                 settingsTabFolder.setSelection(0);
             }
             createButtons();            
@@ -836,7 +835,7 @@ public class SettingsShell extends org.eclipse.swt.widgets.Dialog {
                 textHttpProxyUsername.getText());
         cfg.getProperties().put(Configuration.HTTP_PROXY_AUTH_PASSWORD,
                 textHttpProxyPassword.getText());
-        PluginManager.getInstance().applySettings(cfg, settingsTabFolder);
+//        PluginManager.getInstance().applySettings(cfg, settingsTabFolder);
         ConfigurationFactory.getConfigurationFactory().write(cfg);
     }
 

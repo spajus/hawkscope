@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.TabFolder;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
@@ -84,13 +84,13 @@ public class PluginManager {
         return proceed;
     }
 
-    public void applySettings(final Configuration cfg, final CTabFolder settingsTabFolder) {
+    public void applySettings(final Configuration cfg, final TabFolder settingsTabFolder) {
         for (Plugin plugin : getActivePlugins()) {
             plugin.applySettings(cfg, settingsTabFolder);
         }
     }
 
-    public void enhanceSettings(final Configuration cfg, final CTabFolder settingsTabFolder) {
+    public void enhanceSettings(final Configuration cfg, final TabFolder settingsTabFolder) {
         for (Plugin plugin : getActivePlugins()) {
             try {
                 plugin.enhanceSettings(cfg, settingsTabFolder);
