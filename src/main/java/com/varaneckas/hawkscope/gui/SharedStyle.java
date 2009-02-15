@@ -51,6 +51,11 @@ public class SharedStyle {
     public static Cursor CURSOR_HAND;
     
     /**
+     * Offset for text top margin when text is centered with a label
+     */
+    public static final int TEXT_TOP_OFFSET_ADJUST = -5;
+    
+    /**
      * Creates shared resources
      */
     private static void createResources() {

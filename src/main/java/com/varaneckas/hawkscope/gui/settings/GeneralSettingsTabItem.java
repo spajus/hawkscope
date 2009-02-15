@@ -1,6 +1,7 @@
 package com.varaneckas.hawkscope.gui.settings;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
@@ -68,7 +69,11 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 	private void createReloadDelayInput() {
 		final String reloadDelay = "" + (cfg.getMenuReloadDelay() / 1000.0);
 		reloadDelayInput = addText(reloadDelay, 4);
-		reloadDelayInput.setLayoutData(ident(SharedStyle.relativeTo(menu, reloadDelaySec)));
+		final FormData style = ident(SharedStyle.relativeTo(menu, reloadDelaySec));
+		style.width = 40;
+		//up a little, to center with reloadDelaySec
+		style.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
+		reloadDelayInput.setLayoutData(style);
 		reloadDelayInput.addListener(SWT.FocusOut, new Listener() {
             public void handleEvent(final Event event) {
                 try {
