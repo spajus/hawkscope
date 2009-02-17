@@ -11,11 +11,17 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
 
-
+/**
+ * Blacklist Settings {@link TabItem}
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
 	
     private Label predefined;

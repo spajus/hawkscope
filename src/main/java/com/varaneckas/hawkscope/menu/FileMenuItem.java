@@ -56,6 +56,9 @@ public class FileMenuItem implements com.varaneckas.hawkscope.menu.MenuItem {
         this.file = file;
     }
     
+    /**
+     * Creates the File {@link MenuItem}
+     */
     public void createMenuItem(final Menu parent) {
         menuItem = new MenuItem(parent, SWT.PUSH);
         menuItem.setImage((Image) icon);
@@ -75,10 +78,6 @@ public class FileMenuItem implements com.varaneckas.hawkscope.menu.MenuItem {
 
     public void setText(final String text) {
         this.text = text;
-    }
-
-    public void setToolTipText(final String text) {
-        //unsupported feature
     }
 
 }

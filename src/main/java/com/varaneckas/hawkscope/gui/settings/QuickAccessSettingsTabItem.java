@@ -14,10 +14,17 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
 
+/**
+ * Quick Access List Settings {@link TabItem}
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
     
     private Label labelQuickAccessLoc;

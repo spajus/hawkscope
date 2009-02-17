@@ -9,12 +9,18 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
 
-
+/**
+ * Network Settings {@link TabItem}
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
 	
     private Label httpProxy;

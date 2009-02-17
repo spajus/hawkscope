@@ -7,12 +7,18 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
 
-
+/**
+ * General Settings {@link TabItem}
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 	
 	private Label updates;

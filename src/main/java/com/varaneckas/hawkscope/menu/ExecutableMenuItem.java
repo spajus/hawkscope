@@ -35,6 +35,9 @@ public class ExecutableMenuItem implements com.varaneckas.hawkscope.menu.MenuIte
      */
     private boolean enabled = true;
     
+    /**
+     * Creates the Executable menu item
+     */
     public void createMenuItem(final Menu parent) {
         final MenuItem mi = new MenuItem(parent, SWT.PUSH);
         mi.setImage((Image) icon);
@@ -47,30 +50,50 @@ public class ExecutableMenuItem implements com.varaneckas.hawkscope.menu.MenuIte
         });
     }
 
+    /**
+     * Sets the command to execute on click
+     * 
+     * @param command
+     */
     public void setCommand(final Command command) {
         this.command = command;
     }
 
+    /**
+     * Sets the menu item icon image
+     */
     public void setIcon(final Image icon) {
         this.icon = icon;
     }
 
+    /**
+     * Sets the menu item text
+     */
     public void setText(final String text) {
         this.text = text;
     }
 
-    public void setToolTipText(final String text) {
-        //unsupported feature
-    }
-
+    /**
+     * Gets the {@link Command} to execute
+     * 
+     * @return command
+     */
     public Command getCommand() {
         return command;
     }
 
+    /**
+     * Sets the Enabled flag
+     */
     public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }
     
+    /**
+     * Tells if item is enabled
+     * 
+     * @return
+     */
     public boolean isEnabled() {
         return this.enabled;
     }

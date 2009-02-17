@@ -8,6 +8,7 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
@@ -16,6 +17,12 @@ import com.varaneckas.hawkscope.gui.SharedStyle;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 
+/**
+ * Settings Window
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class SettingsWindow extends AbstractWindow {
 	
 	private TabFolder tabFolderSettings;

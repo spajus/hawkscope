@@ -28,7 +28,8 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         //quick access list contains one entry - user home, 
         //read from system properties
         if (OSUtils.CURRENT_OS.equals(OS.MAC)) {
-        	data.put(Configuration.QUICK_ACCESS_LIST, "${user.home};/Applications");
+        	data.put(Configuration.QUICK_ACCESS_LIST, 
+        	        "${user.home};/Applications");
         } else {
         	data.put(Configuration.QUICK_ACCESS_LIST, "${user.home}");
         }

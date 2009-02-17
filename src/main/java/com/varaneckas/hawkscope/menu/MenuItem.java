@@ -34,13 +34,6 @@ public interface MenuItem {
     public void setText(final String text);
     
     /**
-     * Sets the menu item tooltip text
-     * 
-     * @param text tooltip
-     */
-    public void setToolTipText(final String text);
-    
-    /**
      * Sets the enabled flag
      * 
      * @param enabled is menu item enabled?

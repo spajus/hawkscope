@@ -1,7 +1,7 @@
 package com.varaneckas.hawkscope.command;
 
+import com.varaneckas.hawkscope.gui.AboutWindow;
 import com.varaneckas.hawkscope.gui.WindowFactory;
-import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
  * About {@link Command}
@@ -13,9 +13,11 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
  */
 public class AboutCommand implements Command {
 
+    /**
+     * Opens the {@link AboutWindow}
+     */
     public void execute() {
         WindowFactory.getAboutWindow().open();
-        MenuFactory.getMainMenu().forceHide();
     }
 
 }

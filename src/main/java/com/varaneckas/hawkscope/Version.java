@@ -53,12 +53,12 @@ public class Version {
     /**
      * Application version number   
      */
-    public static final String VERSION_NUMBER = "0.4.1";
+    public static final String VERSION_NUMBER = "0.4.2-DEV";
     
     /**
      * Application version date
      */
-    public static final String VERSION_DATE = "2009-02-06";
+    public static final String VERSION_DATE = "2009-02-??";
     
     /**
      * Application Homepage URL
@@ -214,12 +214,14 @@ public class Version {
                 if (cfg.isHttpProxyAuthInUse()) {
                     Authenticator.setDefault(new Authenticator() {
                         @Override
-                        protected PasswordAuthentication getPasswordAuthentication() {
+                        protected PasswordAuthentication 
+                                getPasswordAuthentication() {
                             if (getRequestorType().equals(RequestorType.PROXY)) {
                                 log.debug("Performing HTTP Proxy Authentication");
                                 return new PasswordAuthentication(
                                         cfg.getHttpProxyAuthUsername(), 
-                                        cfg.getHttpProxyAuthPassword().toCharArray());
+                                        cfg.getHttpProxyAuthPassword()
+                                                .toCharArray());
                             } else {
                                 return null;
                             }

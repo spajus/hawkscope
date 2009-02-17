@@ -176,7 +176,8 @@ public abstract class ConfigurationFactory {
             String key = args[i];
             String value = args[i+1];
             if (!key.startsWith("-")) {
-                log.warn("Skipping invalid argument pair: " + key + ": " + value);
+                log.warn("Skipping invalid argument pair: " + key + ": " 
+                        + value);
                 continue;
             }
             argPairs.put(key.substring(1), value);

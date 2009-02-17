@@ -76,12 +76,14 @@ public class Configuration {
     /**
      * HTTP Proxy authentication username
      */
-    public static final String HTTP_PROXY_AUTH_USERNAME = "http.proxy.auth.username";
+    public static final String HTTP_PROXY_AUTH_USERNAME = 
+            "http.proxy.auth.username";
     
     /**
      * HTTP Proxy authentication password
      */
-    public static final String HTTP_PROXY_AUTH_PASSWORD = "http.proxy.auth.password";
+    public static final String HTTP_PROXY_AUTH_PASSWORD = 
+            "http.proxy.auth.password";
     
     /**
      * Tells Hawkscope to use operating system icons where possible;

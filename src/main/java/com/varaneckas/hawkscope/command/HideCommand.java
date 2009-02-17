@@ -1,6 +1,5 @@
 package com.varaneckas.hawkscope.command;
 
-import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
  * Hide Menu Item {@link Command}
@@ -10,8 +9,11 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
  */
 public class HideCommand implements Command {
 
+    /**
+     * Hides the menu
+     */
     public void execute() {
-        MenuFactory.getMainMenu().forceHide();
+        //nothing to do, menu will hide anyway
     }
 
 }

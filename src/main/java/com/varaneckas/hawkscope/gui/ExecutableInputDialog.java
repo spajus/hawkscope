@@ -3,9 +3,7 @@ package com.varaneckas.hawkscope.gui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
@@ -14,77 +12,66 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import com.varaneckas.hawkscope.util.IconFactory;
-import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.Updater;
 
+/**
+ * Dialog for choosing an Executable application
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class ExecutableInputDialog {
     
-    public static void open(final String prompt, 
-            final String defaultApp,
-             final Shell parent, 
-            final Updater updater) {
-        final Shell dialog = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+    /**
+     * Opens the dialog
+     * 
+     * @param prompt Text to be displayed
+     * @param defaultApp Default executable
+     * @param parent Parent {@link Shell}
+     * @param updater Updater for setting the value
+     */
+    public static void open(final String prompt, final String defaultApp,
+             final Shell parent, final Updater updater) {
+        final Shell dialog = new Shell(parent, SWT.DIALOG_TRIM 
+                | SWT.APPLICATION_MODAL);
         dialog.setImage(IconFactory.getInstance().getUncachedIcon(
                 "hawkscope16.png"));
         dialog.setText("Command Input Dialog");
+        dialog.setLayout(SharedStyle.LAYOUT);
 
-        FormLayout formLayout = new FormLayout();
-        formLayout.marginWidth = 10;
-        formLayout.marginHeight = 10;
-        formLayout.spacing = 10;
-        dialog.setLayout(formLayout);
-
-        Label label = new Label(dialog, SWT.NONE);
+        final Label label = new Label(dialog, SWT.NONE);
         label.setText(prompt);
-        FormData data = new FormData();
-        label.setLayoutData(data);
+        label.setLayoutData(SharedStyle.relativeTo(null, null));
 
-        Button cancel = new Button(dialog, SWT.PUSH);
+        final Button cancel = new Button(dialog, SWT.PUSH);
         cancel.setText("&Cancel");
-        data = new FormData();
-        data.width = 60;
-        data.right = new FormAttachment(100, 0);
-        data.bottom = new FormAttachment(100, 0);
-        cancel.setLayoutData(data);
+        cancel.setLayoutData(SharedStyle.relativeToBottomRight(null));
         cancel.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) { 
                 dialog.close();
             }
         });
-        OSUtils.adjustButton(cancel);
 
         final Text text = new Text(dialog, SWT.BORDER);
         if (defaultApp != null) text.setText(defaultApp);
-        data = new FormData();
+        FormData data = SharedStyle.relativeTo(label, null, cancel, null);
         data.width = 200;
-        data.left = new FormAttachment(label, 0, SWT.DEFAULT);
-        data.right = new FormAttachment(100, 0);
-        data.top = new FormAttachment(label, 0, SWT.CENTER);
-        data.bottom = new FormAttachment(cancel, 0, SWT.DEFAULT);
+        data.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
         text.setLayoutData(data);
         
-        Button ok = new Button(dialog, SWT.PUSH);
+        final Button ok = new Button(dialog, SWT.PUSH);
         ok.setText("&OK");
-        data = new FormData();
-        data.width = 60;
-        data.right = new FormAttachment(cancel, 0, SWT.DEFAULT);
-        data.bottom = new FormAttachment(100, 0);
-        ok.setLayoutData(data);
+        ok.setLayoutData(SharedStyle.relativeToBottomRight(cancel));
         ok.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 updater.setValue(text.getText());
                 dialog.close();
             }
         });
-        OSUtils.adjustButton(ok);
         
-        Button choose = new Button(dialog, SWT.PUSH);
+        final Button choose = new Button(dialog, SWT.PUSH);
         choose.setText("&Browse");
-        data = new FormData();
-        data.width = 60;
-        data.right = new FormAttachment(ok, 0, SWT.DEFAULT);
-        data.bottom = new FormAttachment(100, 0);
-        choose.setLayoutData(data);
+        choose.setLayoutData(SharedStyle.relativeToBottomRight(ok));
         choose.addSelectionListener(new SelectionAdapter() {
             public void widgetSelected(SelectionEvent e) {
                 FileDialog fd = new FileDialog(parent);
@@ -98,7 +85,6 @@ public class ExecutableInputDialog {
                 }
             }
         });
-        OSUtils.adjustButton(choose);
         
         dialog.setDefaultButton(ok);
         dialog.setTabList(new Control[] { text, choose, ok, cancel });

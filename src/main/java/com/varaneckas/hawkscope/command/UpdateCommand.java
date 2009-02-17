@@ -12,6 +12,9 @@ import com.varaneckas.hawkscope.Version;
  */
 public class UpdateCommand implements Command {
 
+    /**
+     * Update is available!
+     */
     public void execute() {
         Program.launch(Version.DOWNLOAD_URL);
     }

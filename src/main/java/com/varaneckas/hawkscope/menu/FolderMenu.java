@@ -128,8 +128,4 @@ public class FolderMenu implements MenuItem {
         this.text = text;
     }
 
-    public void setToolTipText(String text) {
-        //unsupported feature
-    }
-
 }
