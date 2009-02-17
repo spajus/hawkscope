@@ -5,7 +5,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.Version;
-import com.varaneckas.hawkscope.tray.TrayManager;
+import com.varaneckas.hawkscope.gui.settings.SettingsWindow;
 
 /**
  * Window factory for switching among multiple GUI implementations
@@ -23,7 +23,7 @@ public class WindowFactory {
     /**
      * SettingsWindow instance
      */
-    private static SettingsShell settingsWindow = null;
+    private static SettingsWindow settingsWindow = null;
 
     /**
      * Initializes the application GUI 
@@ -49,10 +49,9 @@ public class WindowFactory {
      * 
      * @return instance of Settings Window
      */
-    public static SettingsShell getSettingsWindow() {
+    public static SettingsWindow getSettingsWindow() {
         if (settingsWindow == null) {
-            settingsWindow = new SettingsShell(TrayManager.getInstance()
-            		.getShell(), 0);
+            settingsWindow = new SettingsWindow();
         }
         return settingsWindow;
     }

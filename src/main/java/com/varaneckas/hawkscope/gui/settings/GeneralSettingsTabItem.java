@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.Text;
 
+import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
 
 
@@ -49,6 +50,8 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		checkForUpdates.setLayoutData(ident(SharedStyle
 				.relativeTo(updates, null)));
 		checkForUpdates.setSelection(cfg.checkForUpdates());
+		checkForUpdates.setToolTipText("Should Hawkscope check for updates " +
+			"on startup? Please mind the HTTP Proxy settings in Network tab!");
 	}
 	
 	private void createMenuSection() {
@@ -64,6 +67,8 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		useOsIcons.setLayoutData(ident(SharedStyle
 				.relativeTo(reloadDelayInput, null)));
 		useOsIcons.setSelection(cfg.useOsIcons());
+		useOsIcons.setToolTipText("Let Hawkscope look for Operating " +
+        "System icons?");
 	}
 
 	private void createReloadDelayInput() {
@@ -74,6 +79,11 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		//up a little, to center with reloadDelaySec
 		style.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
 		reloadDelayInput.setLayoutData(style);
+		reloadDelayInput.setToolTipText("After how many seconds " +
+                "of being idle Hawkscope should reload it's main menu " +
+                "(to find new devices, refresh Quick Access List, " +
+                "re-apply Blacklist etc.)? The reload is fast unless you " +
+                "have got many slow network drives.");
 		reloadDelayInput.addListener(SWT.FocusOut, new Listener() {
             public void handleEvent(final Event event) {
                 try {
@@ -90,5 +100,15 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
             }
         });
 	}
+
+    @Override
+    protected void saveConfiguration() {
+        cfg.getProperties().put(Configuration.CHECK_FOR_UPDATES, 
+                checkForUpdates.getSelection() ? "1" : "0");
+        cfg.getProperties().put(Configuration.MENU_RELOAD_DELAY, "" + 
+                Math.round(Double.valueOf(reloadDelayInput.getText()) * 1000));
+        cfg.getProperties().put(Configuration.USE_OS_ICONS, 
+                useOsIcons.getSelection() ? "1" : "0");
+    }
 	
 }

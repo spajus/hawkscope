@@ -2,6 +2,7 @@ package com.varaneckas.hawkscope.plugin.openwith;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
@@ -15,6 +16,7 @@ import org.eclipse.swt.widgets.TabFolder;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
+import com.varaneckas.hawkscope.gui.settings.AbstractSettingsTabItem;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;
 import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.PathUtils;
@@ -100,13 +102,9 @@ public class OpenWithPlugin extends PluginAdapter {
     }
     
     @Override
-    public void enhanceSettings(final Configuration cfg, TabFolder settingsTabFolder) {
-         settings.enhance(cfg, settingsTabFolder);
-    }
-    
-    @Override
-    public void applySettings(final Configuration cfg, TabFolder settingsTabFolder) {
-        settings.apply(cfg);
+    public void enhanceSettings(TabFolder settingsTabFolder,
+            List<AbstractSettingsTabItem> tabList) {
+        settings.enhance(settingsTabFolder, tabList);
     }
    
 }

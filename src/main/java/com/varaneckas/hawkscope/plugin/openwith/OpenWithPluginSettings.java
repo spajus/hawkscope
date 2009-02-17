@@ -23,11 +23,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-import com.cloudgarden.resource.SWTResourceManager;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.ExecutableInputDialog;
 import com.varaneckas.hawkscope.gui.InputDialog;
-import com.varaneckas.hawkscope.gui.SettingsShell;
+import com.varaneckas.hawkscope.gui.settings.AbstractSettingsTabItem;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.PathUtils;
 import com.varaneckas.hawkscope.util.Updater;
@@ -145,18 +144,19 @@ public class OpenWithPluginSettings {
      * @param cfg Configuration object
      * @param folder Settings {@link CTabFolder}
      */
-    public void enhance(final Configuration cfg, final TabFolder folder) {
+    public void enhance(final TabFolder folder, 
+            final List<AbstractSettingsTabItem> tabList) {
         //presenting the cast in order of appearance:
-        createTabItem(folder);
-        createLabelSpecialApps();           
-        createLabelFolderNav();
-        createTextFolderNav(cfg);
-        createLabelUnknownFiles();
-        createTextUnknownFiles(cfg);
-        createLabelPreferredApps();
-        createTablePreferredApps(cfg);
-        createButtonAddApp();
-        createButtonDelApp();
+//        createTabItem(folder);
+//        createLabelSpecialApps();           
+//        createLabelFolderNav();
+//        createTextFolderNav(cfg);
+//        createLabelUnknownFiles();
+//        createTextUnknownFiles(cfg);
+//        createLabelPreferredApps();
+//        createTablePreferredApps(cfg);
+//        createButtonAddApp();
+//        createButtonDelApp();
     }
 
     /**
@@ -263,8 +263,6 @@ public class OpenWithPluginSettings {
         layout.top = new FormAttachment(textFileDef, 3);
         labelPreferredApps.setLayoutData(layout);
         labelPreferredApps.setText("Prefered Applications");
-        labelPreferredApps.setFont(SWTResourceManager.getFont("Sans", 10,
-                1, false, false));
     }
 
     /**
@@ -379,8 +377,6 @@ public class OpenWithPluginSettings {
         laout.top = new FormAttachment(0, 0);
         labelSpecialApps.setLayoutData(laout);
         labelSpecialApps.setText("Special Applications");
-        labelSpecialApps.setFont(SWTResourceManager.getFont("Sans", 10,
-                1, false, false));
     }
 
     /**

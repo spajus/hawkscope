@@ -10,8 +10,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
 
-import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
+import com.varaneckas.hawkscope.gui.settings.AbstractSettingsTabItem;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.plugin.openwith.OpenWithPlugin;
@@ -84,16 +84,11 @@ public class PluginManager {
         return proceed;
     }
 
-    public void applySettings(final Configuration cfg, final TabFolder settingsTabFolder) {
-        for (Plugin plugin : getActivePlugins()) {
-            plugin.applySettings(cfg, settingsTabFolder);
-        }
-    }
-
-    public void enhanceSettings(final Configuration cfg, final TabFolder settingsTabFolder) {
+    public void enhanceSettings(final TabFolder settingsTabFolder, 
+            final List<AbstractSettingsTabItem> tabList) {
         for (Plugin plugin : getActivePlugins()) {
             try {
-                plugin.enhanceSettings(cfg, settingsTabFolder);
+                plugin.enhanceSettings(settingsTabFolder, tabList);
             } catch (final Exception e) {
                 log.warn("Failed enhancing settings tab for plugin: " 
                         + plugin.getId(), e);

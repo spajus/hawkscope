@@ -1,6 +1,6 @@
 package com.varaneckas.hawkscope.command;
 
-import com.varaneckas.hawkscope.gui.settings.SettingsWindow;
+import com.varaneckas.hawkscope.gui.WindowFactory;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 
 /**
@@ -14,8 +14,7 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
 public class SettingsCommand implements Command {
 
     public void execute() {
-//        WindowFactory.getSettingsWindow().showObject();
-    	new SettingsWindow().open();
+        WindowFactory.getSettingsWindow().open();
         MenuFactory.getMainMenu().forceHide();
     }
 

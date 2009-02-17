@@ -1,5 +1,7 @@
 package com.varaneckas.hawkscope.gui.settings;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
@@ -15,6 +17,8 @@ import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.SharedStyle;
 
 public abstract class AbstractSettingsTabItem {
+    
+    protected final Log log = LogFactory.getLog(getClass());
 
 	protected final TabFolder folder;
 
@@ -64,11 +68,21 @@ public abstract class AbstractSettingsTabItem {
 		return l;
 	}
 	
+	protected Button addButton(final String text) {
+	    final Button b = new Button(container, SWT.PUSH);
+	    b.setText(text);
+	    return b;
+	}
+	
 	protected Text addText(final String text, final int limit) {
 		final Text t = new Text(container, SWT.BORDER);
 		t.setText(text);
-		t.setTextLimit(limit);
+		if (limit > 0) {
+		    t.setTextLimit(limit);
+		}
 		return t;
 	}
+	
+	abstract protected void saveConfiguration();
 	
 }

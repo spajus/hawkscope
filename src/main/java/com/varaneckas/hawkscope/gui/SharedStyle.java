@@ -12,6 +12,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
+import com.varaneckas.hawkscope.util.OSUtils;
+
 /**
  * Shared SWT GUI style elements and graphical resources
  * 
@@ -53,13 +55,14 @@ public class SharedStyle {
     /**
      * Offset for text top margin when text is centered with a label
      */
-    public static final int TEXT_TOP_OFFSET_ADJUST = -5;
+    public static final int TEXT_TOP_OFFSET_ADJUST = 
+        OSUtils.getTextTopOffsetAdjust();
     
     /**
      * Creates shared resources
      */
     private static void createResources() {
-		LAYOUT.spacing = 6;
+		LAYOUT.spacing = 12;
 		LAYOUT.marginWidth = 12;
 		LAYOUT.marginHeight = 12;
     	final Display display = Display.getDefault();
@@ -111,13 +114,13 @@ public class SharedStyle {
      * to four corners of the {@link Shell} container. Useful for resizing.
      * 
      * @param top Top Control. null means top edge.
-     * @param left Left Control. null means left edge.
-     * @param bottom Bottom Control. null means bottom edge.
      * @param right Right Control. null means right edge.
+     * @param bottom Bottom Control. null means bottom edge.
+     * @param left Left Control. null means left edge.
      * @return layout data
      */
-    public static FormData relativeTo(final Control top, final Control left, 
-    		final Control bottom, final Control right) {
+    public static FormData relativeTo(final Control top, final Control right, 
+    		final Control bottom, final Control left) {
     	final FormData layout = relativeTo(top, left);
     	if (bottom != null) {
     		layout.bottom = new FormAttachment(bottom);

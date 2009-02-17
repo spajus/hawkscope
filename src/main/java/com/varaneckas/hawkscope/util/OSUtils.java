@@ -273,4 +273,13 @@ public abstract class OSUtils {
 			log.warn("Thread sleep interrupted", e);
 		}
 	}
+
+    public static int getTextTopOffsetAdjust() {
+        switch (CURRENT_OS) {
+        case WIN: 
+            return -2;
+        default:
+            return -5;
+        }
+    }
 }
