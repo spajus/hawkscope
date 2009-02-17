@@ -1,6 +1,7 @@
 package com.varaneckas.hawkscope.plugin;
 
 import java.io.File;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,6 +11,7 @@ import org.eclipse.swt.widgets.TabFolder;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
+import com.varaneckas.hawkscope.gui.settings.AbstractSettingsTabItem;
 import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MainMenu;
 
@@ -80,11 +82,7 @@ public abstract class PluginAdapter implements Plugin {
         return true;
     }
     
-    public void applySettings(Configuration cfg, TabFolder folder) {
-        log.debug("Skipping apply settings on plugin");
-    }
-    
-    public void enhanceSettings(final Configuration cfg, TabFolder folder) {
+    public void enhanceSettings(final TabFolder folder, final List<AbstractSettingsTabItem> tabItems) {
         log.debug("Skipping enhance settings on plugin");
     }
 

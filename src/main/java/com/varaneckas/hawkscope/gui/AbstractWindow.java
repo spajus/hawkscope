@@ -36,7 +36,8 @@ public abstract class AbstractWindow {
 	 * @param title Window title
 	 */
 	protected void createShell(final String title) {
-	    shell = new Shell(TrayManager.getInstance().getShell(), SWT.SHELL_TRIM);
+	    shell = new Shell(TrayManager.getInstance().getShell(), 
+	            SWT.SHELL_TRIM | SWT.DOUBLE_BUFFERED);
 	    shell.setLocation(shell.getParent().toDisplay(100, 100));
 	    shell.setImage(IconFactory.getInstance()
 	            .getUncachedIcon("hawkscope16.png"));

@@ -26,7 +26,7 @@ public class InputDialog {
         dialog.setImage(IconFactory.getInstance().getUncachedIcon(
                 "hawkscope16.png"));
         dialog.setText("Input Dialog");
-
+        
         FormLayout formLayout = new FormLayout();
         formLayout.marginWidth = 10;
         formLayout.marginHeight = 10;

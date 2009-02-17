@@ -35,7 +35,7 @@ public class OpenWithPlugin extends PluginAdapter {
     
     private String unknownFileApp = null;
     
-    private final OpenWithPluginSettings settings;
+    private OpenWithSettingsTabItem openWithTab;
     
     private static final OpenWithPlugin instance = new OpenWithPlugin();
     
@@ -47,7 +47,6 @@ public class OpenWithPlugin extends PluginAdapter {
         canEnhanceFolderMenu = true;
         canInterceptClick = true;
         refresh();
-        settings = new OpenWithPluginSettings();
     }
     
     public void refresh() {
@@ -104,7 +103,8 @@ public class OpenWithPlugin extends PluginAdapter {
     @Override
     public void enhanceSettings(TabFolder settingsTabFolder,
             List<AbstractSettingsTabItem> tabList) {
-        settings.enhance(settingsTabFolder, tabList);
+        openWithTab = new OpenWithSettingsTabItem(settingsTabFolder);
+        tabList.add(openWithTab);
     }
    
 }
