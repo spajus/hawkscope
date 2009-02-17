@@ -127,4 +127,28 @@
         	    <tarfileset file="license.txt" prefix="usr/share/hawkscope"/>
 	        </deb>
     </target>
+    
+    <target name="dist-source" description="Creates a source distribution">
+        <delete dir="dist/output" failonerror="no" quiet="true" />
+        <mkdir dir="dist/output/source"/>
+        <copy overwrite="true" todir="dist/output/source" filtering="true">
+            <fileset dir=".">
+                <exclude name=".svn/"/>
+                <exclude name="dist/"/>
+                <exclude name=".project"/>
+                <exclude name=".settings/"/>
+                <exclude name=".classpath"/>
+                <exclude name="target/"/>
+            </fileset>
+        </copy>
+        <tar destfile="dist/output/hawkscope-${hawkscope.version}-src.tar">
+            <fileset dir="dist/output/source"/>
+        </tar>
+        <gzip src="dist/output/hawkscope-${hawkscope.version}-src.tar" 
+            destfile="dist/output/hawkscope-${hawkscope.version}-src.tar.gz"/>
+        <zip destfile="dist/output/hawkscope-${hawkscope.version}-src.zip">
+            <fileset dir="dist/output/source"/>
+        </zip>        
+    </target>
+    
 </project>
