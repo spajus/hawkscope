@@ -87,6 +87,7 @@ public class InputDialog {
         dialog.setDefaultButton(ok);
         dialog.setTabList(new Control[] { text, ok, cancel });
         dialog.pack();
+        WindowFactory.centerShell(dialog);
         dialog.open();
     }
 

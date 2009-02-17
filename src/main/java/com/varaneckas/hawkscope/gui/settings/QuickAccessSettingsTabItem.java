@@ -74,7 +74,7 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
                 null, null, null);
         layout.bottom = null;
         layout.left = null;
-        layout.width = 30;
+        layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         buttonAddQa.setLayoutData(layout);
         buttonAddQa.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -102,7 +102,7 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         FormData layout = SharedStyle.relativeTo(buttonAddQa, null, null, null);
         layout.bottom = null;
         layout.left = null;
-        layout.width = 30;
+        layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         buttonDelQa.setLayoutData(layout);
         buttonDelQa.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -120,7 +120,7 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         FormData layout = SharedStyle.relativeTo(null, null, buttonDnQa, null);
         layout.top = null;
         layout.left = null;
-        layout.width = 30;
+        layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         buttonUpQa.setLayoutData(layout);
         buttonUpQa.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -146,7 +146,7 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         FormData layout = SharedStyle.relativeTo(null, null, null, null);
         layout.top = null;
         layout.left = null;
-        layout.width = 30;
+        layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         buttonDnQa.setLayoutData(layout);
         buttonDnQa.addSelectionListener(new SelectionAdapter() {
             @Override

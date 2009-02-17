@@ -47,6 +47,11 @@ public abstract class PluginAdapter implements Plugin {
     protected Log log = LogFactory.getLog(getClass());
     
     /**
+     * Tells if plugin is enabled
+     */
+    protected boolean enabled = true;
+    
+    /**
      * @see Plugin#canEnhanceFileMenuItem()
      */
     protected boolean canEnhanceFileMenuItem = false;
@@ -170,12 +175,19 @@ public abstract class PluginAdapter implements Plugin {
             final List<AbstractSettingsTabItem> tabItems) {
         log.debug("Skipping enhance settings on plugin");
     }
-
+    
     /**
-     * @see Plugin#getId()
+     * @see Plugin#isEnabled()
      */
-    public String getId() {
-        return getClass().getSimpleName();
+    public boolean isEnabled() {
+    	return enabled;
     }
     
+    /**
+     * @see Plugin#setEnabled(boolean)
+     */
+    public void setEnabled(final boolean enabled) {
+    	this.enabled = enabled;
+    }
+
 }

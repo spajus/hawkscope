@@ -77,11 +77,24 @@ public class OpenWithPlugin extends PluginAdapter {
         refresh();
     }
     
+	public String getDescription() {
+		return "Allows you to define custom applications to open chosen " +
+				"file types, folders and unknown files.";
+	}
+
+	public String getVersion() {
+		return "1.0";
+	}
+
+	public String getName() {
+		return "Open With";
+	}
+    
     public void refresh() {
-        Configuration cfg = ConfigurationFactory.getConfigurationFactory()
+        final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
                 .getConfiguration();
         apps.clear();
-        for (String key : cfg.getProperties().keySet()) {
+        for (final String key : cfg.getProperties().keySet()) {
             if (key.startsWith(PROP_FILE_TYPE_PREFIX)) {
                 String runner = cfg.getProperties().get(key);
                 apps.put(key.replaceFirst(PROP_FILE_TYPE_PREFIX, ""), 
@@ -93,7 +106,7 @@ public class OpenWithPlugin extends PluginAdapter {
     }
     
     @Override
-    public boolean interceptClick(File file) {
+    public boolean interceptClick(final File file) {
         String ext = file.getName().replaceAll(".*\\.", ".");
         if (ext.equals(file.getName())) {
             ext = "";
@@ -112,8 +125,8 @@ public class OpenWithPlugin extends PluginAdapter {
     }
     
     @Override
-    public void enhanceFolderMenu(final File file, MenuItem menu, Menu submenu,
-            FolderMenuItemListener listener) {
+    public void enhanceFolderMenu(final File file, final MenuItem menu, 
+    		final Menu submenu, final FolderMenuItemListener listener) {
         if (folderNavigator == null || folderNavigator.length() == 0) return;
         if (submenu.getItemCount() < 1) return;
         MenuItem open = submenu.getItem(0);
@@ -129,8 +142,8 @@ public class OpenWithPlugin extends PluginAdapter {
     }
     
     @Override
-    public void enhanceSettings(TabFolder settingsTabFolder,
-            List<AbstractSettingsTabItem> tabList) {
+    public void enhanceSettings(final TabFolder settingsTabFolder,
+            final List<AbstractSettingsTabItem> tabList) {
         openWithTab = new OpenWithSettingsTabItem(settingsTabFolder);
         tabList.add(openWithTab);
     }

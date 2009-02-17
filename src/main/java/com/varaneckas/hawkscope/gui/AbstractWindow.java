@@ -84,6 +84,7 @@ public abstract class AbstractWindow {
 	protected void packAndSetMinSize() {
 		shell.pack();
 		shell.setMinimumSize(shell.getSize());
+		WindowFactory.centerShell(shell);
 	}
 	
 	/**

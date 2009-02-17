@@ -86,7 +86,7 @@ public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
 	    buttonAddBlack = addButton("&+");
 	    final FormData layout = SharedStyle.relativeTo(blacklisted,
 	            null, null, null);
-	    layout.width = 30;
+	    layout.width = SharedStyle.BUTTON_MIN_WIDTH;
 	    layout.bottom = null;
 	    layout.left = null;
 	    buttonAddBlack.setLayoutData(layout);
@@ -114,7 +114,7 @@ public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
         buttonDelBlack = addButton("&-");
         final FormData layout = SharedStyle.relativeTo(buttonAddBlack, 
                 null, null, null);
-        layout.width = 30;
+        layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         layout.bottom = null;
         layout.left = null;
         buttonDelBlack.setLayoutData(layout); 

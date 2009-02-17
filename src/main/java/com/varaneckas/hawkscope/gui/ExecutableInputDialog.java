@@ -106,6 +106,7 @@ public class ExecutableInputDialog {
         dialog.setDefaultButton(ok);
         dialog.setTabList(new Control[] { text, choose, ok, cancel });
         dialog.pack();
+        WindowFactory.centerShell(dialog);
         dialog.open();
     }
 

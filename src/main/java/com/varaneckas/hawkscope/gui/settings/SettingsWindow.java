@@ -70,6 +70,7 @@ public class SettingsWindow extends AbstractWindow {
 		settingsTabs.add(new QuickAccessSettingsTabItem(tabFolderSettings));
 		settingsTabs.add(new BlackListSettingsTabItem(tabFolderSettings));
 		settingsTabs.add(new NetworkSettingsTabItem(tabFolderSettings));
+		settingsTabs.add(new PluginsSettingsTabItem(tabFolderSettings));
 		PluginManager.getInstance().enhanceSettings(tabFolderSettings, settingsTabs);
 	}
 	

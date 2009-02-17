@@ -18,7 +18,7 @@
 package com.varaneckas.hawkscope.plugin;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -27,6 +27,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
 
+import com.varaneckas.hawkscope.cfg.Configuration;
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.gui.settings.AbstractSettingsTabItem;
 import com.varaneckas.hawkscope.gui.settings.SettingsWindow;
@@ -60,13 +62,26 @@ public class PluginManager {
      */
     private PluginManager() {
         //FIXME playing around
+    	final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
+    		.getConfiguration();
         plugins.add(OpenWithPlugin.getInstance());
+        for (final Plugin p : plugins) {
+        	try {
+        		String enabled = cfg.getProperties().get("plugin." 
+	        			+ p.getClass().getName() + ".enabled");
+        		if (enabled != null) {
+        			p.setEnabled(enabled.equals("1") ? true : false); 
+        		}
+        	} catch (final Exception e) {
+        		log.warn("Failed checking if plugin enabled: " + p.getName());
+        	}
+        }
     }
     
     /**
-     * List of enabled {@link Plugin}s
+     * List of available {@link Plugin}s
      */
-    private final List<Plugin> plugins = new ArrayList<Plugin>();
+    private final List<Plugin> plugins = new LinkedList<Plugin>();
     
     /**
      * Gets the singleton instance of {@link PluginManager}
@@ -78,14 +93,29 @@ public class PluginManager {
     }
     
     /**
+     * Gets all {@link Plugin}s
+     * 
+     * @return
+     */
+    public List<Plugin> getAllPlugins() {
+    	return plugins;
+    }
+    
+    /**
      * Gets the list of active {@link Plugin}s
      * 
      * @return active plugins
      */
     public List<Plugin> getActivePlugins() {
-        return plugins;
+    	final List<Plugin> active = new LinkedList<Plugin>();
+    	for (final Plugin p : plugins) {
+    		if (p.isEnabled()) {
+    			active.add(p);
+    		}
+    	}
+        return active;
     }
-
+    
     /**
      * Enhances {@link FolderMenu} with Plugins
      * 
@@ -182,7 +212,7 @@ public class PluginManager {
                 plugin.enhanceSettings(settingsTabFolder, tabList);
             } catch (final Exception e) {
                 log.warn("Failed enhancing settings tab for plugin: " 
-                        + plugin.getId(), e);
+                        + plugin.getName(), e);
             }
         }
     }

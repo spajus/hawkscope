@@ -38,13 +38,41 @@ import com.varaneckas.hawkscope.menu.MainMenu;
  * @version $Id$
  */
 public interface Plugin {
+	
+	/**
+	 * Tells if plugin is enabled
+	 * 
+	 * @return
+	 */
+	public boolean isEnabled();
+	
+	/**
+	 * Sets plugin as enabled or disabled 
+	 * 
+	 * @param enabled
+	 */
+	public void setEnabled(final boolean enabled);
     
     /**
-     * Gets plugin ID (name)
+     * Gets plugin name
      * 
-     * @return plugin ID
+     * @return plugin Human readable name
      */
-    public String getId();
+    public String getName();
+    
+    /**
+     * Gets plugin description
+     * 
+     * @return description text
+     */
+    public String getDescription();
+    
+    /**
+     * Gets plugin version
+     * 
+     * @return plugin version number
+     */
+    public String getVersion();
     
     /**
      * Tells if plugin can enhance {@link FolderMenu}

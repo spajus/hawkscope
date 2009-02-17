@@ -135,7 +135,7 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
     private void createButtonDel() {
         buttonDel = addButton("&-");
         final FormData layout = SharedStyle.relativeTo(buttonAdd, null, null, null);
-        layout.width = 30;
+        layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         layout.bottom = null;
         layout.left = null;
         buttonDel.setLayoutData(layout);
@@ -158,7 +158,7 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
         final FormData layout = SharedStyle.relativeTo(labelPreferredApps, null, null, null);
         layout.bottom = null;
         layout.left = null;
-        layout.width = 30;
+        layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         buttonAdd.setLayoutData(layout);
         buttonAdd.addListener(SWT.Selection, new Listener() {
             public void handleEvent(final Event ev) {

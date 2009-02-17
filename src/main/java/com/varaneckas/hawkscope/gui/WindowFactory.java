@@ -19,7 +19,10 @@ package com.varaneckas.hawkscope.gui;
 
 import java.lang.Thread.UncaughtExceptionHandler;
 
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.gui.settings.SettingsWindow;
@@ -59,6 +62,19 @@ public class WindowFactory {
             aboutWindow = new AboutWindow();
         }
         return aboutWindow;
+    }
+    
+    /**
+     * Makes a shell appear in center of the screen
+     * 
+     * @param target target shell
+     */
+    public static void centerShell(final Shell target) {
+    	final Point size = target.getSize();
+    	final Rectangle bounds = target.getDisplay().getBounds();
+    	final int x = bounds.width / 2 - size.x / 2;
+    	final int y = bounds.height / 2 - size.y / 2;
+    	target.setLocation(x, y);
     }
     
     /**

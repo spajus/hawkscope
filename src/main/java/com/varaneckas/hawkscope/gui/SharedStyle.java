@@ -44,6 +44,11 @@ public class SharedStyle {
 	 */
 	public static final FormLayout LAYOUT = new FormLayout();
 	
+	/**
+	 * Minimum Button width
+	 */
+	public static final int BUTTON_MIN_WIDTH = 50;
+	
     /**
      * Bold font
      */
