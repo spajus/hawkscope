@@ -25,6 +25,9 @@ public class TrayIconListener implements Listener {
      */
     private static final Log log = LogFactory.getLog(TrayIconListener.class);
     
+    /**
+     * Handles tray events
+     */
     public void handleEvent(final Event event) {
         try {
             final StateEvent se = findPopupMenuLocation();

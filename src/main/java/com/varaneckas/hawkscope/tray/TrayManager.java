@@ -22,10 +22,21 @@ import com.varaneckas.hawkscope.util.OSUtils.OS;
  */
 public class TrayManager {
 	
+    /**
+     * Singleton instance
+     */
 	private static final TrayManager instance = new TrayManager();
 	
+	/**
+	 * Singleton constructor
+	 */
 	private TrayManager() {}
 	
+	/**
+	 * Gets the singleton instance 
+	 * 
+	 * @return
+	 */
 	public static TrayManager getInstance() {
 		return instance;
 	}
@@ -50,6 +61,11 @@ public class TrayManager {
      */
     private static final Shell sh = new Shell(d);
 
+    /**
+     * Gets the {@link TrayItem}
+     * 
+     * @return tray icon object
+     */
     public TrayItem getTrayIcon() {
         return trayIcon;
     }
@@ -63,6 +79,9 @@ public class TrayManager {
         return sh;
     }
     
+    /**
+     * Loads the tray item
+     */
     public void load() {
         trayIcon = new TrayItem(d.getSystemTray(), SWT.NONE);
         trayIcon.setImage(IconFactory.getInstance().getTrayIcon());

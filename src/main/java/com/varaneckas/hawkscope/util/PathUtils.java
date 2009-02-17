@@ -116,6 +116,12 @@ public abstract class PathUtils {
     	return OSUtils.isFloppyDrive(file);
     }
     
+    /**
+     * Removes the sanitizing from path string
+     * 
+     * @param path
+     * @return
+     */
     public static String unsanitizePath(final String path) {
         if (OSUtils.CURRENT_OS.equals(OSUtils.OS.WIN)) {
             return path.replaceAll("/", "\\\\");
@@ -123,6 +129,12 @@ public abstract class PathUtils {
         return path;
     }
     
+    /**
+     * Sanitizes the path string (cleanup Windows backslashes)
+     * 
+     * @param path
+     * @return
+     */
     public static String sanitizePath(final String path) {
         if (OSUtils.CURRENT_OS.equals(OSUtils.OS.WIN)) {
             return path.replaceAll("\\\\", "/");

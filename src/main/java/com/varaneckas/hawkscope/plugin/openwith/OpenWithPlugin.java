@@ -17,17 +17,28 @@ import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.gui.settings.AbstractSettingsTabItem;
+import com.varaneckas.hawkscope.plugin.Plugin;
 import com.varaneckas.hawkscope.plugin.PluginAdapter;
 import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.PathUtils;
 
+/**
+ * Hawkscope {@link Plugin} that allows opening application types and folders
+ * with custom commands.
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class OpenWithPlugin extends PluginAdapter {
     
-    public static final String PROP_FOLDER_NAVIGATOR = "plugin.openwith.folder.navigator";
+    public static final String PROP_FOLDER_NAVIGATOR = 
+        "plugin.openwith.folder.navigator";
     
-    public static final String PROP_UNKNOWN_FILE_APP = "plugin.openwith.unknown.files";
+    public static final String PROP_UNKNOWN_FILE_APP = 
+        "plugin.openwith.unknown.files";
     
-    public static final String PROP_FILE_TYPE_PREFIX = "plugin.openwith.type.";
+    public static final String PROP_FILE_TYPE_PREFIX = 
+        "plugin.openwith.type.";
 	
     private static final Map<String, String> apps = new HashMap<String, String>();
     

@@ -10,19 +10,43 @@ import javax.swing.filechooser.FileSystemView;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Text;
 
+/**
+ * Operating System specific utilities.
+ * 
+ * Used for places where different OS acts differently.
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public abstract class OSUtils {
 	
+    /**
+     * Logger
+     */
 	private static final Log log = LogFactory.getLog(OSUtils.class);
 
+	/**
+	 * Supported Operating Systems
+	 * 
+	 * @author Tomas Varaneckas
+	 * @version $Id$
+	 */
 	public enum OS {
 		MAC, WIN, UNIX, UNKNOWN
 	}
 
+	/**
+	 * Current Operating System
+	 */
 	public static final OS CURRENT_OS = getCurrentOS();
 
+	/**
+	 * Gets the current operating system
+	 * 
+	 * @return
+	 */
 	private static OS getCurrentOS() {
 		String os = System.getProperty("os.name", "unknown").toLowerCase();
 		if (os.startsWith("win")) {
@@ -38,6 +62,11 @@ public abstract class OSUtils {
 		return OS.UNKNOWN;
 	}
 
+	/**
+	 * Gets the tray icon size
+	 * 
+	 * @return
+	 */
 	public static int getTrayIconSize() {
 		//experimental
 		if (System.getProperty("java.version").compareTo("1.6") >= 0) {
@@ -65,6 +94,11 @@ public abstract class OSUtils {
 		return 16;
 	}
 
+	/**
+	 * Gets the system tray (menubar, panel, whatever) size
+	 * 
+	 * @return
+	 */
 	public static int getTraySize() {
 		if (CURRENT_OS.equals(OS.MAC)) {
 			return 26;
@@ -72,6 +106,12 @@ public abstract class OSUtils {
 		return getTrayIconSize();
 	}
 
+	/**
+	 * Gets file display name according to local OS
+	 * 
+	 * @param file
+	 * @return
+	 */
 	public static String getSystemDisplayName(final File file) {
 		if (!CURRENT_OS.equals(OS.MAC)) {
 			final FileSystemView fsw = FileSystemView.getFileSystemView();
@@ -80,6 +120,12 @@ public abstract class OSUtils {
 		return null;
 	}
 
+	/**
+	 * Tells if {@link File} is a floppy drive
+	 * 
+	 * @param file
+	 * @return
+	 */
 	public static boolean isFloppyDrive(final File file) {
 		if (CURRENT_OS.equals(OS.WIN)) {
 			return FileSystemView.getFileSystemView().isFloppyDrive(file);
@@ -87,6 +133,12 @@ public abstract class OSUtils {
 		return false;
 	}
 
+	/**
+	 * Tells if {@link File} is a file system root
+	 * 
+	 * @param file
+	 * @return
+	 */
 	public static boolean isFileSystemRoot(final File file) {
 		switch (CURRENT_OS) {
 		case MAC: {
@@ -108,20 +160,11 @@ public abstract class OSUtils {
 		}
 	}
 
-	public static void adjustButton(final Button button) {
-		if (!CURRENT_OS.equals(OS.MAC) || button == null) {
-			return;
-		}
-		final Object layout = button.getLayoutData();
-		int offset = 15;
-		if (layout instanceof FormData) {
-			((FormData) layout).width += offset;
-			if (((FormData) layout).left != null) {
-				((FormData) layout).left.offset -= offset / 2;
-			}
-		}
-	}
-
+	/**
+	 * Gets the File System Roots
+	 * 
+	 * @return
+	 */
 	public static List<File> getFileSystemRoots() {
 		final List<File> roots = new LinkedList<File>();
 		switch (CURRENT_OS) {
@@ -161,6 +204,12 @@ public abstract class OSUtils {
 		}
 	}
 	
+	/**
+	 * Tells if {@link File} is an optical drive
+	 * 
+	 * @param file
+	 * @return
+	 */
 	public static boolean isOpticalDrive(final File file) {
 	    if (!file.isDirectory()) {
 	        return false;
@@ -176,6 +225,12 @@ public abstract class OSUtils {
 	    return name.matches(".*(cdrom|dvd).*");
 	}
 	
+	/**
+	 * Tells if file is a network drive
+	 * 
+	 * @param file
+	 * @return
+	 */
 	public static boolean isNetworkDrive(final File file) {
 	    if (!file.isDirectory()) {
 	        return false;
@@ -187,6 +242,12 @@ public abstract class OSUtils {
 	        .matches(".*(server|network|remote).*");
 	}
 
+	/**
+	 * Tells if file is a removable drive
+	 * 
+	 * @param file
+	 * @return
+	 */
 	public static boolean isRemovableDrive(final File file) {
 	    if (!file.isDirectory()) {
 	        return false;
@@ -202,6 +263,12 @@ public abstract class OSUtils {
         return name.matches(".*(usb|flash|removable).*");
 	}
 	
+	/**
+	 * Tells if file is executable
+	 * 
+	 * @param file
+	 * @return
+	 */
 	public static boolean isExecutable(final File file) {
 	    final String filePath = file.getAbsolutePath().toLowerCase();
 	    switch (CURRENT_OS) {
@@ -232,6 +299,12 @@ public abstract class OSUtils {
         }
 	}
 	
+	/**
+	 * Tells if file is a Mac application
+	 * 
+	 * @param file
+	 * @return
+	 */
 	public static boolean isMacApp(final File file) {
 	    if (CURRENT_OS.equals(OS.MAC) && file != null) {
 	        return file.isDirectory() 
@@ -240,6 +313,13 @@ public abstract class OSUtils {
 	    return false;
 	}
 
+	/**
+	 * Executes app with parameters
+	 * 
+	 * @param app command
+	 * @param params parameters
+	 * @return needs further execution? (when failed, returns true, otherwise false)
+	 */
 	public static boolean exec(String app, String params) {
 		try {
 			switch (CURRENT_OS) {
@@ -261,11 +341,17 @@ public abstract class OSUtils {
 			Runtime.getRuntime().exec(app + " " + params);
 			return false;
 		} catch (final Exception e) {
-			log.warn("Failed executing app " + app + " with params: " + params, e);
+			log.warn("Failed executing app " + app + " with params: " 
+			        + params, e);
 		}
 		return true;
 	}
 	
+	/**
+	 * Sleep for some milliseconds. No exceptions.
+	 * 
+	 * @param millis 
+	 */
 	public static void sleep(final long millis) {
 		try {
 			Thread.sleep(millis);
@@ -274,6 +360,11 @@ public abstract class OSUtils {
 		}
 	}
 
+	/**
+	 * Gets SWT {@link Text} top offset adjustment. Apply manually.
+	 * 
+	 * @return
+	 */
     public static int getTextTopOffsetAdjust() {
         switch (CURRENT_OS) {
         case WIN: 

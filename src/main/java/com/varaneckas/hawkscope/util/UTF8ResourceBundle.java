@@ -6,9 +6,25 @@ import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
+/**
+ * Unicode resource bundle implementation
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public abstract class UTF8ResourceBundle {
-    public static final ResourceBundle getBundle(String baseName, ClassLoader loader) {
-        ResourceBundle bundle = ResourceBundle.getBundle(baseName, Locale.ENGLISH, loader);
+    
+    /**
+     * Gets the utf8 friendly bundle
+     * 
+     * @param baseName
+     * @param loader
+     * @return
+     */
+    public static final ResourceBundle getBundle(final String baseName, 
+            final ClassLoader loader) {
+        final ResourceBundle bundle = ResourceBundle.getBundle(baseName, 
+                Locale.ENGLISH, loader);
         return createUtf8PropertyResourceBundle(bundle);
     }
 
@@ -20,7 +36,8 @@ public abstract class UTF8ResourceBundle {
     }
 
     private static class UTF8PropertyResourceBundle extends ResourceBundle {
-        PropertyResourceBundle bundle;
+        
+        private PropertyResourceBundle bundle;
 
         private UTF8PropertyResourceBundle(PropertyResourceBundle bundle) {
             this.bundle = bundle;
@@ -33,13 +50,13 @@ public abstract class UTF8ResourceBundle {
         }
 
         @Override
-        protected Object handleGetObject(String key) {
+        protected Object handleGetObject(final String key) {
             String value = bundle.getString(key);
             if (value == null)
                 return null;
             try {
                 return new String(value.getBytes("ISO-8859-1"), "UTF-8");
-            } catch (UnsupportedEncodingException e) {
+            } catch (final UnsupportedEncodingException e) {
                 return null;
             }
         }

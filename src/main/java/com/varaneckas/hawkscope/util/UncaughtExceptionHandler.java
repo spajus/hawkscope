@@ -24,6 +24,9 @@ public class UncaughtExceptionHandler implements java.lang.Thread.UncaughtExcept
     private static final Log log = LogFactory
             .getLog(UncaughtExceptionHandler.class);
     
+    /**
+     * Handles the uncaught {@link Exception}
+     */
     public void uncaughtException(final Thread t, final Throwable e) {
         Display display = Display.getCurrent();
         Shell shell = new Shell (display);

@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
+import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
@@ -21,9 +22,17 @@ import com.varaneckas.hawkscope.gui.ExecutableInputDialog;
 import com.varaneckas.hawkscope.gui.InputDialog;
 import com.varaneckas.hawkscope.gui.SharedStyle;
 import com.varaneckas.hawkscope.gui.settings.AbstractSettingsTabItem;
+import com.varaneckas.hawkscope.gui.settings.SettingsWindow;
+import com.varaneckas.hawkscope.plugin.Plugin;
 import com.varaneckas.hawkscope.util.PathUtils;
 import com.varaneckas.hawkscope.util.Updater;
 
+/**
+ * Open With {@link Plugin}'s {@link SettingsWindow} {@link TabItem}
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
 
     /**
@@ -71,7 +80,12 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
      */
     private Button buttonDel;
     
-    public OpenWithSettingsTabItem(TabFolder folder) {
+    /**
+     * Creates the {@link TabItem}
+     * 
+     * @param folder Settings {@link TabFolder}
+     */
+    public OpenWithSettingsTabItem(final TabFolder folder) {
         super(folder, "Open &With");
         //Special Applications
         labelSpecialApps = addSectionLabel("Special Applications");
@@ -97,6 +111,10 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
         createTablePreferredApps();
     }
     
+    /**
+     * Creates {@link Button} that deletes items from preferred applications 
+     * {@link Table}
+     */
     private void createButtonDel() {
         buttonDel = addButton("&-");
         final FormData layout = SharedStyle.relativeTo(buttonAdd, null, null, null);
@@ -114,6 +132,10 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
         });
     }
 
+    /**
+     * Creates {@link Button} that adds item to preferred applications 
+     * {@link Table}
+     */    
     private void createButtonAdd() {
         buttonAdd = addButton("&+");
         final FormData layout = SharedStyle.relativeTo(labelPreferredApps, null, null, null);
@@ -140,7 +162,6 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
      * Creates {@link Table} for storing preferred applications
      * 
      * @see #tablePreferred
-     * @param cfg Configuration object
      */
     private void createTablePreferredApps() {
         tablePreferred = new Table(container, SWT.MULTI | SWT.BORDER
@@ -171,11 +192,15 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
         new AppTableEditor(tablePreferred);
     }
 
+    /**
+     * Creates input for defining default file application
+     */
     private void createTextFileDef() {
         final String fileDef = cfg.getProperties()
                 .get(OpenWithPlugin.PROP_UNKNOWN_FILE_APP);
         textFileDef = addText(fileDef == null ? "" : fileDef, 0);
-        final FormData layout = SharedStyle.relativeTo(labelFolderNav, null, null, labelSpecialApps);
+        final FormData layout = SharedStyle.relativeTo(labelFolderNav, 
+                null, null, labelSpecialApps);
         layout.bottom = null;
         layout.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
         textFileDef.setLayoutData(layout);
@@ -195,11 +220,15 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
         
     }
 
+    /**
+     * Creates input for defining the folder navigator application
+     */
     private void createTextFolderNav() {
         final String folderNav = cfg.getProperties().get(
                 OpenWithPlugin.PROP_FOLDER_NAVIGATOR);
         textFolderNav = addText(folderNav == null ? "" : folderNav, 0);
-        FormData layout = SharedStyle.relativeTo(labelSpecialApps, null, null, labelSpecialApps);
+        FormData layout = SharedStyle.relativeTo(labelSpecialApps, 
+                null, null, labelSpecialApps);
         layout.bottom = null;
         layout.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
         textFolderNav.setLayoutData(layout);
@@ -288,6 +317,4 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
         }
         OpenWithPlugin.getInstance().refresh();
     }
-    
-
 }

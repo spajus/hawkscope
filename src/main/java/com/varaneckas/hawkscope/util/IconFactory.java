@@ -24,14 +24,28 @@ import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
  */
 public class IconFactory {
 
+    /**
+     * Singleton instance
+     */
 	private static final IconFactory instance = new IconFactory();
 	
+	/**
+	 * Singleton constructor
+	 */
 	private IconFactory() {}
 	
+	/**
+	 * Gets the singleton instance
+	 * 
+	 * @return
+	 */
 	public static IconFactory getInstance() {
 		return instance;
 	}
 	
+	/**
+	 * Image Resource Pool
+	 */
     private final Map<String, Image> resourcePool = new HashMap<String, Image>();
     
     /**
@@ -121,6 +135,9 @@ public class IconFactory {
         return trayIcon;
     }
     
+    /**
+     * Releases the resources
+     */
     public synchronized void cleanup() {
         for (final String im : resourcePool.keySet()) {
             try {

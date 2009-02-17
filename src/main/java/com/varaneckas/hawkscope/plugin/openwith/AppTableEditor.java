@@ -13,9 +13,19 @@ import org.eclipse.swt.widgets.Text;
 import com.varaneckas.hawkscope.gui.ExecutableInputDialog;
 import com.varaneckas.hawkscope.util.Updater;
 
-
+/**
+ * Preferred Application {@link TableEditor}
+ * 
+ * @author Tomas Varaneckas
+ * @version $Id$
+ */
 public class AppTableEditor {
 
+    /**
+     * Creates the TableEditor on {@link Table}
+     * 
+     * @param table Preferred Application {@link Table}
+     */
     public AppTableEditor(final Table table) {
         final TableEditor editor = new TableEditor(table);
         editor.horizontalAlignment = SWT.LEFT;
@@ -46,7 +56,7 @@ public class AppTableEditor {
                                 return;
                             }
                             final Text text = new Text(table, SWT.NONE);
-                            Listener textListener = new Listener() {
+                            final Listener textListener = new Listener() {
                                 public void handleEvent(final Event e) {
                                     switch (e.type) {
                                     case SWT.FocusOut:

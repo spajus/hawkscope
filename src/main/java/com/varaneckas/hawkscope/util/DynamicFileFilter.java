@@ -42,6 +42,11 @@ public class DynamicFileFilter implements FileFilter {
         return instance;
     }
     
+    /**
+     * Accepts file according to Hawkscope settings
+     * 
+     * @see FileFilter#accept(File)
+     */
     public boolean accept(final File file) {
         if (!cfg.isHiddenFilesDisplayed()) {
             if (file.isHidden()) {
