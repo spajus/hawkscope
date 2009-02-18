@@ -35,19 +35,47 @@ import com.varaneckas.hawkscope.plugin.PluginManager;
 
 /**
  * Settings Window
+ * +------------------------------------------------------------------------+
+ * | {@link #tabFolderSettings}                                             |
+ * |                                                                        |
+ * |                                {@link #buttonOk} {@link #buttonCancel} |
+ * +------------------------------------------------------------------------+
  * 
  * @author Tomas Varaneckas
  * @version $Id$
  */
 public class SettingsWindow extends AbstractWindow {
 	
+    /**
+     * Settings {@link TabFolder}
+     * 
+     * @see #createTabFolderSettings()
+     */
 	private TabFolder tabFolderSettings;
 	
+	/**
+	 * Cancel {@link Button}
+	 * 
+	 * @see #createButtonCancel()
+	 */
 	private Button buttonCancel;
 	
+	/**
+	 * OK (Save) {@link Button}
+	 * 
+	 * @see #createButtonOk()
+	 */
+	private Button buttonOk;
+	
+	/**
+	 * List of settings tabs
+	 */
 	private final List<AbstractSettingsTabItem> settingsTabs = 
 	        new ArrayList<AbstractSettingsTabItem>();
 	
+	/**
+	 * Configuration
+	 */
 	private final Configuration cfg = ConfigurationFactory
 			.getConfigurationFactory().getConfiguration();
 	
@@ -61,6 +89,9 @@ public class SettingsWindow extends AbstractWindow {
 		shell.open();
 	}
 	
+	/**
+	 * Creates Settings {@link TabFolder}
+	 */
 	private void createTabFolderSettings() {
 		tabFolderSettings = new TabFolder(shell, SWT.NONE);
 		tabFolderSettings.setLayoutData(SharedStyle.relativeTo(null, null, 
@@ -89,11 +120,14 @@ public class SettingsWindow extends AbstractWindow {
 	     });
 	}
 	
+	/**
+	 * Creates OK button
+	 */
 	private void createButtonOk() {
-	    final Button ok = new Button(shell, SWT.PUSH);
-	    ok.setText("&OK");
-	    ok.setLayoutData(SharedStyle.relativeToBottomRight(buttonCancel));
-	    ok.addSelectionListener(new SelectionAdapter() {
+	    buttonOk = new Button(shell, SWT.PUSH);
+	    buttonOk.setText("&OK");
+	    buttonOk.setLayoutData(SharedStyle.relativeToBottomRight(buttonCancel));
+	    buttonOk.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent event) {
                 saveConfiguration();
@@ -103,6 +137,9 @@ public class SettingsWindow extends AbstractWindow {
         });
 	}
 	
+	/**
+	 * Saves configuration
+	 */
 	private void saveConfiguration() {
 	    for (final AbstractSettingsTabItem tab : settingsTabs) {
 	        tab.saveConfiguration();
@@ -110,8 +147,13 @@ public class SettingsWindow extends AbstractWindow {
 	    ConfigurationFactory.getConfigurationFactory().write(cfg);
 	}
 	
-	public static void main(String[] args) {
-		SettingsWindow w = new SettingsWindow();
+	/**
+	 * Launcher for testing when in development
+	 * 
+	 * @param args
+	 */
+	public static void main(final String[] args) {
+		final SettingsWindow w = new SettingsWindow();
 		w.open();
 	    while (!w.shell.isDisposed()) {
 	        if (!w.shell.getDisplay().readAndDispatch())

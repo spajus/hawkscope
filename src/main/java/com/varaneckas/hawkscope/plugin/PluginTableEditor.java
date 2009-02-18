@@ -27,7 +27,7 @@ import com.varaneckas.hawkscope.gui.BasicTableEditor;
  * Plugin {@link TableEditor}
  * 
  * @author Tomas Varaneckas
- * @version $Id: AppTableEditor.java 250 2009-02-17 13:10:44Z tomas.varaneckas $
+ * @version $Id$
  */
 public class PluginTableEditor extends BasicTableEditor {
 
