@@ -84,7 +84,7 @@ public class SettingsWindow extends AbstractWindow {
 	    buttonCancel.addSelectionListener(new SelectionAdapter() {
 	        @Override
 	        public void widgetSelected(final SelectionEvent event) {
-	            shell.setVisible(false);
+	            shell.dispose();
 	        } 
 	     });
 	}
@@ -97,7 +97,7 @@ public class SettingsWindow extends AbstractWindow {
             @Override
             public void widgetSelected(final SelectionEvent event) {
                 saveConfiguration();
-                shell.setVisible(false);
+                shell.dispose();
                 MenuFactory.getMainMenu().reloadMenu(false);
             }
         });

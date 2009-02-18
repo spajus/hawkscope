@@ -223,6 +223,7 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
         textFileDef.setLayoutData(layout);
         textFileDef.addListener(SWT.MouseDoubleClick, new Listener() {
             public void handleEvent(final Event ev) {
+                textFileDef.setSelection(0);
                 ExecutableInputDialog.open(
                         "Choose executable for opening unknown files", 
                         textFileDef.getText(), textFileDef.getShell(), 
@@ -251,6 +252,7 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
         textFolderNav.setLayoutData(layout);
         textFolderNav.addListener(SWT.MouseDoubleClick, new Listener() {
             public void handleEvent(final Event ev) {
+                textFolderNav.setSelection(0);
                 ExecutableInputDialog.open(
                         "Choose executable for opening directories", 
                         textFolderNav.getText(), 

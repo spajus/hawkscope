@@ -174,5 +174,4 @@ public interface Plugin {
     public void enhanceSettings(final TabFolder settingsTabFolder, 
             final List<AbstractSettingsTabItem> tabList);
 
-    
 }

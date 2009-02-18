@@ -25,6 +25,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
@@ -114,6 +115,11 @@ public class Configuration {
      */
     public static final String MAC_MENUBAR_BLUES_WORKAROUND = 
     	"mac.menubar.blues.workaround";
+    
+    /**
+     * Plugin location directory
+     */
+    public static final String PLUGIN_DIR = "plugin.dir";
     
     /**
      * Properties {@link Map}
@@ -304,6 +310,22 @@ public class Configuration {
                     + ", defaulting to 8080: " + e.getMessage());
         }
         return port;
+    }
+    
+    /**
+     * Gets plugin location directory
+     * 
+     * @return
+     */
+    public File getPluginLocation() {
+       final String dir = PathUtils.interpret(properties.get(PLUGIN_DIR));
+       final File pluginDir = new File(dir);
+       if (!pluginDir.isDirectory()) {
+           if (!pluginDir.mkdir()) {
+               return null;
+           }
+       }
+       return pluginDir;
     }
     
 }

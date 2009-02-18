@@ -78,7 +78,8 @@ public class OpenWithPlugin extends PluginAdapter {
     }
     
 	public String getDescription() {
-		return "Allows you to define custom applications to open chosen " +
+		return "A built-in plugin that allows you to define custom " +
+				"applications to open chosen " +
 				"file types, folders and unknown files.";
 	}
 
@@ -147,5 +148,5 @@ public class OpenWithPlugin extends PluginAdapter {
         openWithTab = new OpenWithSettingsTabItem(settingsTabFolder);
         tabList.add(openWithTab);
     }
-   
+
 }

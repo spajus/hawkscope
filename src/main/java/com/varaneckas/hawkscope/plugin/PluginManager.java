@@ -18,8 +18,12 @@
 package com.varaneckas.hawkscope.plugin;
 
 import java.io.File;
+import java.lang.reflect.Method;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -48,9 +52,15 @@ import com.varaneckas.hawkscope.plugin.openwith.OpenWithPlugin;
 public class PluginManager {
     
     /**
+     * Hawkscope configuration
+     */
+    private final Configuration cfg = ConfigurationFactory
+            .getConfigurationFactory().getConfiguration();
+    
+    /**
      * Singleton instance
      */
-    private static final PluginManager instance = new PluginManager();
+    private static PluginManager instance = null;
     
     /**
      * Logger
@@ -62,9 +72,9 @@ public class PluginManager {
      */
     private PluginManager() {
         //FIXME playing around
-    	final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
-    		.getConfiguration();
-        plugins.add(OpenWithPlugin.getInstance());
+    	
+        addBuiltInPlugins();
+        findExternalPlugins();
         for (final Plugin p : plugins) {
         	try {
         		String enabled = cfg.getProperties().get("plugin." 
@@ -76,6 +86,68 @@ public class PluginManager {
         		log.warn("Failed checking if plugin enabled: " + p.getName());
         	}
         }
+    }
+
+    /**
+     * Finds and loads external plugins
+     */
+    private void findExternalPlugins() {
+        final File pluginDir = cfg.getPluginLocation();
+        if (pluginDir == null) {
+            return;
+        }
+        final String[] pluginJars = pluginDir.list();
+        if (pluginJars == null) {
+            log.debug("Found 0 plugins");
+            return;
+        }
+        log.debug("Found " + pluginJars.length + " plugins");
+        for (final String jar : pluginJars) {
+            if (jar.endsWith(".jar")) {
+                processPlugin(pluginDir, jar);
+            }
+        }
+    }
+
+    private void processPlugin(final File pluginDir, final String jar) {
+        try {
+            final File jarFile = new File(pluginDir.getAbsolutePath() 
+                    + "/" + jar);
+            log.debug(jarFile.getAbsoluteFile());
+            final URLClassLoader classLoader = 
+                new URLClassLoader(new URL[] {jarFile.toURI().toURL()});
+            Scanner s = new Scanner(classLoader
+                    .getResourceAsStream("plugin.loader"));;
+            String pluginClass = s.nextLine();
+            s.close();
+            log.debug("Plugin :" + pluginClass);
+            final Class<?> p = classLoader.loadClass(pluginClass);
+            Method creator = null;
+            try {
+                creator = p.getMethod("getInstance", new Class[] {});
+            } catch (final NoSuchMethodException no) {
+                //so singleton getter found...
+            }
+            Plugin plugin;
+            if (creator == null) {
+                plugin = (Plugin) p.newInstance();
+            } else {
+                plugin = (Plugin) creator.invoke(p, new Object[] {});
+            }
+            if (plugin != null) {
+                log.debug("Adding plugin: " + plugin);
+                getAllPlugins().add(plugin);
+            }
+        } catch (final Exception e) {
+            log.warn("Failed loading plugin: " + jar, e);
+        }
+    }
+
+    /**
+     * Adds built-in plugins
+     */
+    private void addBuiltInPlugins() {
+        plugins.add(OpenWithPlugin.getInstance());
     }
     
     /**
@@ -89,6 +161,9 @@ public class PluginManager {
      * @return singleton instance
      */
     public static PluginManager getInstance() {
+        if (instance == null) {
+            instance = new PluginManager();
+        }
         return instance;
     }
     

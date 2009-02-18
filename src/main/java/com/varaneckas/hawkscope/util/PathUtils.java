@@ -80,7 +80,7 @@ public abstract class PathUtils {
      * @param location
      * @return
      */
-    private static String interpret(final String location) {
+    public static String interpret(final String location) {
         if (!location.matches(".*" + INTERPRET_REGEX + ".*")) {
             return location;
         } else {

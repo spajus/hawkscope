@@ -36,16 +36,6 @@ import com.varaneckas.hawkscope.gui.settings.SettingsWindow;
 public class WindowFactory {
 	
     /**
-     * AboutWindow instance
-     */
-    private static AbstractWindow aboutWindow = null;
-    
-    /**
-     * SettingsWindow instance
-     */
-    private static SettingsWindow settingsWindow = null;
-
-    /**
      * Initializes the application GUI 
      */
     public static void initialize() {
@@ -58,10 +48,7 @@ public class WindowFactory {
      * @return instance of About Window
      */
     public static AbstractWindow getAboutWindow() {
-        if (aboutWindow == null) {
-            aboutWindow = new AboutWindow();
-        }
-        return aboutWindow;
+        return new AboutWindow();
     }
     
     /**
@@ -71,7 +58,8 @@ public class WindowFactory {
      */
     public static void centerShell(final Shell target) {
     	final Point size = target.getSize();
-    	final Rectangle bounds = target.getDisplay().getBounds();
+    	final Rectangle bounds = target.getDisplay().getPrimaryMonitor()
+    	        .getBounds();
     	final int x = bounds.width / 2 - size.x / 2;
     	final int y = bounds.height / 2 - size.y / 2;
     	target.setLocation(x, y);
@@ -83,10 +71,7 @@ public class WindowFactory {
      * @return instance of Settings Window
      */
     public static SettingsWindow getSettingsWindow() {
-        if (settingsWindow == null) {
-            settingsWindow = new SettingsWindow();
-        }
-        return settingsWindow;
+        return new SettingsWindow();
     }
     
     /**

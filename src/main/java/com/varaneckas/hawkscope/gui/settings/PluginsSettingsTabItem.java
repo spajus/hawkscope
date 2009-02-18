@@ -17,22 +17,32 @@
  */
 package com.varaneckas.hawkscope.gui.settings;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.program.Program;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.DirectoryDialog;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 
 import com.varaneckas.hawkscope.gui.SharedStyle;
 import com.varaneckas.hawkscope.plugin.Plugin;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.plugin.PluginTableEditor;
+import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
  * Plugin settings {@link TabItem}
@@ -42,6 +52,21 @@ import com.varaneckas.hawkscope.plugin.PluginTableEditor;
  */
 public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 
+    /**
+     * Label "Plugin Location"
+     */
+    private Label pluginLocation;
+    
+    /**
+     * Text for plugin location
+     */
+    private Text textPluginLocation;
+    
+    /**
+     * Button that opens plugin location;
+     */
+    private Button openPluginLocation;
+    
 	/**
 	 * Label "Available Plugins"
 	 */
@@ -65,13 +90,68 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 	public PluginsSettingsTabItem(final TabFolder folder) {
 		super(folder, "&Plugins");
 		
+		//Plugin Location
+		pluginLocation = addSectionLabel("Plugin Location");
+		pluginLocation.setLayoutData(SharedStyle.relativeTo(null, null));
+		
+		createButtonOpenPluginLocation();
+		
+		createTextPluginLocation();
+		
 		//Available Plugins
 		availablePlugins = addSectionLabel("Available Plugins");
-		availablePlugins.setLayoutData(SharedStyle.relativeTo(null, null));
+		availablePlugins.setLayoutData(SharedStyle.relativeTo(
+		        textPluginLocation, null));
 		
 		//Table: Available Plugins
 		createTablePlugins();
 	}
+
+    private void createButtonOpenPluginLocation() {
+        openPluginLocation = addButton("Open");
+		final FormData layout = SharedStyle.relativeTo(pluginLocation, 
+		        null, null, null);
+		layout.bottom = null;
+		layout.left = null;
+		openPluginLocation.setLayoutData(layout);
+		openPluginLocation.addSelectionListener(new SelectionAdapter() {
+		   @Override
+		    public void widgetSelected(final SelectionEvent ev) {
+		       final File dir = new File(PathUtils.unsanitizePath(
+		               textPluginLocation.getText()));
+		       if (!dir.isDirectory()) {
+		           dir.mkdir();
+		       }
+		       Program.launch(dir.getAbsolutePath());
+		    } 
+		});
+    }
+
+    private void createTextPluginLocation() {
+        //Plugin location [            ]
+		textPluginLocation = addText(PathUtils.sanitizePath(
+		        cfg.getPluginLocation().getAbsolutePath()), 0);
+		final FormData layout = ident(SharedStyle.relativeTo(pluginLocation, 
+		        openPluginLocation, null, null));
+		layout.bottom = null;
+		textPluginLocation.setLayoutData(layout);
+		textPluginLocation.setToolTipText("Double click to browse");
+		textPluginLocation.addListener(SWT.MouseDoubleClick, new Listener() {
+            public void handleEvent(final Event event) {
+                textPluginLocation.setSelection(0);
+                final DirectoryDialog dd = new DirectoryDialog(
+                        folder.getShell(), SWT.APPLICATION_MODAL);
+                dd.setText("Hawkscope Plugin Location");
+                dd.setMessage("Choose a folder where Hawkscope plugins are " +
+                		"located");
+                dd.setFilterPath(textPluginLocation.getText());
+                final String loc = dd.open();
+                if (loc != null) {
+                    textPluginLocation.setText(PathUtils.sanitizePath(loc));
+                }
+            }
+		});
+    }
 
 	/**
 	 * Creates the {@link Table}
