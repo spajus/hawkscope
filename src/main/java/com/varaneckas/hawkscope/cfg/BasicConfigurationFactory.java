@@ -72,6 +72,10 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         data.put(Configuration.HTTP_PROXY_AUTH_PASSWORD, "");
         //use OS icons - off by default
         data.put(Configuration.USE_OS_ICONS, "0");
+        if (OSUtils.CURRENT_OS.equals(OS.MAC)) {
+        	//Mac menubar blues 
+        	data.put(Configuration.MAC_MENUBAR_BLUES_WORKAROUND, "1");
+        }
         return data;
     }
 

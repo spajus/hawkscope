@@ -386,6 +386,8 @@ public abstract class OSUtils {
         switch (CURRENT_OS) {
         case WIN: 
             return -2;
+        case MAC:
+        	return -7;
         default:
             return -5;
         }

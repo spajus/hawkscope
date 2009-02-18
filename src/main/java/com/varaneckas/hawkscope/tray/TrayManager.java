@@ -26,6 +26,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.TrayItem;
 
+import com.varaneckas.hawkscope.cfg.Configuration;
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.UncaughtExceptionHandler;
@@ -105,8 +107,11 @@ public class TrayManager {
         final TrayIconListener listener = new TrayIconListener();
         trayIcon.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event ev) {
-				if (OSUtils.CURRENT_OS.equals(OS.MAC)) {
-					//TODO add setting for this hack (enable by default)
+				final Configuration cfg = ConfigurationFactory
+						.getConfigurationFactory().getConfiguration();
+				if (OSUtils.CURRENT_OS.equals(OS.MAC) && cfg.getProperties()
+						.get(Configuration.MAC_MENUBAR_BLUES_WORKAROUND)
+						.equals("1")) {
 					//mac blue icon hack
 					//https://bugs.eclipse.org/bugs/show_bug.cgi?id=263589
 					new Thread(new Runnable() {

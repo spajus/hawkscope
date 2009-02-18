@@ -108,6 +108,14 @@ public class Configuration {
     public static final String USE_OS_ICONS = "use.os.icons";
     
     /**
+     * Mac menubar blues workaround
+     * 
+     * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=263589
+     */
+    public static final String MAC_MENUBAR_BLUES_WORKAROUND = 
+    	"mac.menubar.blues.workaround";
+    
+    /**
      * Properties {@link Map}
      */
     private final Map<String, String> properties;

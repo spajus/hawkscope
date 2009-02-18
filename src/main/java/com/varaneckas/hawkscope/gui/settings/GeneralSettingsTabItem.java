@@ -29,6 +29,8 @@ import org.eclipse.swt.widgets.Text;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
+import com.varaneckas.hawkscope.util.OSUtils;
+import com.varaneckas.hawkscope.util.OSUtils.OS;
 
 /**
  * General Settings {@link TabItem}
@@ -50,10 +52,15 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 	
 	private Button useOsIcons;
 	
+	private Button menubarBlues;
+	
 	public GeneralSettingsTabItem(final TabFolder folder) {
 		super(folder, "&General");
 		createUpdatesSection();
 		createMenuSection();
+		if (OSUtils.CURRENT_OS.equals(OS.MAC)) {
+			createMacSection();
+		}
 	}
 	
 	/**
@@ -91,7 +98,7 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 				.relativeTo(reloadDelayInput, null)));
 		useOsIcons.setSelection(cfg.useOsIcons());
 		useOsIcons.setToolTipText("Let Hawkscope look for Operating " +
-        "System icons?");
+        		"System icons?");
 	}
 
 	private void createReloadDelayInput() {
@@ -123,6 +130,19 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
             }
         });
 	}
+	
+	private void createMacSection() {
+		//Mac
+		final Label macintosh = addSectionLabel("Mac");
+		macintosh.setLayoutData(SharedStyle.relativeTo(useOsIcons, null));
+		
+		//[ ] Menubar icon blues
+		menubarBlues = addCheckbox("Use Mac Menubar icon " +
+				"blues workaround");
+		menubarBlues.setLayoutData(ident(SharedStyle.relativeTo(macintosh, null)));
+		menubarBlues.setSelection(cfg.getProperties()
+				.get(Configuration.MAC_MENUBAR_BLUES_WORKAROUND).equals("1"));
+	}
 
     @Override
     protected void saveConfiguration() {
@@ -132,6 +152,10 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
                 Math.round(Double.valueOf(reloadDelayInput.getText()) * 1000));
         cfg.getProperties().put(Configuration.USE_OS_ICONS, 
                 useOsIcons.getSelection() ? "1" : "0");
+        if (OSUtils.CURRENT_OS.equals(OS.MAC)) {
+        	cfg.getProperties().put(Configuration.MAC_MENUBAR_BLUES_WORKAROUND,  
+        			menubarBlues.getSelection() ? "1" : "0");
+        }
     }
 	
 }
