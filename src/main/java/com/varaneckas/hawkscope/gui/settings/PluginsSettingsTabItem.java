@@ -129,8 +129,15 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 
     private void createTextPluginLocation() {
         //Plugin location [            ]
-		textPluginLocation = addText(PathUtils.sanitizePath(
-		        cfg.getPluginLocation().getAbsolutePath()), 0);
+        final File pluginLocFile = cfg.getPluginLocation();
+        String plugPath = pluginLocFile == null ? null : pluginLocFile
+                .getAbsolutePath();
+        if (plugPath == null) {
+            plugPath = "";
+        } else {
+            plugPath = PathUtils.sanitizePath(plugPath);
+        }
+		textPluginLocation = addText(plugPath, 0);
 		final FormData layout = ident(SharedStyle.relativeTo(pluginLocation, 
 		        openPluginLocation, null, null));
 		layout.bottom = null;
