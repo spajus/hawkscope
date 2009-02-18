@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
+import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
 import com.varaneckas.hawkscope.plugin.Plugin;
 import com.varaneckas.hawkscope.plugin.PluginManager;
@@ -207,6 +208,8 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 	
 	@Override
 	protected void saveConfiguration() {
+	    cfg.getProperties().put(Configuration.PLUGIN_DIR, PathUtils
+	            .sanitizePath(textPluginLocation.getText()));
 		for (final TableItem item : tablePlugins.getItems()) {
 			final Plugin p = pluginMap.get(item.getText(1));
 			boolean enabled = item.getText(0).equals("Yes");
