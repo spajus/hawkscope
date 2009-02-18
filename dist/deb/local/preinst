@@ -1,3 +1,5 @@
 #!/bin/sh
 set -e
+mkdir -p /usr/share/hawkscope/plugins
+chmod a+rw /usr/share/hawkscope/plugins
 exit 0

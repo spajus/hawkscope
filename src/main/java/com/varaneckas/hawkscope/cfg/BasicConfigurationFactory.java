@@ -70,8 +70,14 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         data.put(Configuration.HTTP_PROXY_AUTH_USERNAME, "");
         //no proxy auth password by default
         data.put(Configuration.HTTP_PROXY_AUTH_PASSWORD, "");
-        //use OS icons - off by default
-        data.put(Configuration.USE_OS_ICONS, "0");
+        //use OS icons - off by default for unix
+        String useOsIcons = "1";
+        switch (OSUtils.CURRENT_OS) {
+        case UNIX:
+            useOsIcons = "0";
+            break;
+        }
+        data.put(Configuration.USE_OS_ICONS, useOsIcons);
         
         //plugin dir
         String pluginDir = "${user.home}/.hawkscope-plugins";
