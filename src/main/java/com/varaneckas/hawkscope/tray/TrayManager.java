@@ -116,7 +116,7 @@ public class TrayManager {
 					//https://bugs.eclipse.org/bugs/show_bug.cgi?id=263589
 					new Thread(new Runnable() {
 						public void run() {
-							OSUtils.sleep(120);
+							OSUtils.sleep(150);
 							d.asyncExec(new Runnable() {
 								public void run() {
 									listener.handleEvent(null);

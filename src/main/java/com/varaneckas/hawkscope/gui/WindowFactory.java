@@ -35,6 +35,16 @@ import com.varaneckas.hawkscope.gui.settings.SettingsWindow;
  */
 public class WindowFactory {
 	
+	/**
+	 * About Window
+	 */
+	private static AboutWindow aboutWindow;
+	
+	/**
+	 * Settings Window
+	 */
+	private static SettingsWindow settingsWindow;
+	
     /**
      * Initializes the application GUI 
      */
@@ -48,7 +58,10 @@ public class WindowFactory {
      * @return instance of About Window
      */
     public static AbstractWindow getAboutWindow() {
-        return new AboutWindow();
+    	if (aboutWindow == null || aboutWindow.shell.isDisposed()) {
+    		aboutWindow = new AboutWindow();
+    	}
+        return aboutWindow;
     }
     
     /**
@@ -71,7 +84,10 @@ public class WindowFactory {
      * @return instance of Settings Window
      */
     public static SettingsWindow getSettingsWindow() {
-        return new SettingsWindow();
+    	if (settingsWindow == null || settingsWindow.shell.isDisposed()) {
+    		settingsWindow = new SettingsWindow();
+    	}
+        return settingsWindow;
     }
     
     /**

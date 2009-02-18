@@ -71,9 +71,15 @@ public class PluginManager {
      * Private singleton constructor
      */
     private PluginManager() {
-        //FIXME playing around
-    	
-        addBuiltInPlugins();
+        reloadPlugins();
+    }
+
+    /**
+     * Reloads the plugins
+     */
+	public void reloadPlugins() {
+		plugins.clear();
+		addBuiltInPlugins();
         findExternalPlugins();
         for (final Plugin p : plugins) {
             log.debug("Checking if plugin is enabled:" + p.getName());
@@ -87,7 +93,7 @@ public class PluginManager {
         		log.warn("Failed checking if plugin enabled: " + p.getName());
         	}
         }
-    }
+	}
 
     /**
      * Finds and loads external plugins

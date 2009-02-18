@@ -70,12 +70,12 @@ public class Version {
     /**
      * Application version number   
      */
-    public static final String VERSION_NUMBER = "0.5.0-DEV";
+    public static final String VERSION_NUMBER = "0.5.0";
     
     /**
      * Application version date
      */
-    public static final String VERSION_DATE = "2009-02-??";
+    public static final String VERSION_DATE = "2009-02-20";
     
     /**
      * Application Homepage URL
@@ -88,6 +88,12 @@ public class Version {
     public static final String VERSION_CHECK_URL 
             = "http://hawkscope.googlecode.com/svn/trunk/dist/version/" 
             	+ OSUtils.CURRENT_OS.toString().toLowerCase();
+
+    /**
+     * Plugins download URL
+     */
+    public static final String PLUGINS_URL 
+    		= "http://code.google.com/p/hawkscope/wiki/Plugins";
     
     /**
      * URL where more recent version of Hawkscope can be downloaded

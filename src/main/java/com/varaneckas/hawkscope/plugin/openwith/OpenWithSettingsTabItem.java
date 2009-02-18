@@ -327,13 +327,18 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
                 && textFileDef.getText().length() > 0) {
             cfg.getProperties().put(OpenWithPlugin.PROP_UNKNOWN_FILE_APP, 
                     PathUtils.sanitizePath(textFileDef.getText()));
+        } else {
+        	cfg.getProperties().remove(OpenWithPlugin.PROP_UNKNOWN_FILE_APP);
         }
         //folder navigator
         if (textFolderNav.getText() != null 
                 && textFolderNav.getText().length() > 0) {
             cfg.getProperties().put(OpenWithPlugin.PROP_FOLDER_NAVIGATOR, 
                     PathUtils.sanitizePath(textFolderNav.getText()));
+        } else {
+        	cfg.getProperties().remove(OpenWithPlugin.PROP_FOLDER_NAVIGATOR);
         }
+        
         OpenWithPlugin.getInstance().refresh();
     }
 }

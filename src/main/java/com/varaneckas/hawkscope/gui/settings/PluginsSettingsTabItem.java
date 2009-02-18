@@ -38,8 +38,10 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
+import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
+import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.plugin.Plugin;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.plugin.PluginTableEditor;
@@ -79,6 +81,11 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 	private Table tablePlugins;
 	
 	/**
+	 * Get Plugins {@link Button}
+	 */
+	private Button buttonGetPlugins;
+	
+	/**
 	 * Plugin Name -> Plugin Object map
 	 */
 	private final Map<String, Plugin> pluginMap = new HashMap<String, Plugin>();
@@ -104,11 +111,47 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 		availablePlugins.setLayoutData(SharedStyle.relativeTo(
 		        textPluginLocation, null));
 		
+		createButtonGetPlugins();
+
 		//Table: Available Plugins
 		createTablePlugins();
+		
+		createButtonReloadPlugins();
 	}
 
-    private void createButtonOpenPluginLocation() {
+	/**
+	 * Creates a button that reloads plugins
+	 */
+	private void createButtonReloadPlugins() {
+		final Button buttonReloadPlugins = addButton("&Reload Plugins");
+		final FormData layout = SharedStyle
+				.relativeToBottomRight(buttonGetPlugins);
+		buttonReloadPlugins.setLayoutData(layout);
+		buttonReloadPlugins.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(final Event ev) {
+				tablePlugins.removeAll();
+				PluginManager.getInstance().reloadPlugins();
+				reloadTablePlugins();
+				MainMenu.getInstance().reloadMenu(false);
+			}
+		});
+	}
+
+	/**
+	 * Creates a button for getting more plugins
+	 */
+    private void createButtonGetPlugins() {
+    	buttonGetPlugins = addButton("&Get Plugins");
+    	final FormData layout = SharedStyle.relativeToBottomRight(null);
+    	buttonGetPlugins.setLayoutData(layout);
+    	buttonGetPlugins.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(final Event ev) {
+				Program.launch(Version.PLUGINS_URL);
+			}
+    	});
+	}
+
+	private void createButtonOpenPluginLocation() {
         openPluginLocation = addButton("Open");
 		final FormData layout = SharedStyle.relativeTo(pluginLocation, 
 		        null, null, null);
@@ -168,8 +211,9 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 		tablePlugins = new Table(container, SWT.MULTI | SWT.BORDER
                 | SWT.SINGLE | SWT.VERTICAL | SWT.HORIZONTAL);
 		final FormData layout = ident(SharedStyle.relativeTo(availablePlugins, 
-				null, null, null));
+				null, buttonGetPlugins, null));
 		layout.width = 260;
+		layout.height = 80;
 		tablePlugins.setLayoutData(layout);
 		tablePlugins.setLinesVisible(true);
 		tablePlugins.setHeaderVisible(true);
@@ -188,6 +232,21 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 		colPluginDesc.setText("Description");
 		colPluginDesc.setWidth(400);
 		
+		reloadTablePlugins();
+
+		new PluginTableEditor(tablePlugins);
+		
+	}
+
+	/**
+	 * Reloads the plugins table
+	 * 
+	 * @param colEnabled
+	 * @param colPluginName
+	 * @param colPluginVersion
+	 * @param colPluginDesc
+	 */
+	private void reloadTablePlugins() {
 		for (final Plugin p : PluginManager.getInstance().getAllPlugins()) {
 			log.debug("Addin plugin: " + p.getName());
 			pluginMap.put(p.getName(), p);
@@ -198,12 +257,10 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 			item.setText(3, p.getDescription());
 		}
 		
-		new PluginTableEditor(tablePlugins);
-		
-		colEnabled.pack();
-		colPluginName.pack();
-		colPluginVersion.pack();
-		colPluginDesc.pack();
+		tablePlugins.getColumn(0).pack();
+		tablePlugins.getColumn(1).pack();
+		tablePlugins.getColumn(2).pack();
+		tablePlugins.getColumn(3).pack();
 	}
 	
 	@Override

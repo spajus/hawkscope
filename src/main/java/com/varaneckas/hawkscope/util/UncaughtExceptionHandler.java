@@ -17,9 +17,12 @@
  */
 package com.varaneckas.hawkscope.util;
 
+import java.net.URLEncoder;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
@@ -50,10 +53,19 @@ public class UncaughtExceptionHandler implements java.lang.Thread.UncaughtExcept
         MessageBox message = new MessageBox(shell, SWT.OK | SWT.CANCEL | SWT.ICON_ERROR);
         message.setText("Hawkscope Error");
         message.setMessage(e.getMessage() 
-                + "\nCopy Hawkscope Error Report to Clipboard?");
+                + "\nSubmit Hawkscope Error Report to Issue Tracker?");
         log.error("Uncaught exception", e);
         if (message.open() == SWT.OK) {
             IOUtils.copyToClipboard(Version.getBugReport(e));
+            try {
+            Program.launch("http://code.google.com/p/hawkscope/" +
+            		"issues/entry?comment=" 
+            		+ URLEncoder.encode("Please paste the Hawkscope Error " +
+            				"Report here. It's currently copied to your " +
+            				"clipboard. Thank you for your support!", "UTF-8")); 
+            } catch (final Exception e1) {
+            	Program.launch("http://code.google.com/p/hawkscope/issues/entry");
+            }
         }
         shell.dispose();
     }

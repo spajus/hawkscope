@@ -81,6 +81,11 @@ public class SettingsWindow extends AbstractWindow {
 	
 	@Override
 	public void open() {
+        if (shell != null && !shell.isDisposed()) {
+            shell.setVisible(true);
+            shell.forceFocus();
+            return;
+        }      		
 		createShell("Settings");
 		createButtonCancel();
 		createButtonOk();

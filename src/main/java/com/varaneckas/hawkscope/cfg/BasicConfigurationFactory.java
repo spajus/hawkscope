@@ -85,6 +85,8 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         case UNIX:
             pluginDir = "/usr/share/hawkscope/plugins";
             break;
+        case MAC:
+        	pluginDir ="${user.home}/Library/Application Support/Hawkscope";
         }
         data.put(Configuration.PLUGIN_DIR, pluginDir);
 
