@@ -4,6 +4,17 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
+Changes in version 0.5.0 (2009-02-??)
+-------------------------------------
+* Plugin System
+  http://code.google.com/p/hawkscope/issues/detail?id=27
+* Open With plugin
+  http://code.google.com/p/hawkscope/issues/detail?id=42  
+* A temporary workaround for Mac menubar icon blues
+  http://code.google.com/p/hawkscope/issues/detail?id=33
+* Friendlier GUI windows
+  http://code.google.com/p/hawkscope/issues/detail?id=44    
+
 Changes in version 0.4.1 (2009-02-06)
 -------------------------------------
 * Separate versions for each operating system

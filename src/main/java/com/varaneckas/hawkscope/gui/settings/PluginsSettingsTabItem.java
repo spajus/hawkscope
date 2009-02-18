@@ -204,7 +204,7 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 			final Plugin p = pluginMap.get(item.getText(1));
 			boolean enabled = item.getText(0).equals("Yes");
 			p.setEnabled(enabled);
-			cfg.getProperties().put("plugin." + p.getClass().getSimpleName() 
+			cfg.getProperties().put("plugin." + p.getClass().getName() 
 					+ ".enabled", enabled ? "1" : "0");
 		}
 	}

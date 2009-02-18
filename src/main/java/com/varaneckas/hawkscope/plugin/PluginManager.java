@@ -76,6 +76,7 @@ public class PluginManager {
         addBuiltInPlugins();
         findExternalPlugins();
         for (final Plugin p : plugins) {
+            log.debug("Checking if plugin is enabled:" + p.getName());
         	try {
         		String enabled = cfg.getProperties().get("plugin." 
 	        			+ p.getClass().getName() + ".enabled");
