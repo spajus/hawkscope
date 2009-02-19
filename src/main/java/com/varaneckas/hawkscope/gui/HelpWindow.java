@@ -51,7 +51,9 @@ public class HelpWindow extends AbstractWindow {
 		
 		createHelpBrowser();
 		
-		packAndSetMinSize();
+        shell.pack();
+        shell.setMinimumSize(300, 200);
+        WindowFactory.centerShell(shell);
 		shell.open();
 	}
 
