@@ -33,6 +33,7 @@ import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.command.AboutCommand;
 import com.varaneckas.hawkscope.command.Command;
 import com.varaneckas.hawkscope.command.ExitCommand;
+import com.varaneckas.hawkscope.command.HelpCommand;
 import com.varaneckas.hawkscope.command.HideCommand;
 import com.varaneckas.hawkscope.command.SettingsCommand;
 import com.varaneckas.hawkscope.command.UpdateCommand;
@@ -325,6 +326,7 @@ public class MainMenu {
         PluginManager.getInstance().beforeAboutMenuItem(this);
         addExecutableMenuItem("about", "About", new AboutCommand());
         addExecutableMenuItem("settings", "Settings", new SettingsCommand());
+        addExecutableMenuItem("help", "Help", new HelpCommand());
         addExecutableMenuItem("exit", "Exit", new ExitCommand());
     }
 

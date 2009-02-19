@@ -34,6 +34,11 @@ import com.varaneckas.hawkscope.gui.settings.SettingsWindow;
  * @version $Id$
  */
 public class WindowFactory {
+    
+    /**
+     * Help Window
+     */
+    private static HelpWindow helpWindow;
 	
 	/**
 	 * About Window
@@ -62,6 +67,18 @@ public class WindowFactory {
     		aboutWindow = new AboutWindow();
     	}
         return aboutWindow;
+    }
+    
+    /**
+     * Gets the help window
+     * 
+     * @return
+     */
+    public static AbstractWindow getHelpWindow() {
+        if (helpWindow == null || helpWindow.shell.isDisposed()) {
+            helpWindow = new HelpWindow();
+        }
+        return helpWindow;
     }
     
     /**
