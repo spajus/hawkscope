@@ -91,7 +91,7 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 	private final Map<String, Plugin> pluginMap = new HashMap<String, Plugin>();
 	
 	/**
-	 * Initializing constructor 
+	 * Creates Plugins Settings {@link TabItem}
 	 * 
 	 * @param folder Settings {@link TabFolder}
 	 */
@@ -141,7 +141,7 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 	 * Creates a button for getting more plugins
 	 */
     private void createButtonGetPlugins() {
-    	buttonGetPlugins = addButton("&Get Plugins");
+    	buttonGetPlugins = addButton("Get P&lugins");
     	final FormData layout = SharedStyle.relativeToBottomRight(null);
     	buttonGetPlugins.setLayoutData(layout);
     	buttonGetPlugins.addListener(SWT.Selection, new Listener() {
@@ -151,8 +151,11 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
     	});
 	}
 
+    /**
+     * Creates button that opens plugin location folder
+     */
 	private void createButtonOpenPluginLocation() {
-        openPluginLocation = addButton("Open");
+        openPluginLocation = addButton("Op&en");
 		final FormData layout = SharedStyle.relativeTo(pluginLocation, 
 		        null, null, null);
 		layout.bottom = null;
@@ -171,6 +174,9 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 		});
     }
 
+	/**
+	 * Creates text input for plugin location
+	 */
     private void createTextPluginLocation() {
         //Plugin location [            ]
         final File pluginLocFile = cfg.getPluginLocation();

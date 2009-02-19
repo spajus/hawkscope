@@ -110,18 +110,21 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
         
         //For directories:
         labelFolderNav = addLabel("For directories:");
-        labelFolderNav.setLayoutData(ident(SharedStyle.relativeTo(labelSpecialApps, null)));
+        labelFolderNav.setLayoutData(ident(SharedStyle.relativeTo(
+                labelSpecialApps, null)));
         
         //Uknown files:
         labelFileDef = addLabel("Unknown files:");
-        labelFileDef.setLayoutData(ident(SharedStyle.relativeTo(labelFolderNav, null)));
+        labelFileDef.setLayoutData(ident(SharedStyle.relativeTo(
+                labelFolderNav, null)));
         
         createTextFolderNav();
         createTextFileDef();
         
         //Preferred Application
         labelPreferredApps = addSectionLabel("Preferred Applications");
-        labelPreferredApps.setLayoutData(SharedStyle.relativeTo(labelFileDef, null));
+        labelPreferredApps.setLayoutData(SharedStyle.relativeTo(
+                labelFileDef, null));
        
         createButtonAdd();
         createButtonDel();
@@ -134,11 +137,13 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
      */
     private void createButtonDel() {
         buttonDel = addButton("&-");
-        final FormData layout = SharedStyle.relativeTo(buttonAdd, null, null, null);
+        final FormData layout = SharedStyle.relativeTo(buttonAdd, 
+                null, null, null);
         layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         layout.bottom = null;
         layout.left = null;
         buttonDel.setLayoutData(layout);
+        buttonDel.setToolTipText("Remove selected item(s)");
         buttonDel.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent event) {
@@ -155,11 +160,13 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
      */    
     private void createButtonAdd() {
         buttonAdd = addButton("&+");
-        final FormData layout = SharedStyle.relativeTo(labelPreferredApps, null, null, null);
+        final FormData layout = SharedStyle.relativeTo(labelPreferredApps, 
+                null, null, null);
         layout.bottom = null;
         layout.left = null;
         layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         buttonAdd.setLayoutData(layout);
+        buttonAdd.setToolTipText("Add an item");
         buttonAdd.addListener(SWT.Selection, new Listener() {
             public void handleEvent(final Event ev) {
                 int index = 0;

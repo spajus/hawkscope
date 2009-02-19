@@ -40,7 +40,11 @@ public class PluginTableEditor extends BasicTableEditor {
        super(table);
     }
 
-    protected boolean doEditing(final TableItem item, final int column, final int row) {
+    /**
+     * Flips Yes and No values on doubleclick
+     */
+    protected boolean doEditing(final TableItem item, final int column, 
+            final int row) {
     	if (column == 0) {
     		if (item.getText(0).equals("Yes")) {
     			item.setText(0, "No");

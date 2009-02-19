@@ -40,29 +40,66 @@ import com.varaneckas.hawkscope.gui.SharedStyle;
  */
 public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
 	
+    /**
+     * Label "HTTP Proxy"
+     */
     private Label httpProxy;
     
+    /**
+     * Checkbox "[] Use HTTP Proxy"
+     */
     private Button useHttpProxy;
     
+    /**
+     * Checkbox "[] Enable Authentication"
+     */
     private Button useHttpProxyAuth;
     
+    /**
+     * Label "HTTP Proxy Host"
+     */
     private Label labelHttpProxyHost;
 
+    /**
+     * Label "HTTP Proxy Port"
+     */
     private Label labelHttpProxyPort;
     
+    /**
+     * Input for HTTP proxy host
+     */
     private Text httpProxyHost;
     
+    /**
+     * Input for HTTP proxy port
+     */
     private Text httpProxyPort;
     
+    /**
+     * Label "Username"
+     */
     private Label labelUsername;
     
+    /**
+     * Label "Password"
+     */
     private Label labelPassword;
     
+    /**
+     * Input for HTTP proxy auth username
+     */
     private Text httpProxyUser;
     
+    /**
+     * Input for HTTP proxy auth password
+     */
     private Text httpProxyPass;
     
-    
+    /**
+     * Creates the Network Settings {@link TabItem}
+     * 
+     * @param folder Settings {@link TabFolder}
+     */
 	public NetworkSettingsTabItem(final TabFolder folder) {
 		super(folder, "&Network");
 		
@@ -75,11 +112,13 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
 		
 		//HTTP Proxy Host:
 		labelHttpProxyHost = addLabel("HTTP Proxy Host:");
-		labelHttpProxyHost.setLayoutData(ident(SharedStyle.relativeTo(useHttpProxy, null)));
+		labelHttpProxyHost.setLayoutData(ident(SharedStyle.relativeTo(
+		        useHttpProxy, null)));
 		
 		//HTTP Proxy Port:
 		labelHttpProxyPort = addLabel("HTTP Proxy Port:");
-		labelHttpProxyPort.setLayoutData(ident(SharedStyle.relativeTo(labelHttpProxyHost, null)));
+		labelHttpProxyPort.setLayoutData(ident(SharedStyle.relativeTo(
+		        labelHttpProxyHost, null)));
 		
 		//[] Enable Authentication
 		createCheckUseHttpProxyAuth();
@@ -92,11 +131,13 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
 		
 		//Username:
 		labelUsername = addLabel("Username:");
-		labelUsername.setLayoutData(ident(SharedStyle.relativeTo(useHttpProxyAuth, null)));
+		labelUsername.setLayoutData(ident(SharedStyle.relativeTo(
+		        useHttpProxyAuth, null)));
 
 		//Password:
 		labelPassword = addLabel("Password:");
-		labelPassword.setLayoutData(ident(SharedStyle.relativeTo(labelUsername, null)));
+		labelPassword.setLayoutData(ident(SharedStyle.relativeTo(
+		        labelUsername, null)));
 		
 		//Username: [       ]
 		createInputAuthUsername();
@@ -105,9 +146,13 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
 		createInputAuthPassword();
 	}
 
+	/**
+	 * Creates checkbox "[] Enable Authentication"
+	 */
     private void createCheckUseHttpProxyAuth() {
-        useHttpProxyAuth = addCheckbox("Enable Authentication");
-		useHttpProxyAuth.setLayoutData(ident(SharedStyle.relativeTo(labelHttpProxyPort, null)));
+        useHttpProxyAuth = addCheckbox("Enable &Authentication");
+		useHttpProxyAuth.setLayoutData(ident(SharedStyle.relativeTo(
+		        labelHttpProxyPort, null)));
 		useHttpProxyAuth.setSelection(cfg.isHttpProxyAuthInUse());
 		useHttpProxyAuth.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -120,9 +165,13 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
         });          
     }
 
+    /**
+     * Creates checkbox "[] Use HTTP Proxy"
+     */
     private void createCheckUseHttpProxy() {
         useHttpProxy = addCheckbox("&Use HTTP Proxy");
-		useHttpProxy.setLayoutData(ident(SharedStyle.relativeTo(httpProxy, null)));
+		useHttpProxy.setLayoutData(ident(SharedStyle.relativeTo(
+		        httpProxy, null)));
 		useHttpProxy.setSelection(cfg.isHttpProxyInUse());
 		useHttpProxy.addSelectionListener(new SelectionAdapter() {
             @Override
@@ -138,9 +187,13 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
         });
     }
 
+    /**
+     * Creates auth password input
+     */
     private void createInputAuthPassword() {
         httpProxyPass = addText(cfg.getHttpProxyAuthPassword(), 255);
-        FormData layout = SharedStyle.relativeTo(labelUsername, null, null, useHttpProxyAuth);
+        final FormData layout = SharedStyle.relativeTo(labelUsername, null, 
+                null, useHttpProxyAuth);
         layout.bottom = null;
         layout.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
         httpProxyPass.setLayoutData(layout);
@@ -149,9 +202,12 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
         httpProxyPass.setEchoChar('*');
     }
 
+    /**
+     * Creates auth username input
+     */
     private void createInputAuthUsername() {
         httpProxyUser = addText(cfg.getHttpProxyAuthUsername(), 255);
-        FormData layout = SharedStyle.relativeTo(useHttpProxyAuth, 
+        final FormData layout = SharedStyle.relativeTo(useHttpProxyAuth, 
                 null, null, useHttpProxyAuth);
         layout.bottom = null;
         layout.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
@@ -160,9 +216,13 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
                 && cfg.isHttpProxyAuthInUse());
     }
 
+    /**
+     * Creates HTTP proxy port input
+     */
     private void createInputHttpProxyPort() {
         httpProxyPort = addText("" + cfg.getHttpProxyPort(), 5);
-		FormData layout = SharedStyle.relativeTo(labelHttpProxyHost, null, null, useHttpProxyAuth);
+		final FormData layout = SharedStyle.relativeTo(labelHttpProxyHost, 
+		        null, null, useHttpProxyAuth);
 		layout.bottom = null;
 		layout.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
 		layout.right = null;
@@ -186,9 +246,13 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
         });
     }
 
+    /**
+     * Creates HTTP proxy host input
+     */
     private void createInputHttpProxyHost() {
         httpProxyHost = addText(cfg.getHttpProxyHost(), 255);
-		FormData layout = SharedStyle.relativeTo(useHttpProxy, null, null, useHttpProxyAuth);
+		final FormData layout = SharedStyle.relativeTo(useHttpProxy, 
+		        null, null, useHttpProxyAuth);
 		layout.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
 		layout.bottom = null;
 		httpProxyHost.setLayoutData(layout);

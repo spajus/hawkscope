@@ -44,13 +44,41 @@ import com.varaneckas.hawkscope.gui.SharedStyle;
  */
 public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
     
+    /**
+     * Label "Quick Access Locations"
+     */
     private Label labelQuickAccessLoc;
+    
+    /**
+     * The Quick Access {@link List}
+     */
     private List listQuickAccess;
+    
+    /**
+     * Button that adds a Quick Access item
+     */
     private Button buttonAddQa;
+    
+    /**
+     * Button that deletes a Quick Access item
+     */
     private Button buttonDelQa;
+    
+    /**
+     * Button that moves a Quick Access item up
+     */
     private Button buttonUpQa;
+    
+    /**
+     * Button that moves a Quick Access item down
+     */
     private Button buttonDnQa;
     
+    /**
+     * Creates the Quick Access settings {@link TabItem}
+     * 
+     * @param folder Settings {@link TabFolder}
+     */
 	public QuickAccessSettingsTabItem(final TabFolder folder) {
 		super(folder, "&Quick Access");
 		
@@ -65,17 +93,20 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
 
 		createButtonDnQa();
 		createButtonUpQa();
-
 	}
 
+	/**
+	 * Creates {@link Button} that adds a Quick Access item
+	 */
     private void createButtonAddQa() {
         buttonAddQa = addButton("&+");
-        FormData layout = SharedStyle.relativeTo(labelQuickAccessLoc, 
+        final FormData layout = SharedStyle.relativeTo(labelQuickAccessLoc, 
                 null, null, null);
         layout.bottom = null;
         layout.left = null;
         layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         buttonAddQa.setLayoutData(layout);
+        buttonAddQa.setToolTipText("Add a Quick Access item");
         buttonAddQa.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent event) {
@@ -97,13 +128,18 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         });
     }
     
+    /**
+     * Creates a {@link Button} that removes selected Quick Access item(s)
+     */
     private void createButtonDelQa() {
         buttonDelQa = addButton("&-");
-        FormData layout = SharedStyle.relativeTo(buttonAddQa, null, null, null);
+        final FormData layout = SharedStyle.relativeTo(buttonAddQa, 
+                null, null, null);
         layout.bottom = null;
         layout.left = null;
         layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         buttonDelQa.setLayoutData(layout);
+        buttonDelQa.setToolTipText("Remove selected Quick Access item(s)");
         buttonDelQa.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent event) {
@@ -115,13 +151,18 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         });
     }
     
+    /**
+     * Creates a {@link Button} that moves a Quick Access item up
+     */
     private void createButtonUpQa() {
         buttonUpQa = addButton("&Up");
-        FormData layout = SharedStyle.relativeTo(null, null, buttonDnQa, null);
+        final FormData layout = SharedStyle.relativeTo(null, null, 
+                buttonDnQa, null);
         layout.top = null;
         layout.left = null;
         layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         buttonUpQa.setLayoutData(layout);
+        buttonUpQa.setToolTipText("Move selected item up");
         buttonUpQa.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent event) {
@@ -141,13 +182,17 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         });
     }
     
+    /**
+     * Creates a {@link Button} that moves Quick Access item down
+     */
     private void createButtonDnQa() {
         buttonDnQa = addButton("&Dn");
-        FormData layout = SharedStyle.relativeTo(null, null, null, null);
+        final FormData layout = SharedStyle.relativeTo(null, null, null, null);
         layout.top = null;
         layout.left = null;
         layout.width = SharedStyle.BUTTON_MIN_WIDTH;
         buttonDnQa.setLayoutData(layout);
+        buttonDnQa.setToolTipText("Move selected item down");
         buttonDnQa.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent event) {
@@ -167,6 +212,9 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         });
     }
     
+    /**
+     * Shows warning when user is tring to move more than one selected item
+     */
     private void showMoveWarnDialog() {
         final MessageBox mb = new MessageBox(folder.getShell(), SWT.ICON_WARNING);
         mb.setMessage("Please select only one item to move!");
@@ -176,6 +224,9 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         folder.getShell().setEnabled(true);
     }     
 
+    /**
+     * Creates the Quick Access {@link List}
+     */
     private void createListQuickAccess() {
         listQuickAccess = new List(container, 
                 SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);

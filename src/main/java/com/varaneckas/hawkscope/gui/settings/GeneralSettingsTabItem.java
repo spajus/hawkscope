@@ -40,20 +40,46 @@ import com.varaneckas.hawkscope.util.OSUtils.OS;
  */
 public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 	
+    /**
+     * Label "Updates"
+     */
 	private Label updates;
 	
+	/**
+	 * Checkbox "[] Check for updates"
+	 */
 	private Button checkForUpdates;
 	
+	/**
+	 * Label "Menu"
+	 */
 	private Label menu;
 	
+	/**
+	 * Label "Reload delay (sec)"
+	 */
 	private Label reloadDelaySec;
 	
+	/**
+	 * Text input for reload delay
+	 */
 	private Text reloadDelayInput;
 	
+	/**
+	 * Checkbox "[] Use OS icons"
+	 */
 	private Button useOsIcons;
 	
+	/**
+	 * Checkbox "[] Mac menubar blues workaround"
+	 */
 	private Button menubarBlues;
 	
+	/**
+	 * Creates the General settings {@link TabItem}
+	 * 
+	 * @param folder Settings {@link TabFolder}
+	 */
 	public GeneralSettingsTabItem(final TabFolder folder) {
 		super(folder, "&General");
 		createUpdatesSection();
@@ -84,6 +110,9 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 			"on startup? Please mind the HTTP Proxy settings in Network tab!");
 	}
 	
+	/**
+	 * Creates the Menu section
+	 */
 	private void createMenuSection() {
 	    menu = addSectionLabel("Menu");
 		menu.setLayoutData(SharedStyle.relativeTo(checkForUpdates, null));
@@ -93,7 +122,7 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		
 		createReloadDelayInput();
 
-		useOsIcons = addCheckbox("Use operating system icons");
+		useOsIcons = addCheckbox("Use operating system &icons");
 		useOsIcons.setLayoutData(ident(SharedStyle
 				.relativeTo(reloadDelayInput, null)));
 		useOsIcons.setSelection(cfg.useOsIcons());
@@ -101,6 +130,9 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
         		"System icons?");
 	}
 
+	/**
+	 * Creates the Menu Reload Delay input
+	 */
 	private void createReloadDelayInput() {
 		final String reloadDelay = "" + (cfg.getMenuReloadDelay() / 1000.0);
 		reloadDelayInput = addText(reloadDelay, 4);
@@ -131,13 +163,16 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
         });
 	}
 	
+	/**
+	 * Creates the Mac section
+	 */
 	private void createMacSection() {
 		//Mac
 		final Label macintosh = addSectionLabel("Mac");
 		macintosh.setLayoutData(SharedStyle.relativeTo(useOsIcons, null));
 		
 		//[ ] Menubar icon blues
-		menubarBlues = addCheckbox("Use Mac Menubar icon " +
+		menubarBlues = addCheckbox("Use &Mac Menubar icon " +
 				"blues workaround");
 		menubarBlues.setLayoutData(ident(SharedStyle.relativeTo(macintosh, null)));
 		menubarBlues.setSelection(cfg.getProperties()
@@ -157,5 +192,4 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
         			menubarBlues.getSelection() ? "1" : "0");
         }
     }
-	
 }

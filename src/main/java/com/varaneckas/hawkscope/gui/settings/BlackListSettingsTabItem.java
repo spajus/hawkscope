@@ -41,20 +41,46 @@ import com.varaneckas.hawkscope.gui.SharedStyle;
  */
 public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
 	
+    /**
+     * Label "Predefined"
+     */
     private Label predefined;
     
+    /**
+     * Checkbox "[] Display hidden files"
+     */
     private Button displayHidden;
     
+    /**
+     * Checkbox "[] Display floppy drives (discouraged)"
+     */
     private Button displayFloppy;
     
+    /**
+     * Label "Blacklisted Locations"
+     */
     private Label blacklisted;
     
+    /**
+     * The Blacklist itself
+     */
     private List listBlack;
     
+    /**
+     * Button that adds to Blacklist
+     */
     private Button buttonAddBlack;
     
+    /**
+     * Button that removes from Blacklist
+     */
     private Button buttonDelBlack;
     
+    /**
+     * Creates the Blacklist Setting {@link TabItem}
+     * 
+     * @param folder Settings {@link TabFolder}
+     */
 	public BlackListSettingsTabItem(final TabFolder folder) {
 		super(folder, "&Blacklist");
 		
@@ -63,13 +89,15 @@ public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
 		predefined.setLayoutData(SharedStyle.relativeTo(null, null));
 		
 		//[] Display hidden files
-		displayHidden = addCheckbox("Display hidden files");
-		displayHidden.setLayoutData(ident(SharedStyle.relativeTo(predefined, null)));
+		displayHidden = addCheckbox("Display &hidden files");
+		displayHidden.setLayoutData(ident(SharedStyle.relativeTo(predefined, 
+		        null)));
 		displayHidden.setSelection(cfg.isHiddenFilesDisplayed());
 		
 		//[] Display floppy drives
-		displayFloppy = addCheckbox("Display floppy drives (discouraged)");
-		displayFloppy.setLayoutData(ident(SharedStyle.relativeTo(displayHidden, null)));
+		displayFloppy = addCheckbox("Display &floppy drives (discouraged)");
+		displayFloppy.setLayoutData(ident(SharedStyle.relativeTo(displayHidden, 
+		        null)));
         displayFloppy.setSelection(cfg.isFloppyDrivesDisplayed());
         
         //Blacklisted Locations
@@ -82,6 +110,9 @@ public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
 		createListBlack();
 	}
 	
+	/**
+	 * Creates a {@link Button} that adds item to Blacklist
+	 */
 	private void createButtonAddBlack() {
 	    buttonAddBlack = addButton("&+");
 	    final FormData layout = SharedStyle.relativeTo(blacklisted,
@@ -90,6 +121,7 @@ public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
 	    layout.bottom = null;
 	    layout.left = null;
 	    buttonAddBlack.setLayoutData(layout);
+	    buttonAddBlack.setToolTipText("Add item to Blacklist");
 	    buttonAddBlack.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(SelectionEvent event) {
@@ -110,6 +142,9 @@ public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
         });
 	}
 	
+	/**
+	 * Creates a {@link Button} that removes selected Blacklist item(s)
+	 */
 	private void createButtonDelBlack() {
         buttonDelBlack = addButton("&-");
         final FormData layout = SharedStyle.relativeTo(buttonAddBlack, 
@@ -118,9 +153,10 @@ public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
         layout.bottom = null;
         layout.left = null;
         buttonDelBlack.setLayoutData(layout); 
+        buttonDelBlack.setToolTipText("Remove selected Blacklist item(s)");
         buttonDelBlack.addSelectionListener(new SelectionAdapter() {
             @Override
-            public void widgetSelected(SelectionEvent event) {
+            public void widgetSelected(final SelectionEvent event) {
                for (String s : listBlack.getSelection()) {
                    listBlack.remove(s);
                }
@@ -129,10 +165,14 @@ public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
         });
 	}
 	
+	/**
+	 * Creates the Blacklist
+	 */
 	private void createListBlack() {
 	    listBlack = new List(container, 
                 SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
-	    FormData layout = ident(SharedStyle.relativeTo(blacklisted, buttonAddBlack, null, null));
+	    final FormData layout = ident(SharedStyle.relativeTo(blacklisted, 
+	            buttonAddBlack, null, null));
 	    layout.width = 250;
 	    layout.height = 60;
 	    listBlack.setLayoutData(layout);

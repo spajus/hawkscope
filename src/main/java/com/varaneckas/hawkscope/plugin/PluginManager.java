@@ -123,7 +123,7 @@ public class PluginManager {
             log.debug(jarFile.getAbsoluteFile());
             final URLClassLoader classLoader = 
                 new URLClassLoader(new URL[] {jarFile.toURI().toURL()});
-            Scanner s = new Scanner(classLoader
+            final Scanner s = new Scanner(classLoader
                     .getResourceAsStream("plugin.loader"));;
             String pluginClass = s.nextLine();
             s.close();
