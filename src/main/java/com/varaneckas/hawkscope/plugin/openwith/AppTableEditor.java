@@ -46,7 +46,7 @@ public class AppTableEditor extends BasicTableEditor {
     	super(table);
     }
 
-	@Override
+    @Override
     protected boolean doEditing(final TableItem item, final int column, 
 			final int row) {
 		if (column == 1) {
