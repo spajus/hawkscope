@@ -16,6 +16,8 @@ Changes in version 0.5.0 (2009-02-20)
   http://code.google.com/p/hawkscope/issues/detail?id=44   
 * Interactive error report
   http://code.google.com/p/hawkscope/issues/detail?id=46 
+* Help Window
+  http://code.google.com/p/hawkscope/issues/detail?id=43
 
 Changes in version 0.4.1 (2009-02-06)
 -------------------------------------

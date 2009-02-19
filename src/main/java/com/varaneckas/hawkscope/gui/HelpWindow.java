@@ -57,6 +57,7 @@ public class HelpWindow extends AbstractWindow {
 		if (shell != null && !shell.isDisposed()) {
 			shell.setVisible(true);
 			shell.forceFocus();
+			return;
 		}
 		createShell("Help");
 		createButtonClose();
