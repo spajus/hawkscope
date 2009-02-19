@@ -47,7 +47,7 @@ public class AppTableEditor extends BasicTableEditor {
     }
 
 	@Override
-	protected boolean doEditing(final TableItem item, final int column, 
+    protected boolean doEditing(final TableItem item, final int column, 
 			final int row) {
 		if (column == 1) {
             ExecutableInputDialog.open("Please enter executable",
