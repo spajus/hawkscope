@@ -192,7 +192,7 @@ public abstract class OSUtils {
 				roots.add(new File("/"));
 			} else {
 				for (final File f : volumes) {
-					if (f.canRead()) {
+					if (f.canRead() && !isMacApp(f)) {
 					    roots.add(f);
 					}
 				}
@@ -252,6 +252,9 @@ public abstract class OSUtils {
 	    if (!file.isDirectory()) {
 	        return false;
 	    }
+	    if (isMacApp(file)) {
+	        return false;
+	    }
 	    if (CURRENT_OS.equals(OS.WIN)) {
 	        return FileSystemView.getFileSystemView().isComputerNode(file);
 	    } 
@@ -267,6 +270,9 @@ public abstract class OSUtils {
 	 */
 	public static boolean isRemovableDrive(final File file) {
 	    if (!file.isDirectory()) {
+	        return false;
+	    }
+	    if (isMacApp(file)) {
 	        return false;
 	    }
         String name = null;
