@@ -13,7 +13,9 @@ Changes in version 0.5.0 (2009-02-20)
 * A temporary workaround for Mac menubar icon blues
   http://code.google.com/p/hawkscope/issues/detail?id=33
 * Friendlier GUI windows
-  http://code.google.com/p/hawkscope/issues/detail?id=44    
+  http://code.google.com/p/hawkscope/issues/detail?id=44   
+* Interactive error report
+  http://code.google.com/p/hawkscope/issues/detail?id=46 
 
 Changes in version 0.4.1 (2009-02-06)
 -------------------------------------
