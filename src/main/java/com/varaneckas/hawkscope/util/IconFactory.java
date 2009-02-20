@@ -110,6 +110,22 @@ public class IconFactory {
         resourcePool.put(name, i);
         return i;
     }
+    
+    /**
+     * Gets icon with plugin's classloader
+     * 
+     * @param name Icon name with extension
+     * @return icon
+     */
+    public Image getPluginIcon(final String name, final ClassLoader classLoader) {
+        if (resourcePool.containsKey(name)) {
+            return resourcePool.get(name);
+        } 
+        final Image i = new Image(display, classLoader
+                .getResourceAsStream("icons/" + name));
+        resourcePool.put(name, i);
+        return i;
+    }    
 
     /**
      * Gets large file system icon for any file

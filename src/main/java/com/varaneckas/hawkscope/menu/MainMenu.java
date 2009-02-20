@@ -136,7 +136,6 @@ public class MainMenu {
         hiddenSince = 0L;
         menu.setLocation(x, y);
         menu.setVisible(true);
-        menu.setDefaultItem(menu.getItems()[0]);
     }
 
     public void addMenuItem(final com.varaneckas.hawkscope.menu.MenuItem item) {
