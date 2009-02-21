@@ -108,6 +108,7 @@ public class ExecutableInputDialog {
         dialog.pack();
         WindowFactory.centerShell(dialog);
         dialog.open();
+        dialog.forceFocus();
     }
 
 }
