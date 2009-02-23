@@ -83,6 +83,7 @@ public class SettingsWindow extends AbstractWindow {
 	public void open() {
         if (shell != null && !shell.isDisposed()) {
             shell.setVisible(true);
+            shell.forceActive();
             shell.forceFocus();
             return;
         }      		
@@ -92,6 +93,8 @@ public class SettingsWindow extends AbstractWindow {
 		createTabFolderSettings();
 		packAndSetMinSize();
 		shell.open();
+		shell.forceActive();
+		shell.forceFocus();
 	}
 	
 	/**

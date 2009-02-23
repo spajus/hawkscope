@@ -85,20 +85,26 @@ public abstract class PathUtils {
             return location;
         } else {
             String newLocation = location;
-            final Pattern grep = Pattern.compile(INTERPRET_REGEX);
-            final Matcher matcher = grep.matcher(location);
-            while (matcher.find()) {
-                log.debug("Parsing: " + matcher.group(1));
-                String replacement;
-                if (matcher.group(1).startsWith("$")) {
-                    replacement = "" + System.getenv(matcher.group(1)
-                            .substring(1));
-                } else {
-                    replacement = "" + System.getProperty(matcher.group(1));
-                }
-                newLocation = newLocation.replaceFirst(Pattern.quote(
-                        matcher.group()), replacement.replaceAll("\\\\", "/"));
+            try {
+	            final Pattern grep = Pattern.compile(INTERPRET_REGEX);
+	            final Matcher matcher = grep.matcher(location);
+	            while (matcher.find()) {
+	                log.debug("Parsing: " + matcher.group(1));
+	                String replacement;
+	                if (matcher.group(1).startsWith("$")) {
+	                    replacement = "" + System.getenv(matcher.group(1)
+	                            .substring(1));
+	                } else {
+	                    replacement = "" + System.getProperty(matcher.group(1));
+	                }
+	                newLocation = newLocation.replaceFirst(Pattern.quote(
+	                        matcher.group()),
+	                        replacement.replaceAll("\\\\", "/"));
+	            }
+            } catch (final Exception e) {
+            	log.warn("Failed parsing location: " + location, e);
             }
+	            
             return newLocation;
         }
     }

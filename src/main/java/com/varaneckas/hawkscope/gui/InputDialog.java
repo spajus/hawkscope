@@ -90,6 +90,8 @@ public class InputDialog {
         WindowFactory.centerShell(dialog);
         dialog.open();
         dialog.forceFocus();
+        dialog.forceActive();
+        text.forceFocus();
     }
 
 }

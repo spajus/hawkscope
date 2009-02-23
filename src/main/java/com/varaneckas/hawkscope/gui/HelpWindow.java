@@ -56,6 +56,7 @@ public class HelpWindow extends AbstractWindow {
 	public void open() {
 		if (shell != null && !shell.isDisposed()) {
 			shell.setVisible(true);
+			shell.forceActive();
 			shell.forceFocus();
 			return;
 		}
@@ -68,6 +69,8 @@ public class HelpWindow extends AbstractWindow {
         shell.setMinimumSize(300, 200);
         WindowFactory.centerShell(shell);
 		shell.open();
+		shell.forceActive();
+		shell.forceFocus();
 	}
 
 	/**
