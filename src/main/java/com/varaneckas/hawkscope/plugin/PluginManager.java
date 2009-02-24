@@ -18,12 +18,13 @@
 package com.varaneckas.hawkscope.plugin;
 
 import java.io.File;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -123,10 +124,15 @@ public class PluginManager {
             log.debug(jarFile.getAbsoluteFile());
             final URLClassLoader classLoader = 
                 new URLClassLoader(new URL[] {jarFile.toURI().toURL()});
-            final Scanner s = new Scanner(classLoader
+            final Reader r = new InputStreamReader(classLoader
                     .getResourceAsStream("plugin.loader"));;
-            String pluginClass = s.nextLine();
-            s.close();
+                    
+            String pluginClass = "";
+            int c = 0;
+            while ((c = r.read()) != -1) {
+                pluginClass += (char) c;
+            }
+            r.close();
             log.debug("Plugin :" + pluginClass);
             final Class<?> p = classLoader.loadClass(pluginClass);
             Method creator = null;

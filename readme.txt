@@ -4,7 +4,7 @@ $Id$
 
 === Prequisites ===
 To build Hawkscope executable jar, you need:
-  * JDK 6+
+  * JDK 5+
   * Maven 2.0.6+
 
 === Adding SWT native library to local Maven repository ===

@@ -4,6 +4,13 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
+Changes in version 0.5.1 (2009-02-24)
+-------------------------------------
+* Linux GIJ 4.3 support
+  http://code.google.com/p/hawkscope/issues/detail?id=54
+  http://code.google.com/p/hawkscope/issues/detail?id=55
+  http://code.google.com/p/hawkscope/issues/detail?id=56
+
 Changes in version 0.5.0 (2009-02-20)
 -------------------------------------
 * Plugin System
