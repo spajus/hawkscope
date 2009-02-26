@@ -159,7 +159,9 @@ public abstract class AbstractSettingsTabItem {
 	 */
 	protected Text addText(final String text, final int limit) {
 		final Text t = new Text(container, SWT.BORDER);
-		t.setText(text);
+		if (text != null) {
+		    t.setText(text);
+		}
 		if (limit > 0) {
 		    t.setTextLimit(limit);
 		}

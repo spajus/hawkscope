@@ -48,8 +48,7 @@ public class InputDialog {
      */
     public static void open(final String prompt, final int maxLength, 
             final Shell parent, final Updater updater) {
-        final Shell dialog = new Shell(parent, SWT.DIALOG_TRIM | SWT.ON_TOP
-                | SWT.APPLICATION_MODAL);
+        final Shell dialog = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
         dialog.setImage(IconFactory.getInstance().getUncachedIcon(
                 "hawkscope16.png"));
         dialog.setText("Input Dialog");
