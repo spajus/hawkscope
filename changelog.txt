@@ -4,6 +4,14 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
+
+Changes in version 0.5.2 (2009-02-27)
+-------------------------------------
+* Improved plugin support
+  http://code.google.com/p/hawkscope/issues/detail?id=57
+* Better password protection
+  http://code.google.com/p/hawkscope/issues/detail?id=58
+
 Changes in version 0.5.1 (2009-02-24)
 -------------------------------------
 * Linux GIJ 4.3 support

@@ -20,6 +20,8 @@ package com.varaneckas.hawkscope.gui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.ShellAdapter;
+import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
@@ -168,6 +170,11 @@ public class InputDialog {
                 "hawkscope16.png"));
         dialog.setText("Input Dialog");
         dialog.setLayout(SharedStyle.LAYOUT);
+        dialog.addShellListener(new ShellAdapter() {
+			public void shellClosed(ShellEvent ev) {
+				dialog.dispose();
+			}
+        });
 	}
 
 }

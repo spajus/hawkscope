@@ -25,8 +25,12 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.util.PathUtils;
+import com.varaneckas.hawkscope.util.RC4Crypt;
 
 /**
  * Hawkscope configuration.
@@ -120,6 +124,11 @@ public class Configuration {
      * Plugin location directory
      */
     public static final String PLUGIN_DIR = "plugin.dir";
+    
+    /**
+     * Salt
+     */
+    public static final String SALT = "a bit of tasty salt";
     
     /**
      * Properties {@link Map}
@@ -284,7 +293,7 @@ public class Configuration {
      * @return
      */
     public String getHttpProxyAuthPassword() {
-        return properties.get(HTTP_PROXY_AUTH_PASSWORD);
+    	return getPasswordProperty(HTTP_PROXY_AUTH_PASSWORD);
     }
     
     /**
@@ -328,4 +337,40 @@ public class Configuration {
        return pluginDir;
     }
     
+    /**
+     * Encrypts a password property
+     * 
+     * @param propName
+     * @param pass
+     */
+    public void setPasswordProperty(final String propName, final String pass) {
+    	try {
+			getProperties().put(propName, new BASE64Encoder().encode(
+					RC4Crypt.encrypt(pass.getBytes("UTF-8"), 
+					SALT.getBytes("UTF-8"))));
+		} catch (Exception e) {
+			log.warn("Failed encrypting password property: " + propName);
+			getProperties().put(propName, "");
+		}
+    }
+    
+    /**
+     * Decrypts a password property
+     * 
+     * @param propName
+     * @return
+     */
+    public String getPasswordProperty(final String propName) {
+        try {
+			String prop = properties.get(propName);
+			if (prop == null || prop.equals("")) {
+				return ""; 
+			}
+			return new String(RC4Crypt.decrypt(new BASE64Decoder().decodeBuffer(prop), 
+					SALT.getBytes("UTF-8")), "UTF-8");
+		} catch (Exception e) {
+			log.warn("Failed decrypting password property: " + propName);
+			return "";
+		}
+    }
 }

@@ -141,6 +141,10 @@ public class MainMenu {
     public void addMenuItem(final com.varaneckas.hawkscope.menu.MenuItem item) {
         item.createMenuItem(menu);
     }
+    
+    public Menu getSwtMenuObject() {
+    	return menu;
+    }
 
     public void addSeparator() {
         new org.eclipse.swt.widgets.MenuItem(menu, SWT.SEPARATOR);

@@ -271,7 +271,7 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
                 useHttpProxyAuth.getSelection() ? "1" : "0");
         cfg.getProperties().put(Configuration.HTTP_PROXY_AUTH_USERNAME,
                 httpProxyUser.getText());
-        cfg.getProperties().put(Configuration.HTTP_PROXY_AUTH_PASSWORD,
+        cfg.setPasswordProperty(Configuration.HTTP_PROXY_AUTH_PASSWORD,
                 httpProxyPass.getText());
     }
 

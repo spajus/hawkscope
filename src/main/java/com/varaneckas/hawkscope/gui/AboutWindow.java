@@ -145,6 +145,7 @@ public class AboutWindow extends AbstractWindow {
     public void open() {
         if (shell != null && !shell.isDisposed()) {
             shell.setVisible(true);
+            shell.forceActive();
             shell.forceFocus();
             return;
         }       
@@ -164,6 +165,8 @@ public class AboutWindow extends AbstractWindow {
         createTextEnvironment();
         packAndSetMinSize();
         shell.open();
+        shell.forceActive();
+        shell.forceFocus();
     }
     
     /**

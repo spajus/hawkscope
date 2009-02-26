@@ -130,7 +130,6 @@ public class TrayManager {
 			}
         });
         trayIcon.addListener(SWT.MenuDetect, listener);
-        log.debug(trayIcon.getListeners(SWT.NONE).length);
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
                 log.debug("Removing Tray Icon");
@@ -139,7 +138,7 @@ public class TrayManager {
         }, "icon-disposer-hook"));
         while (!sh.isDisposed()) {
             try {
-                if (!d.readAndDispatch ()) {
+                if (!d.readAndDispatch()) {
                     d.sleep();
                 }
             } catch (final Exception e) {
