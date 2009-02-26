@@ -231,7 +231,7 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
         textFileDef.addListener(SWT.MouseDoubleClick, new Listener() {
             public void handleEvent(final Event ev) {
                 textFileDef.setSelection(0);
-                ExecutableInputDialog.open(
+                new ExecutableInputDialog().open(
                         "Choose executable for opening unknown files", 
                         textFileDef.getText(), textFileDef.getShell(), 
                         new Updater() {
@@ -260,7 +260,7 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
         textFolderNav.addListener(SWT.MouseDoubleClick, new Listener() {
             public void handleEvent(final Event ev) {
                 textFolderNav.setSelection(0);
-                ExecutableInputDialog.open(
+                new ExecutableInputDialog().open(
                         "Choose executable for opening directories", 
                         textFolderNav.getText(), 
                         textFolderNav.getShell(), new Updater() {
@@ -281,7 +281,7 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
      * @param tableItem TableItem to fill in
      */
     private void addApplication(final TableItem tableItem) {
-        InputDialog.open("Please enter file extension", 30,
+        new InputDialog().open("Please enter file extension", 30,
                 tablePreferred.getShell(), new Updater() {
             public void setValue(String ext) {
                 if (ext == null || ext.length() == 0) {
@@ -291,7 +291,7 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
                     ext = "." + ext;
                 }
                 tableItem.setText(0, ext);
-                ExecutableInputDialog.open(
+                new ExecutableInputDialog().open(
                         "Please enter executable for handling " + ext, null, 
                         tablePreferred.getShell(), new Updater() {
                     public void setValue(final String app) {

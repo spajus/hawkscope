@@ -20,15 +20,11 @@ package com.varaneckas.hawkscope.gui;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
 
-import com.varaneckas.hawkscope.util.IconFactory;
 import com.varaneckas.hawkscope.util.Updater;
 
 /**
@@ -37,8 +33,13 @@ import com.varaneckas.hawkscope.util.Updater;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class ExecutableInputDialog {
+public class ExecutableInputDialog extends InputDialog {
     
+	/**
+	 * The choose button
+	 */
+	protected Button choose;
+	
     /**
      * Opens the dialog
      * 
@@ -47,46 +48,38 @@ public class ExecutableInputDialog {
      * @param parent Parent {@link Shell}
      * @param updater Updater for setting the value
      */
-    public static void open(final String prompt, final String defaultApp,
+    public void open(final String prompt, final String defaultApp,
              final Shell parent, final Updater updater) {
-        final Shell dialog = new Shell(parent, SWT.DIALOG_TRIM 
-                | SWT.APPLICATION_MODAL);
-        dialog.setImage(IconFactory.getInstance().getUncachedIcon(
-                "hawkscope16.png"));
-        dialog.setText("Command Input Dialog");
-        dialog.setLayout(SharedStyle.LAYOUT);
-
-        final Label label = new Label(dialog, SWT.NONE);
-        label.setText(prompt);
-        label.setLayoutData(SharedStyle.relativeTo(null, null));
-
-        final Button cancel = new Button(dialog, SWT.PUSH);
-        cancel.setText("&Cancel");
-        cancel.setLayoutData(SharedStyle.relativeToBottomRight(null));
-        cancel.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) { 
-                dialog.close();
-            }
-        });
-
-        final Text text = new Text(dialog, SWT.BORDER);
-        if (defaultApp != null) text.setText(defaultApp);
-        FormData data = SharedStyle.relativeTo(label, null, cancel, null);
-        data.width = 200;
-        data.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
-        text.setLayoutData(data);
         
-        final Button ok = new Button(dialog, SWT.PUSH);
-        ok.setText("&OK");
-        ok.setLayoutData(SharedStyle.relativeToBottomRight(cancel));
-        ok.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
-                updater.setValue(text.getText());
-                dialog.close();
-            }
-        });
+    	createDialogShell(parent);
+    	dialog.setText("Command Input Dialog");
+    	
+    	createLabel(prompt);
+
+    	createButtonCancel();
+    	
+    	createTextInput(0, 200);
+    	if (defaultApp != null) {
+    		text.setText(defaultApp);
+    	}
         
-        final Button choose = new Button(dialog, SWT.PUSH);
+    	createButtonOk(updater);
+    	
+        createButtonChoose(defaultApp, parent);
+        
+        runDialog();
+        dialog.setTabList(new Control[] { text, choose, ok, cancel});
+    }
+
+    /**
+     * Creates a choose file button
+     * 
+     * @param defaultApp
+     * @param parent
+     */
+	protected void createButtonChoose(final String defaultApp,
+			final Shell parent) {
+		choose = new Button(dialog, SWT.PUSH);
         choose.setText("&Browse");
         choose.setLayoutData(SharedStyle.relativeToBottomRight(ok));
         choose.addSelectionListener(new SelectionAdapter() {
@@ -102,15 +95,6 @@ public class ExecutableInputDialog {
                 }
             }
         });
-        
-        dialog.setDefaultButton(ok);
-        dialog.setTabList(new Control[] { text, choose, ok, cancel });
-        dialog.pack();
-        WindowFactory.centerShell(dialog);
-        dialog.open();
-        dialog.forceFocus();
-        dialog.forceActive();
-        text.forceFocus();
-    }
+	}
 
 }

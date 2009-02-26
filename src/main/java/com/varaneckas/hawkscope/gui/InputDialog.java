@@ -38,6 +38,31 @@ import com.varaneckas.hawkscope.util.Updater;
  */
 public class InputDialog {
     
+	/**
+	 * The dialog shell
+	 */
+	protected Shell dialog;
+
+	/**
+	 * The label
+	 */
+	protected Label label;
+	
+	/**
+	 * The cancel button
+	 */
+	protected Button cancel;
+	
+	/**
+	 * The text input
+	 */
+	protected Text text;
+	
+	/**
+	 * The OK button
+	 */
+	protected Button ok;
+	
     /**
      * Opens the dialog 
      * 
@@ -46,35 +71,37 @@ public class InputDialog {
      * @param parent Parent {@link Shell}
      * @param updater Updater for the value
      */
-    public static void open(final String prompt, final int maxLength, 
+    public void open(final String prompt, final int maxLength, 
             final Shell parent, final Updater updater) {
-        final Shell dialog = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
-        dialog.setImage(IconFactory.getInstance().getUncachedIcon(
-                "hawkscope16.png"));
-        dialog.setText("Input Dialog");
-        dialog.setLayout(SharedStyle.LAYOUT);
+        createDialogShell(parent);
+        createLabel(prompt);
+        createButtonCancel();
+        createTextInput(maxLength, 0);
+        createButtonOk(updater);
+        runDialog();
+    }
 
-        final Label label = new Label(dialog, SWT.NONE);
-        label.setText(prompt);
-        label.setLayoutData(SharedStyle.relativeTo(null, null));
+    /**
+     * Runs the dialog
+     */
+	protected void runDialog() {
+		dialog.setDefaultButton(ok);
+        dialog.setTabList(new Control[] { text, ok, cancel });
+        dialog.pack();
+        WindowFactory.centerShell(dialog);
+        dialog.open();
+        dialog.forceFocus();
+        dialog.forceActive();
+        text.forceFocus();
+	}
 
-        final Button cancel = new Button(dialog, SWT.PUSH);
-        cancel.setText("&Cancel");
-        cancel.setLayoutData(SharedStyle.relativeToBottomRight(null));
-        cancel.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) { 
-                dialog.close();
-            }
-        });
-
-        final Text text = new Text(dialog, SWT.BORDER);
-        final FormData data = SharedStyle.relativeTo(null, null, cancel, label);
-        data.width = Math.min(10 * maxLength, 100);
-        data.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
-        text.setLayoutData(data);
-        text.setTextLimit(maxLength);
-        
-        final Button ok = new Button(dialog, SWT.PUSH);
+	/**
+	 * Creates OK button
+	 * 
+	 * @param updater
+	 */
+	protected void createButtonOk(final Updater updater) {
+		ok = new Button(dialog, SWT.PUSH);
         ok.setText("&OK");
         ok.setLayoutData(SharedStyle.relativeToBottomRight(cancel));
         ok.addSelectionListener(new SelectionAdapter() {
@@ -83,14 +110,64 @@ public class InputDialog {
                 dialog.close();
             }
         });
-        dialog.setDefaultButton(ok);
-        dialog.setTabList(new Control[] { text, ok, cancel });
-        dialog.pack();
-        WindowFactory.centerShell(dialog);
-        dialog.open();
-        dialog.forceFocus();
-        dialog.forceActive();
-        text.forceFocus();
-    }
+	}
+
+	/**
+	 * Creates text input
+	 * 
+	 * @param maxLength
+	 */
+	protected void createTextInput(final int maxLength, final int width) {
+		text = new Text(dialog, SWT.BORDER);
+        final FormData data = SharedStyle.relativeTo(null, null, cancel, label);
+        if (width > 0) {
+        	data.width = width;
+        } else if (maxLength > 0) {
+        	data.width = Math.min(10 * maxLength, 100);
+        }
+        data.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
+        text.setLayoutData(data);
+        if (maxLength > 0) {
+        	text.setTextLimit(maxLength);
+        }
+	}
+
+	/**
+	 * Creates cancel button
+	 */
+	protected void createButtonCancel() {
+		cancel = new Button(dialog, SWT.PUSH);
+        cancel.setText("&Cancel");
+        cancel.setLayoutData(SharedStyle.relativeToBottomRight(null));
+        cancel.addSelectionListener(new SelectionAdapter() {
+            public void widgetSelected(SelectionEvent e) { 
+                dialog.close();
+            }
+        });
+	}
+
+	/**
+	 * Creates the prompt label
+	 * 
+	 * @param prompt
+	 */
+	protected void createLabel(final String prompt) {
+		label = new Label(dialog, SWT.NONE);
+        label.setText(prompt);
+        label.setLayoutData(SharedStyle.relativeTo(null, null));
+	}
+
+	/**
+	 * Creates Dialog shell
+	 * 
+	 * @param parent
+	 */
+	protected void createDialogShell(final Shell parent) {
+		dialog = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL);
+        dialog.setImage(IconFactory.getInstance().getUncachedIcon(
+                "hawkscope16.png"));
+        dialog.setText("Input Dialog");
+        dialog.setLayout(SharedStyle.LAYOUT);
+	}
 
 }

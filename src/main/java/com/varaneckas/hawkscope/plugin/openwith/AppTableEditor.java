@@ -50,7 +50,7 @@ public class AppTableEditor extends BasicTableEditor {
     protected boolean doEditing(final TableItem item, final int column, 
 			final int row) {
 		if (column == 1) {
-            ExecutableInputDialog.open("Please enter executable",
+            new ExecutableInputDialog().open("Please enter executable",
             		item.getText(column), table.getShell(), new Updater() {
                         public void setValue(String value) {
                             item.setText(column, value);
