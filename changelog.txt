@@ -4,9 +4,10 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
-
 Changes in version 0.5.2 (2009-02-27)
 -------------------------------------
+* Twitter plugin (available separately)
+  http://code.google.com/p/hawkscope/issues/detail?id=59
 * Improved plugin support
   http://code.google.com/p/hawkscope/issues/detail?id=57
 * Better password protection

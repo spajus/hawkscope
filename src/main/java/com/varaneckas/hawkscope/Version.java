@@ -70,12 +70,12 @@ public class Version {
     /**
      * Application version number   
      */
-    public static final String VERSION_NUMBER = "0.5.1";
+    public static final String VERSION_NUMBER = "0.5.2";
     
     /**
      * Application version date
      */
-    public static final String VERSION_DATE = "2009-02-24";
+    public static final String VERSION_DATE = "2009-02-28";
     
     /**
      * Application Homepage URL
