@@ -25,10 +25,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
 import com.varaneckas.hawkscope.menu.MainMenu;
+import com.varaneckas.hawkscope.util.Base64;
 import com.varaneckas.hawkscope.util.PathUtils;
 import com.varaneckas.hawkscope.util.RC4Crypt;
 
@@ -345,9 +343,9 @@ public class Configuration {
      */
     public void setPasswordProperty(final String propName, final String pass) {
     	try {
-			getProperties().put(propName, new BASE64Encoder().encode(
+			getProperties().put(propName, Base64.encodeToString(
 					RC4Crypt.encrypt(pass.getBytes("UTF-8"), 
-					SALT.getBytes("UTF-8"))));
+					SALT.getBytes("UTF-8")), false));
 		} catch (Exception e) {
 			log.warn("Failed encrypting password property: " + propName);
 			getProperties().put(propName, "");
@@ -366,7 +364,7 @@ public class Configuration {
 			if (prop == null || prop.equals("")) {
 				return ""; 
 			}
-			return new String(RC4Crypt.decrypt(new BASE64Decoder().decodeBuffer(prop), 
+			return new String(RC4Crypt.decrypt(Base64.decode(prop), 
 					SALT.getBytes("UTF-8")), "UTF-8");
 		} catch (Exception e) {
 			log.warn("Failed decrypting password property: " + propName);
