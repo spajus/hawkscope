@@ -75,6 +75,14 @@ public class MainMenu {
     private static long hiddenSince;
     
     /**
+     * Instance of configuration
+     */
+    private Configuration cfg = ConfigurationFactory
+        .getConfigurationFactory()
+        .getConfiguration();
+    
+    
+    /**
      * Initializing singleton constructor
      */
     private MainMenu() {
@@ -195,9 +203,7 @@ public class MainMenu {
                             isReloading = false;
                             return;
                         } else if (System.currentTimeMillis() 
-                                - hiddenSince < ConfigurationFactory
-                                        .getConfigurationFactory()
-                                        .getConfiguration().getMenuReloadDelay()) {
+                                - hiddenSince < cfg.getMenuReloadDelay()) {
                             //menu is actively used, try reloading later
                             if (log.isDebugEnabled()) {
                                 log.debug("Reloading later, menu is not sleeping " +
@@ -220,6 +226,34 @@ public class MainMenu {
                     log.debug("Failed reloading menu", e);
                 }
                 isReloading = false;
+                enqueueIdleReload();
+            }
+
+            /**
+             * Enqueues idle reload
+             */
+            private void enqueueIdleReload() {
+                if (isReloading) {
+                    log.warn("Can't enqueue idle reload on a reloading menu");
+                    return;
+                }
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            //sleep at least 3 minutes
+                            Thread.sleep(Math.max(cfg.getMenuReloadDelay(), 
+                                    1800000));
+                            if (!isReloading) {
+                                log.debug("Idle reload.");
+                                doReload(true);
+                            } else {
+                                log.debug("Idle reload cancelled");
+                            }
+                        } catch (final InterruptedException e) {
+                            log.warn("Idle reload interrupted", e);
+                        }
+                    }
+                }).start();
             }
         });
     }
