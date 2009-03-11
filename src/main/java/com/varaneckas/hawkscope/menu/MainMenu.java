@@ -229,35 +229,36 @@ public class MainMenu {
                 hiddenSince = System.currentTimeMillis();
                 enqueueIdleReload();
             }
-
-            /**
-             * Enqueues idle reload
-             */
-            private void enqueueIdleReload() {
-                if (isReloading) {
-                    log.warn("Can't enqueue idle reload on a reloading menu");
-                    return;
-                }
-                new Thread(new Runnable() {
-                    public void run() {
-                        try {
-                            //sleep at least 3 minutes
-                            Thread.sleep(Math.max(cfg.getMenuReloadDelay(), 
-                                    180000));
-                            if (!isReloading) {
-                                log.debug("Idle reload.");
-                                doReload(true);
-                            } else {
-                                log.debug("Idle reload cancelled");
-                            }
-                        } catch (final InterruptedException e) {
-                            log.warn("Idle reload interrupted", e);
-                        }
-                    }
-                }).start();
-            }
         });
     }
+ 
+    /**
+     * Enqueues idle reload
+     */
+    private void enqueueIdleReload() {
+        if (isReloading) {
+            log.warn("Can't enqueue idle reload on a reloading menu");
+            return;
+        }
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    //sleep at least 3 minutes
+                    Thread.sleep(Math.max(cfg.getMenuReloadDelay(), 
+                            180000));
+                    if (!isReloading) {
+                        log.debug("Idle reload.");
+                        doReload(true);
+                    } else {
+                        log.debug("Idle reload cancelled");
+                    }
+                } catch (final InterruptedException e) {
+                    log.warn("Idle reload interrupted", e);
+                }
+            }
+        }).start();
+    }
+    
     /**
      * Current menu state
      */
