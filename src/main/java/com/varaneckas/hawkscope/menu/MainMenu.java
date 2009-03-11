@@ -92,7 +92,7 @@ public class MainMenu {
                 new Thread(new Runnable() {
                     public void run() {
                         if (!menu.isDisposed()) {
-                            menu.getDisplay().syncExec(new Runnable() {
+                            menu.getDisplay().asyncExec(new Runnable() {
                                 public void run() {
                                     try {
                                         Thread.sleep(10l);
@@ -162,7 +162,7 @@ public class MainMenu {
         hiddenSince = timestamp;
     }
     
-    public synchronized void reloadMenu(final boolean canWait) {
+    public void reloadMenu(final boolean canWait) {
         if (!canWait && log.isDebugEnabled()) {
             log.debug("Forcing menu reload now.");
         }
@@ -188,7 +188,7 @@ public class MainMenu {
     /**
      * Does the actual reload of Main Menu
      */
-    private synchronized void doReload(final boolean canWait) {
+    private void doReload(final boolean canWait) {
         if (menu.getDisplay().isDisposed()) return;
         menu.getDisplay().asyncExec(new Runnable() {
             public void run() {
@@ -226,6 +226,7 @@ public class MainMenu {
                     log.debug("Failed reloading menu", e);
                 }
                 isReloading = false;
+                hiddenSince = System.currentTimeMillis();
                 enqueueIdleReload();
             }
 
@@ -242,7 +243,7 @@ public class MainMenu {
                         try {
                             //sleep at least 3 minutes
                             Thread.sleep(Math.max(cfg.getMenuReloadDelay(), 
-                                    1800000));
+                                    180000));
                             if (!isReloading) {
                                 log.debug("Idle reload.");
                                 doReload(true);

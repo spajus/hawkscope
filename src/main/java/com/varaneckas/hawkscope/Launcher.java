@@ -63,7 +63,7 @@ public class Launcher {
      */
     private static void preload() {
 		log.debug("Preloading data");
-		MenuFactory.getMainMenu().loadMenu();
+		MenuFactory.getMainMenu().reloadMenu(false);
 		log.debug("Preloaded...");
     }
 
