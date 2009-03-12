@@ -21,6 +21,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,6 +31,7 @@ import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.util.Base64;
 import com.varaneckas.hawkscope.util.PathUtils;
 import com.varaneckas.hawkscope.util.RC4Crypt;
+import com.varaneckas.hawkscope.util.UTF8ResourceBundle;
 
 /**
  * Hawkscope configuration.
@@ -43,6 +45,12 @@ public class Configuration {
      * Logger 
      */
     private static final Log log = LogFactory.getLog(Configuration.class);
+    
+    /**
+     * Hawkscope properties bundle
+     */
+    public static final ResourceBundle PROPERTIES = UTF8ResourceBundle
+    		.getBundle("hawkscope", Configuration.class.getClassLoader());
     
     /**
      * Display hidden files property name
@@ -342,8 +350,8 @@ public class Configuration {
     public void setPasswordProperty(final String propName, final String pass) {
     	try {
 			getProperties().put(propName, Base64.encodeToString(
-					RC4Crypt.encrypt(pass.getBytes(Constants.UTF8), 
-					SALT.getBytes(Constants.UTF8)), false));
+					RC4Crypt.encrypt(pass.getBytes(Constants.ENCODING), 
+					SALT.getBytes(Constants.ENCODING)), false));
 		} catch (final Exception e) {
 			log.warn("Failed encrypting password property: " + propName);
 			getProperties().put(propName, "");
@@ -363,7 +371,7 @@ public class Configuration {
 				return ""; 
 			}
 			return new String(RC4Crypt.decrypt(Base64.decode(prop), 
-					SALT.getBytes(Constants.UTF8)), Constants.UTF8);
+					SALT.getBytes(Constants.ENCODING)), Constants.ENCODING);
 		} catch (final Exception e) {
 			log.warn("Failed decrypting password property: " + propName);
 			return "";

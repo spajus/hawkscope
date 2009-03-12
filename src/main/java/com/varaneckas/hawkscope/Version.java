@@ -60,46 +60,57 @@ public class Version {
     /**
      * Application name
      */
-    public static final String APP_NAME = "Hawkscope";
+    public static final String APP_NAME = Configuration.PROPERTIES
+    		.getString("name");
     
     /**
      * Application slogan
      */
-    public static final String APP_SLOGAN = "Access anything with single click!";
+    public static final String APP_SLOGAN = Configuration.PROPERTIES
+    		.getString("slogan");
     
     /**
      * Application version number   
      */
-    public static final String VERSION_NUMBER = "0.5.2";
+    public static final String VERSION_NUMBER = Configuration.PROPERTIES
+    		.getString("version.number");
     
     /**
      * Application version date
      */
-    public static final String VERSION_DATE = "2009-02-28";
+    public static final String VERSION_DATE = Configuration.PROPERTIES
+    		.getString("version.date");
     
     /**
      * Application Homepage URL
      */
-    public static final String HOMEPAGE = "http://hawkscope.googlecode.com";
+    public static final String HOMEPAGE = Configuration.PROPERTIES
+    		.getString("homepage");
+    
+    /**
+     * Configuration instance
+     */
+    final static Configuration cfg = ConfigurationFactory
+    		.getConfigurationFactory().getConfiguration();
     
     /**
      * URL where latest Hawkscope version is stored
      */
-    public static final String VERSION_CHECK_URL 
-            = "http://hawkscope.googlecode.com/svn/trunk/dist/version/" 
-            	+ OSUtils.CURRENT_OS.toString().toLowerCase();
+    public static final String VERSION_CHECK_URL = Configuration.PROPERTIES
+    		.getString("version.url")
+    		.concat(OSUtils.CURRENT_OS.toString().toLowerCase());
 
     /**
      * Plugins download URL
      */
     public static final String PLUGINS_URL 
-    		= "http://code.google.com/p/hawkscope/wiki/Plugins";
+    		= Constants.HAWKSCOPE_URL_ROOT.concat("wiki/Plugins");
     
     /**
      * URL where more recent version of Hawkscope can be downloaded
      */
     public static final String DOWNLOAD_URL 
-            = "http://code.google.com/p/hawkscope/downloads/list";
+            = Constants.HAWKSCOPE_URL_ROOT.concat("downloads/list");
     
     /**
      * Tells if update is available
@@ -115,7 +126,7 @@ public class Version {
                 try {
                     Thread.sleep(5000L);
                 } catch (final InterruptedException e) {
-                    //yawn
+                	log.warn("Version check interrupted", e);
                 }
                 checkForUpdate();
             }
@@ -163,9 +174,7 @@ public class Version {
      */
     public static String formatConfigurationProperties() {
         final StringBuilder props = new StringBuilder();
-        for (Entry<String, String> entry : ConfigurationFactory
-                .getConfigurationFactory()
-                .getConfiguration().getProperties().entrySet()) {
+        for (final Entry<String, String> entry : cfg.getProperties().entrySet()) {
             props.append(entry.getKey()).append(": ");
             //we don't want user passwords in bug reports...
             if (entry.getKey().contains("pass")) {
@@ -224,8 +233,6 @@ public class Version {
      * @return
      */
     public static void checkForUpdate() {
-        final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
-                .getConfiguration();
         if (!cfg.checkForUpdates()) {
             return;
         }
@@ -267,8 +274,10 @@ public class Version {
             while ((c = io.read()) != -1) {
                 version.append((char) c);
             }
-            log.debug("Check complete. Latest " + OSUtils.CURRENT_OS 
-                    + " version: " + version.toString());
+            if (log.isDebugEnabled()) {
+            	log.debug("Check complete. Latest " + OSUtils.CURRENT_OS 
+            			+ " version: " + version.toString());
+            }
             if (VERSION_NUMBER.compareTo(version.toString()) < 0) {
                 log.info("Newer " + OSUtils.CURRENT_OS + " version available (" 
                         + version.toString() 

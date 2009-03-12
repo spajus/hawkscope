@@ -76,7 +76,7 @@ public abstract class UTF8ResourceBundle {
                 return null;
             }
             try {
-                return new String(value.getBytes("ISO-8859-1"), Constants.UTF8);
+                return new String(value.getBytes("ISO-8859-1"), Constants.ENCODING);
             } catch (final UnsupportedEncodingException e) {
                 return null;
             }

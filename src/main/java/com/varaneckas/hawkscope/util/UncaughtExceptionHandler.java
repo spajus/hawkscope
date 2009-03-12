@@ -66,7 +66,7 @@ public class UncaughtExceptionHandler implements
             		+ URLEncoder.encode("Please paste the Hawkscope Error " +
             				"Report here. It's currently copied to your " +
             				"clipboard. Thank you for your support!", 
-            				Constants.UTF8)); 
+            				Constants.ENCODING)); 
             } catch (final Exception e1) {
             	Program.launch(Constants.HAWKSCOPE_URL_ROOT + "issues/entry");
             }

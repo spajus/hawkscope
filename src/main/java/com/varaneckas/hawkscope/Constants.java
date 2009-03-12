@@ -17,6 +17,8 @@
  */
 package com.varaneckas.hawkscope;
 
+import com.varaneckas.hawkscope.cfg.Configuration;
+
 /**
  * A class for storing constant values
  *
@@ -28,7 +30,8 @@ public class Constants {
     /**
      * A "UTF-8" String litteral
      */
-    public static final String UTF8 = "UTF-8";
+    public static final String ENCODING = Configuration.PROPERTIES
+    		.getString("encoding");
     
     /**
      * Slash for regex
@@ -43,8 +46,8 @@ public class Constants {
     /**
      * Hawkscope URL base
      */
-    public static final String HAWKSCOPE_URL_ROOT = 
-        "http://code.google.com/p/hawkscope/";
+    public static final String HAWKSCOPE_URL_ROOT = Configuration.PROPERTIES
+    		.getString("googlecode.url");
         
 
 }
