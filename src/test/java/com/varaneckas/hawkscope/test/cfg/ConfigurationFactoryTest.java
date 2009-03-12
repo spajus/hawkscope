@@ -28,11 +28,4 @@ public class ConfigurationFactoryTest {
         ConfigurationFactory.getConfigurationFactory().write(cfg);
     }
     
-    @Test
-	public void testPasswords() throws Exception {
-    	Configuration cfg = ConfigurationFactory.getConfigurationFactory().getConfiguration();
-    	String pass = cfg.getPasswordProperty("plugins.twitter.pass");
-    	log.debug("pass: " + pass);
-	}
-    
 }
