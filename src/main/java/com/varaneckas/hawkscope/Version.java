@@ -150,7 +150,7 @@ public class Version {
     public static String getSystemProperties() {
         final StringBuilder props = new StringBuilder();
         for (final Object p : System.getProperties().keySet()) {
-            props.append(p).append(": ").append(System.getProperty("" + p));
+            props.append(p).append(": ").append(System.getProperty((String) p));
             props.append('\n');
         }
         return props.toString().trim();

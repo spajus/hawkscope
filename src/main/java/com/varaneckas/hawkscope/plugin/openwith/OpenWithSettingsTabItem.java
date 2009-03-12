@@ -322,11 +322,10 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
         }
         // then add
         for (final TableItem item : tablePreferred.getItems()) {
-            if (item.getText(0) != null && item.getText().length() > 0) {
-                if (item.getText(1) != null && item.getText(1).length() > 0) {
-                    cfg.getProperties().put(OpenWithPlugin.PROP_FILE_TYPE_PREFIX 
-                            + item.getText(0), item.getText(1));
-                }
+            if (item.getText(0) != null && item.getText(0).length() > 0 
+                    && item.getText(1) != null && item.getText(1).length() > 0) {
+                cfg.getProperties().put(OpenWithPlugin.PROP_FILE_TYPE_PREFIX 
+                        + item.getText(0), item.getText(1));
             }
         }
         //unknown file app

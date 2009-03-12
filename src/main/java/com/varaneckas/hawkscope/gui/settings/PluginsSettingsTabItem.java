@@ -178,15 +178,10 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 	 * Creates text input for plugin location
 	 */
     private void createTextPluginLocation() {
-        //Plugin location [            ]
+        //Plugin location []            ]
         final File pluginLocFile = cfg.getPluginLocation();
-        String plugPath = pluginLocFile == null ? null : pluginLocFile
-                .getAbsolutePath();
-        if (plugPath == null) {
-            plugPath = "";
-        } else {
-            plugPath = PathUtils.sanitizePath(plugPath);
-        }
+        final String plugPath = pluginLocFile == null ? "" : 
+                PathUtils.sanitizePath(pluginLocFile.getAbsolutePath());
 		textPluginLocation = addText(plugPath, 0);
 		final FormData layout = ident(SharedStyle.relativeTo(pluginLocation, 
 		        openPluginLocation, null, null));
@@ -275,7 +270,7 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 	            .sanitizePath(textPluginLocation.getText()));
 		for (final TableItem item : tablePlugins.getItems()) {
 			final Plugin p = pluginMap.get(item.getText(1));
-			boolean enabled = item.getText(0).equals("Yes");
+			final boolean enabled = item.getText(0).equals("Yes");
 			p.setEnabled(enabled);
 			cfg.getProperties().put("plugin." + p.getClass().getName() 
 					+ ".enabled", enabled ? "1" : "0");

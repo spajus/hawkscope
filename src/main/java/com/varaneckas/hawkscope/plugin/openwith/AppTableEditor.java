@@ -52,7 +52,7 @@ public class AppTableEditor extends BasicTableEditor {
 		if (column == 1) {
             new ExecutableInputDialog().open("Please enter executable",
             		item.getText(column), table.getShell(), new Updater() {
-                        public void setValue(String value) {
+                        public void setValue(final String value) {
                             item.setText(column, value);
                             table.getColumn(1).pack();
                         }

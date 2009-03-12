@@ -69,15 +69,15 @@ public abstract class BasicTableEditor {
         editor.horizontalAlignment = SWT.LEFT;
         editor.grabHorizontal = true;
         table.addListener(SWT.MouseDoubleClick, new Listener() {
-            public void handleEvent(Event event) {
-                Rectangle clientArea = table.getClientArea();
-                Point pt = new Point(event.x, event.y);
+            public void handleEvent(final Event event) {
+                final Rectangle clientArea = table.getClientArea();
+                final Point pt = new Point(event.x, event.y);
                 int index = table.getTopIndex();
                 while (index < table.getItemCount()) {
                     boolean visible = false;
                     final TableItem item = table.getItem(index);
                     for (int i = 0; i < table.getColumnCount(); i++) {
-                        Rectangle rect = item.getBounds(i);
+                        final Rectangle rect = item.getBounds(i);
                         if (rect.contains(pt)) {
                             final int column = i;
                             try {
@@ -92,8 +92,9 @@ public abstract class BasicTableEditor {
                             visible = true;
                         }
                     }
-                    if (!visible)
+                    if (!visible) {
                         return;
+                    }
                     index++;
                 }
             }

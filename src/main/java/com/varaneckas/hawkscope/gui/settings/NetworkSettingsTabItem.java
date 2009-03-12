@@ -156,7 +156,7 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
 		useHttpProxyAuth.setSelection(cfg.isHttpProxyAuthInUse());
 		useHttpProxyAuth.addSelectionListener(new SelectionAdapter() {
             @Override
-            public void widgetSelected(SelectionEvent event) {
+            public void widgetSelected(final SelectionEvent event) {
                 httpProxyUser.setEnabled(useHttpProxy.getSelection() 
                         && useHttpProxyAuth.getSelection());
                 httpProxyPass.setEnabled(useHttpProxy.getSelection() 
@@ -175,7 +175,7 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
 		useHttpProxy.setSelection(cfg.isHttpProxyInUse());
 		useHttpProxy.addSelectionListener(new SelectionAdapter() {
             @Override
-            public void widgetSelected(SelectionEvent event) {
+            public void widgetSelected(final SelectionEvent event) {
                 httpProxyHost.setEnabled(useHttpProxy.getSelection());
                 httpProxyPort.setEnabled(useHttpProxy.getSelection());
                 useHttpProxyAuth.setEnabled(useHttpProxy.getSelection());
@@ -220,7 +220,7 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
      * Creates HTTP proxy port input
      */
     private void createInputHttpProxyPort() {
-        httpProxyPort = addText("" + cfg.getHttpProxyPort(), 5);
+        httpProxyPort = addText(String.valueOf(cfg.getHttpProxyPort()), 5);
 		final FormData layout = SharedStyle.relativeTo(labelHttpProxyHost, 
 		        null, null, useHttpProxyAuth);
 		layout.bottom = null;
@@ -230,17 +230,17 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
 		httpProxyPort.setLayoutData(layout);
 		httpProxyPort.setEnabled(cfg.isHttpProxyInUse());
 		httpProxyPort.addListener(SWT.FocusOut, new Listener() {
-            public void handleEvent(Event event) {
+            public void handleEvent(final Event event) {
                 try {
-                    int s = Integer.valueOf(httpProxyPort.getText());
+                    final int s = Integer.valueOf(httpProxyPort.getText());
                     if (s <= 0) {
                         httpProxyPort.setText("1");
                     }
                     if (s > Short.MAX_VALUE) {
-                        httpProxyPort.setText("" + Short.MAX_VALUE);
+                        httpProxyPort.setText(String.valueOf(Short.MAX_VALUE));
                     }
                 } catch (final Exception e) {
-                    httpProxyPort.setText("" + cfg.getHttpProxyPort());
+                    httpProxyPort.setText(String.valueOf(cfg.getHttpProxyPort()));
                 }
             }
         });

@@ -106,7 +106,6 @@ public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
 		
         createButtonAddBlack();
         createButtonDelBlack();
-        
 		createListBlack();
 	}
 	
@@ -124,7 +123,7 @@ public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
 	    buttonAddBlack.setToolTipText("Add item to Blacklist");
 	    buttonAddBlack.addSelectionListener(new SelectionAdapter() {
             @Override
-            public void widgetSelected(SelectionEvent event) {
+            public void widgetSelected(final SelectionEvent event) {
                final DirectoryDialog fd = new DirectoryDialog(folder.getShell(), 
                        SWT.OPEN);
                folder.getShell().setEnabled(false);
@@ -178,7 +177,7 @@ public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
 	    listBlack.setLayoutData(layout);
 	    listBlack.addSelectionListener(new SelectionAdapter() {
             @Override
-             public void widgetSelected(SelectionEvent event) {
+             public void widgetSelected(final SelectionEvent event) {
                 if (listBlack.getSelectionCount() == 1) {
                     listBlack.setToolTipText(listBlack.getSelection()[0]);
                 }
@@ -195,7 +194,7 @@ public class BlackListSettingsTabItem extends AbstractSettingsTabItem {
                 displayHidden.getSelection() ? "1" : "0");
         cfg.getProperties().put(Configuration.FLOPPY_DRIVES_DISPLAYED, 
                 displayFloppy.getSelection() ? "1" : "0");
-        StringBuilder blackList = new StringBuilder();
+        final StringBuilder blackList = new StringBuilder();
         for (final String item : listBlack.getItems()) {
             blackList.append(item.replaceAll("\\\\", "/"));
             blackList.append(';');

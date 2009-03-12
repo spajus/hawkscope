@@ -32,14 +32,13 @@ public class RC4Crypt {
 	 * @param code
 	 *            Secret Key
 	 * @return
-	 * @throws Exception
 	 */
-	static public byte[] encrypt(byte[] data, byte[] code) throws Exception {
+	static public byte[] encrypt(final byte[] data, final byte[] code) {
 		int[] key = new int[256];
 		int[] box = new int[256];
 
-		int codeLength = code.length;
-		int dataLength = data.length;
+		final int codeLength = code.length;
+		final int dataLength = data.length;
 
 		for (int i = 0; i < 256; i++) {
 			key[i] = code[(i % codeLength)];
@@ -53,7 +52,7 @@ public class RC4Crypt {
 			box[i] ^= box[j];
 		}
 
-		byte[] cipher = new byte[dataLength];
+		final byte[] cipher = new byte[dataLength];
 
 		for (int a = 0, j = 0, i = 0; i < dataLength; i++) {
 			a = (a + 1) % 256;
@@ -63,11 +62,12 @@ public class RC4Crypt {
 			box[j] ^= box[a];
 			box[a] ^= box[j];
 
-			int k = box[((box[a] + box[j]) % 256)];
-			int c = data[i] ^ k;
+			final int k = box[((box[a] + box[j]) % 256)];
+			final int c = data[i] ^ k;
 			cipher[i] = (byte) c;
 		}
-
+		key = null;
+		box = null;
 		return cipher;
 	}
 
@@ -79,9 +79,8 @@ public class RC4Crypt {
 	 * @param code
 	 *            Secret Key
 	 * @return
-	 * @throws Exception
 	 */
-	static public byte[] decrypt(byte[] data, byte[] code) throws Exception {
+	static public byte[] decrypt(final byte[] data, final byte[] code) {
 		return RC4Crypt.encrypt(data, code);
 	}
 	

@@ -138,7 +138,7 @@ public abstract class ConfigurationFactory {
             });
             final Enumeration<String> keys = data.getKeys();
             while (keys.hasMoreElements()) {
-            	String key = keys.nextElement();
+            	final String key = keys.nextElement();
             	cfg.put(key, data.getString(key));
             }
         } catch (final MissingResourceException e) {
@@ -182,7 +182,9 @@ public abstract class ConfigurationFactory {
      * @param args
      */
     private void setCommandLineArgs(final String[] args) {
-        if (args.length == 0) return;
+        if (args.length == 0) {
+            return;
+        }
         if (args.length % 2 != 0) {
             log.warn("Odd count of '-key value' argument pairs. " +
             		"Skipping arguments.");
@@ -190,9 +192,9 @@ public abstract class ConfigurationFactory {
         }
         final Map<String, String> argPairs = new HashMap<String, String>();
         for (int i = 0; i < args.length; i+=2) {
-            String key = args[i];
-            String value = args[i+1];
-            if (!key.startsWith("-")) {
+            final String key = args[i];
+            final String value = args[i+1];
+            if (key.charAt(0) != '-') {
                 log.warn("Skipping invalid argument pair: " + key + ": " 
                         + value);
                 continue;

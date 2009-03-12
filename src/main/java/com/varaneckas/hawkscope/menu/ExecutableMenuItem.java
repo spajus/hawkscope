@@ -46,7 +46,7 @@ public class ExecutableMenuItem extends AbstractMenuItem {
         swtMenuItem.setText(text);
         swtMenuItem.setEnabled(enabled);
         swtMenuItem.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event event) {
+            public void handleEvent(final Event event) {
                 command.execute();
             }
         });

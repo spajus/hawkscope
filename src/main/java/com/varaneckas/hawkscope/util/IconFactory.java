@@ -138,12 +138,13 @@ public class IconFactory {
     		return null;
     	}
         Image image = null;
-        Program p = Program.findProgram(file.getName().replaceAll(".*\\.", "."));
+        final Program p = Program.findProgram(file.getName()
+                .replaceAll(".*\\.", "."));
         if (p != null) {
             if (resourcePool.containsKey(p.getName())) {
                 return resourcePool.get(p.getName());
             }
-            ImageData data = p.getImageData();
+            final ImageData data = p.getImageData();
             if (data != null) {
                 image = new Image(display, data);
                 resourcePool.put(p.getName(), image);
@@ -158,12 +159,12 @@ public class IconFactory {
      * @return tray icon
      */
     public Image getTrayIcon() {
-        String name = "HawkscopeTrayIcon";
+        final String name = "HawkscopeTrayIcon";
         if (resourcePool.containsKey(name)) {
             resourcePool.get(name);
         }
-        final Image trayIcon = new Image(display, IconFactory.class.getClassLoader()
-                .getResourceAsStream(getBestTrayIcon()));
+        final Image trayIcon = new Image(display, IconFactory.class
+                .getClassLoader().getResourceAsStream(getBestTrayIcon()));
         resourcePool.put(name, trayIcon);
         return trayIcon;
     }
@@ -189,30 +190,26 @@ public class IconFactory {
     protected static final Map<String, URL> resources = new HashMap<String, URL>();
     
     static {
-        try {
-            //initialize resources
-            resources.put("drive",  IconFactory.class.getClassLoader().getResource("icons/hdd24.png"));
-            resources.put("floppy",  IconFactory.class.getClassLoader().getResource("icons/fdd24.png"));
-            resources.put("cdrom",  IconFactory.class.getClassLoader().getResource("icons/cdrom24.png"));
-            resources.put("network",  IconFactory.class.getClassLoader().getResource("icons/network24.png"));
-            resources.put("removable",  IconFactory.class.getClassLoader().getResource("icons/removable24.png"));
-            resources.put("folder", IconFactory.class.getClassLoader().getResource("icons/folder24.png"));
-            resources.put("folder.open", IconFactory.class.getClassLoader().getResource("icons/folder.open.24.png"));
-            resources.put("file",   IconFactory.class.getClassLoader().getResource("icons/file24.png"));
-            resources.put("executable",   IconFactory.class.getClassLoader().getResource("icons/executable24.png"));
-            resources.put("exit",   IconFactory.class.getClassLoader().getResource("icons/exit24.png"));
-            resources.put("hide",   IconFactory.class.getClassLoader().getResource("icons/down24.png"));
-            resources.put("more",   IconFactory.class.getClassLoader().getResource("icons/more24.png"));
-            resources.put("unknown", IconFactory.class.getClassLoader().getResource("icons/unknown24.png"));  
-            resources.put("about",  IconFactory.class.getClassLoader().getResource("icons/about24.png"));  
-            resources.put("open",  IconFactory.class.getClassLoader().getResource("icons/open24.png")); 
-            resources.put("empty",  IconFactory.class.getClassLoader().getResource("icons/empty24.png")); 
-            resources.put("update", IconFactory.class.getClassLoader().getResource("icons/update24.png"));
-            resources.put("settings", IconFactory.class.getClassLoader().getResource("icons/settings24.png"));
-            resources.put("help", IconFactory.class.getClassLoader().getResource("icons/help24.png"));
-        } catch (final Exception e) {
-            log.warn("Cannot find icon", e);
-        }
+        //initialize resources
+        resources.put("drive", loadResource("icons/hdd24.png"));
+        resources.put("floppy", loadResource("icons/fdd24.png"));
+        resources.put("cdrom", loadResource("icons/cdrom24.png"));
+        resources.put("network", loadResource("icons/network24.png"));
+        resources.put("removable", loadResource("icons/removable24.png"));
+        resources.put("folder", loadResource("icons/folder24.png"));
+        resources.put("folder.open", loadResource("icons/folder.open.24.png"));
+        resources.put("file", loadResource("icons/file24.png"));
+        resources.put("executable", loadResource("icons/executable24.png"));
+        resources.put("exit", loadResource("icons/exit24.png"));
+        resources.put("hide", loadResource("icons/down24.png"));
+        resources.put("more", loadResource("icons/more24.png"));
+        resources.put("unknown", loadResource("icons/unknown24.png"));  
+        resources.put("about", loadResource("icons/about24.png"));  
+        resources.put("open", loadResource("icons/open24.png")); 
+        resources.put("empty", loadResource("icons/empty24.png")); 
+        resources.put("update", loadResource("icons/update24.png"));
+        resources.put("settings", loadResource("icons/settings24.png"));
+        resources.put("help", loadResource("icons/help24.png"));
     }
     
     /**
@@ -224,7 +221,7 @@ public class IconFactory {
     public Image getIcon(final File targetFile) {
         if (ConfigurationFactory.getConfigurationFactory().getConfiguration()
                 .useOsIcons()) {
-            Image icon = getFileSystemIcon(targetFile);
+            final Image icon = getFileSystemIcon(targetFile);
             if (icon != null) {
                 return icon;
             }
@@ -261,12 +258,27 @@ public class IconFactory {
     }
     
     /**
+     * Loads a resource with help of active classloader
+     * 
+     * @param name resource name
+     * @return
+     */
+    private static URL loadResource(final String name) {
+        try {
+            return IconFactory.class.getClassLoader().getResource(name);
+        } catch (final Exception e) {
+            log.warn("Failed loading icon resource: " + name, e);
+        }
+        return null;
+    }
+
+    /**
      * Gets best sized tray icon name for current setup
      * 
      * @return tray icon name
      */
     protected String getBestTrayIcon() {
-        float height = OSUtils.getTrayIconSize();
+        final float height = OSUtils.getTrayIconSize();
         int[] sizes = new int[] { 64, 48, 32, 24, 16 };
         int best = 64;
         for (int i = 0; i < sizes.length; i++) {
@@ -277,7 +289,9 @@ public class IconFactory {
                 break;
             }
         }
-        final String res = "icons/hawkscope" + best + ".png";
+        sizes = null;
+        final String res = "icons/hawkscope".concat(String.valueOf(best))
+                .concat(".png");
         if (log.isDebugEnabled()) {
             log.debug("Chose best icon for " + (int) height 
                     + " pixel tray: " + res);

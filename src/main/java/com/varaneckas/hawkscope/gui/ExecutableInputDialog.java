@@ -53,18 +53,15 @@ public class ExecutableInputDialog extends InputDialog {
         
     	createDialogShell(parent);
     	dialog.setText("Command Input Dialog");
-    	
     	createLabel(prompt);
-
     	createButtonCancel();
-    	
     	createTextInput(0, 200);
+
     	if (defaultApp != null) {
     		text.setText(defaultApp);
     	}
         
     	createButtonOk(updater);
-    	
         createButtonChoose(defaultApp, parent);
         
         runDialog();
@@ -83,13 +80,13 @@ public class ExecutableInputDialog extends InputDialog {
         choose.setText("&Browse");
         choose.setLayoutData(SharedStyle.relativeToBottomRight(ok));
         choose.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
-                FileDialog fd = new FileDialog(parent);
+            public void widgetSelected(final SelectionEvent e) {
+                final FileDialog fd = new FileDialog(parent);
                 if (defaultApp != null) {
                     fd.setFileName(defaultApp);
                 }
                 fd.setText("Select executable");
-                String app = fd.open();
+                final String app = fd.open();
                 if (app != null) {
                     text.setText(app);
                 }

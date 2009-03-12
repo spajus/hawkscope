@@ -27,6 +27,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
+import com.varaneckas.hawkscope.Constants;
 import com.varaneckas.hawkscope.Version;
 
 /**
@@ -36,7 +37,8 @@ import com.varaneckas.hawkscope.Version;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class UncaughtExceptionHandler implements java.lang.Thread.UncaughtExceptionHandler {
+public class UncaughtExceptionHandler implements 
+        java.lang.Thread.UncaughtExceptionHandler {
 
     /**
      * Logger
@@ -48,9 +50,10 @@ public class UncaughtExceptionHandler implements java.lang.Thread.UncaughtExcept
      * Handles the uncaught {@link Exception}
      */
     public void uncaughtException(final Thread t, final Throwable e) {
-        Display display = Display.getCurrent();
-        Shell shell = new Shell (display);
-        MessageBox message = new MessageBox(shell, SWT.OK | SWT.CANCEL | SWT.ICON_ERROR);
+        final Display display = Display.getCurrent();
+        final Shell shell = new Shell (display);
+        final MessageBox message = new MessageBox(shell, SWT.OK | SWT.CANCEL 
+                | SWT.ICON_ERROR);
         message.setText("Hawkscope Error");
         message.setMessage(e.getMessage() 
                 + "\nSubmit Hawkscope Error Report to Issue Tracker?");
@@ -58,13 +61,14 @@ public class UncaughtExceptionHandler implements java.lang.Thread.UncaughtExcept
         if (message.open() == SWT.OK) {
             IOUtils.copyToClipboard(Version.getBugReport(e));
             try {
-            Program.launch("http://code.google.com/p/hawkscope/" +
+            Program.launch(Constants.HAWKSCOPE_URL_ROOT +
             		"issues/entry?comment=" 
             		+ URLEncoder.encode("Please paste the Hawkscope Error " +
             				"Report here. It's currently copied to your " +
-            				"clipboard. Thank you for your support!", "UTF-8")); 
+            				"clipboard. Thank you for your support!", 
+            				Constants.UTF8)); 
             } catch (final Exception e1) {
-            	Program.launch("http://code.google.com/p/hawkscope/issues/entry");
+            	Program.launch(Constants.HAWKSCOPE_URL_ROOT + "issues/entry");
             }
         }
         shell.dispose();

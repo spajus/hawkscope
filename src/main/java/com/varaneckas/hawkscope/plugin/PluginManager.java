@@ -83,9 +83,9 @@ public class PluginManager {
 		addBuiltInPlugins();
         findExternalPlugins();
         for (final Plugin p : plugins) {
-            log.debug("Checking if plugin is enabled:" + p.getName());
+            log.debug("Checking if plugin is enabled: " + p.getName());
         	try {
-        		String enabled = cfg.getProperties().get("plugin." 
+        		final String enabled = cfg.getProperties().get("plugin." 
 	        			+ p.getClass().getName() + ".enabled");
         		if (enabled != null) {
         			p.setEnabled(enabled.equals("1") ? true : false); 
@@ -104,42 +104,41 @@ public class PluginManager {
         if (pluginDir == null) {
             return;
         }
-        final String[] pluginJars = pluginDir.list();
+        String[] pluginJars = pluginDir.list();
         if (pluginJars == null) {
             log.debug("Found 0 plugins");
             return;
         }
         log.debug("Found " + pluginJars.length + " plugins");
         for (final String jar : pluginJars) {
-            if (jar.endsWith(".jar")) {
+            if (jar.toLowerCase().endsWith(".jar")) {
                 processPlugin(pluginDir, jar);
             }
         }
+        pluginJars = null;
     }
 
     private void processPlugin(final File pluginDir, final String jar) {
         try {
             final File jarFile = new File(pluginDir.getAbsolutePath() 
                     + "/" + jar);
-            log.debug(jarFile.getAbsoluteFile());
             final URLClassLoader classLoader = 
                 new URLClassLoader(new URL[] {jarFile.toURI().toURL()});
             final Reader r = new InputStreamReader(classLoader
-                    .getResourceAsStream("plugin.loader"));;
-                    
+                    .getResourceAsStream("plugin.loader"));
             String pluginClass = "";
             int c = 0;
             while ((c = r.read()) != -1) {
                 pluginClass += (char) c;
             }
             r.close();
-            log.debug("Plugin :" + pluginClass);
-            final Class<?> p = classLoader.loadClass(pluginClass);
+            log.debug("Processing Plugin: " + pluginClass);
+            Class<?> p = classLoader.loadClass(pluginClass);
             Method creator = null;
             try {
                 creator = p.getMethod("getInstance", new Class[] {});
             } catch (final NoSuchMethodException no) {
-                //so singleton getter found...
+                log.debug("Plugin does not implement a singleton getter");
             }
             Plugin plugin;
             if (creator == null) {
@@ -147,6 +146,8 @@ public class PluginManager {
             } else {
                 plugin = (Plugin) creator.invoke(p, new Object[] {});
             }
+            creator = null;
+            p = null;
             if (plugin != null) {
                 log.debug("Adding plugin: " + plugin);
                 getAllPlugins().add(plugin);
@@ -215,8 +216,9 @@ public class PluginManager {
     public void enhanceFolderMenu(final File file, final MenuItem menu, 
             final Menu submenu, final FolderMenuItemListener listener) {
         for (final Plugin plugin : getActivePlugins()) {
-            if (plugin.canEnhanceFolderMenu())
+            if (plugin.canEnhanceFolderMenu()) {
                 plugin.enhanceFolderMenu(file, menu, submenu, listener);
+            }
         }
     }
 
@@ -228,8 +230,9 @@ public class PluginManager {
      */
     public void enhanceFileMenuItem(final MenuItem menuItem, final File file) {
         for (final Plugin plugin : getActivePlugins()) {
-            if (plugin.canEnhanceFileMenuItem())
+            if (plugin.canEnhanceFileMenuItem()) {
                 plugin.enhanceFileMenuItem(menuItem, file);
+            }
         }
     }
 
@@ -240,8 +243,9 @@ public class PluginManager {
      */
     public void beforeQuickAccess(final MainMenu mainMenu) {
         for (final Plugin plugin : getActivePlugins()) {
-            if (plugin.canHookBeforeQuickAccessList())
+            if (plugin.canHookBeforeQuickAccessList()) {
                 plugin.beforeQuickAccess(mainMenu);
+            }
         }
     }
 
@@ -253,8 +257,9 @@ public class PluginManager {
      */
     public void enhanceQuickAccessItem(final FolderMenu fm, final File custom) {
         for (final Plugin plugin : getActivePlugins()) {
-            if (plugin.canEnhanceQuickAccessItem())
+            if (plugin.canEnhanceQuickAccessItem()) {
                 plugin.enhanceQuickAccessItem(fm, custom);
+            }
         }
     }
 
@@ -265,8 +270,9 @@ public class PluginManager {
      */
     public void beforeAboutMenuItem(final MainMenu mainMenu) {
         for (final Plugin plugin : getActivePlugins()) {
-            if (plugin.canHookBeforeAboutMenuItem())
+            if (plugin.canHookBeforeAboutMenuItem()) {
                 plugin.beforeAboutMenuItem(mainMenu);
+            }
         }
     }
     
@@ -281,7 +287,9 @@ public class PluginManager {
         for (final Plugin plugin : getActivePlugins()) {
             if (plugin.canInterceptClick()) {
                 proceed = plugin.interceptClick(file);
-                if (!proceed) break;
+                if (!proceed) {
+                    break;
+                }
             }
         }
         return proceed;

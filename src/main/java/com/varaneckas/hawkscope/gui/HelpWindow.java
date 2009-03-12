@@ -82,8 +82,8 @@ public class HelpWindow extends AbstractWindow {
 	    if (cfg.isHttpProxyInUse()) {
 	        log.debug("Setting proxy");
 	        System.setProperty("network.proxy_host", cfg.getHttpProxyHost());
-	        System.setProperty("network.proxy_port", "" 
-	                + cfg.getHttpProxyPort());
+	        System.setProperty("network.proxy_port", String.valueOf(
+	                cfg.getHttpProxyPort()));
 	    }
 		browser = new Browser(shell, SWT.BORDER);
 		final FormData layout = SharedStyle.relativeTo(null, null, buttonClose, 
@@ -103,19 +103,4 @@ public class HelpWindow extends AbstractWindow {
 	
 	}
 	
-	/**
-	 * Launcher for testing when in development
-	 * 
-	 * @param args
-	 */
-	public static void main(final String[] args) {
-		final HelpWindow w = new HelpWindow();
-		w.open();
-	    while (!w.shell.isDisposed()) {
-	        if (!w.shell.getDisplay().readAndDispatch())
-	          w.shell.getDisplay().sleep();
-	      }
-	      w.shell.getDisplay().dispose();
-	}
-
 }

@@ -25,6 +25,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.varaneckas.hawkscope.Constants;
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.util.Base64;
 import com.varaneckas.hawkscope.util.PathUtils;
@@ -231,8 +232,7 @@ public class Configuration {
     public long getMenuReloadDelay() {
         long millis = 3000L; //default in case of missing
         try {
-            millis = Long.valueOf(properties.get(
-                    Configuration.MENU_RELOAD_DELAY)).longValue();
+            millis = Long.valueOf(properties.get(MENU_RELOAD_DELAY));
         } catch (final Exception e) {
             log.warn("Could not read " + MENU_RELOAD_DELAY 
                     + ", defaulting to 10 seconds: " + e.getMessage());
@@ -311,7 +311,7 @@ public class Configuration {
     public int getHttpProxyPort() {
         int port = 8080;
         try {
-            port = Integer.valueOf(properties.get(HTTP_PROXY_PORT)).intValue();
+            port = Integer.valueOf(properties.get(HTTP_PROXY_PORT));
         } catch (final Exception e) {
             log.warn("Could not read " + HTTP_PROXY_PORT 
                     + ", defaulting to 8080: " + e.getMessage());
@@ -327,10 +327,8 @@ public class Configuration {
     public File getPluginLocation() {
        final String dir = PathUtils.interpret(properties.get(PLUGIN_DIR));
        final File pluginDir = new File(dir);
-       if (!pluginDir.isDirectory()) {
-           if (!pluginDir.mkdir()) {
-               return null;
-           }
+       if (!pluginDir.isDirectory() && !pluginDir.mkdir()) {
+           return null;
        }
        return pluginDir;
     }
@@ -344,9 +342,9 @@ public class Configuration {
     public void setPasswordProperty(final String propName, final String pass) {
     	try {
 			getProperties().put(propName, Base64.encodeToString(
-					RC4Crypt.encrypt(pass.getBytes("UTF-8"), 
-					SALT.getBytes("UTF-8")), false));
-		} catch (Exception e) {
+					RC4Crypt.encrypt(pass.getBytes(Constants.UTF8), 
+					SALT.getBytes(Constants.UTF8)), false));
+		} catch (final Exception e) {
 			log.warn("Failed encrypting password property: " + propName);
 			getProperties().put(propName, "");
 		}
@@ -360,13 +358,13 @@ public class Configuration {
      */
     public String getPasswordProperty(final String propName) {
         try {
-			String prop = properties.get(propName);
+			final String prop = properties.get(propName);
 			if (prop == null || prop.equals("")) {
 				return ""; 
 			}
 			return new String(RC4Crypt.decrypt(Base64.decode(prop), 
-					SALT.getBytes("UTF-8")), "UTF-8");
-		} catch (Exception e) {
+					SALT.getBytes(Constants.UTF8)), Constants.UTF8);
+		} catch (final Exception e) {
 			log.warn("Failed decrypting password property: " + propName);
 			return "";
 		}

@@ -23,6 +23,8 @@ import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
+import com.varaneckas.hawkscope.Constants;
+
 /**
  * Unicode resource bundle implementation
  * 
@@ -46,9 +48,10 @@ public abstract class UTF8ResourceBundle {
     }
 
     private static ResourceBundle createUtf8PropertyResourceBundle(
-            ResourceBundle bundle) {
-        if (!(bundle instanceof PropertyResourceBundle))
+            final ResourceBundle bundle) {
+        if (!(bundle instanceof PropertyResourceBundle)) {
             return bundle;
+        }
         return new UTF8PropertyResourceBundle((PropertyResourceBundle) bundle);
     }
 
@@ -56,7 +59,7 @@ public abstract class UTF8ResourceBundle {
         
         private PropertyResourceBundle bundle;
 
-        private UTF8PropertyResourceBundle(PropertyResourceBundle bundle) {
+        private UTF8PropertyResourceBundle(final PropertyResourceBundle bundle) {
             this.bundle = bundle;
         }
 
@@ -68,11 +71,12 @@ public abstract class UTF8ResourceBundle {
 
         @Override
         protected Object handleGetObject(final String key) {
-            String value = bundle.getString(key);
-            if (value == null)
+            final String value = bundle.getString(key);
+            if (value == null) {
                 return null;
+            }
             try {
-                return new String(value.getBytes("ISO-8859-1"), "UTF-8");
+                return new String(value.getBytes("ISO-8859-1"), Constants.UTF8);
             } catch (final UnsupportedEncodingException e) {
                 return null;
             }

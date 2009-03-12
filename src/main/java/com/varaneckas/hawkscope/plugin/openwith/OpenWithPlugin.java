@@ -97,7 +97,7 @@ public class OpenWithPlugin extends PluginAdapter {
         apps.clear();
         for (final String key : cfg.getProperties().keySet()) {
             if (key.startsWith(PROP_FILE_TYPE_PREFIX)) {
-                String runner = cfg.getProperties().get(key);
+                final String runner = cfg.getProperties().get(key);
                 apps.put(key.replaceFirst(PROP_FILE_TYPE_PREFIX, ""), 
                         PathUtils.sanitizePath(runner));
             }
@@ -128,13 +128,17 @@ public class OpenWithPlugin extends PluginAdapter {
     @Override
     public void enhanceFolderMenu(final File file, final MenuItem menu, 
     		final Menu submenu, final FolderMenuItemListener listener) {
-        if (folderNavigator == null || folderNavigator.length() == 0) return;
-        if (submenu.getItemCount() < 1) return;
-        MenuItem open = submenu.getItem(0);
+        if (folderNavigator == null || folderNavigator.length() == 0) {
+            return;
+        }
+        if (submenu.getItemCount() < 1) {
+            return;
+        }
+        final MenuItem open = submenu.getItem(0);
         open.removeListener(SWT.Selection, 
                 open.getListeners(SWT.Selection)[0]);
         open.addListener(SWT.Selection, new Listener() {
-            public void handleEvent(Event ev) {
+            public void handleEvent(final Event ev) {
             	if (OSUtils.exec(folderNavigator, file.getAbsolutePath())) {
             		Program.launch(file.getAbsolutePath());
             	}

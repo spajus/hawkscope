@@ -20,6 +20,8 @@ package com.varaneckas.hawkscope.util;
 import java.io.Closeable;
 import java.io.IOException;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.dnd.Clipboard;
 import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.dnd.Transfer;
@@ -32,6 +34,11 @@ import org.eclipse.swt.widgets.Display;
  * @version $Id$
  */
 public abstract class IOUtils {
+    
+    /**
+     * Logger
+     */
+    private static final Log log = LogFactory.getLog(IOUtils.class);
 
     /**
      * Closes a closeable without the annoying {@link IOException} or a 
@@ -45,7 +52,7 @@ public abstract class IOUtils {
                 closeable.close();
             }
         } catch (final IOException e) { 
-            //Be vewy vewy quiet. I'm hunting wabbits 
+            log.warn("Failed closing: " + closeable, e);
         }
     }
     
@@ -55,7 +62,8 @@ public abstract class IOUtils {
      * @param target text to copy
      */
     public static void copyToClipboard(final String target) {
-    	Clipboard clip = new Clipboard(Display.getDefault());
-    	clip.setContents(new Object[] { target }, new Transfer[] { TextTransfer.getInstance() });
+    	final Clipboard clip = new Clipboard(Display.getDefault());
+    	clip.setContents(new Object[] { target }, new Transfer[] { 
+    	        TextTransfer.getInstance() });
     }
 }

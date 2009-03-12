@@ -27,9 +27,8 @@ import com.varaneckas.hawkscope.menu.FolderMenu;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.DynamicFileFilter;
-import com.varaneckas.hawkscope.util.MenuUtils;
-import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
  * Folder Menu Item Listener
@@ -57,11 +56,6 @@ public class FolderMenuItemListener {
     private final File file;
     
     /**
-     * Number of Menu Items in one Menu
-     */
-    private static final int MENU_SIZE = MenuUtils.getAutoMenuSize();
-    
-    /**
      * Constructor
      * 
      * @param menu tagert
@@ -72,11 +66,13 @@ public class FolderMenuItemListener {
         this.file = file;
     }
 
-    public synchronized void itemSelected() {
+    /**
+     * Processes the folder menu item selection
+     */
+    public void itemSelected() {
         if (!loaded && file != null && file.isDirectory()) {
-            final File[] files = file.listFiles(DynamicFileFilter.getInstance());
-            long counter = 0L;
-            FolderMenu workMenu = folderMenu;
+            File[] files = file.listFiles(DynamicFileFilter.getInstance());
+            final FolderMenu workMenu = folderMenu;
             if (files == null || files.length == 0) {                
                 final ExecutableMenuItem empty = MenuFactory.newExecutableMenuItem();
                 empty.setIcon(IconFactory.getInstance().getIcon("empty"));
@@ -95,22 +91,15 @@ public class FolderMenuItemListener {
                     } else {
                         workMenu.addMenuItem(MenuFactory.newFileMenuItem(ff));
                     }
-                    if (++counter % MENU_SIZE == 0 && counter < files.length) {
-                        FolderMenu more = MenuFactory.newFolderMenu(null);
-                        more.setIcon(IconFactory.getInstance().getIcon("more"));
-                        more.setText("More");
-                        workMenu.addSeparator();
-                        workMenu.addMenuItem(more);
-                        workMenu = more;
-                    }
                 }
             }
+            files = null; //cleanup memory
             loaded = true;
         }
     }
     
     public void itemClicked() {
-        boolean launch = PluginManager.getInstance().interceptClick(file);
+        final boolean launch = PluginManager.getInstance().interceptClick(file);
         if (launch) {
             Program.launch(file.getAbsolutePath());
         }

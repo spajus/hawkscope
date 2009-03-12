@@ -161,13 +161,14 @@ public class SettingsWindow extends AbstractWindow {
 	 * @param args
 	 */
 	public static void main(final String[] args) {
-		final SettingsWindow w = new SettingsWindow();
-		w.open();
-	    while (!w.shell.isDisposed()) {
-	        if (!w.shell.getDisplay().readAndDispatch())
-	          w.shell.getDisplay().sleep();
-	      }
-	      w.shell.getDisplay().dispose();
-	}
+        final SettingsWindow w = new SettingsWindow();
+        w.open();
+        while (!w.shell.isDisposed()) {
+            if (!w.shell.getDisplay().readAndDispatch()) {
+                w.shell.getDisplay().sleep();
+            }
+        }
+        w.shell.getDisplay().dispose();
+    }
 
 }

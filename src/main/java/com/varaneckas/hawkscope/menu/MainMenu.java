@@ -88,7 +88,7 @@ public class MainMenu {
     private MainMenu() {
         menu = new Menu(TrayManager.getInstance().getShell(), SWT.POP_UP);
         menu.addListener(SWT.Hide, new Listener() {
-            public void handleEvent(Event event) {
+            public void handleEvent(final Event event) {
                 new Thread(new Runnable() {
                     public void run() {
                         if (!menu.isDisposed()) {
@@ -176,7 +176,7 @@ public class MainMenu {
                                     .getConfigurationFactory()
                                     .getConfiguration().getMenuReloadDelay());
                         }
-                    } catch (InterruptedException e1) {
+                    } catch (final InterruptedException e1) {
                     	log.warn("Could not sleep", e1);
                     }
                     doReload(canWait);
@@ -189,7 +189,10 @@ public class MainMenu {
      * Does the actual reload of Main Menu
      */
     private void doReload(final boolean canWait) {
-        if (menu.getDisplay().isDisposed()) return;
+        if (menu.getDisplay().isDisposed()) {
+            log.warn("Menu disposed - won't reload");
+            return;
+        }
         menu.getDisplay().asyncExec(new Runnable() {
             public void run() {
                 try {
@@ -299,8 +302,6 @@ public class MainMenu {
      * Loads the menu
      */
     public void loadMenu() {
-        Configuration cfg = ConfigurationFactory.getConfigurationFactory()
-                .getConfiguration();
         PluginManager.getInstance().beforeQuickAccess(this);
         loadQuickAccessMenu();
         boolean addSeparator = false;
@@ -309,7 +310,9 @@ public class MainMenu {
                 continue;
             }
             if (cfg.isFloppyDrivesDisplayed() || !PathUtils.isFloppy(root)) {
-            log.debug("Generating menu for: " + root.getAbsolutePath());
+                if (log.isDebugEnabled()) {
+                    log.debug("Generating menu for: " + root.getAbsolutePath());
+                }
                 final FolderMenu item = MenuFactory.newFolderMenu(root);
                 item.setText(PathUtils.getFileName(root));
                 item.setIcon(IconFactory.getInstance().getIcon(root));
@@ -342,7 +345,7 @@ public class MainMenu {
         if (quick != null && quick.size() > 0) {
             for (final File custom : quick) {
                 try {
-                    FolderMenu fm = MenuFactory.newFolderMenu(custom);
+                    final FolderMenu fm = MenuFactory.newFolderMenu(custom);
                     PluginManager.getInstance().enhanceQuickAccessItem(fm, custom);
                     addMenuItem(fm);
                 } catch (final Exception e) {

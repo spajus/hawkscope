@@ -175,14 +175,14 @@ public class AboutWindow extends AbstractWindow {
     private void createLogo() {
         logo = new Canvas(shell, SWT.NONE);
         logo.addPaintListener(new PaintListener() {
-            public void paintControl(PaintEvent e) {
+            public void paintControl(final PaintEvent e) {
                 e.gc.drawImage(IconFactory.getInstance()
                         .getUncachedIcon("hawkscope128.png"), 0, 0);
             }
         });
         logo.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseUp(MouseEvent event) {
+            public void mouseUp(final MouseEvent event) {
                 Program.launch(Version.HOMEPAGE);
             } 
         });

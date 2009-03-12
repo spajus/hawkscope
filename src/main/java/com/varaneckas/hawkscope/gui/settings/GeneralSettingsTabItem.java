@@ -134,7 +134,8 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 	 * Creates the Menu Reload Delay input
 	 */
 	private void createReloadDelayInput() {
-		final String reloadDelay = "" + (cfg.getMenuReloadDelay() / 1000.0);
+		final String reloadDelay = String.valueOf((cfg.getMenuReloadDelay() 
+		        / 1000.0));
 		reloadDelayInput = addText(reloadDelay, 4);
 		final FormData style = ident(SharedStyle.relativeTo(menu, reloadDelaySec));
 		style.width = 40;
@@ -149,7 +150,7 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		reloadDelayInput.addListener(SWT.FocusOut, new Listener() {
             public void handleEvent(final Event event) {
                 try {
-                    double d = Double.valueOf(reloadDelayInput.getText());
+                    final double d = Double.valueOf(reloadDelayInput.getText());
                     if (d <= 0) {
                     	reloadDelayInput.setText("0.1");
                     }
@@ -183,8 +184,8 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
     protected void saveConfiguration() {
         cfg.getProperties().put(Configuration.CHECK_FOR_UPDATES, 
                 checkForUpdates.getSelection() ? "1" : "0");
-        cfg.getProperties().put(Configuration.MENU_RELOAD_DELAY, "" + 
-                Math.round(Double.valueOf(reloadDelayInput.getText()) * 1000));
+        cfg.getProperties().put(Configuration.MENU_RELOAD_DELAY, String.valueOf( 
+                Math.round(Double.valueOf(reloadDelayInput.getText()) * 1000)));
         cfg.getProperties().put(Configuration.USE_OS_ICONS, 
                 useOsIcons.getSelection() ? "1" : "0");
         if (OSUtils.CURRENT_OS.equals(OS.MAC)) {

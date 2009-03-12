@@ -107,7 +107,7 @@ public class InputDialog {
         ok.setText("&OK");
         ok.setLayoutData(SharedStyle.relativeToBottomRight(cancel));
         ok.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected(final SelectionEvent e) {
                 updater.setValue(text.getText());
                 dialog.close();
             }
@@ -142,7 +142,7 @@ public class InputDialog {
         cancel.setText("&Cancel");
         cancel.setLayoutData(SharedStyle.relativeToBottomRight(null));
         cancel.addSelectionListener(new SelectionAdapter() {
-            public void widgetSelected(SelectionEvent e) { 
+            public void widgetSelected(final SelectionEvent e) { 
                 dialog.close();
             }
         });
@@ -171,7 +171,7 @@ public class InputDialog {
         dialog.setText("Input Dialog");
         dialog.setLayout(SharedStyle.LAYOUT);
         dialog.addShellListener(new ShellAdapter() {
-			public void shellClosed(ShellEvent ev) {
+			public void shellClosed(final ShellEvent ev) {
 				dialog.dispose();
 			}
         });

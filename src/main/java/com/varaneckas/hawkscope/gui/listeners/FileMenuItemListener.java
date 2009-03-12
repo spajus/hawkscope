@@ -56,12 +56,9 @@ public class FileMenuItemListener extends SelectionAdapter {
     @Override
     public void widgetSelected(final SelectionEvent e) {
         //Plugins can intercept the default execution. 
-        boolean launch = PluginManager.getInstance().interceptClick(file);
-        if (launch) {
-            if (!Program.launch(file.getAbsolutePath())) {
-                throw new RuntimeException("Cannot find program for opening "
-                        + file);
-            }
+        final boolean launch = PluginManager.getInstance().interceptClick(file);
+        if (launch && !Program.launch(file.getAbsolutePath())) {
+            throw new RuntimeException("Cannot find program for opening " + file);
         }
     }
 }

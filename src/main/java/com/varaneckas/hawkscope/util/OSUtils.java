@@ -53,11 +53,16 @@ public abstract class OSUtils {
 	public enum OS {
 		MAC, WIN, UNIX, UNKNOWN
 	}
-
+	
 	/**
 	 * Current Operating System
 	 */
 	public static final OS CURRENT_OS = getCurrentOS();
+
+	/**
+	 * FileSystemView (don't use with Mac)
+	 */
+	private static final FileSystemView fsw = getFileSystemView();
 
 	/**
 	 * Gets the current operating system
@@ -65,7 +70,7 @@ public abstract class OSUtils {
 	 * @return
 	 */
 	private static OS getCurrentOS() {
-		String os = System.getProperty("os.name", "unknown").toLowerCase();
+		final String os = System.getProperty("os.name", "unknown").toLowerCase();
 		if (os.startsWith("win")) {
 			return OS.WIN;
 		}
@@ -80,6 +85,18 @@ public abstract class OSUtils {
 	}
 
 	/**
+	 * Gets FileSystemView for non-macs
+	 * 
+	 * @return
+	 */
+	private static FileSystemView getFileSystemView() {
+	    if (!CURRENT_OS.equals(OS.MAC)) {
+	        return FileSystemView.getFileSystemView();
+	    }
+        return null;
+    }
+
+    /**
 	 * Gets the tray icon size
 	 * 
 	 * @return
@@ -89,11 +106,16 @@ public abstract class OSUtils {
 		if (System.getProperty("java.version").compareTo("1.6") >= 0) {
 			try {
 				log.debug("Java > 1.6, trying java.awt.SystemTray");
-				Class<?> systemTrayClass = Class.forName("java.awt.SystemTray");
-				Method m = systemTrayClass.getMethod("getSystemTray", new Class[] {});
-				Object systemTray = m.invoke(systemTrayClass, new Object[] {});
-				m = systemTray.getClass().getMethod("getTrayIconSize", new Class[] {});
-				Object size = m.invoke(systemTray, new Object[] {});
+				final Class<?> systemTrayClass = Class.forName(
+				        "java.awt.SystemTray");
+				Method m = systemTrayClass.getMethod("getSystemTray", 
+				        new Class[] {});
+				final Object systemTray = m.invoke(systemTrayClass, 
+				        new Object[] {});
+				m = systemTray.getClass().getMethod("getTrayIconSize", 
+				        new Class[] {});
+				final Object size = m.invoke(systemTray, new Object[] {});
+				m = null;
 				return ((java.awt.Dimension) size).height;
 			} catch (final Exception e) {
 				log.warn("Failed calling java.awt.SystemTray object", e);
@@ -131,7 +153,6 @@ public abstract class OSUtils {
 	 */
 	public static String getSystemDisplayName(final File file) {
 		if (!CURRENT_OS.equals(OS.MAC)) {
-			final FileSystemView fsw = FileSystemView.getFileSystemView();
 			return fsw.getSystemDisplayName(file);
 		}
 		return null;
@@ -145,7 +166,7 @@ public abstract class OSUtils {
 	 */
 	public static boolean isFloppyDrive(final File file) {
 		if (CURRENT_OS.equals(OS.WIN)) {
-			return FileSystemView.getFileSystemView().isFloppyDrive(file);
+			return fsw.isFloppyDrive(file);
 		}
 		return false;
 	}
@@ -173,7 +194,7 @@ public abstract class OSUtils {
 		    return false;
 		}
 		default: 
-		    return FileSystemView.getFileSystemView().isFileSystemRoot(file);
+		    return fsw.isFileSystemRoot(file);
 		}
 	}
 
@@ -233,7 +254,7 @@ public abstract class OSUtils {
 	    }
 	    String name = null;
 	    if (CURRENT_OS.equals(OS.WIN)) {
-	        name = FileSystemView.getFileSystemView().getSystemDisplayName(file)
+	        name = fsw.getSystemDisplayName(file)
 	                .toLowerCase();
 	    }
 	    if (name == null) {
@@ -256,7 +277,7 @@ public abstract class OSUtils {
 	        return false;
 	    }
 	    if (CURRENT_OS.equals(OS.WIN)) {
-	        return FileSystemView.getFileSystemView().isComputerNode(file);
+	        return fsw.isComputerNode(file);
 	    } 
 	    return file.getAbsolutePath().toLowerCase()
 	        .matches(".*(server|network|remote).*");
@@ -277,8 +298,7 @@ public abstract class OSUtils {
 	    }
         String name = null;
         if (CURRENT_OS.equals(OS.WIN)) {
-            name = FileSystemView.getFileSystemView().getSystemDisplayName(file)
-                    .toLowerCase();
+            name = fsw.getSystemDisplayName(file).toLowerCase();
         }
         if (name == null) {
             name = file.getName().toLowerCase();
@@ -308,10 +328,13 @@ public abstract class OSUtils {
             if (System.getProperty("java.version").compareTo("1.6") >= 0) {
                 //we can check if it's executable
                 try {
-                    Method m = file.getClass().getMethod("canExecute", new Class[] {});
+                    Method m = file.getClass().getMethod("canExecute", 
+                            new Class[] {});
                     if (m != null) { 
-                        return ((Boolean) m.invoke(file, new Object[] {}));
-                        
+                        final boolean result = (Boolean) m.invoke(file, 
+                                new Object[] {}); 
+                        m = null;
+                        return result;
                     }
                 } catch (final Exception e) {
                     log.warn("Failed dynamically calling File.canExecute", e);

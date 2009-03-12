@@ -99,7 +99,7 @@ public class FolderMenu implements MenuItem {
      */
     private void addOpenAction(final FolderMenuItemListener listener) {
         if (file != null) {
-            org.eclipse.swt.widgets.MenuItem open = 
+            final org.eclipse.swt.widgets.MenuItem open = 
                 new org.eclipse.swt.widgets.MenuItem(submenu, SWT.PUSH);
             open.setImage(IconFactory.getInstance().getIcon("open"));
             open.setText("Open");

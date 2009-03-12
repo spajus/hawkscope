@@ -27,6 +27,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.varaneckas.hawkscope.Constants;
+
 /**
  * Path processing utilities
  *
@@ -56,10 +58,10 @@ public abstract class PathUtils {
         if (path == null || path.equals("")) {
             return Collections.emptyList();
         }
-        final String[] locations = interpret(path).split(delimiter);
+        String[] locations = interpret(path).split(delimiter);
         final List<File> files = new ArrayList<File>();
         for (final String location : locations) {
-            File f = new File(unsanitizePath(location));
+            final File f = new File(unsanitizePath(location));
             if (!f.isDirectory()) {
                 log.warn(f.getAbsolutePath() + " is not a directory!");
             } else if (!f.canRead()) {
@@ -68,6 +70,7 @@ public abstract class PathUtils {
                 files.add(f);
             }
         }
+        locations = null;
         return files;
     }
     
@@ -92,13 +95,14 @@ public abstract class PathUtils {
 	                log.debug("Parsing: " + matcher.group(1));
 	                String replacement;
 	                if (matcher.group(1).startsWith("$")) {
-	                    replacement = "" + System.getenv(matcher.group(1)
+	                    replacement = System.getenv(matcher.group(1)
 	                            .substring(1));
 	                } else {
-	                    replacement = "" + System.getProperty(matcher.group(1));
+	                    replacement = System.getProperty(matcher.group(1));
 	                }
                     newLocation = newLocation.replaceFirst(quote(matcher.group()),
-                            replacement.replaceAll("\\\\", "/"));
+                            replacement.replaceAll(Constants.REGEX_BACKSLASH, 
+                                    Constants.REGEX_SLASH));
 	            }
             } catch (final Exception e) {
             	log.warn("Failed parsing location: " + location, e);
@@ -146,7 +150,8 @@ public abstract class PathUtils {
      */
     public static String unsanitizePath(final String path) {
         if (OSUtils.CURRENT_OS.equals(OSUtils.OS.WIN)) {
-            return path.replaceAll("/", "\\\\");
+            return path.replaceAll(Constants.REGEX_SLASH, 
+                    Constants.REGEX_BACKSLASH);
         }
         return path;
     }
@@ -159,7 +164,8 @@ public abstract class PathUtils {
      */
     public static String sanitizePath(final String path) {
         if (OSUtils.CURRENT_OS.equals(OSUtils.OS.WIN)) {
-            return path.replaceAll("\\\\", "/");
+            return path.replaceAll(Constants.REGEX_BACKSLASH, 
+                    Constants.REGEX_SLASH);
         }
         return path;
     }
@@ -180,12 +186,12 @@ public abstract class PathUtils {
      * @return  A literal string replacement
      * @since 1.5
      */
-    public static String quote(String s) {
+    public static String quote(final String s) {
         int slashEIndex = s.indexOf("\\E");
-        if (slashEIndex == -1)
+        if (slashEIndex == -1) {
             return "\\Q" + s + "\\E";
-
-        StringBuilder sb = new StringBuilder(s.length() * 2);
+        }
+        final StringBuilder sb = new StringBuilder(s.length() * 2);
         sb.append("\\Q");
         slashEIndex = 0;
         int current = 0;

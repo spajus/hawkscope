@@ -88,9 +88,7 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
 		
 		createButtonAddQa();
 		createButtonDelQa();
-
 		createListQuickAccess();
-
 		createButtonDnQa();
 		createButtonUpQa();
 	}
@@ -166,18 +164,22 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         buttonUpQa.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent event) {
-               if (listQuickAccess.getSelectionCount() == 0) return;
+               if (listQuickAccess.getSelectionCount() == 0) {
+                   return;
+               }
                if (listQuickAccess.getSelectionCount() > 1) {
                    showMoveWarnDialog();
                    return;
                }
-               int i = listQuickAccess.getSelectionIndex();
+               final int i = listQuickAccess.getSelectionIndex();
                //first item
-               if (i == 0) return;
-               final String temp = listQuickAccess.getItem(i-1);
-               listQuickAccess.setItem(i-1, listQuickAccess.getSelection()[0]);
+               if (i == 0) {
+                   return;
+               }
+               final String temp = listQuickAccess.getItem(i - 1);
+               listQuickAccess.setItem(i - 1, listQuickAccess.getSelection()[0]);
                listQuickAccess.setItem(i, temp);
-               listQuickAccess.setSelection(i-1);
+               listQuickAccess.setSelection(i - 1);
             }
         });
     }
@@ -196,18 +198,22 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         buttonDnQa.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent event) {
-               if (listQuickAccess.getSelectionCount() == 0) return;
+               if (listQuickAccess.getSelectionCount() == 0) {
+                   return;
+               }
                if (listQuickAccess.getSelectionCount() > 1) {
                    showMoveWarnDialog();
                    return;
                }
-               int i = listQuickAccess.getSelectionIndex();
+               final int i = listQuickAccess.getSelectionIndex();
                //last item
-               if (i == listQuickAccess.getItemCount()-1) return;
-               final String temp = listQuickAccess.getItem(i+1);
-               listQuickAccess.setItem(i+1, listQuickAccess.getSelection()[0]);
+               if (i == listQuickAccess.getItemCount() - 1) {
+                   return;
+               }
+               final String temp = listQuickAccess.getItem(i + 1);
+               listQuickAccess.setItem(i + 1, listQuickAccess.getSelection()[0]);
                listQuickAccess.setItem(i, temp);
-               listQuickAccess.setSelection(i+1);
+               listQuickAccess.setSelection(i + 1);
             }
         });
     }
@@ -237,7 +243,7 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         listQuickAccess.setLayoutData(layout);
         listQuickAccess.addSelectionListener(new SelectionAdapter() {
             @Override
-            public void widgetSelected(SelectionEvent event) {
+            public void widgetSelected(final SelectionEvent event) {
                if (listQuickAccess.getSelectionCount() == 1) {
                    listQuickAccess
                        .setToolTipText(listQuickAccess.getSelection()[0]);
@@ -248,7 +254,7 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         if (qaFiles.hasNext()) {
             for (final String qaItem : cfg.getRawQuickAccessList()) {
                 try {
-                    String qaFile = qaFiles.next().getAbsolutePath()
+                    final String qaFile = qaFiles.next().getAbsolutePath()
                             .replaceAll("\\\\", "/");
                     if (!qaFile.equals(qaItem)) {
                         listQuickAccess.add(qaFile + " <" + qaItem + ">");

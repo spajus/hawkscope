@@ -65,10 +65,8 @@ public class DynamicFileFilter implements FileFilter {
      * @see FileFilter#accept(File)
      */
     public boolean accept(final File file) {
-        if (!cfg.isHiddenFilesDisplayed()) {
-            if (file.isHidden()) {
-                return false;
-            }
+        if (!cfg.isHiddenFilesDisplayed() && file.isHidden()) {
+            return false;
         }
         if (file.isDirectory() && cfg.getBlackList().contains(file)) {
             return false;

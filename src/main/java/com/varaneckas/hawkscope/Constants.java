@@ -15,37 +15,36 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.varaneckas.hawkscope.util;
-
-import org.eclipse.swt.widgets.Display;
+package com.varaneckas.hawkscope;
 
 /**
- * Utilities related to menus and menu items 
+ * A class for storing constant values
  *
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public abstract class MenuUtils {
+public class Constants {
+    
+    /**
+     * A "UTF-8" String litteral
+     */
+    public static final String UTF8 = "UTF-8";
+    
+    /**
+     * Slash for regex
+     */
+    public static final String REGEX_SLASH = "/";
+    
+    /**
+     * Backslash for regex
+     */
+    public static final String REGEX_BACKSLASH = "\\\\";
+    
+    /**
+     * Hawkscope URL base
+     */
+    public static final String HAWKSCOPE_URL_ROOT = 
+        "http://code.google.com/p/hawkscope/";
+        
 
-    /**
-     * Menu item size in pixels
-     */
-    public static final int MENU_ITEM_SIZE = 32;
-    
-    /**
-     * Gets automatic recommended number of menu items
-     * 
-     * @return number of menu items
-     */
-    public static int getAutoMenuSize() {
-        try {
-            int screenHeight = Display.getDefault().getPrimaryMonitor().getBounds().height;
-            return (screenHeight / MENU_ITEM_SIZE) * 9 / 10; //menu gets cut at 90%
-        } catch (final Exception e) {
-            //for some weird reason sometimes display mode is null on Ubuntu 
-            //running in VirtualBox 
-            return 10;
-        }
-    }
-    
 }
