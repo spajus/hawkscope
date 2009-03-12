@@ -34,6 +34,7 @@ import java.util.Map.Entry;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.varaneckas.hawkscope.Constants;
 import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.UTF8ResourceBundle;
 
@@ -90,7 +91,8 @@ public abstract class ConfigurationFactory {
         synchronized (ConfigurationFactory.class) {
             if (concreteInstance == null) {
                 if (new File(System.getProperty("user.home")
-                		.replaceAll("\\\\", "/")).canWrite()) {
+                		.replaceAll(Constants.REGEX_BACKSLASH, 
+                				Constants.REGEX_SLASH)).canWrite()) {
                     concreteInstance = new UserHomeConfigurationFactory();
                 } else {
                     concreteInstance = new BasicConfigurationFactory();
@@ -106,9 +108,11 @@ public abstract class ConfigurationFactory {
      * @return configuration
      */
     public Configuration getConfiguration() {
-        if (configuration == null) {
-            loadConfiguration();
-        }
+    	synchronized (ConfigurationFactory.class) {
+	        if (configuration == null) {
+	            loadConfiguration();
+	        }
+    	}
         return configuration;
     }
 

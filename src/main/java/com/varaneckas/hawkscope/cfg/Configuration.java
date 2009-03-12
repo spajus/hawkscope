@@ -49,8 +49,8 @@ public class Configuration {
     /**
      * Hawkscope properties bundle
      */
-    public static final ResourceBundle PROPERTIES = UTF8ResourceBundle
-    		.getBundle("hawkscope", Configuration.class.getClassLoader());
+    public static final ResourceBundle APP_PROPS = UTF8ResourceBundle
+    		.getBundle("internal", Configuration.class.getClassLoader());
     
     /**
      * Display hidden files property name

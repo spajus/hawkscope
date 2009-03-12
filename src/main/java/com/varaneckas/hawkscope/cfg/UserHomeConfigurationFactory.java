@@ -17,6 +17,8 @@
  */
 package com.varaneckas.hawkscope.cfg;
 
+import com.varaneckas.hawkscope.Constants;
+
 /**
  * User Home Configuration Factory
  *
@@ -27,7 +29,8 @@ public class UserHomeConfigurationFactory extends BasicConfigurationFactory {
 
     @Override
     protected String loadConfigFilePath() {
-        return System.getProperty("user.home").replaceAll("\\\\", "/"); 
+        return System.getProperty("user.home").replaceAll(
+        		Constants.REGEX_BACKSLASH, Constants.REGEX_SLASH); 
     }
 
 }

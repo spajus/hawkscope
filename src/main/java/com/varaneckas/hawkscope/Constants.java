@@ -30,7 +30,7 @@ public class Constants {
     /**
      * A "UTF-8" String litteral
      */
-    public static final String ENCODING = Configuration.PROPERTIES
+    public static final String ENCODING = Configuration.APP_PROPS
     		.getString("encoding");
     
     /**
@@ -46,7 +46,7 @@ public class Constants {
     /**
      * Hawkscope URL base
      */
-    public static final String HAWKSCOPE_URL_ROOT = Configuration.PROPERTIES
+    public static final String HAWKSCOPE_URL_ROOT = Configuration.APP_PROPS
     		.getString("googlecode.url");
         
 

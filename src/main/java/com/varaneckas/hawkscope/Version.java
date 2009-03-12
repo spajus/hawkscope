@@ -60,31 +60,31 @@ public class Version {
     /**
      * Application name
      */
-    public static final String APP_NAME = Configuration.PROPERTIES
+    public static final String APP_NAME = Configuration.APP_PROPS
     		.getString("name");
     
     /**
      * Application slogan
      */
-    public static final String APP_SLOGAN = Configuration.PROPERTIES
+    public static final String APP_SLOGAN = Configuration.APP_PROPS
     		.getString("slogan");
     
     /**
      * Application version number   
      */
-    public static final String VERSION_NUMBER = Configuration.PROPERTIES
+    public static final String VERSION_NUMBER = Configuration.APP_PROPS
     		.getString("version.number");
     
     /**
      * Application version date
      */
-    public static final String VERSION_DATE = Configuration.PROPERTIES
+    public static final String VERSION_DATE = Configuration.APP_PROPS
     		.getString("version.date");
     
     /**
      * Application Homepage URL
      */
-    public static final String HOMEPAGE = Configuration.PROPERTIES
+    public static final String HOMEPAGE = Configuration.APP_PROPS
     		.getString("homepage");
     
     /**
@@ -96,7 +96,7 @@ public class Version {
     /**
      * URL where latest Hawkscope version is stored
      */
-    public static final String VERSION_CHECK_URL = Configuration.PROPERTIES
+    public static final String VERSION_CHECK_URL = Configuration.APP_PROPS
     		.getString("version.url")
     		.concat(OSUtils.CURRENT_OS.toString().toLowerCase());
 

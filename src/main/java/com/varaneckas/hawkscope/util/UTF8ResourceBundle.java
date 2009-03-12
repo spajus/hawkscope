@@ -23,8 +23,6 @@ import java.util.Locale;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
-import com.varaneckas.hawkscope.Constants;
-
 /**
  * Unicode resource bundle implementation
  * 
@@ -76,9 +74,9 @@ public abstract class UTF8ResourceBundle {
                 return null;
             }
             try {
-                return new String(value.getBytes("ISO-8859-1"), Constants.ENCODING);
+                return new String(value.getBytes("ISO-8859-1"), "UTF-8");
             } catch (final UnsupportedEncodingException e) {
-                return null;
+            	throw new RuntimeException("UTF-8 not supported on this system", e);
             }
         }
     }
