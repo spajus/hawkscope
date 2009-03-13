@@ -54,7 +54,7 @@
     <target name="dist-win" description="Builds a Windows distributable.">
         <taskdef name="jsmoothgen" 
             classname="net.charabia.jsmoothgen.ant.JSmoothGen" 
-            classpath="dist/win/tools/jsmoothgen-ant.jar" />
+            classpath="dist/win/tools/jsmoothgen-ant-0.9.9-7-mgu1.jar" />
         <taskdef name="nsis" classname="net.sf.nsisant.Task" 
             classpath="dist/win/tools/nsisant-1.2.jar" />
         <exec executable="cmd">

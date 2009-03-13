@@ -9,7 +9,7 @@
 <currentDirectory>${EXECUTABLEPATH}</currentDirectory>
 <embeddedJar>true</embeddedJar>
 <executableName>../output/win/Hawkscope.exe</executableName>
-<iconLocation>hawkscope.ico</iconLocation>
+<iconLocation>..\..\src\main\resources\icons\hawkscope32.png</iconLocation>
 <initialMemoryHeap>2097152</initialMemoryHeap>
 <jarLocation>..\..\target\hawkscope.jar</jarLocation>
 <mainClassName>com.varaneckas.hawkscope.Launcher</mainClassName>
