@@ -7,6 +7,7 @@ http://hawkscope.googlecode.com
 Changes in version 0.5.3 (2009-03-13)
 -------------------------------------
 * Optimized memory consumption and overal performance
+* Improved icon in Windows version
 * Fixed Network Settings proxy authentication checkbox behavior
   http://code.google.com/p/hawkscope/issues/detail?id=66
 * Long menus are no longer splitted with "More..."
