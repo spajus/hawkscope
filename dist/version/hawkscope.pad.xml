@@ -34,9 +34,9 @@
 	</Company_Info>
 	<Program_Info>
 		<Program_Name>Hawkscope</Program_Name>
-		<Program_Version>0.5.2</Program_Version>
-		<Program_Release_Month>02</Program_Release_Month>
-		<Program_Release_Day>28</Program_Release_Day>
+		<Program_Version>0.5.3</Program_Version>
+		<Program_Release_Month>03</Program_Release_Month>
+		<Program_Release_Day>13</Program_Release_Day>
 		<Program_Release_Year>2009</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
@@ -51,9 +51,9 @@
 		<Program_Category_Class>System Utilities::File &amp; Disk Management</Program_Category_Class>
 		<Program_System_Requirements />
 		<File_Info>
-			<File_Size_Bytes>1790400</File_Size_Bytes>
-			<File_Size_K>1748</File_Size_K>
-			<File_Size_MB>1.71</File_Size_MB>
+			<File_Size_Bytes>1992294</File_Size_Bytes>
+			<File_Size_K>1946</File_Size_K>
+			<File_Size_MB>1.9</File_Size_MB>
 		</File_Info>
 		<Expire_Info>
 			<Has_Expire_Info>N</Has_Expire_Info>
