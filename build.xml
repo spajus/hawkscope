@@ -7,7 +7,7 @@
          All the java building magic should be done with Maven. 
      -->
     
-    <property file="build.properties" />
+    <property file="src/main/resources/internal.properties" />
 
     <target name="dist-mac" 
         description="Builds a Mac distributable. Find it in dist/output.">
@@ -26,11 +26,11 @@
         <exec executable="rm">
             <arg line="-rf dist/output" />
         </exec>
-        <mkdir dir="dist/output/Hawkscope-${hawkscope.version}" />
-        <filter token="hawkscope.version" value="${hawkscope.version}" />
+        <mkdir dir="dist/output/Hawkscope-${version.number}" />
+        <filter token="hawkscope.version" value="${version.number}" />
         <filter token="copyright.year" value="${copyright.year}" />
         <copy overwrite="true" 
-            todir="dist/output/Hawkscope-${hawkscope.version}" filtering="true">
+            todir="dist/output/Hawkscope-${version.number}" filtering="true">
             <fileset dir="dist/mac">
                 <filename name="**/*" />
                 <exclude name=".*" />
@@ -39,15 +39,15 @@
         <chmod perm="a+x" 
             file="dist/output/Hawkscope-${hawkscope.version}/Hawkscope.app/Contents/MacOS/hawkscope" />
         <exec executable="ln">
-            <arg line="-s /Applications dist/output/Hawkscope-${hawkscope.version}/Applications" />
+            <arg line="-s /Applications dist/output/Hawkscope-${version.number}/Applications" />
         </exec>
-        <copy file="license.txt" todir="dist/output/Hawkscope-${hawkscope.version}"/>
-        <copy file="changelog.txt" todir="dist/output/Hawkscope-${hawkscope.version}"/>
+        <copy file="license.txt" todir="dist/output/Hawkscope-${version.number}"/>
+        <copy file="changelog.txt" todir="dist/output/Hawkscope-${version.number}"/>
         <exec executable="hdiutil">
-            <arg line="create -srcfolder dist/output/Hawkscope-${hawkscope.version} dist/output/Hawkscope-${hawkscope.version}.dmg" />
+            <arg line="create -srcfolder dist/output/Hawkscope-${version.number} dist/output/Hawkscope-${version.number}.dmg" />
         </exec>
         <exec executable="hdiutil">
-            <arg line="internet-enable -yes dist/output/Hawkscope-${hawkscope.version}.dmg" />
+            <arg line="internet-enable -yes dist/output/Hawkscope-${version.number}.dmg" />
         </exec>
     </target>
 
@@ -107,7 +107,7 @@
         	    postinst="dist/deb/local/postinst"
         	    architecture="${os.arch}"
 	            depends="sun-java6-jre | sun-java5-jre">
-	            <version upstream="${hawkscope.version}"/>
+	            <version upstream="${version.number}"/>
 	            <maintainer email="tomas.varaneckas@gmail.com" name="Tomas Varaneckas"/>
 	            <description synopsis="Access anything with single click!">
 	                Hawkscope is a productivity tool that allows you to access your hard drive contents quickly via system tray icon with dynamic pop-up menu. 
@@ -141,12 +141,12 @@
                 <exclude name="target/"/>
             </fileset>
         </copy>
-        <tar destfile="dist/output/hawkscope-${hawkscope.version}-src.tar">
+        <tar destfile="dist/output/hawkscope-${version.number}-src.tar">
             <fileset dir="dist/output/source"/>
         </tar>
-        <gzip src="dist/output/hawkscope-${hawkscope.version}-src.tar" 
-            destfile="dist/output/hawkscope-${hawkscope.version}-src.tar.gz"/>
-        <zip destfile="dist/output/hawkscope-${hawkscope.version}-src.zip">
+        <gzip src="dist/output/hawkscope-${version.number}-src.tar" 
+            destfile="dist/output/hawkscope-${version.number}-src.tar.gz"/>
+        <zip destfile="dist/output/hawkscope-${version.number}-src.zip">
             <fileset dir="dist/output/source"/>
         </zip>        
     </target>

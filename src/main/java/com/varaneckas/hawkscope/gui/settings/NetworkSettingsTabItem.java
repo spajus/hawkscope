@@ -153,6 +153,7 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
         useHttpProxyAuth = addCheckbox("Enable &Authentication");
 		useHttpProxyAuth.setLayoutData(ident(SharedStyle.relativeTo(
 		        labelHttpProxyPort, null)));
+		useHttpProxyAuth.setEnabled(cfg.isHttpProxyInUse());
 		useHttpProxyAuth.setSelection(cfg.isHttpProxyAuthInUse());
 		useHttpProxyAuth.addSelectionListener(new SelectionAdapter() {
             @Override

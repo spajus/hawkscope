@@ -7,11 +7,13 @@ http://hawkscope.googlecode.com
 Changes in version 0.5.3 (2009-03-13)
 -------------------------------------
 * Optimized memory consumption and overal performance
+* Fixed Network Settings proxy authentication checkbox behavior
+  http://code.google.com/p/hawkscope/issues/detail?id=66
 * Long menus are no longer splitted with "More..."
   http://code.google.com/p/hawkscope/issues/detail?id=64
 * Periodic menu reload in background (with at least 3 minutes between reloads)
   http://code.google.com/p/hawkscope/issues/detail?id=62
-* Execute plugin
+* Execute plugin (available separately)
   http://code.google.com/p/hawkscope/issues/detail?id=60 
 
 Changes in version 0.5.2 (2009-02-28)
