@@ -94,7 +94,7 @@
 	    <desktopentry
 	            toFile="dist/output/deb/hawkscope.desktop"
 	            name="Hawkscope"
-	            comment="Access anything with single click!"
+	            comment="${slogan}"
 	            exec="hawkscope"
 	            path="/usr/share/hawkscope/"
 	            icon="/usr/share/hawkscope/hawkscope32.png"
