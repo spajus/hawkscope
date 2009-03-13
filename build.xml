@@ -37,7 +37,7 @@
             </fileset>
         </copy>
         <chmod perm="a+x" 
-            file="dist/output/Hawkscope-${hawkscope.version}/Hawkscope.app/Contents/MacOS/hawkscope" />
+            file="dist/output/Hawkscope-${version.number}/Hawkscope.app/Contents/MacOS/hawkscope" />
         <exec executable="ln">
             <arg line="-s /Applications dist/output/Hawkscope-${version.number}/Applications" />
         </exec>
