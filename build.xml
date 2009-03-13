@@ -71,7 +71,7 @@
             skeletonroot="dist/win/skeletons" destdir="dist/win" />
         <nsis path="C:/Program Files/NSIS" 
             script="dist/win/hawkscope.nsi" nocd="yes" verbosity="4">
-            <define name="VERSION" value="${hawkscope.version}" />
+            <define name="VERSION" value="${version.number}" />
         </nsis>
     </target>
 	
