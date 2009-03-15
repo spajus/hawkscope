@@ -29,8 +29,8 @@ import org.eclipse.swt.widgets.Menu;
 
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
 import com.varaneckas.hawkscope.plugin.PluginManager;
-import com.varaneckas.hawkscope.util.PathUtils;
 import com.varaneckas.hawkscope.util.IconFactory;
+import com.varaneckas.hawkscope.util.PathUtils;
 
 /**
  * {@link FolderMenu} - SWT implementation
@@ -38,7 +38,7 @@ import com.varaneckas.hawkscope.util.IconFactory;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class FolderMenu implements MenuItem {
+public class FolderMenu extends AbstractMenuItem {
     
     /**
      * Target folder
@@ -46,42 +46,22 @@ public class FolderMenu implements MenuItem {
     final protected File file;
     
     /**
-     * Menu text
-     */
-    private String text;
-    
-    /**
-     * Menu icon
-     */
-    private Image icon;
-    
-    /**
-     * Is menu enabled?
-     */
-    private boolean enabled = true;
-
-    /**
-     * SWT Menu item object
-     */
-    private org.eclipse.swt.widgets.MenuItem menu;
-    
-    /**
      * SWT Submenu object
      */
     private Menu submenu;
 
     public void createMenuItem(final Menu parent) {
-        menu = new org.eclipse.swt.widgets.MenuItem(parent, SWT.CASCADE);
+        swtMenuItem = new org.eclipse.swt.widgets.MenuItem(parent, SWT.CASCADE);
         submenu = new Menu(parent);
         final FolderMenuItemListener listener = new FolderMenuItemListener(this, 
                 this.file);
         addOpenAction(listener);
         PluginManager.getInstance()
-                .enhanceFolderMenu(file, menu, submenu, listener);
-        menu.setMenu(submenu);
-        menu.setText(text);
-        menu.setEnabled(enabled);
-        menu.setImage((Image) icon);
+                .enhanceFolderMenu(file, swtMenuItem, submenu, listener);
+        swtMenuItem.setMenu(submenu);
+        swtMenuItem.setText(text);
+        swtMenuItem.setEnabled(enabled);
+        swtMenuItem.setImage((Image) icon);
         if (this.file != null) {
             submenu.addMenuListener(new MenuAdapter() {
                 @Override
@@ -102,7 +82,7 @@ public class FolderMenu implements MenuItem {
             final org.eclipse.swt.widgets.MenuItem open = 
                 new org.eclipse.swt.widgets.MenuItem(submenu, SWT.PUSH);
             open.setImage(IconFactory.getInstance().getIcon("open"));
-            open.setText("Open");
+            open.setText("&Open");
             open.addSelectionListener(new SelectionAdapter() {
                 @Override
                 public void widgetSelected(final SelectionEvent e) {
@@ -120,7 +100,7 @@ public class FolderMenu implements MenuItem {
     public FolderMenu(final File file) {
         this.file = file;
         if (file != null) {
-            this.text = PathUtils.getFileName(file);
+            setText(PathUtils.getFileName(file));
             this.icon = IconFactory.getInstance().getIcon(file);
         } 
     }
@@ -130,19 +110,7 @@ public class FolderMenu implements MenuItem {
     }
 
     public void addSeparator() {
-        new org.eclipse.swt.widgets.MenuItem(menu.getMenu(), SWT.SEPARATOR);
-    }
-
-    public void setEnabled(final boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public void setIcon(final Image icon) {
-        this.icon = icon;
-    }
-
-    public void setText(final String text) {
-        this.text = text;
+        new org.eclipse.swt.widgets.MenuItem(swtMenuItem.getMenu(), SWT.SEPARATOR);
     }
 
 }

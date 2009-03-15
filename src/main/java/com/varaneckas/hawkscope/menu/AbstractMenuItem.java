@@ -55,7 +55,7 @@ public abstract class AbstractMenuItem
 	 * Sets the menu item text
 	 */
 	public void setText(final String text) {
-	    this.text = text;
+	    this.text = "&".concat(text);
 	}
 
 	/**
