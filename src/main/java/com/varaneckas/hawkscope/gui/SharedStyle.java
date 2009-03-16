@@ -55,6 +55,11 @@ public class SharedStyle {
     public static Font FONT_BOLD;
     
     /**
+     * Fixed font
+     */
+    public static Font FONT_FIXED;
+    
+    /**
      * Red color
      */
     public static Color COLOR_RED;
@@ -89,9 +94,17 @@ public class SharedStyle {
 		LAYOUT.marginHeight = 12;
     	final Display display = Display.getDefault();
         final FontData data = new FontData();
+        
+        //bold font
         data.setHeight(10);
         data.setStyle(SWT.BOLD);
         FONT_BOLD = new Font(display, data);
+        
+        //fixed font
+        data.setName(OSUtils.getFixedFontName());
+        data.setStyle(SWT.NONE);
+        FONT_FIXED = new Font(display, data);
+        
         COLOR_RED = new Color(display, 255, 0, 0);
         COLOR_GREEN = new Color(display, 0, 128, 0);
         COLOR_BLUE = new Color(display, 0, 0, 255);
@@ -103,6 +116,7 @@ public class SharedStyle {
      */
     public static void releaseResources() {
     	FONT_BOLD.dispose();
+    	FONT_FIXED.dispose();
     	COLOR_RED.dispose();
     	COLOR_GREEN.dispose();
     	COLOR_BLUE.dispose();

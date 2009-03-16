@@ -421,4 +421,18 @@ public abstract class OSUtils {
             return -5;
         }
     }
+
+    /**
+     * Gets platform friendly fixed font name
+     * 
+     * @return
+     */
+	public static String getFixedFontName() {
+		switch (CURRENT_OS) {
+		case MAC:
+			return "Monaco";
+		default:
+			return "Courier";
+		}
+	}
 }
