@@ -19,6 +19,7 @@ package com.varaneckas.hawkscope.util;
 
 import java.io.File;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -368,27 +369,27 @@ public abstract class OSUtils {
 	 */
 	public static boolean exec(String app, String params) {
 		try {
+		    final List<String> cmd = new ArrayList<String>();
 			switch (CURRENT_OS) {
 			case MAC:
 				if (app.toLowerCase().endsWith(".app")) {
-					app = "open -a " + app;
-				}
-				break;
-			case WIN:
-			    if (app.contains(" ")) {
-			        app = "\"" + app + "\"";
-			    }
-			    params = "\"" + params + "\"";
-			    break;
-			case UNIX:
-                if (params.contains(" ")) {
-                    params = "\'" + params + "\'";
-                }
+				    cmd.add("open");
+				    cmd.add("-a");
+				    cmd.add(app);
+				    cmd.add(params);
+				    break;
+				} 
+			default:
+			    cmd.add(app);
+			    cmd.add(params);
 			}
 			if (log.isDebugEnabled()) {
-				log.debug("Executing: " + app + " " + params);
+				log.debug("Executing: " + cmd);
 			}
-			Runtime.getRuntime().exec(app + " " + params);
+			String[] cmdArray = new String[] {};
+			cmdArray = cmd.toArray(cmdArray);
+			Runtime.getRuntime().exec(cmdArray);
+			cmdArray = null;
 			return false;
 		} catch (final Exception e) {
 			log.warn("Failed executing app " + app + " with params: " 
