@@ -349,6 +349,7 @@ public class AboutWindow extends AbstractWindow {
     private void createTextEnvironment() {
         textEnvironment = new Text(shell, SWT.MULTI | SWT.WRAP 
                 | SWT.V_SCROLL | SWT.BORDER);
+        textEnvironment.setFont(SharedStyle.FONT_FIXED);
         textEnvironment.setText(Version.getEnvironmentReport());
         textEnvironment.setEditable(false);
         final FormData layout = SharedStyle.relativeTo(labelEnvironment, null, 
