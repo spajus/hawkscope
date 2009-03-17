@@ -431,6 +431,8 @@ public abstract class OSUtils {
 		switch (CURRENT_OS) {
 		case MAC:
 			return "Monaco";
+		case UNIX:
+		    return "Monospace";
 		default:
 			return "Courier New";
 		}
