@@ -64,7 +64,7 @@ public class AppTableEditor extends BasicTableEditor {
             public void handleEvent(final Event e) {
                 switch (e.type) {
                 case SWT.FocusOut:
-                    item.setText(column, text.getText());
+                    item.setText(column, text.getText().toLowerCase());
                     text.dispose();
                     break;
                 case SWT.Traverse:

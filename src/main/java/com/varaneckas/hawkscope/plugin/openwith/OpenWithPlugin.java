@@ -108,7 +108,7 @@ public class OpenWithPlugin extends PluginAdapter {
     
     @Override
     public boolean interceptClick(final File file) {
-        String ext = file.getName().replaceAll(".*\\.", ".");
+        String ext = file.getName().toLowerCase().replaceAll(".*\\.", ".");
         if (ext.equals(file.getName())) {
             ext = "";
         }
