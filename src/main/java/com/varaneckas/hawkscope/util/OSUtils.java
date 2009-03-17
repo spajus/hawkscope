@@ -380,6 +380,10 @@ public abstract class OSUtils {
 			    }
 			    params = "\"" + params + "\"";
 			    break;
+			case UNIX:
+                if (params.contains(" ")) {
+                    params = "\'" + params + "\'";
+                }
 			}
 			if (log.isDebugEnabled()) {
 				log.debug("Executing: " + app + " " + params);
