@@ -432,7 +432,7 @@ public abstract class OSUtils {
 		case MAC:
 			return "Monaco";
 		default:
-			return "Courier";
+			return "Courier New";
 		}
 	}
 }
