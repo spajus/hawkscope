@@ -36,6 +36,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.util.OSUtils;
 
 /**
@@ -99,6 +100,12 @@ public class Version {
     public static final String VERSION_CHECK_URL = Configuration.APP_PROPS
     		.getString("version.url")
     		.concat(OSUtils.CURRENT_OS.toString().toLowerCase());
+    
+    /**
+     * URL where plugin versions are stored
+     */
+    public static final String PLUGIN_VERSION_CHECK_URL = Configuration.APP_PROPS
+            .getString("version.url").concat("plugins");
 
     /**
      * Plugins download URL
@@ -240,6 +247,7 @@ public class Version {
             log.debug("Checking for updates...");
             URLConnection conn = null;
             final URL versionCheckUrl = new URL(VERSION_CHECK_URL);
+            Proxy proxy = null;
             if (cfg.isHttpProxyInUse()) {
                 if (cfg.isHttpProxyAuthInUse()) {
                     Authenticator.setDefault(new Authenticator() {
@@ -258,7 +266,7 @@ public class Version {
                         }
                     });
                 }
-                final Proxy proxy = new Proxy(Type.HTTP, InetSocketAddress
+                proxy = new Proxy(Type.HTTP, InetSocketAddress
                         .createUnresolved(cfg.getHttpProxyHost()
                                 , cfg.getHttpProxyPort()));
                 conn = versionCheckUrl.openConnection(proxy);
@@ -288,6 +296,8 @@ public class Version {
                         + VERSION_NUMBER);
                 isUpdateAvailable = false;
             }
+            PluginManager.getInstance().checkPluginUpdates(
+                    PLUGIN_VERSION_CHECK_URL, proxy);
         } catch (final Exception e) {
             log.info("Failed checking for update: " + e.getMessage());
         }

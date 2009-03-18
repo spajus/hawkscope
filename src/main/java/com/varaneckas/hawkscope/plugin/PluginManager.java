@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Method;
+import java.net.Proxy;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.LinkedList;
@@ -311,6 +312,17 @@ public class PluginManager {
                         + plugin.getName(), e);
             }
         }
+    }
+
+    /**
+     * Tells to check for plugin updates
+     * 
+     * @param pluginVersionCheckUrl
+     * @param proxy can be null
+     */
+    public void checkPluginUpdates(final String pluginVersionCheckUrl, 
+            final Proxy proxy) {
+        //FIXME implement
     }
 
 }
