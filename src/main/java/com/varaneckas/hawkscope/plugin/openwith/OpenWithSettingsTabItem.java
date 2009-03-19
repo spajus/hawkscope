@@ -208,7 +208,8 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
                 final TableItem item = new TableItem(tablePreferred, SWT.NONE);
                 item.setText(0, appEntry.replaceFirst(
                         OpenWithPlugin.PROP_FILE_TYPE_PREFIX, ""));
-                item.setText(1, cfg.getProperties().get(appEntry));
+                item.setText(1, PathUtils.unsanitizePath(cfg.getProperties()
+                		.get(appEntry)));
             }
         }
         colType.pack();
@@ -325,7 +326,7 @@ public class OpenWithSettingsTabItem extends AbstractSettingsTabItem {
             if (item.getText(0) != null && item.getText(0).length() > 0 
                     && item.getText(1) != null && item.getText(1).length() > 0) {
                 cfg.getProperties().put(OpenWithPlugin.PROP_FILE_TYPE_PREFIX 
-                        + item.getText(0), item.getText(1));
+                        + item.getText(0), PathUtils.sanitizePath(item.getText(1)));
             }
         }
         //unknown file app
