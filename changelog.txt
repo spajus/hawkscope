@@ -4,16 +4,22 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
-Changes in version 0.5.4 (2009-03-??)
+Changes in version 0.5.4 (2009-03-21)
 -------------------------------------
-* Twitter plugin auto-recovery after network failures
-  http://code.google.com/p/hawkscope/issues/detail?id=70
+* Gmail Checker plugin
+  http://code.google.com/p/hawkscope/issues/detail?id=76
+* Open With plugin now saves/loads custom application paths well in Windows
+  http://code.google.com/p/hawkscope/issues/detail?id=73
 * Open With plugin was failing to open files with spaces on Linux 
   http://code.google.com/p/hawkscope/issues/detail?id=72
 * Various enhancements of Execute plugin
-  http://code.google.com/p/hawkscope/issues/detail?id=71  
+  http://code.google.com/p/hawkscope/issues/detail?id=71
+* Twitter plugin auto-recovery after network failures
+  http://code.google.com/p/hawkscope/issues/detail?id=70    
 * Improved keyboard navigation
   http://code.google.com/p/hawkscope/issues/detail?id=69
+* No more problems with opening huge folders
+  http://code.google.com/p/hawkscope/issues/detail?id=40  
 
 
 Changes in version 0.5.3 (2009-03-13)
