@@ -24,6 +24,7 @@ import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.WindowFactory;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.tray.TrayManager;
+import com.varaneckas.hawkscope.util.ModularAuthenticator;
 
 /**
  * Hawkscope Application Launcher
@@ -48,6 +49,7 @@ public class Launcher {
         try {
             ConfigurationFactory.getConfigurationFactory(args)
                     .getConfiguration();
+            ModularAuthenticator.register();
         	Thread.setDefaultUncaughtExceptionHandler(WindowFactory
         	        .getUncaughtExceptionHandler());
         	WindowFactory.initialize();

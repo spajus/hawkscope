@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.Text;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
+import com.varaneckas.hawkscope.util.ModularAuthenticator;
 
 /**
  * Network Settings {@link TabItem}
@@ -274,6 +275,7 @@ public class NetworkSettingsTabItem extends AbstractSettingsTabItem {
                 httpProxyUser.getText());
         cfg.setPasswordProperty(Configuration.HTTP_PROXY_AUTH_PASSWORD,
                 httpProxyPass.getText());
+        ModularAuthenticator.getInstance().loadProxyAuth(cfg);
     }
 
 }
