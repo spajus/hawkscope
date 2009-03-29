@@ -120,6 +120,11 @@ public class Configuration {
     public static final String USE_OS_ICONS = "use.os.icons";
     
     /**
+     * Hides known file extensions
+     */
+    public static final String HIDE_FILE_EXT = "hide.known.file.ext";
+    
+    /**
      * Mac menubar blues workaround
      * 
      * @see https://bugs.eclipse.org/bugs/show_bug.cgi?id=263589
@@ -309,6 +314,15 @@ public class Configuration {
      */
     public boolean useOsIcons() {
         return properties.get(USE_OS_ICONS).equals("1");
+    }
+    
+    /**
+     * Tells if to hide known file extensions
+     * 
+     * @return
+     */
+    public boolean isKnownFileExtHidden() {
+        return properties.get(HIDE_FILE_EXT).equals("1");
     }
  
     /**

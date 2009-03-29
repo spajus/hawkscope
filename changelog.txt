@@ -4,6 +4,11 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
+Changes in version 0.6.0 (2009-04-??)
+-------------------------------------
+* Ability to show/hide known file icons. Mac .app extension is always hidden.
+  http://code.google.com/p/hawkscope/issues/detail?id=78
+
 Changes in version 0.5.4 (2009-03-21)
 -------------------------------------
 * Gmail Checker plugin

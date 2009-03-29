@@ -26,8 +26,11 @@ import java.util.regex.Pattern;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.swt.program.Program;
 
 import com.varaneckas.hawkscope.Constants;
+import com.varaneckas.hawkscope.cfg.Configuration;
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 
 /**
  * Path processing utilities
@@ -119,6 +122,8 @@ public abstract class PathUtils {
      * @return friendly file name
      */
     public static String getFileName(final File file) {
+        final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
+                .getConfiguration();
     	String name = OSUtils.getSystemDisplayName(file);
         if (name == null || name.equals("")) {
             name = file.getName();
@@ -126,8 +131,22 @@ public abstract class PathUtils {
         if (name == null || name.equals("")) {
             name = file.getPath();
         } 
+        
         if (name == null || name.equals("")) {
             name = "Untitled";
+        } else if (OSUtils.isMacApp(file)) {
+            name = name.substring(0, name.length() - 4);
+        } else if (cfg.isKnownFileExtHidden()) {
+            String ext = name.replaceAll(".*\\.", ".");
+            final Program p = Program.findProgram(ext);
+            if (ext.equalsIgnoreCase(".gz")) {
+                if (name.toLowerCase().endsWith(".tar.gz")) {
+                    ext = ".tar.gz";
+                }
+            }
+            if (p != null) {
+                name = name.substring(0, name.length() - ext.length());
+            }
         }
         return name;
     }

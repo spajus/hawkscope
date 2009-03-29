@@ -71,6 +71,11 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 	private Button useOsIcons;
 	
 	/**
+	 * Checkbox "[] Hide known file extensions"
+	 */
+	private Button hideKnownFileExt;
+	
+	/**
 	 * Checkbox "[] Mac menubar blues workaround"
 	 */
 	private Button menubarBlues;
@@ -128,6 +133,13 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		useOsIcons.setSelection(cfg.useOsIcons());
 		useOsIcons.setToolTipText("Let Hawkscope look for Operating " +
         		"System icons?");
+		
+		hideKnownFileExt = addCheckbox("&Hide known file extensions");
+		hideKnownFileExt.setLayoutData(ident(SharedStyle
+		        .relativeTo(useOsIcons, null)));
+		hideKnownFileExt.setSelection(cfg.isKnownFileExtHidden());
+		hideKnownFileExt.setToolTipText("Display file names without extensions "
+		        + "for known files?");
 	}
 
 	/**
@@ -170,7 +182,7 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 	private void createMacSection() {
 		//Mac
 		final Label macintosh = addSectionLabel("Mac");
-		macintosh.setLayoutData(SharedStyle.relativeTo(useOsIcons, null));
+		macintosh.setLayoutData(SharedStyle.relativeTo(hideKnownFileExt, null));
 		
 		//[ ] Menubar icon blues
 		menubarBlues = addCheckbox("Use &Mac Menubar icon " +
@@ -188,6 +200,8 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
                 Math.round(Double.valueOf(reloadDelayInput.getText()) * 1000)));
         cfg.getProperties().put(Configuration.USE_OS_ICONS, 
                 useOsIcons.getSelection() ? "1" : "0");
+        cfg.getProperties().put(Configuration.HIDE_FILE_EXT, hideKnownFileExt
+                .getSelection() ? "1" : "0");
         if (OSUtils.CURRENT_OS.equals(OS.MAC)) {
         	cfg.getProperties().put(Configuration.MAC_MENUBAR_BLUES_WORKAROUND,  
         			menubarBlues.getSelection() ? "1" : "0");
