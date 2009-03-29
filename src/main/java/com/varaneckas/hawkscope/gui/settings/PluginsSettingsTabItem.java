@@ -141,7 +141,9 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 	 * Creates a button for getting more plugins
 	 */
     private void createButtonGetPlugins() {
-    	buttonGetPlugins = addButton("Get P&lugins");
+        final String text = PluginManager.getInstance().getAvailableUpdates()
+                .size() > 0 ? "Get P&lugin Updates!" : "Get P&lugins";
+     	buttonGetPlugins = addButton(text);
     	final FormData layout = SharedStyle.relativeToBottomRight(null);
     	buttonGetPlugins.setLayoutData(layout);
     	buttonGetPlugins.addListener(SWT.Selection, new Listener() {
@@ -254,7 +256,12 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 			final TableItem item = new TableItem(tablePlugins, SWT.NONE);
 			item.setText(0, p.isEnabled() ? "Yes" : "No");
 			item.setText(1, p.getName());
-			item.setText(2, p.getVersion());
+			if (PluginManager.getInstance().getAvailableUpdates()
+			        .containsKey(p.getName())) {
+			    item.setText(2, p.getVersion() + " (Update Available!)");
+			} else {
+			    item.setText(2, p.getVersion());
+			}
 			item.setText(3, p.getDescription());
 		}
 		

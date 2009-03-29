@@ -123,6 +123,11 @@ public class Version {
     private static Boolean isUpdateAvailable = null; 
     
     /**
+     * Update version number
+     */
+    public static String updateVersion;
+    
+    /**
      * Asynchronious update check on startup.
      */
     static {
@@ -254,9 +259,8 @@ public class Version {
             } else {
                 conn = versionCheckUrl.openConnection();
             }
-            //timeout in 3 seconds
-            conn.setConnectTimeout(3000);
-            conn.setReadTimeout(3000);
+            conn.setConnectTimeout(Constants.CONNECTION_TIMOUT);
+            conn.setReadTimeout(Constants.CONNECTION_TIMOUT);
             final InputStream io = conn.getInputStream();
             int c = 0;
             final StringBuilder version = new StringBuilder();
@@ -272,6 +276,7 @@ public class Version {
                         + version.toString() 
                         + "). You should update Hawkscope!");
                 isUpdateAvailable = true;
+                updateVersion = version.toString();
             } else {
                 log.info("You have the latest available version of Hawkscope: " 
                         + VERSION_NUMBER);

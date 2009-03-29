@@ -48,6 +48,11 @@ public class Constants {
      */
     public static final String HAWKSCOPE_URL_ROOT = Configuration.APP_PROPS
     		.getString("googlecode.url");
-        
+    
+    /**
+     * Default connection timeuot
+     */
+    public static final int CONNECTION_TIMOUT = Integer.valueOf(Configuration
+            .APP_PROPS.getString("connection.timeout")).intValue();
 
 }

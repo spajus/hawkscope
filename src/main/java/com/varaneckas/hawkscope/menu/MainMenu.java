@@ -19,6 +19,7 @@ package com.varaneckas.hawkscope.menu;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -360,9 +361,19 @@ public class MainMenu {
      * Adds static menu items
      */
     private void addStaticItems() {
-        if (Version.isUpdateAvailable() != null && Version.isUpdateAvailable()) {
-            addExecutableMenuItem("update", "Update Available!", 
-                    new UpdateCommand());
+        if (cfg.checkForUpdates()) {
+            if (Version.isUpdateAvailable() != null && Version.isUpdateAvailable()) {
+                addExecutableMenuItem("update", "Update Available! (" 
+                        + Version.VERSION_NUMBER + " to " 
+                        + Version.updateVersion + ")", 
+                        new UpdateCommand(Version.DOWNLOAD_URL));
+            }
+            for (final Entry<String, String> plugUp : PluginManager.getInstance()
+                    .getAvailableUpdates().entrySet()) {
+                addExecutableMenuItem("update", "Plugin Update! (" 
+                        + plugUp.getKey() + " " + plugUp.getValue() + ")", 
+                        new UpdateCommand(Version.PLUGINS_URL));
+            }
         }
         addExecutableMenuItem("hide", "Hide", new HideCommand());
         PluginManager.getInstance().beforeAboutMenuItem(this);

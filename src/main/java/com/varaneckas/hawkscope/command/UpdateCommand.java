@@ -19,8 +19,6 @@ package com.varaneckas.hawkscope.command;
 
 import org.eclipse.swt.program.Program;
 
-import com.varaneckas.hawkscope.Version;
-
 /**
  * Update Hawkscope Menu Item {@link Command}
  *
@@ -28,12 +26,26 @@ import com.varaneckas.hawkscope.Version;
  * @version $Id$
  */
 public class UpdateCommand implements Command {
+    
+    /**
+     * Target URL
+     */
+    private final String url;
+    
+    /**
+     * Constructor with target URL
+     * 
+     * @param url
+     */
+    public UpdateCommand(final String url) {
+        this.url = url;
+    }
 
     /**
      * Update is available!
      */
     public void execute() {
-        Program.launch(Version.DOWNLOAD_URL);
+        Program.launch(url);
     }
 
 }

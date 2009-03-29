@@ -18,14 +18,18 @@
 package com.varaneckas.hawkscope.plugin;
 
 import java.io.File;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Method;
 import java.net.Proxy;
 import java.net.URL;
 import java.net.URLClassLoader;
+import java.net.URLConnection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,6 +37,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
 
+import com.varaneckas.hawkscope.Constants;
+import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.listeners.FolderMenuItemListener;
@@ -68,6 +74,12 @@ public class PluginManager {
      * Logger
      */
     private static final Log log = LogFactory.getLog(PluginManager.class);
+
+    /**
+     * Available plugin updates
+     */
+    private final Map<String, String> availableUpdates 
+            = new HashMap<String, String>();
     
     /**
      * Private singleton constructor
@@ -75,7 +87,11 @@ public class PluginManager {
     private PluginManager() {
         reloadPlugins();
     }
-
+    
+    public Map<String, String> getAvailableUpdates() {
+        return this.availableUpdates;
+    }
+    
     /**
      * Reloads the plugins
      */
@@ -90,6 +106,10 @@ public class PluginManager {
 	        			+ p.getClass().getName() + ".enabled");
         		if (enabled != null) {
         			p.setEnabled(enabled.equals("1") ? true : false); 
+        		}
+        		if (availableUpdates.containsKey(p.getName()) && 
+        		        availableUpdates.get(p.getName()).equals(p.getVersion())) {
+        		    availableUpdates.remove(p.getName());
         		}
         	} catch (final Exception e) {
         		log.warn("Failed checking if plugin enabled: " + p.getName());
@@ -322,7 +342,43 @@ public class PluginManager {
      */
     public void checkPluginUpdates(final String pluginVersionCheckUrl, 
             final Proxy proxy) {
-        //FIXME implement
+        try {
+            final URL pluginCheckUrl = new URL(Version.PLUGIN_VERSION_CHECK_URL);
+            final URLConnection conn;
+            if (proxy == null) {
+                conn = pluginCheckUrl.openConnection();
+            } else {
+                conn = pluginCheckUrl.openConnection(proxy);
+            }
+            conn.setConnectTimeout(Constants.CONNECTION_TIMOUT);
+            conn.setReadTimeout(Constants.CONNECTION_TIMOUT);
+            final InputStream io = conn.getInputStream();
+            int c = 0;
+            final StringBuilder version = new StringBuilder();
+            while ((c = io.read()) != -1) {
+                version.append((char) c);
+            }
+            final String[] plugs = version.toString().split("\n");
+            final Map<String, String> currentVersions 
+                    = new HashMap<String, String>();
+            for (final Plugin p : getActivePlugins()) {
+                currentVersions.put(p.getName(), p.getVersion());
+            }
+            for (final String plug : plugs) {
+                final String[] plugData = plug.split(":");
+                if (currentVersions.containsKey(plugData[0])) {
+                    if (currentVersions.get(plugData[0])
+                            .compareTo(plugData[1]) < 0) {
+                        availableUpdates.put(plugData[0], plugData[1]);
+                    }
+                }
+            }
+            if (availableUpdates.size() > 0) {
+                log.info("Plugin updates available: " + availableUpdates);
+            }
+        } catch (final Exception e) {
+            log.error("Failed getting plugin updates");
+        }
     }
 
 }
