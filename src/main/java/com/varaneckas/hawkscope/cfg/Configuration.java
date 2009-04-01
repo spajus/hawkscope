@@ -19,9 +19,11 @@ package com.varaneckas.hawkscope.cfg;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,6 +42,17 @@ import com.varaneckas.hawkscope.util.UTF8ResourceBundle;
  * @version $Id$
  */
 public class Configuration {
+    
+    /**
+     * Theme list
+     */
+    public static final Map<String, String> THEMES = new HashMap<String, String>();
+    static {
+        THEMES.put("default", "Default (Ubuntu)");
+        THEMES.put("mac", "MacOSX");
+        THEMES.put("vista", "Vista");
+        THEMES.put("xp", "Windows XP");
+    }
     
     /**
      * Logger 
@@ -118,6 +131,11 @@ public class Configuration {
      * Tells Hawkscope to use operating system icons where possible;
      */
     public static final String USE_OS_ICONS = "use.os.icons";
+    
+    /**
+     * Icons theme
+     */
+    public static final String ICONS_THEME = "icons.theme";
     
     /**
      * Hides known file extensions
@@ -314,6 +332,46 @@ public class Configuration {
      */
     public boolean useOsIcons() {
         return properties.get(USE_OS_ICONS).equals("1");
+    }
+    
+    /**
+     * Gets Icons theme name
+     * 
+     * @return
+     */
+    public String getIconsTheme() {
+        final String theme = properties.get(ICONS_THEME);
+        if (theme == null || theme.equals("")) {
+            return "default";
+        }
+        return theme;
+    }
+    
+    /**
+     * Gets nice theme name
+     * 
+     * @return
+     */
+    public String getIconsThemeName() {
+        return THEMES.get(getIconsTheme());
+    }
+    
+    /**
+     * Gets theme id by name
+     * 
+     * @param name
+     * @return
+     */
+    public String getThemeByName(final String name) {
+        if (name == null || name.equals("")) {
+            return "default";
+        }
+        for (Entry<String, String> entry : THEMES.entrySet()) {
+            if (entry.getValue().equalsIgnoreCase(name)) {
+                return entry.getKey();
+            }
+        }
+        return "default";
     }
     
     /**

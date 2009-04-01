@@ -74,13 +74,25 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         data.put(Configuration.HIDE_FILE_EXT, "0");
         //use OS icons - off by default for unix
         String useOsIcons = "1";
+        //Icons theme by OS
+        String iconsTheme = "";
         switch (OSUtils.CURRENT_OS) {
         case UNIX:
             useOsIcons = "0";
             break;
+        case MAC:
+            iconsTheme = "mac";
+            break;
+        case WIN:
+            if (System.getProperty("os.name").equalsIgnoreCase("Windows XP")) {
+                iconsTheme = "xp";
+            } else {
+                iconsTheme = "vista";
+            }
+            break;
         }
         data.put(Configuration.USE_OS_ICONS, useOsIcons);
-        
+        data.put(Configuration.ICONS_THEME, iconsTheme);
         //plugin dir
         String pluginDir = "${user.home}/.hawkscope-plugins";
         switch (OSUtils.CURRENT_OS) {
@@ -91,7 +103,6 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         	pluginDir ="${user.home}/Library/Application Support/Hawkscope";
         }
         data.put(Configuration.PLUGIN_DIR, pluginDir);
-
         if (OSUtils.CURRENT_OS.equals(OS.MAC)) {
         	//Mac menubar blues 
         	data.put(Configuration.MAC_MENUBAR_BLUES_WORKAROUND, "1");

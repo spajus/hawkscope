@@ -276,6 +276,9 @@ public abstract class OSUtils {
 	    }
 	    if (isMacApp(file)) {
 	        return false;
+	    } 
+	    if (getSystemDisplayName(file).contains(" on ")) {
+	        return true;
 	    }
 	    if (CURRENT_OS.equals(OS.WIN)) {
 	        return fsw.isComputerNode(file);

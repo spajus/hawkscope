@@ -18,14 +18,20 @@
 package com.varaneckas.hawkscope.gui.settings;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
@@ -39,7 +45,7 @@ import com.varaneckas.hawkscope.util.OSUtils.OS;
  * @version $Id$
  */
 public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
-	
+    
     /**
      * Label "Updates"
      */
@@ -69,6 +75,21 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 	 * Checkbox "[] Use OS icons"
 	 */
 	private Button useOsIcons;
+	
+	/**
+	 * Label "Icons Theme: "
+	 */
+	private Label iconsTheme;
+	
+	/**
+	 * Text "[    ]" Icons theme value
+	 */
+	private ToolItem iconsThemeValue;
+	
+	/**
+	 * Dropdown "[] Theme"
+	 */
+	private ToolBar iconsThemeToolbar;
 	
 	/**
 	 * Checkbox "[] Hide known file extensions"
@@ -126,10 +147,12 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		reloadDelaySec.setLayoutData(ident(SharedStyle.relativeTo(menu, null)));
 		
 		createReloadDelayInput();
+		
+		createIconsTheme();
 
 		useOsIcons = addCheckbox("Use operating system &icons");
 		useOsIcons.setLayoutData(ident(SharedStyle
-				.relativeTo(reloadDelayInput, null)));
+				.relativeTo(iconsThemeToolbar, null)));
 		useOsIcons.setSelection(cfg.useOsIcons());
 		useOsIcons.setToolTipText("Let Hawkscope look for Operating " +
         		"System icons?");
@@ -141,6 +164,56 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		hideKnownFileExt.setToolTipText("Display file names without extensions "
 		        + "for known files?");
 	}
+
+    private void createIconsTheme() {
+        iconsTheme = addLabel("Icons theme: ");
+		iconsTheme.setLayoutData(ident(SharedStyle.relativeTo(reloadDelaySec, null)));
+		iconsThemeToolbar = new ToolBar(container, SWT.NONE);
+		final Menu themes = new Menu(iconsThemeToolbar.getShell(), SWT.POP_UP);
+		for (final String theme : Configuration.THEMES.values()) {
+    		final MenuItem themeItem = new MenuItem(themes, SWT.PUSH);
+    		themeItem.setText(theme);
+    		themeItem.addListener(SWT.Selection, newThemeUpdateListner(themeItem));
+		}
+		iconsThemeValue = new ToolItem(iconsThemeToolbar, SWT.DROP_DOWN);
+		iconsThemeValue.setWidth(200);
+		iconsThemeValue.setText(cfg.getIconsThemeName());
+		iconsThemeValue.addListener(SWT.Selection, new Listener() {
+            @Override
+            public void handleEvent(final Event event) {
+                if (event.detail == SWT.ARROW) {
+                    Rectangle rect = iconsThemeValue.getBounds();
+                    Point pt = new Point(rect.x, rect.y + rect.height);
+                    pt = iconsThemeToolbar.toDisplay(pt);
+                    themes.setLocation(pt);
+                    themes.setVisible(true);
+                }
+            }
+		});
+		final FormData data = SharedStyle.relativeTo(reloadDelaySec, reloadDelaySec);
+		data.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
+		iconsThemeToolbar.setLayoutData(ident(data));
+    }
+    
+    /**
+     * Creates new {@link #iconsThemeValue} update listener
+     * 
+     * @param target MenuItem target
+     * @return
+     */
+    private Listener newThemeUpdateListner(final MenuItem target) {
+        return new Listener() {
+            @Override
+            public void handleEvent(final Event event) {
+                iconsThemeValue.setText(target.getText());
+                iconsThemeToolbar.pack();
+                if (!target.getText().equals(cfg.getIconsThemeName())) {
+                    target.getParent().getShell()
+                            .setText("Settings (Hawkscope restart required)");
+                } 
+            }
+        };
+    }
 
 	/**
 	 * Creates the Menu Reload Delay input
@@ -202,6 +275,9 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
                 useOsIcons.getSelection() ? "1" : "0");
         cfg.getProperties().put(Configuration.HIDE_FILE_EXT, hideKnownFileExt
                 .getSelection() ? "1" : "0");
+        cfg.getProperties().put(Configuration.ICONS_THEME, 
+                cfg.getThemeByName(iconsThemeValue.getText()));
+        log.debug(cfg.getProperties());
         if (OSUtils.CURRENT_OS.equals(OS.MAC)) {
         	cfg.getProperties().put(Configuration.MAC_MENUBAR_BLUES_WORKAROUND,  
         			menubarBlues.getSelection() ? "1" : "0");

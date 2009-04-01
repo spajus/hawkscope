@@ -31,6 +31,7 @@ import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Display;
 
+import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 
 /**
@@ -191,25 +192,25 @@ public class IconFactory {
     
     static {
         //initialize resources
-        resources.put("drive", loadResource("icons/hdd24.png"));
-        resources.put("floppy", loadResource("icons/fdd24.png"));
-        resources.put("cdrom", loadResource("icons/cdrom24.png"));
-        resources.put("network", loadResource("icons/network24.png"));
-        resources.put("removable", loadResource("icons/removable24.png"));
-        resources.put("folder", loadResource("icons/folder24.png"));
-        resources.put("folder.open", loadResource("icons/folder.open.24.png"));
-        resources.put("file", loadResource("icons/file24.png"));
-        resources.put("executable", loadResource("icons/executable24.png"));
-        resources.put("exit", loadResource("icons/exit24.png"));
-        resources.put("hide", loadResource("icons/down24.png"));
-        resources.put("more", loadResource("icons/more24.png"));
-        resources.put("unknown", loadResource("icons/unknown24.png"));  
-        resources.put("about", loadResource("icons/about24.png"));  
-        resources.put("open", loadResource("icons/open24.png")); 
-        resources.put("empty", loadResource("icons/empty24.png")); 
-        resources.put("update", loadResource("icons/update24.png"));
-        resources.put("settings", loadResource("icons/settings24.png"));
-        resources.put("help", loadResource("icons/help24.png"));
+        resources.put("drive", loadResource("hdd24.png"));
+        resources.put("floppy", loadResource("fdd24.png"));
+        resources.put("cdrom", loadResource("cdrom24.png"));
+        resources.put("network", loadResource("network24.png"));
+        resources.put("removable", loadResource("removable24.png"));
+        resources.put("folder", loadResource("folder24.png"));
+        resources.put("folder.open", loadResource("folder.open.24.png"));
+        resources.put("file", loadResource("file24.png"));
+        resources.put("executable", loadResource("executable24.png"));
+        resources.put("exit", loadResource("exit24.png"));
+        resources.put("hide", loadResource("down24.png"));
+        resources.put("more", loadResource("more24.png"));
+        resources.put("unknown", loadResource("unknown24.png"));  
+        resources.put("about", loadResource("about24.png"));  
+        resources.put("open", loadResource("open24.png")); 
+        resources.put("empty", loadResource("empty24.png")); 
+        resources.put("update", loadResource("update24.png"));
+        resources.put("settings", loadResource("settings24.png"));
+        resources.put("help", loadResource("help24.png"));
     }
     
     /**
@@ -264,8 +265,26 @@ public class IconFactory {
      * @return
      */
     private static URL loadResource(final String name) {
+        final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
+            .getConfiguration();
         try {
-            return IconFactory.class.getClassLoader().getResource(name);
+            String theme = cfg.getIconsTheme();
+            if (theme.equals("default")) {
+                theme = "";
+            } else {
+                theme += "/";
+            }
+            URL resource = IconFactory.class.getClassLoader()
+                .getResource("icons/".concat(theme).concat(name));
+            if (!theme.equals("")) {
+                if (resource == null) {
+                    resource = IconFactory.class.getClassLoader()
+                        .getResource("icons/".concat(name));
+                } else {
+                    log.debug("File exists: " + name);
+                }
+            }
+            return resource;
         } catch (final Exception e) {
             log.warn("Failed loading icon resource: " + name, e);
         }
