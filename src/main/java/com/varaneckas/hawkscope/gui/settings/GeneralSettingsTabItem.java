@@ -179,7 +179,6 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		iconsThemeValue.setWidth(200);
 		iconsThemeValue.setText(cfg.getIconsThemeName());
 		iconsThemeValue.addListener(SWT.Selection, new Listener() {
-            @Override
             public void handleEvent(final Event event) {
                 if (event.detail == SWT.ARROW) {
                     Rectangle rect = iconsThemeValue.getBounds();
@@ -203,7 +202,6 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
      */
     private Listener newThemeUpdateListner(final MenuItem target) {
         return new Listener() {
-            @Override
             public void handleEvent(final Event event) {
                 iconsThemeValue.setText(target.getText());
                 iconsThemeToolbar.pack();
