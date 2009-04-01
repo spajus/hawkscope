@@ -285,7 +285,8 @@ public class IconFactory {
             if (targetFile.getName().equalsIgnoreCase("Desktop")) {
                 return getIcon("desktop");
             }
-            if (targetFile.getPath().equalsIgnoreCase(System.getProperty("user.home"))) {
+            if (targetFile.getPath().equalsIgnoreCase(
+                    System.getProperty("user.home"))) {
                 return getIcon("home");
             }
             if (targetFile.getName().equalsIgnoreCase("Applications") 
