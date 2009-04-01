@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.ToolItem;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
+import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.OSUtils.OS;
 
@@ -165,6 +166,9 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		        + "for known files?");
 	}
 
+	/**
+	 * Creates icons theme choice
+	 */
     private void createIconsTheme() {
         iconsTheme = addLabel("Icons theme: ");
 		iconsTheme.setLayoutData(ident(SharedStyle.relativeTo(reloadDelaySec, null)));
@@ -180,18 +184,16 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		iconsThemeValue.setText(cfg.getIconsThemeName());
 		iconsThemeValue.addListener(SWT.Selection, new Listener() {
             public void handleEvent(final Event event) {
-                if (event.detail == SWT.ARROW) {
-                    Rectangle rect = iconsThemeValue.getBounds();
-                    Point pt = new Point(rect.x, rect.y + rect.height);
-                    pt = iconsThemeToolbar.toDisplay(pt);
-                    themes.setLocation(pt);
-                    themes.setVisible(true);
-                }
+                Rectangle rect = iconsThemeValue.getBounds();
+                Point pt = new Point(rect.x, rect.y + rect.height);
+                pt = iconsThemeToolbar.toDisplay(pt);
+                themes.setLocation(pt);
+                themes.setVisible(true);
             }
 		});
-		final FormData data = SharedStyle.relativeTo(reloadDelaySec, reloadDelaySec);
+		final FormData data = ident(SharedStyle.relativeTo(reloadDelayInput, reloadDelaySec));
 		data.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
-		iconsThemeToolbar.setLayoutData(ident(data));
+		iconsThemeToolbar.setLayoutData(data);
     }
     
     /**
@@ -205,10 +207,6 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
             public void handleEvent(final Event event) {
                 iconsThemeValue.setText(target.getText());
                 iconsThemeToolbar.pack();
-                if (!target.getText().equals(cfg.getIconsThemeName())) {
-                    target.getParent().getShell()
-                            .setText("Settings (Hawkscope restart required)");
-                } 
             }
         };
     }
@@ -273,6 +271,9 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
                 useOsIcons.getSelection() ? "1" : "0");
         cfg.getProperties().put(Configuration.HIDE_FILE_EXT, hideKnownFileExt
                 .getSelection() ? "1" : "0");
+        if (!cfg.getIconsThemeName().equals(iconsThemeValue.getText())) {
+            MainMenu.getInstance().enqueueIconsReload();
+        }
         cfg.getProperties().put(Configuration.ICONS_THEME, 
                 cfg.getThemeByName(iconsThemeValue.getText()));
         log.debug(cfg.getProperties());

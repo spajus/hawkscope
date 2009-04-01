@@ -69,6 +69,11 @@ public class MainMenu {
      */
     private boolean isReloading;
     
+    /** 
+     * Is icon reload enqueued after changing display theme?
+     */
+    private boolean isIconReloadEnqueued = false;
+    
     /**
      * Unix timestamp since when menu was hidden. Used for enhancing the 
      * reloading performance.
@@ -130,6 +135,11 @@ public class MainMenu {
             if (!item.isDisposed()) {
                 item.dispose();
             }
+        }
+        if (isIconReloadEnqueued) {
+            IconFactory.getInstance().cleanup();
+            IconFactory.getInstance().loadResources();
+            isIconReloadEnqueued = false;
         }
     }
 
@@ -397,6 +407,13 @@ public class MainMenu {
         item.setText(text);
         item.setIcon(IconFactory.getInstance().getIcon(name));
         addMenuItem(item);
+    }
+
+    /**
+     * Enqueues icons reload 
+     */
+    public void enqueueIconsReload() {
+        isIconReloadEnqueued = true;
     }    
     
 }

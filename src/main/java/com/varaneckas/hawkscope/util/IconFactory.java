@@ -26,8 +26,13 @@ import javax.swing.Icon;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
+import org.eclipse.swt.graphics.PaletteData;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.program.Program;
 import org.eclipse.swt.widgets.Display;
 
@@ -45,7 +50,7 @@ public class IconFactory {
     /**
      * Singleton instance
      */
-	private static final IconFactory instance = new IconFactory();
+	private static IconFactory instance;
 	
 	/**
 	 * Singleton constructor
@@ -58,6 +63,12 @@ public class IconFactory {
 	 * @return
 	 */
 	public static IconFactory getInstance() {
+	    synchronized (IconFactory.class) {
+    	    if (instance == null) {
+    	        instance = new IconFactory();
+    	        instance.loadResources();
+    	    }
+	    }
 		return instance;
 	}
 	
@@ -147,7 +158,21 @@ public class IconFactory {
             }
             final ImageData data = p.getImageData();
             if (data != null) {
-                image = new Image(display, data);
+                if (data.width < 24) {
+                    final Color white = display.getSystemColor(SWT.COLOR_WHITE);
+                    final Color black = display.getSystemColor(SWT.COLOR_BLACK);
+                    final PaletteData palette = new PaletteData(new RGB[] { 
+                            white.getRGB(), black.getRGB() });
+                    final ImageData sourceData = new ImageData(24, 24, 1, palette);
+                    sourceData.transparentPixel = 0;
+                    image = new Image(display, sourceData);
+                    final GC gc = new GC(image);
+                    gc.drawImage(new Image(display, data), (24 - data.width) / 2, 
+                            (24 - data.height) / 2);
+                    gc.dispose();
+                } else {
+                    image = new Image(display, data);
+                }
                 resourcePool.put(p.getName(), image);
             }
         }
@@ -174,6 +199,7 @@ public class IconFactory {
      * Releases the resources
      */
     public synchronized void cleanup() {
+        resources.clear();
         for (final String im : resourcePool.keySet()) {
             try {
                 log.debug("Releasing icon: " + im);
@@ -182,6 +208,7 @@ public class IconFactory {
                 log.debug("Failed releasing icon", e);
             }
         }        
+        resourcePool.clear();
     }
     
     
@@ -190,7 +217,7 @@ public class IconFactory {
      */
     protected static final Map<String, URL> resources = new HashMap<String, URL>();
     
-    static {
+    public synchronized void loadResources() {
         //initialize resources
         resources.put("drive", loadResource("hdd24.png"));
         resources.put("floppy", loadResource("fdd24.png"));
@@ -211,6 +238,9 @@ public class IconFactory {
         resources.put("update", loadResource("update24.png"));
         resources.put("settings", loadResource("settings24.png"));
         resources.put("help", loadResource("help24.png"));
+        resources.put("home", loadResource("home24.png"));
+        resources.put("desktop", loadResource("desktop24.png"));
+        resources.put("apps", loadResource("apps24.png"));
     }
     
     /**
@@ -252,6 +282,17 @@ public class IconFactory {
                     && targetFile.getName().endsWith(".app")) {
                 return getIcon("executable");  
             } 
+            if (targetFile.getName().equalsIgnoreCase("Desktop")) {
+                return getIcon("desktop");
+            }
+            if (targetFile.getPath().equalsIgnoreCase(System.getProperty("user.home"))) {
+                return getIcon("home");
+            }
+            if (targetFile.getName().equalsIgnoreCase("Applications") 
+                    || targetFile.getName().equalsIgnoreCase("Program Files") 
+                    || targetFile.getName().equalsIgnoreCase("Programs")) {
+                return getIcon("apps");
+            }
             return getIcon("folder");
         } else {
             return getIcon("unknown");
@@ -264,7 +305,7 @@ public class IconFactory {
      * @param name resource name
      * @return
      */
-    private static URL loadResource(final String name) {
+    private URL loadResource(final String name) {
         final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
             .getConfiguration();
         try {

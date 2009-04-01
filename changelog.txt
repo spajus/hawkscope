@@ -6,6 +6,8 @@ http://hawkscope.googlecode.com
 
 Changes in version 0.6.0 (2009-04-??)
 -------------------------------------
+* Native icon themes for supported operating systems
+  http://code.google.com/p/hawkscope/issues/detail?id=83
 * Ability to show/hide known file icons. Mac .app extension is always hidden.
   http://code.google.com/p/hawkscope/issues/detail?id=78
 * Implemented checking for plugin updates

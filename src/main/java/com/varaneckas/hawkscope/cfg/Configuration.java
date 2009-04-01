@@ -47,8 +47,12 @@ public class Configuration {
      * Theme list
      */
     public static final Map<String, String> THEMES = new HashMap<String, String>();
+    
+    /**
+     * Initialize available themes
+     */
     static {
-        THEMES.put("default", "Default (Ubuntu)");
+        THEMES.put("default", "Ubuntu");
         THEMES.put("mac", "MacOSX");
         THEMES.put("vista", "Vista");
         THEMES.put("xp", "Windows XP");
