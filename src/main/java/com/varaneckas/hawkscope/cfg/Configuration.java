@@ -53,7 +53,7 @@ public class Configuration {
      */
     static {
         THEMES.put("default", "Ubuntu");
-        THEMES.put("mac", "MacOSX");
+        THEMES.put("mac", "Mac OS X");
         THEMES.put("vista", "Vista");
         THEMES.put("xp", "Windows XP");
     }
