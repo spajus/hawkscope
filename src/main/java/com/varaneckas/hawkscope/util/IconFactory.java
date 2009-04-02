@@ -38,6 +38,7 @@ import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
+import com.varaneckas.hawkscope.util.OSUtils.OS;
 
 /**
  * {@link IconFactory} - SWT implmementation
@@ -158,13 +159,14 @@ public class IconFactory {
             }
             final ImageData data = p.getImageData();
             if (data != null) {
-                if (data.width < 24) {
+                //FIXME add windows support (check on Vista too).
+                if (data.width < 24 & !OSUtils.CURRENT_OS.equals(OS.WIN)) {
                     final Color white = display.getSystemColor(SWT.COLOR_WHITE);
                     final Color black = display.getSystemColor(SWT.COLOR_BLACK);
                     final PaletteData palette = new PaletteData(new RGB[] { 
                             white.getRGB(), black.getRGB()});
                     final ImageData sourceData = new ImageData(24, 24, 
-                            data.depth, palette);
+                            1, palette);
                     sourceData.transparentPixel = 0;
                     image = new Image(display, sourceData);
                     final GC gc = new GC(image);
