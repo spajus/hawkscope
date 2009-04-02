@@ -230,7 +230,6 @@ public class IconFactory {
         resources.put("executable", loadResource("executable24.png"));
         resources.put("exit", loadResource("exit24.png"));
         resources.put("hide", loadResource("down24.png"));
-        resources.put("more", loadResource("more24.png"));
         resources.put("unknown", loadResource("unknown24.png"));  
         resources.put("about", loadResource("about24.png"));  
         resources.put("open", loadResource("open24.png")); 
