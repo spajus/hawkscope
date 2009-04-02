@@ -4,7 +4,7 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
-Changes in version 0.6.0 (2009-04-??)
+Changes in version 0.6.0 (2009-04-04)
 -------------------------------------
 * Plugins can no longer break the rest of Hawkscope menu
   http://code.google.com/p/hawkscope/issues/detail?id=84
