@@ -162,13 +162,16 @@ public class IconFactory {
                     final Color white = display.getSystemColor(SWT.COLOR_WHITE);
                     final Color black = display.getSystemColor(SWT.COLOR_BLACK);
                     final PaletteData palette = new PaletteData(new RGB[] { 
-                            white.getRGB(), black.getRGB() });
-                    final ImageData sourceData = new ImageData(24, 24, 1, palette);
+                            white.getRGB(), black.getRGB()});
+                    final ImageData sourceData = new ImageData(24, 24, 
+                            data.depth, palette);
                     sourceData.transparentPixel = 0;
                     image = new Image(display, sourceData);
                     final GC gc = new GC(image);
-                    gc.drawImage(new Image(display, data), (24 - data.width) / 2, 
+                    final Image icon = new Image(display, data);
+                    gc.drawImage(icon, (24 - data.width) / 2, 
                             (24 - data.height) / 2);
+                    icon.dispose();
                     gc.dispose();
                 } else {
                     image = new Image(display, data);
