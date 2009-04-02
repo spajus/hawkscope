@@ -6,6 +6,8 @@ http://hawkscope.googlecode.com
 
 Changes in version 0.6.0 (2009-04-??)
 -------------------------------------
+* Plugins can no longer break the rest of Hawkscope menu
+  http://code.google.com/p/hawkscope/issues/detail?id=84
 * Native icon themes for supported operating systems
   http://code.google.com/p/hawkscope/issues/detail?id=83
 * Unified HTTP authentication mechanism for version checks and plugins that 
