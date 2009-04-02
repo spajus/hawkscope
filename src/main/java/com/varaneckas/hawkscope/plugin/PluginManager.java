@@ -237,8 +237,12 @@ public class PluginManager {
     public void enhanceFolderMenu(final File file, final MenuItem menu, 
             final Menu submenu, final FolderMenuItemListener listener) {
         for (final Plugin plugin : getActivePlugins()) {
-            if (plugin.canEnhanceFolderMenu()) {
-                plugin.enhanceFolderMenu(file, menu, submenu, listener);
+            try {
+                if (plugin.canEnhanceFolderMenu()) {
+                    plugin.enhanceFolderMenu(file, menu, submenu, listener);
+                }
+            } catch (final Exception e) {
+                log.error("Could not enchance folder menu", e);
             }
         }
     }
@@ -251,8 +255,12 @@ public class PluginManager {
      */
     public void enhanceFileMenuItem(final MenuItem menuItem, final File file) {
         for (final Plugin plugin : getActivePlugins()) {
-            if (plugin.canEnhanceFileMenuItem()) {
-                plugin.enhanceFileMenuItem(menuItem, file);
+            try {
+                if (plugin.canEnhanceFileMenuItem()) {
+                    plugin.enhanceFileMenuItem(menuItem, file);
+                }
+            } catch (final Exception e) {
+                log.error("Could not enchance file menu item", e);
             }
         }
     }
@@ -264,8 +272,12 @@ public class PluginManager {
      */
     public void beforeQuickAccess(final MainMenu mainMenu) {
         for (final Plugin plugin : getActivePlugins()) {
-            if (plugin.canHookBeforeQuickAccessList()) {
-                plugin.beforeQuickAccess(mainMenu);
+            try {
+                if (plugin.canHookBeforeQuickAccessList()) {
+                    plugin.beforeQuickAccess(mainMenu);
+                }
+            } catch (final Exception e) {
+                log.error("Could not load plugin before quick access", e);
             }
         }
     }
@@ -278,8 +290,12 @@ public class PluginManager {
      */
     public void enhanceQuickAccessItem(final FolderMenu fm, final File custom) {
         for (final Plugin plugin : getActivePlugins()) {
-            if (plugin.canEnhanceQuickAccessItem()) {
-                plugin.enhanceQuickAccessItem(fm, custom);
+            try {
+                if (plugin.canEnhanceQuickAccessItem()) {
+                    plugin.enhanceQuickAccessItem(fm, custom);
+                }
+            } catch (final Exception e) {
+                log.error("Could not enchance quick access item", e);
             }
         }
     }
@@ -291,8 +307,12 @@ public class PluginManager {
      */
     public void beforeAboutMenuItem(final MainMenu mainMenu) {
         for (final Plugin plugin : getActivePlugins()) {
-            if (plugin.canHookBeforeAboutMenuItem()) {
-                plugin.beforeAboutMenuItem(mainMenu);
+            try {
+                if (plugin.canHookBeforeAboutMenuItem()) {
+                    plugin.beforeAboutMenuItem(mainMenu);
+                }
+            } catch (final Exception e) {
+                log.error("Could not load plugin before about menu item", e);
             }
         }
     }
