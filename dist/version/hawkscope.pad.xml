@@ -34,9 +34,9 @@
 	</Company_Info>
 	<Program_Info>
 		<Program_Name>Hawkscope</Program_Name>
-		<Program_Version>0.5.4</Program_Version>
-		<Program_Release_Month>03</Program_Release_Month>
-		<Program_Release_Day>21</Program_Release_Day>
+		<Program_Version>0.6.0</Program_Version>
+		<Program_Release_Month>04</Program_Release_Month>
+		<Program_Release_Day>04</Program_Release_Day>
 		<Program_Release_Year>2009</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
@@ -51,9 +51,9 @@
 		<Program_Category_Class>System Utilities::File &amp; Disk Management</Program_Category_Class>
 		<Program_System_Requirements />
 		<File_Info>
-			<File_Size_Bytes>1992294</File_Size_Bytes>
-			<File_Size_K>1946</File_Size_K>
-			<File_Size_MB>1.9</File_Size_MB>
+			<File_Size_Bytes>2119444</File_Size_Bytes>
+			<File_Size_K>2069</File_Size_K>
+			<File_Size_MB>2.02</File_Size_MB>
 		</File_Info>
 		<Expire_Info>
 			<Has_Expire_Info>N</Has_Expire_Info>
@@ -79,7 +79,7 @@
 		<Application_URLs>
 			<Application_Info_URL>http://hawkscope.googlecode.com</Application_Info_URL>
 			<Application_Order_URL />
-			<Application_Screenshot_URL>http://lh4.ggpht.com/_nP8Aa6cTHpo/Sbt9GgOSHFI/AAAAAAAABgI/tiDRD7Is60g/hs.vista.png</Application_Screenshot_URL>
+			<Application_Screenshot_URL>http://lh5.ggpht.com/_nP8Aa6cTHpo/Sdc2OGXh3XI/AAAAAAAABiI/4E7d2TNFJFM/hs6.vista.png</Application_Screenshot_URL>
 			<Application_Icon_URL>http://hawkscope.googlecode.com/svn/trunk/src/main/resources/icons/hawkscope32.png</Application_Icon_URL>
 			<Application_XML_File_URL />
 		</Application_URLs>
