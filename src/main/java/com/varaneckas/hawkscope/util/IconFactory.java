@@ -160,7 +160,8 @@ public class IconFactory {
             final ImageData data = p.getImageData();
             if (data != null) {
                 //FIXME add windows support (check on Vista too).
-                if (data.width < 24 & !OSUtils.CURRENT_OS.equals(OS.WIN)) {
+                if (data.width < 24 & !(OSUtils.CURRENT_OS.equals(OS.WIN)
+                        && !System.getProperty("os.name").equals("Windows Vista"))) {
                     final Color white = display.getSystemColor(SWT.COLOR_WHITE);
                     final Color black = display.getSystemColor(SWT.COLOR_BLACK);
                     final PaletteData palette = new PaletteData(new RGB[] { 
