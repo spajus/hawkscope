@@ -194,6 +194,12 @@
           <artifactId>swt-mac-32</artifactId>
           <version>3.4</version>
         </dependency>
+        <dependency>
+          <groupId>jxgrabkey</groupId>
+          <artifactId>jxgrabkey</artifactId>
+          <version>0.3.1</version>
+          <scope>provided</scope>
+        </dependency>   
       </dependencies>
     </profile>
   </profiles>

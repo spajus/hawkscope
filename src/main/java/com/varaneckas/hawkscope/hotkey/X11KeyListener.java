@@ -18,14 +18,19 @@
 package com.varaneckas.hawkscope.hotkey;
 
 import java.awt.event.KeyEvent;
-
-import com.varaneckas.hawkscope.menu.MenuFactory;
-import com.varaneckas.hawkscope.menu.state.StateEvent;
-import com.varaneckas.hawkscope.tray.TrayIconListener;
+import java.io.File;
 
 import jxgrabkey.HotkeyConflictException;
 import jxgrabkey.HotkeyListener;
 import jxgrabkey.JXGrabKey;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.varaneckas.hawkscope.menu.MenuFactory;
+import com.varaneckas.hawkscope.menu.state.StateEvent;
+import com.varaneckas.hawkscope.tray.TrayIconListener;
+import com.varaneckas.hawkscope.util.IOUtils;
 
 /**
  * Key listener for X11 (Linux)
@@ -34,9 +39,19 @@ import jxgrabkey.JXGrabKey;
  * @version $Id$
  */
 public class X11KeyListener extends GlobalHotkeyListener {
+    
+    private static final Log log = LogFactory.getLog(X11KeyListener.class);
 
     public X11KeyListener() {
-        System.load(getClass().getClassLoader().getResource("libJXGrabKey.so").getFile());
+        String jarLib = "libJXGrabKey.so";
+        String tempLib = System.getProperty("java.io.tmpdir") 
+                + File.separator + jarLib;
+        log.debug("Copying file");
+        boolean copied = IOUtils.copyFile(jarLib, tempLib);
+        log.debug("Copied file: " + copied);
+        log.debug("Loading: " + tempLib);
+        System.load(tempLib);
+        log.debug("Loaded lib");
         JXGrabKey.setDebugOutput(true);
         try {
             JXGrabKey.getInstance().registerAwtHotkey(1, KeyEvent.VK_CONTROL 

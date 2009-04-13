@@ -18,7 +18,11 @@
 package com.varaneckas.hawkscope.util;
 
 import java.io.Closeable;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -66,4 +70,45 @@ public abstract class IOUtils {
     	clip.setContents(new Object[] { target }, new Transfer[] { 
     	        TextTransfer.getInstance() });
     }
+    
+    /**
+     * Copies a file
+     * 
+     * @param in source file
+     * @param out target file
+     * @return boolean on success
+     */
+    public static synchronized boolean copyFile(final InputStream in, final OutputStream out) {
+        try {
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+            in.close();
+            out.close();
+            return true;
+        } catch (final Exception e) {
+            log.error("Failed copying file: " + in + " -> " + out, e);
+            return false;
+        }
+    }
+    
+    public static synchronized boolean copyFile(final String in, final String out) {
+        try {
+            File outFile = new File(out);
+            if (!outFile.exists()) {
+                if (!outFile.createNewFile()) {
+                    return false;
+                }
+            }
+            return copyFile(ClassLoader.getSystemClassLoader()
+                    .getResourceAsStream(in), 
+                    new FileOutputStream(outFile));
+        } catch (final Exception e) {
+            log.debug("Failed copying file: " + in + " -> " + out, e);
+            return false;
+        }
+    }
+        
 }
