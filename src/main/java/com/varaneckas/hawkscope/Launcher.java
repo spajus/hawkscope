@@ -57,6 +57,7 @@ public class Launcher {
             log.fatal("Failed starting Hawkscope", e);
         }
         preload();
+//        X11KeyListener listener = new X11KeyListener();
         TrayManager.getInstance().load();
     }
     

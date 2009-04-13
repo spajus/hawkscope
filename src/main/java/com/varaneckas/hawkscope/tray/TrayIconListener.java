@@ -47,7 +47,7 @@ public class TrayIconListener implements Listener {
      */
     public void handleEvent(final Event event) {
         try {
-            final StateEvent se = findPopupMenuLocation();
+            final StateEvent se = TrayIconListener.findPopupMenuLocation();
             MenuFactory.getMainMenu().getState().act(se);
         } catch (final Exception e) {
             log.error(e, e);
@@ -59,7 +59,7 @@ public class TrayIconListener implements Listener {
      * 
      * @return
      */
-    private StateEvent findPopupMenuLocation() {
+    public static synchronized StateEvent findPopupMenuLocation() {
         final Display d = Display.getDefault();
         final StateEvent se = new StateEvent();
         final Point loc = d.getCursorLocation();
