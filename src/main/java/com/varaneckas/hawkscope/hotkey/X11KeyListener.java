@@ -26,10 +26,11 @@ import jxgrabkey.JXGrabKey;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Display;
 
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.menu.state.StateEvent;
-import com.varaneckas.hawkscope.tray.TrayIconListener;
 import com.varaneckas.hawkscope.util.IOUtils;
 
 /**
@@ -43,31 +44,47 @@ public class X11KeyListener extends GlobalHotkeyListener {
     private static final Log log = LogFactory.getLog(X11KeyListener.class);
 
     public X11KeyListener() {
-        String jarLib = "libJXGrabKey.so";
-        String tempLib = System.getProperty("java.io.tmpdir") 
-                + File.separator + jarLib;
-        log.debug("Copying file");
-        boolean copied = IOUtils.copyFile(jarLib, tempLib);
-        log.debug("Copied file: " + copied);
-        log.debug("Loading: " + tempLib);
-        System.load(tempLib);
-        log.debug("Loaded lib");
-        JXGrabKey.setDebugOutput(true);
-        try {
-            JXGrabKey.getInstance().registerAwtHotkey(1, KeyEvent.VK_CONTROL 
-                    | KeyEvent.VK_SHIFT, KeyEvent.VK_H);
-            JXGrabKey.getInstance().removeHotkeyListener(getListener());
-        } catch (HotkeyConflictException e) {
-            e.printStackTrace();
-            JXGrabKey.getInstance().cleanUp();
-        }
+        Display.getCurrent().asyncExec(new Runnable() {
+            public void run() {
+                String jarLib = "libJXGrabKey.so";
+                String tempLib = System.getProperty("java.io.tmpdir") 
+                        + File.separator + jarLib;
+                log.debug("Copying file");
+                boolean copied = IOUtils.copyFile(jarLib, tempLib);
+                log.debug("Copied file: " + copied);
+                log.debug("Loading: " + tempLib);
+                System.load(tempLib);
+                log.debug("Loaded lib");
+                JXGrabKey.setDebugOutput(true);
+                try {
+                    JXGrabKey.getInstance().registerAwtHotkey(1, 
+                            KeyEvent.VK_CONTROL, KeyEvent.VK_SPACE);
+                    JXGrabKey.getInstance().addHotkeyListener(getListener());
+                } catch (HotkeyConflictException e) {
+                    log.debug("Hotkey conflict!", e);
+                    JXGrabKey.getInstance().cleanUp();
+                }
+            }
+        });
     }
     
     public HotkeyListener getListener() {
         return new HotkeyListener() {
             public void onHotkey(final int key) {
-                final StateEvent se = TrayIconListener.findPopupMenuLocation();
-                MenuFactory.getMainMenu().getState().act(se);
+                log.debug("otkey found " + key);
+                try {
+                    Display.getDefault().asyncExec(new Runnable() {
+                        public void run() {
+                            final StateEvent se = new StateEvent();
+                            final Point loc = Display.getDefault().getCursorLocation();
+                            se.setX(loc.x);
+                            se.setY(loc.y);
+                            MenuFactory.getMainMenu().getState().act(se);
+                        }
+                    });
+                } catch (final Exception e) {
+                    log.error("Failed invoking Hawkscope with x11 hotkey", e);
+                }
             }
         };
     }
