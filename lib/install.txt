@@ -6,12 +6,15 @@ mvn install:install-file -DgroupId=org.eclipse.swt -DartifactId=swt-linux-64 -Dv
 #Linux GTK i386
 mvn install:install-file -DgroupId=org.eclipse.swt -DartifactId=swt-linux-32 -Dversion=3.4 -DgeneratePom=true -Dpackaging=jar -Dfile=swt-linux-32.jar
 
-#JXGrabKey for Linux
-mvn install:install-file -DgroupId=jxgrabkey -DartifactId=jxgrabkey -Dversion=0.3.1 -DgeneratePom=true -Dpackaging=jar -Dfile=jxgrabkey-0.3.1.jar
-
 #Windows x86
 mvn install:install-file -DgroupId=org.eclipse.swt -DartifactId=swt-win-32 -Dversion=3.4 -DgeneratePom=true -Dpackaging=jar -Dfile=swt-win-32.jar 
 
 #Mac i386
 mvn install:install-file -DgroupId=org.eclipse.swt -DartifactId=swt-mac-32 -Dversion=3.4 -DgeneratePom=true -Dpackaging=jar -Dfile=swt-mac-32.jar 
+ 
+#JXGrabKey for Linux 32 bit
+mvn install:install-file -DgroupId=jxgrabkey -DartifactId=jxgrabkey -Dversion=0.3.1-32 -DgeneratePom=true -Dpackaging=jar -Dfile=jxgrabkey-0.3.1-32.jar
+
+#JXGrabKey for Linux 32 bit
+mvn install:install-file -DgroupId=jxgrabkey -DartifactId=jxgrabkey -Dversion=0.3.1-64 -DgeneratePom=true -Dpackaging=jar -Dfile=jxgrabkey-0.3.1-64.jar
  

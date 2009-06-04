@@ -17,6 +17,8 @@
  */
 package com.varaneckas.hawkscope.hotkey;
 
+import java.awt.Robot;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
 
@@ -28,6 +30,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.menu.state.StateEvent;
@@ -73,13 +76,41 @@ public class X11KeyListener extends GlobalHotkeyListener {
             public void onHotkey(final int key) {
                 log.debug("otkey found " + key);
                 try {
-                    Display.getDefault().asyncExec(new Runnable() {
+                    Display.getDefault().syncExec(new Runnable() {
                         public void run() {
                             final StateEvent se = new StateEvent();
                             final Point loc = Display.getDefault().getCursorLocation();
                             se.setX(loc.x);
                             se.setY(loc.y);
-                            MenuFactory.getMainMenu().getState().act(se);
+                            Shell sh = new Shell();
+                            sh.setVisible(true);
+                            try {
+                            Thread.sleep(1l);
+                            sh.setVisible(false);
+                                Robot robo = new Robot();
+                                Shell hs = new Shell();
+                                hs.setLocation(loc.x -100, loc.y - 100);
+                                hs.setSize(200, 200);
+                                hs.setVisible(true);
+                                robo.mousePress(InputEvent.BUTTON1_MASK);
+                                Thread.sleep(1L);
+                                MenuFactory.getMainMenu().getState().act(se);
+                                robo.mouseRelease(InputEvent.BUTTON1_MASK);
+                                hs.setLocation(10000, 10000);
+                                Thread.sleep(1000L);
+//                                hs.setVisible(false);
+                                hs.dispose();
+                            } catch (final Exception e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            sh.dispose();
+                            
+                            log.debug("Cursor at: " + loc);
+//                    final StateEvent se = TrayIconListener.findPopupMenuLocation();
+//                    MenuFactory.getMainMenu().getSwtMenuObject().setLocation(loc);
+//                    MenuFactory.getMainMenu().getSwtMenuObject().setVisible(true);
+//                            MenuFactory.getMainMenu().showMenu(10, 10);
                         }
                     });
                 } catch (final Exception e) {

@@ -18,7 +18,6 @@
 package com.varaneckas.hawkscope.gui.settings;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.Iterator;
 
 import org.eclipse.swt.SWT;
@@ -28,12 +27,15 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.TabFolder;
 import org.eclipse.swt.widgets.TabItem;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
+import com.varaneckas.hawkscope.gui.PlainTextTableEditor;
 import com.varaneckas.hawkscope.gui.SharedStyle;
 
 /**
@@ -52,7 +54,12 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
     /**
      * The Quick Access {@link List}
      */
-    private List listQuickAccess;
+    //private List listQuickAccess;
+    
+    /**
+     * Quick Access {@link Table}
+     */
+    private Table tableQuickAccess;
     
     /**
      * Button that adds a Quick Access item
@@ -88,12 +95,13 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
 		
 		createButtonAddQa();
 		createButtonDelQa();
-		createListQuickAccess();
+		createTableQuickAccess();
+//		createListQuickAccess();
 		createButtonDnQa();
 		createButtonUpQa();
 	}
 
-	/**
+    /**
 	 * Creates {@link Button} that adds a Quick Access item
 	 */
     private void createButtonAddQa() {
@@ -114,12 +122,10 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
                fd.setMessage("Find a folder to add");
                fd.setText("Add to Quick Access List");
                final String item = fd.open();
-               if (item != null && !Arrays.asList(listQuickAccess.getItems())
-                       .contains(item)) {
-                   listQuickAccess.add(item);
-                   listQuickAccess.setToolTipText(item);
-                   listQuickAccess.setSelection(
-                           listQuickAccess.getItemCount() - 1);
+               if (item != null) {
+                   TableItem newItem = new TableItem(tableQuickAccess, SWT.NONE);
+                   newItem.setText(0, new File(item).getName());
+                   newItem.setText(1, item);
                }
                folder.getShell().setEnabled(true);
             } 
@@ -141,10 +147,7 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         buttonDelQa.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent event) {
-               for (final String s : listQuickAccess.getSelection()) {
-                   listQuickAccess.remove(s);
-               }
-               listQuickAccess.setToolTipText("");
+                tableQuickAccess.remove(tableQuickAccess.getSelectionIndices());
             } 
         });
     }
@@ -164,22 +167,20 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         buttonUpQa.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent event) {
-               if (listQuickAccess.getSelectionCount() == 0) {
+               if (tableQuickAccess.getSelectionCount() == 0) {
                    return;
                }
-               if (listQuickAccess.getSelectionCount() > 1) {
+               if (tableQuickAccess.getSelectionCount() > 1) {
                    showMoveWarnDialog();
                    return;
                }
-               final int i = listQuickAccess.getSelectionIndex();
+               final int i = tableQuickAccess.getSelectionIndex();
                //first item
                if (i == 0) {
                    return;
                }
-               final String temp = listQuickAccess.getItem(i - 1);
-               listQuickAccess.setItem(i - 1, listQuickAccess.getSelection()[0]);
-               listQuickAccess.setItem(i, temp);
-               listQuickAccess.setSelection(i - 1);
+               swap(tableQuickAccess.getItem(i-1), tableQuickAccess.getItem(i));
+               tableQuickAccess.setSelection(i - 1);
             }
         });
     }
@@ -198,24 +199,37 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         buttonDnQa.addSelectionListener(new SelectionAdapter() {
             @Override
             public void widgetSelected(final SelectionEvent event) {
-               if (listQuickAccess.getSelectionCount() == 0) {
+               if (tableQuickAccess.getSelectionCount() == 0) {
                    return;
                }
-               if (listQuickAccess.getSelectionCount() > 1) {
+               if (tableQuickAccess.getSelectionCount() > 1) {
                    showMoveWarnDialog();
                    return;
                }
-               final int i = listQuickAccess.getSelectionIndex();
+               final int i = tableQuickAccess.getSelectionIndex();
                //last item
-               if (i == listQuickAccess.getItemCount() - 1) {
+               if (i == tableQuickAccess.getItemCount() - 1) {
                    return;
                }
-               final String temp = listQuickAccess.getItem(i + 1);
-               listQuickAccess.setItem(i + 1, listQuickAccess.getSelection()[0]);
-               listQuickAccess.setItem(i, temp);
-               listQuickAccess.setSelection(i + 1);
+               swap(tableQuickAccess.getItem(i), tableQuickAccess.getItem(i + 1));
+               tableQuickAccess.setSelection(i + 1);
             }
         });
+    }
+    
+    /**
+     * Swaps two items in a table
+     * 
+     * @param one
+     * @param two
+     */
+    private void swap(final TableItem one, final TableItem two) {
+        final String temp0 = one.getText(0);
+        final String temp1 = one.getText(1);
+        one.setText(0, two.getText(0));
+        one.setText(1, two.getText(1));
+        two.setText(0, temp0);
+        two.setText(1, temp1);
     }
     
     /**
@@ -231,50 +245,50 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
     }     
 
     /**
-     * Creates the Quick Access {@link List}
+     * Creates the Quick Access {@link Table}
      */
-    private void createListQuickAccess() {
-        listQuickAccess = new List(container, 
-                SWT.BORDER | SWT.MULTI | SWT.V_SCROLL);
+    private void createTableQuickAccess() {
+        tableQuickAccess = new Table(container, SWT.MULTI | SWT.BORDER
+                | SWT.SINGLE | SWT.VERTICAL | SWT.HORIZONTAL);
         final FormData layout = ident(SharedStyle.relativeTo(
                 labelQuickAccessLoc, buttonAddQa, null, null));
         layout.width = 250;
         layout.height = 120;
-        listQuickAccess.setLayoutData(layout);
-        listQuickAccess.addSelectionListener(new SelectionAdapter() {
-            @Override
-            public void widgetSelected(final SelectionEvent event) {
-               if (listQuickAccess.getSelectionCount() == 1) {
-                   listQuickAccess
-                       .setToolTipText(listQuickAccess.getSelection()[0]);
-               }
-            } 
-        });
+        tableQuickAccess.setLayoutData(layout);
+        tableQuickAccess.setLinesVisible(true);
+        tableQuickAccess.setHeaderVisible(true);
+        final TableColumn colType = new TableColumn(tableQuickAccess, SWT.NONE);
+        colType.setText("Name");
+        colType.setWidth(5);
+        final TableColumn colApp = new TableColumn(tableQuickAccess, SWT.NONE);
+        colApp.setText("Path");
+        // load apps
         final Iterator<File> qaFiles = cfg.getQuickAccessList().iterator();
         if (qaFiles.hasNext()) {
             for (final String qaItem : cfg.getRawQuickAccessList()) {
                 try {
                     final String qaFile = qaFiles.next().getAbsolutePath()
                             .replaceAll("\\\\", "/");
-                    if (!qaFile.equals(qaItem)) {
-                        listQuickAccess.add(qaFile + " <" + qaItem + ">");
-                    } else {
-                        listQuickAccess.add(qaItem);
-                    }
+                    final TableItem item = new TableItem(tableQuickAccess,
+                            SWT.NONE);
+                    item.setText(0, qaFile);
+                    item.setText(1, qaItem);
                 } catch (final Exception e) {
-                    log.warn("Processing invalid access entry: " + qaItem 
+                    log.warn("Processing invalid access entry: " + qaItem
                             + ": " + e.getMessage(), e);
                 }
             }
-        }
-    }
-
+        }        
+        colType.pack();
+        colApp.pack();
+        new PlainTextTableEditor(tableQuickAccess);
+    }    
+    
     @Override
     protected void saveConfiguration() {
         final StringBuilder quickAccess = new StringBuilder();
-        for (final String item : listQuickAccess.getItems()) {
-            quickAccess.append(item.replaceFirst(".+<", "")
-                    .replaceFirst(">", "").replaceAll("\\\\", "/"));
+        for (final TableItem item : tableQuickAccess.getItems()) {
+            quickAccess.append(item.getText(1));
             quickAccess.append(';');
         }
         cfg.getProperties().put(Configuration.QUICK_ACCESS_LIST, 
