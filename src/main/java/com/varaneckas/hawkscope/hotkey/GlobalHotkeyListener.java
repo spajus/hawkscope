@@ -17,6 +17,8 @@
  */
 package com.varaneckas.hawkscope.hotkey;
 
+import com.varaneckas.hawkscope.util.OSUtils;
+
 /**
  * Global hotkey listener for invoking hawkscope menu
  *
@@ -24,5 +26,38 @@ package com.varaneckas.hawkscope.hotkey;
  * @version $Id$
  */
 public class GlobalHotkeyListener {
+    
+    /**
+     * Global Hotkey Listener instance
+     */
+    private static GlobalHotkeyListener instance = null;
+    
+    /**
+     * Loads the required instance if possible
+     * 
+     * @return instance
+     */
+    public static synchronized GlobalHotkeyListener getInstance() {
+        if (instance == null) {
+            instance = chooseImpl();
+        }
+        return instance;
+    }
+    
+    /**
+     * Chooses {@link GlobalHotkeyListener} implementation according to OS
+     * 
+     * @return
+     */
+    private static GlobalHotkeyListener chooseImpl() {
+        switch (OSUtils.CURRENT_OS) {
+        case UNIX:
+            return new X11KeyListener();
+        case WIN:
+            return new WinKeyListener();
+        default:
+            return null;
+        }
+    }
 
 }

@@ -44,8 +44,14 @@ import com.varaneckas.hawkscope.util.IOUtils;
  */
 public class X11KeyListener extends GlobalHotkeyListener {
     
+    /**
+     * Logger
+     */
     private static final Log log = LogFactory.getLog(X11KeyListener.class);
 
+    /**
+     * Constructs libJXGrabKey listener
+     */
     public X11KeyListener() {
         Display.getCurrent().asyncExec(new Runnable() {
             public void run() {
@@ -60,8 +66,7 @@ public class X11KeyListener extends GlobalHotkeyListener {
                 log.debug("Loaded lib");
                 JXGrabKey.setDebugOutput(true);
                 try {
-                    JXGrabKey.getInstance().registerAwtHotkey(1, 
-                            KeyEvent.VK_CONTROL, KeyEvent.VK_SPACE);
+                    JXGrabKey.getInstance().registerAwtHotkey(1, InputEvent.CTRL_MASK, KeyEvent.VK_SPACE);
                     JXGrabKey.getInstance().addHotkeyListener(getListener());
                 } catch (HotkeyConflictException e) {
                     log.debug("Hotkey conflict!", e);
@@ -71,6 +76,12 @@ public class X11KeyListener extends GlobalHotkeyListener {
         });
     }
     
+    /**
+     * Gets the instance of new HotkeyListener configured for hawkscope 
+     * (Shift + space to invoke)
+     * 
+     * @return new HotkeyListener
+     */
     public HotkeyListener getListener() {
         return new HotkeyListener() {
             public void onHotkey(final int key) {
@@ -97,20 +108,15 @@ public class X11KeyListener extends GlobalHotkeyListener {
                                 MenuFactory.getMainMenu().getState().act(se);
                                 robo.mouseRelease(InputEvent.BUTTON1_MASK);
                                 hs.setLocation(10000, 10000);
-                                Thread.sleep(1000L);
-//                                hs.setVisible(false);
+                                Thread.sleep(1L);
+                                hs.setVisible(false);
                                 hs.dispose();
                             } catch (final Exception e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
+                                throw new RuntimeException("Failed invoking hawkscope menu with shortcut", e);
                             }
                             sh.dispose();
                             
                             log.debug("Cursor at: " + loc);
-//                    final StateEvent se = TrayIconListener.findPopupMenuLocation();
-//                    MenuFactory.getMainMenu().getSwtMenuObject().setLocation(loc);
-//                    MenuFactory.getMainMenu().getSwtMenuObject().setVisible(true);
-//                            MenuFactory.getMainMenu().showMenu(10, 10);
                         }
                     });
                 } catch (final Exception e) {
