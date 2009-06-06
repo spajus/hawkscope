@@ -28,19 +28,19 @@ import com.varaneckas.hawkscope.util.OSUtils;
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class GlobalHotkeyListener {
+public abstract class GlobalHotkeyManager {
     
     /**
      * Global Hotkey Listener instance
      */
-    private static GlobalHotkeyListener instance = null;
+    private static GlobalHotkeyManager instance = null;
     
     /**
      * Loads the required instance if possible
      * 
      * @return instance
      */
-    public static synchronized GlobalHotkeyListener getInstance() {
+    public static synchronized GlobalHotkeyManager getInstance() {
         if (instance == null) {
             instance = chooseImpl();
         }
@@ -48,16 +48,29 @@ public class GlobalHotkeyListener {
     }
     
     /**
-     * Chooses {@link GlobalHotkeyListener} implementation according to OS
+     * Implementation should clear all defined hotkeys
+     */
+    public abstract void clearHotkeys();
+    
+    /**
+     * Implementation should register AWT hotkey
+     * 
+     * @param specKey AWT modifier, like InputEvent.CRTL_MASK
+     * @param key AWT key, like InputEvent.VK_SPACE
+     */
+    public abstract void registerHotkey(int specKey, int key);
+    
+    /**
+     * Chooses {@link GlobalHotkeyManager} implementation according to OS
      * 
      * @return
      */
-    private static GlobalHotkeyListener chooseImpl() {
+    private static GlobalHotkeyManager chooseImpl() {
         switch (OSUtils.CURRENT_OS) {
         case UNIX:
-            return new X11KeyListener();
+            return new X11GlobalHotkeyManager();
         case WIN:
-            return new WinKeyListener();
+            return new WinGlobalHotkeyManager();
         default:
             return null;
         }

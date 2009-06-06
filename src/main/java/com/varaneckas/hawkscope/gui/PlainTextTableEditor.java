@@ -27,7 +27,7 @@ public class PlainTextTableEditor extends BasicTableEditor {
             public void handleEvent(final Event e) {
                 switch (e.type) {
                 case SWT.FocusOut:
-                    item.setText(column, text.getText().toLowerCase());
+                    item.setText(column, text.getText());
                     text.dispose();
                     break;
                 case SWT.Traverse:

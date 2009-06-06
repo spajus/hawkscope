@@ -19,6 +19,7 @@ package com.varaneckas.hawkscope.menu;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.logging.Log;
@@ -351,12 +352,18 @@ public class MainMenu {
      * Loads quick access menu
      */
     private void loadQuickAccessMenu() {
-        final List<File> quick = ConfigurationFactory.getConfigurationFactory()
-                .getConfiguration().getQuickAccessList();
+        final List<File> quick = cfg.getQuickAccessList();
         if (quick != null && quick.size() > 0) {
-            for (final File custom : quick) {
+            final List<String> quickRaw = cfg.getRawQuickAccessList();
+            final Map<String, String> qaNames = cfg.getQuickAccessNames();
+            for (int i = 0; i < quick.size(); i++) {
+                File custom = quick.get(i);
+                String customEntry = quickRaw.get(i);
                 try {
                     final FolderMenu fm = MenuFactory.newFolderMenu(custom);
+                    if (qaNames.containsKey(customEntry)) {
+                        fm.setText(qaNames.get(customEntry));
+                    }
                     PluginManager.getInstance().enhanceQuickAccessItem(fm, custom);
                     addMenuItem(fm);
                 } catch (final Exception e) {

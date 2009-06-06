@@ -32,6 +32,11 @@ import com.varaneckas.hawkscope.gui.BasicTableEditor;
 public class PluginTableEditor extends BasicTableEditor {
 
     /**
+     * Tells if table was changed and therefore reload is required
+     */
+    private boolean changed = false;
+    
+    /**
      * Creates the TableEditor on {@link Table}
      * 
      * @param table Preferred Application {@link Table}
@@ -53,9 +58,18 @@ public class PluginTableEditor extends BasicTableEditor {
     			item.setText(0, "Yes");
     			item.setGrayed(false);
     		}
+    		setChanged(true);
     		return true;
     	} else {
     		return false;
     	}
+    }
+    
+    public void setChanged(boolean changed) {
+        this.changed = changed;
+    }
+    
+    public boolean isChanged() {
+        return changed;
     }
 }

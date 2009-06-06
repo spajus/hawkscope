@@ -1,30 +1,10 @@
-/*
- * Copyright (c) 2008-2009 Tomas Varaneckas
- * http://www.varaneckas.com
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
 package com.varaneckas.hawkscope.hotkey;
 
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 
-import jxgrabkey.HotkeyConflictException;
 import jxgrabkey.HotkeyListener;
-import jxgrabkey.JXGrabKey;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,59 +17,21 @@ import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.menu.state.StateEvent;
 
 /**
- * Key listener for X11 (Linux)
+ * X11 Global {@link HotkeyListener} that tries to invoke Hawkscope menu
+ * at mouse cursor location
  * 
  * FIXME this is all based on dirty hacks
  * Due to swt bug: https://bugs.eclipse.org/bugs/show_bug.cgi?id=11570
  * 
- * Does not work on top of eclipse
- *
  * @author Tomas Varaneckas
  * @version $Id$
  */
-public class X11KeyListener extends GlobalHotkeyListener {
+public class X11HotkeyListener implements HotkeyListener {
     
     /**
      * Logger
      */
-    private static final Log log = LogFactory.getLog(X11KeyListener.class);
-
-    /**
-     * Constructs libJXGrabKey listener
-     */
-    public X11KeyListener() {
-        MenuFactory.getMainMenu().getSwtMenuObject().getDisplay()
-                .asyncExec(new Runnable() {
-            public void run() {
-                if (loadJarLibrary("libJXGrabKey.so")) {
-	                JXGrabKey.setDebugOutput(false);
-	                try {
-	                    JXGrabKey.getInstance().registerAwtHotkey(1, 
-	                            InputEvent.CTRL_MASK, KeyEvent.VK_SPACE);
-	                    JXGrabKey.getInstance().addHotkeyListener(getListener());
-	                } catch (HotkeyConflictException e) {
-	                    log.debug("Hotkey conflict!", e);
-	                    JXGrabKey.getInstance().cleanUp();
-	                }
-                }
-            }
-        });
-    }
-    
-    /**
-     * Gets the instance of new HotkeyListener configured for hawkscope 
-     * (Shift + space to invoke)
-     * 
-     * @return new HotkeyListener
-     */
-    public HotkeyListener getListener() {
-        return new HotkeyListener() {
-            public void onHotkey(final int key) {
-                log.debug("hotkey found " + key);
-                displayHawkscopeMenu();
-            }
-        };
-    }
+    private static final Log log = LogFactory.getLog(X11HotkeyListener.class);
     
     /**
      * Hawkscope launch shell for dirty hacks
@@ -105,6 +47,25 @@ public class X11KeyListener extends GlobalHotkeyListener {
      * A robot to simulate mouse clicks
      */
     private Robot robo = createRobot();
+    
+    /**
+     * Creates the Robot
+     * 
+     * @return
+     */
+    private Robot createRobot() {
+        try {
+            return new Robot();
+        } catch (AWTException e) {
+            return null;
+        }
+    }
+
+    
+    public void onHotkey(final int key) {
+        log.debug("hotkey found " + key);
+        displayHawkscopeMenu();
+    }
     
     /**
      * Displays Hawkscope menu at mouse location.
@@ -140,32 +101,13 @@ public class X11KeyListener extends GlobalHotkeyListener {
                         hawkscopeLaunchShell.setVisible(false);
                     } catch (final Exception e) {
                         throw new RuntimeException("Failed invoking hawkscope " +
-                        		"menu with shortcut", e);
+                                "menu with shortcut", e);
                     }
                 }
             });
         } catch (final Exception e) {
             throw new RuntimeException("Failed invoking hawkscope with " +
-            		"shortcut key", e);
+                    "shortcut key", e);
         }
     }
-    
-    /**
-     * Creates the Robot
-     * 
-     * @return
-     */
-    private Robot createRobot() {
-        try {
-            return new Robot();
-        } catch (AWTException e) {
-            return null;
-        }
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        JXGrabKey.getInstance().cleanUp();
-    }
-    
 }

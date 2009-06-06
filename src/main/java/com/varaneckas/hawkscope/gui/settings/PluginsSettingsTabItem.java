@@ -82,6 +82,11 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 	private Table tablePlugins;
 	
 	/**
+	 * Editor of Table with {@link Plugin}s
+	 */
+	private PluginTableEditor tablePluginsEditor;
+	
+	/**
 	 * Get Plugins {@link Button}
 	 */
 	private Button buttonGetPlugins;
@@ -130,9 +135,7 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 		buttonReloadPlugins.setLayoutData(layout);
 		buttonReloadPlugins.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(final Event ev) {
-				tablePlugins.removeAll();
-				PluginManager.getInstance().reloadPlugins();
-				reloadTablePlugins();
+				reloadPlugins();
 				MainMenu.getInstance().reloadMenu(false);
 			}
 		});
@@ -238,7 +241,7 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 		
 		reloadTablePlugins();
 
-		new PluginTableEditor(tablePlugins);
+		tablePluginsEditor = new PluginTableEditor(tablePlugins);
 		
 	}
 
@@ -286,6 +289,17 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 			cfg.getProperties().put("plugin." + className 
 					+ ".enabled", enabled ? "1" : "0");
 		}
+		if (tablePluginsEditor.isChanged()) {
+		    log.debug("Plugins changed, reloading");
+		    reloadPlugins();
+		    tablePluginsEditor.setChanged(false);
+		}
 	}
+
+    private void reloadPlugins() {
+        tablePlugins.removeAll();
+        PluginManager.getInstance().reloadPlugins();
+        reloadTablePlugins();
+    }
 
 }

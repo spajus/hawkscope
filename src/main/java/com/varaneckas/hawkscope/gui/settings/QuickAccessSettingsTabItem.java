@@ -19,6 +19,7 @@ package com.varaneckas.hawkscope.gui.settings;
 
 import java.io.File;
 import java.util.Iterator;
+import java.util.Map;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -50,11 +51,6 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
      * Label "Quick Access Locations"
      */
     private Label labelQuickAccessLoc;
-    
-    /**
-     * The Quick Access {@link List}
-     */
-    //private List listQuickAccess;
     
     /**
      * Quick Access {@link Table}
@@ -261,8 +257,10 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         colType.setWidth(5);
         final TableColumn colApp = new TableColumn(tableQuickAccess, SWT.NONE);
         colApp.setText("Path");
-        // load apps
+        // load quick access list
         final Iterator<File> qaFiles = cfg.getQuickAccessList().iterator();
+        final Map<String, String> names = cfg.getQuickAccessNames();
+        log.debug("Quick Access List Names: " + names);
         if (qaFiles.hasNext()) {
             for (final String qaItem : cfg.getRawQuickAccessList()) {
                 try {
@@ -270,7 +268,8 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
                             .replaceAll("\\\\", "/");
                     final TableItem item = new TableItem(tableQuickAccess,
                             SWT.NONE);
-                    item.setText(0, qaFile);
+                    item.setText(0, names.containsKey(qaItem) ? 
+                            names.get(qaItem) : new File(qaFile).getName());
                     item.setText(1, qaItem);
                 } catch (final Exception e) {
                     log.warn("Processing invalid access entry: " + qaItem
@@ -286,12 +285,18 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
     @Override
     protected void saveConfiguration() {
         final StringBuilder quickAccess = new StringBuilder();
+        final StringBuilder quickAccessNames = new StringBuilder();
         for (final TableItem item : tableQuickAccess.getItems()) {
             quickAccess.append(item.getText(1));
             quickAccess.append(';');
+            quickAccessNames.append(item.getText(1))
+                .append("::").append(item.getText(0));
+            quickAccessNames.append(';');
         }
         cfg.getProperties().put(Configuration.QUICK_ACCESS_LIST, 
-                quickAccess.toString());        
+                quickAccess.toString());       
+        cfg.getProperties().put(Configuration.QUICK_ACCESS_NAMES_LIST, 
+                quickAccessNames.toString());
     }
 
 }

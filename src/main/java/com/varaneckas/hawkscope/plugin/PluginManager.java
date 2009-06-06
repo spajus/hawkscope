@@ -102,7 +102,10 @@ public class PluginManager {
         for (final Plugin p : plugins) {
             log.debug("Checking if plugin is enabled: " + p.getName());
         	try {
-        	    p.setEnabled(isPluginEnabled(p.getClass().getName()));
+        	    String pluginClass = (p instanceof DisabledPlugin) 
+        	            ? ((DisabledPlugin) p).getClassName()
+        	            : p.getClass().getName();
+        	    p.setEnabled(isPluginEnabled(pluginClass));
         		if (availableUpdates.containsKey(p.getName()) && 
         		        availableUpdates.get(p.getName()).equals(p.getVersion())) {
         		    availableUpdates.remove(p.getName());

@@ -19,6 +19,7 @@ package com.varaneckas.hawkscope.cfg;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,11 @@ public class Configuration {
      * Quick folder access list property name
      */
     public static final String QUICK_ACCESS_LIST = "quick.access.list";
+
+    /**
+     * Quick folder access names list property name
+     */
+    public static final String QUICK_ACCESS_NAMES_LIST = "quick.access.names.list";
     
     /**
      * Property name for blacklist of file/folder names that will be filtered out 
@@ -237,6 +243,29 @@ public class Configuration {
     public List<String> getRawQuickAccessList() {
         return Arrays.asList(properties.get(Configuration.QUICK_ACCESS_LIST)
                 .split(";"));
+    }
+    
+    /**
+     * Gets a list of quick access names in format entry -> name
+     * 
+     * @return
+     */
+    public Map<String, String> getQuickAccessNames() {
+        final List<String> raw = Arrays.asList(
+                properties.get(Configuration.QUICK_ACCESS_NAMES_LIST).split(";"));
+        if (raw == null) {
+            return Collections.emptyMap();
+        }
+        final Map<String, String> names = new HashMap<String, String>();
+        for (final String name : raw) {
+            String[] n = name.split("\\:\\:");
+            if (n != null && n.length == 2) {
+                names.put(n[0].trim(), n[1].trim());
+            } else {
+                log.warn("Weird quick access name entry: " + name);
+            }
+        }
+        return names;
     }
     
     /**

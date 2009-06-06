@@ -22,7 +22,7 @@ import org.apache.commons.logging.LogFactory;
 
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.gui.WindowFactory;
-import com.varaneckas.hawkscope.hotkey.GlobalHotkeyListener;
+import com.varaneckas.hawkscope.hotkey.GlobalHotkeyManager;
 import com.varaneckas.hawkscope.menu.MenuFactory;
 import com.varaneckas.hawkscope.tray.TrayManager;
 import com.varaneckas.hawkscope.util.ModularAuthenticator;
@@ -58,7 +58,7 @@ public class Launcher {
             log.fatal("Failed starting Hawkscope", e);
         }
         preload();
-        GlobalHotkeyListener.getInstance();
+        GlobalHotkeyManager.getInstance();
         TrayManager.getInstance().load();
     }
     
