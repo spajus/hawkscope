@@ -96,7 +96,6 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
 		createButtonAddQa();
 		createButtonDelQa();
 		createTableQuickAccess();
-//		createListQuickAccess();
 		createButtonDnQa();
 		createButtonUpQa();
 	}
