@@ -125,7 +125,9 @@ public class PluginManager {
         if (enabled != null) {
            return enabled.equals("1"); 
         } 
-        return false;
+        //here we assume that there is no property, so plugin is new, enable it
+        //by default.
+        return true;
     }
 
     /**
