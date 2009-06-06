@@ -131,7 +131,7 @@
         <dependency>
           <groupId>com.melloware</groupId>
           <artifactId>jintellitype</artifactId>
-          <version>1.3.1</version>
+          <version>1.3.1-full</version>
         </dependency>
       </dependencies>
     </profile>
