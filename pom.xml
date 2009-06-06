@@ -4,7 +4,7 @@
   <groupId>com.varaneckas</groupId>
   <artifactId>hawkscope</artifactId>
   <packaging>jar</packaging>
-  <version>0.6.0</version>
+  <version>0.6.1</version>
   <name>Hawkscope</name>
   <url>http://hawkscope.googlecode.com</url>
   <!-- $Id$ -->
@@ -131,8 +131,14 @@
         <dependency>
           <groupId>com.melloware</groupId>
           <artifactId>jintellitype</artifactId>
-          <version>1.3.1-full</version>
+          <version>1.3.1</version>
         </dependency>
+        <dependency>
+          <groupId>jxgrabkey</groupId>
+          <artifactId>jxgrabkey</artifactId>
+          <version>0.3.1-32</version>
+          <scope>provided</scope>
+        </dependency>          
       </dependencies>
     </profile>
     <profile>

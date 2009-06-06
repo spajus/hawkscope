@@ -58,8 +58,8 @@ public class Launcher {
             log.fatal("Failed starting Hawkscope", e);
         }
         preload();
-        TrayManager.getInstance().load();
         GlobalHotkeyListener.getInstance();
+        TrayManager.getInstance().load();
     }
     
     /**

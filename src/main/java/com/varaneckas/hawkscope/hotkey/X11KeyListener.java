@@ -17,10 +17,8 @@
  */
 package com.varaneckas.hawkscope.hotkey;
 
-import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
 
 import jxgrabkey.HotkeyConflictException;
 import jxgrabkey.HotkeyListener;
@@ -28,13 +26,7 @@ import jxgrabkey.JXGrabKey;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-
-import com.varaneckas.hawkscope.menu.MenuFactory;
-import com.varaneckas.hawkscope.menu.state.StateEvent;
-import com.varaneckas.hawkscope.util.IOUtils;
 
 /**
  * Key listener for X11 (Linux)
@@ -55,22 +47,15 @@ public class X11KeyListener extends GlobalHotkeyListener {
     public X11KeyListener() {
         Display.getCurrent().asyncExec(new Runnable() {
             public void run() {
-                String jarLib = "libJXGrabKey.so";
-                String tempLib = System.getProperty("java.io.tmpdir") 
-                        + File.separator + jarLib;
-                log.debug("Copying file");
-                boolean copied = IOUtils.copyFile(jarLib, tempLib);
-                log.debug("Copied file: " + copied);
-                log.debug("Loading: " + tempLib);
-                System.load(tempLib);
-                log.debug("Loaded lib");
-                JXGrabKey.setDebugOutput(true);
-                try {
-                    JXGrabKey.getInstance().registerAwtHotkey(1, InputEvent.CTRL_MASK, KeyEvent.VK_SPACE);
-                    JXGrabKey.getInstance().addHotkeyListener(getListener());
-                } catch (HotkeyConflictException e) {
-                    log.debug("Hotkey conflict!", e);
-                    JXGrabKey.getInstance().cleanUp();
+                if (loadJarLibrary("libJXGrabKey.so")) {
+	                JXGrabKey.setDebugOutput(true);
+	                try {
+	                    JXGrabKey.getInstance().registerAwtHotkey(1, InputEvent.CTRL_MASK, KeyEvent.VK_SPACE);
+	                    JXGrabKey.getInstance().addHotkeyListener(getListener());
+	                } catch (HotkeyConflictException e) {
+	                    log.debug("Hotkey conflict!", e);
+	                    JXGrabKey.getInstance().cleanUp();
+	                }
                 }
             }
         });
@@ -86,42 +71,7 @@ public class X11KeyListener extends GlobalHotkeyListener {
         return new HotkeyListener() {
             public void onHotkey(final int key) {
                 log.debug("otkey found " + key);
-                try {
-                    Display.getDefault().syncExec(new Runnable() {
-                        public void run() {
-                            final StateEvent se = new StateEvent();
-                            final Point loc = Display.getDefault().getCursorLocation();
-                            se.setX(loc.x);
-                            se.setY(loc.y);
-                            Shell sh = new Shell();
-                            sh.setVisible(true);
-                            try {
-                            Thread.sleep(1l);
-                            sh.setVisible(false);
-                                Robot robo = new Robot();
-                                Shell hs = new Shell();
-                                hs.setLocation(loc.x -100, loc.y - 100);
-                                hs.setSize(200, 200);
-                                hs.setVisible(true);
-                                robo.mousePress(InputEvent.BUTTON1_MASK);
-                                Thread.sleep(1L);
-                                MenuFactory.getMainMenu().getState().act(se);
-                                robo.mouseRelease(InputEvent.BUTTON1_MASK);
-                                hs.setLocation(10000, 10000);
-                                Thread.sleep(1L);
-                                hs.setVisible(false);
-                                hs.dispose();
-                            } catch (final Exception e) {
-                                throw new RuntimeException("Failed invoking hawkscope menu with shortcut", e);
-                            }
-                            sh.dispose();
-                            
-                            log.debug("Cursor at: " + loc);
-                        }
-                    });
-                } catch (final Exception e) {
-                    log.error("Failed invoking Hawkscope with x11 hotkey", e);
-                }
+                displayHawkscopeMenu();
             }
         };
     }
