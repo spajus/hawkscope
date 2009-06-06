@@ -102,11 +102,7 @@ public class PluginManager {
         for (final Plugin p : plugins) {
             log.debug("Checking if plugin is enabled: " + p.getName());
         	try {
-        		final String enabled = cfg.getProperties().get("plugin." 
-	        			+ p.getClass().getName() + ".enabled");
-        		if (enabled != null) {
-        			p.setEnabled(enabled.equals("1") ? true : false); 
-        		}
+        	    p.setEnabled(isPluginEnabled(p.getClass().getName()));
         		if (availableUpdates.containsKey(p.getName()) && 
         		        availableUpdates.get(p.getName()).equals(p.getVersion())) {
         		    availableUpdates.remove(p.getName());
@@ -116,6 +112,21 @@ public class PluginManager {
         	}
         }
 	}
+
+	/**
+	 * Checks configuration to see if plugin is enabled
+	 * 
+	 * @param pluginClass Plugin class (getClass().getName())
+	 * @return true / false
+	 */
+    private boolean isPluginEnabled(final String pluginClass) {
+        final String enabled = cfg.getProperties().get("plugin." 
+        		+ pluginClass + ".enabled");
+        if (enabled != null) {
+           return enabled.equals("1"); 
+        } 
+        return false;
+    }
 
     /**
      * Finds and loads external plugins
@@ -154,6 +165,10 @@ public class PluginManager {
             }
             r.close();
             log.debug("Processing Plugin: " + pluginClass);
+            if (!isPluginEnabled(pluginClass)) {
+                log.debug("Plugin disabled, skipping");
+                return;
+            }
             Class<?> p = classLoader.loadClass(pluginClass);
             Method creator = null;
             try {
