@@ -17,16 +17,8 @@
  */
 package com.varaneckas.hawkscope.hotkey;
 
-import java.awt.Robot;
-import java.awt.event.InputEvent;
 import java.io.File;
 
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-
-import com.varaneckas.hawkscope.menu.MenuFactory;
-import com.varaneckas.hawkscope.menu.state.StateEvent;
 import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.OSUtils;
 
@@ -71,6 +63,12 @@ public class GlobalHotkeyListener {
         }
     }
     
+    /**
+     * Loads native library located inside some jar in classpath
+     * 
+     * @param jarLib library name
+     * @return success?
+     */
     protected boolean loadJarLibrary(String jarLib) {
         final String tempLib = System.getProperty("java.io.tmpdir") 
                 + File.separator + jarLib;
@@ -81,42 +79,5 @@ public class GlobalHotkeyListener {
         System.load(tempLib);
         return true;
     }
-    
-    protected void displayHawkscopeMenu() {
-		try {
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
-                    final StateEvent se = new StateEvent();
-                    final Point loc = Display.getDefault().getCursorLocation();
-                    se.setX(loc.x);
-                    se.setY(loc.y);
-//                    Shell sh = new Shell();
-//                    sh.setVisible(true);
-                    try {
-                    Thread.sleep(1l);
-//                    sh.setVisible(false);
-//                        Robot robo = new Robot();
-//                        Shell hs = new Shell();
-//                        hs.setLocation(loc.x -100, loc.y - 100);
-//                        hs.setSize(200, 200);
-//                        hs.setVisible(true);
-//                        robo.mousePress(InputEvent.BUTTON1_MASK);
-                        Thread.sleep(1L);
-                        MenuFactory.getMainMenu().getState().act(se);
-//                        robo.mouseRelease(InputEvent.BUTTON1_MASK);
-//                        hs.setLocation(10000, 10000);
-                        Thread.sleep(10L);
-//                        hs.setVisible(false);
-//                        hs.dispose();
-                    } catch (final Exception e) {
-                        throw new RuntimeException("Failed invoking hawkscope menu with shortcut", e);
-                    }
-//                    sh.dispose();
-                }
-            });
-        } catch (final Exception e) {
-        	throw new RuntimeException("Failed invoking hawkscope with shortcut key", e);
-        }
-	}
 
 }

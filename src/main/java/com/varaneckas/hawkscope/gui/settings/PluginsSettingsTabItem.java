@@ -42,6 +42,7 @@ import com.varaneckas.hawkscope.Version;
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
 import com.varaneckas.hawkscope.menu.MainMenu;
+import com.varaneckas.hawkscope.plugin.DisabledPlugin;
 import com.varaneckas.hawkscope.plugin.Plugin;
 import com.varaneckas.hawkscope.plugin.PluginManager;
 import com.varaneckas.hawkscope.plugin.PluginTableEditor;
@@ -279,7 +280,10 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 			final Plugin p = pluginMap.get(item.getText(1));
 			final boolean enabled = item.getText(0).equals("Yes");
 			p.setEnabled(enabled);
-			cfg.getProperties().put("plugin." + p.getClass().getName() 
+			String className = (p instanceof DisabledPlugin) 
+			        ? ((DisabledPlugin) p).getClassName() 
+			        : p.getClass().getName();
+			cfg.getProperties().put("plugin." + className 
 					+ ".enabled", enabled ? "1" : "0");
 		}
 	}

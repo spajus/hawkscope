@@ -169,6 +169,7 @@ public class PluginManager {
             log.debug("Processing Plugin: " + pluginClass);
             if (!isPluginEnabled(pluginClass)) {
                 log.debug("Plugin disabled, skipping");
+                getAllPlugins().add(new DisabledPlugin(pluginClass));
                 return;
             }
             Class<?> p = classLoader.loadClass(pluginClass);

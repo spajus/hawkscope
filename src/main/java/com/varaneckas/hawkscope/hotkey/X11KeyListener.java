@@ -17,6 +17,8 @@
  */
 package com.varaneckas.hawkscope.hotkey;
 
+import java.awt.AWTException;
+import java.awt.Robot;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
@@ -26,10 +28,21 @@ import jxgrabkey.JXGrabKey;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
+
+import com.varaneckas.hawkscope.menu.MenuFactory;
+import com.varaneckas.hawkscope.menu.state.StateEvent;
 
 /**
  * Key listener for X11 (Linux)
+ * 
+ * FIXME this is all based on dirty hacks
+ * Due to swt bug: https://bugs.eclipse.org/bugs/show_bug.cgi?id=11570
+ * 
+ * Does not work on top of eclipse
  *
  * @author Tomas Varaneckas
  * @version $Id$
@@ -45,12 +58,14 @@ public class X11KeyListener extends GlobalHotkeyListener {
      * Constructs libJXGrabKey listener
      */
     public X11KeyListener() {
-        Display.getCurrent().asyncExec(new Runnable() {
+        MenuFactory.getMainMenu().getSwtMenuObject().getDisplay()
+                .asyncExec(new Runnable() {
             public void run() {
                 if (loadJarLibrary("libJXGrabKey.so")) {
-	                JXGrabKey.setDebugOutput(true);
+	                JXGrabKey.setDebugOutput(false);
 	                try {
-	                    JXGrabKey.getInstance().registerAwtHotkey(1, InputEvent.CTRL_MASK, KeyEvent.VK_SPACE);
+	                    JXGrabKey.getInstance().registerAwtHotkey(1, 
+	                            InputEvent.CTRL_MASK, KeyEvent.VK_SPACE);
 	                    JXGrabKey.getInstance().addHotkeyListener(getListener());
 	                } catch (HotkeyConflictException e) {
 	                    log.debug("Hotkey conflict!", e);
@@ -70,12 +85,84 @@ public class X11KeyListener extends GlobalHotkeyListener {
     public HotkeyListener getListener() {
         return new HotkeyListener() {
             public void onHotkey(final int key) {
-                log.debug("otkey found " + key);
+                log.debug("hotkey found " + key);
                 displayHawkscopeMenu();
             }
         };
     }
     
+    /**
+     * Hawkscope launch shell for dirty hacks
+     */
+    private Shell hawkscopeLaunchShell = new Shell(SWT.DIALOG_TRIM | SWT.NONE);
+    
+    /**
+     * Hawkscope support shell for dirty hacks
+     */
+    private Shell supportShell = new Shell();
+    
+    /**
+     * A robot to simulate mouse clicks
+     */
+    private Robot robo = createRobot();
+    
+    /**
+     * Displays Hawkscope menu at mouse location.
+     * Based on very, very dirty hacks, because of this bug:
+     * https://bugs.eclipse.org/bugs/show_bug.cgi?id=11570
+     */
+    protected void displayHawkscopeMenu() {
+        try {
+            MenuFactory.getMainMenu().getSwtMenuObject().getDisplay()
+                    .syncExec(new Runnable() {
+                public void run() {
+                    if (MenuFactory.getMainMenu().getSwtMenuObject().isVisible()) {
+                        MenuFactory.getMainMenu().forceHide();
+                    }
+                    try {
+                        hawkscopeLaunchShell.setText("Hawkscope");
+                        final StateEvent se = new StateEvent();
+                        final Point loc = Display.getDefault().getCursorLocation();
+                        se.setX(loc.x);
+                        se.setY(loc.y);
+                        hawkscopeLaunchShell.setLocation(loc.x -30, loc.y - 30);
+                        hawkscopeLaunchShell.setSize(60, 60);
+                        hawkscopeLaunchShell.setVisible(true);
+                        supportShell.setSize(1, 1);
+                        supportShell.setVisible(true);
+                        supportShell.setVisible(false);
+                        Thread.sleep(20L);
+                        Thread.yield();
+                        robo.mousePress(InputEvent.BUTTON1_MASK);
+                        Thread.sleep(10L);
+                        robo.mouseRelease(InputEvent.BUTTON1_MASK);
+                        MenuFactory.getMainMenu().getState().act(se);
+                        hawkscopeLaunchShell.setVisible(false);
+                    } catch (final Exception e) {
+                        throw new RuntimeException("Failed invoking hawkscope " +
+                        		"menu with shortcut", e);
+                    }
+                }
+            });
+        } catch (final Exception e) {
+            throw new RuntimeException("Failed invoking hawkscope with " +
+            		"shortcut key", e);
+        }
+    }
+    
+    /**
+     * Creates the Robot
+     * 
+     * @return
+     */
+    private Robot createRobot() {
+        try {
+            return new Robot();
+        } catch (AWTException e) {
+            return null;
+        }
+    }
+
     @Override
     protected void finalize() throws Throwable {
         JXGrabKey.getInstance().cleanUp();
