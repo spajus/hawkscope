@@ -52,6 +52,7 @@ public class ExitCommand implements Command {
             }
         } catch (final Exception e) {
             log.warn("Error while cleaning up resources before exit", e);
+            System.exit(-1);
         }
         System.exit(0);
     }

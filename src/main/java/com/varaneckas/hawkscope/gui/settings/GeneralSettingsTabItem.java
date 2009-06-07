@@ -299,8 +299,11 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
             }
 	    });
 	    
+	    //Key combination:
 	    final Label keys = addLabel("Key combination:");
 	    keys.setLayoutData(ident(SharedStyle.relativeTo(enableHotkey, null)));
+	    
+	    //Input for key
 	    keyInput = addText(cfg.getProperties().get(Configuration.HOTKEY_REPR), 15);
 	    final FormData style = ident(SharedStyle.relativeTo(enableHotkey, keys));
         style.width = 100;
@@ -308,32 +311,11 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
         style.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
         keyInput.setLayoutData(style);
         keyInput.setEnabled(enableHotkey.getSelection());
-        keyInput.setToolTipText("Type a combination, like CTRL + SPACE");
+        keyInput.setToolTipText("Type a \"Modifier + Key\" combination, " +
+        		"like CTRL + SPACE. Some keys may not be allowed.");
         keyInput.addKeyListener(new KeyAdapter() {
-            public void keyPressed(KeyEvent ev) {
-                String repr = "";
-                ev.doit = false;
-                log.debug(ev.stateMask);
-                switch (ev.stateMask) {
-                case SWT.SHIFT:   repr = "Shift + "; break;
-                case SWT.CTRL:    repr = "Ctrl + ";  break;
-                case SWT.ALT:     repr = "Alt + "; break;
-                case SWT.COMMAND: repr = OSUtils.CURRENT_OS.equals(OS.MAC) 
-                    ? "Command + " : "Win + "; break;
-                default: return;
-                }
-                log.debug(ev.keyCode);
-                if (ev.keyCode < 32 || ev.keyCode > 126) {
-                    repr = "";
-                    return;
-                }
-                char c = (char) ev.keyCode;
-                if (c == ' ') {
-                    repr += "Space";
-                } else {
-                    repr += ("" + c).toUpperCase();
-                }
-                keyInput.setText(repr);
+            public void keyPressed(final KeyEvent ev) {
+                keyInput.setText(GlobalHotkeyManager.interpretKeyEvent(ev));
             }
         });
 	}
@@ -369,4 +351,5 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
             }
         }
     }
+
 }

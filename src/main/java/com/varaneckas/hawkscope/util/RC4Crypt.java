@@ -21,7 +21,7 @@ package com.varaneckas.hawkscope.util;
  * Modified RC4 encryption/decryption mechanism
  * 
  * @author tomasv
- * @version $Id: RC4Crypt.java 89 2006-06-09 08:58:03Z tomasv $
+ * @version $Id$
  */
 public class RC4Crypt {
 	/**

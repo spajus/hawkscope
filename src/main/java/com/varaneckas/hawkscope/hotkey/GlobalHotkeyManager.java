@@ -19,13 +19,19 @@ package com.varaneckas.hawkscope.hotkey;
 
 import java.io.File;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyEvent;
+
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.OSUtils;
+import com.varaneckas.hawkscope.util.OSUtils.OS;
 
 /**
  * Global hotkey listener for invoking hawkscope menu
+ * 
+ * TODO implementation for Mac OS X
  *
  * @author Tomas Varaneckas
  * @version $Id$
@@ -65,7 +71,7 @@ public abstract class GlobalHotkeyManager {
     /**
      * Chooses {@link GlobalHotkeyManager} implementation according to OS
      * 
-     * @return
+     * @return GlobalHotkeyManager or null in case OS does not support one
      */
     private static GlobalHotkeyManager chooseImpl() {
         switch (OSUtils.CURRENT_OS) {
@@ -84,7 +90,7 @@ public abstract class GlobalHotkeyManager {
      * @param jarLib library name
      * @return success?
      */
-    protected boolean loadJarLibrary(String jarLib) {
+    protected boolean loadJarLibrary(final String jarLib) {
         final String tempLib = System.getProperty("java.io.tmpdir") 
                 + File.separator + jarLib;
         boolean copied = IOUtils.copyFile(jarLib, tempLib);
@@ -95,6 +101,10 @@ public abstract class GlobalHotkeyManager {
         return true;
     }
 
+    /**
+     * Configures the GlobalHotkeyManager according to settings. Uses
+     * {@link Configuration} to get required parameters.
+     */
     public void configure() {
         final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
                 .getConfiguration();
@@ -105,6 +115,36 @@ public abstract class GlobalHotkeyManager {
                 registerHotkey(modifier, key);
             }
         }
+    }
+    
+    /**
+     * Interprets KeyEvent and returns something like "Ctrl + H" or 
+     * "Alt + Space". Works only with ASCII keys from 32 to 126.
+     * 
+     * @param ev KeyEvent to interpret
+     * @return interpretation string
+     */
+    public static String interpretKeyEvent(final KeyEvent ev) {
+        String repr = "";
+        ev.doit = false;
+        switch (ev.stateMask) {
+        case SWT.SHIFT:   repr = "Shift + "; break;
+        case SWT.CTRL:    repr = "Ctrl + ";  break;
+        case SWT.ALT:     repr = "Alt + "; break;
+        case SWT.COMMAND: repr = OSUtils.CURRENT_OS.equals(OS.MAC) 
+            ? "Command + " : "Win + "; break;
+        default: return "";
+        }
+        if (ev.keyCode < 32 || ev.keyCode > 126) {
+            return "";
+        }
+        char c = (char) ev.keyCode;
+        if (c == ' ') {
+            repr += "Space";
+        } else {
+            repr += ("" + c).toUpperCase();
+        }
+        return repr;
     }
 
 }

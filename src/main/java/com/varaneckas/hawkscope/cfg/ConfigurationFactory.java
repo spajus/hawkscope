@@ -124,7 +124,6 @@ public abstract class ConfigurationFactory {
     private void loadConfiguration() {
         final Map<String, String> cfg = getDefaults();
         try {
-            
             final ResourceBundle data = UTF8ResourceBundle
                     .getBundle(CONFIG_FILE_NAME
                             , new ClassLoader() {

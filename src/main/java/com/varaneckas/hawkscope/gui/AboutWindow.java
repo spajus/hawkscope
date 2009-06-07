@@ -38,16 +38,16 @@ import com.varaneckas.hawkscope.util.IconFactory;
 
 /**
  * About Window
- * +------------------------------------------------------------------------+
- * | {@link #logo}       {@link #labelAppName}                              |
- * |                     {@link #labelAppSlogan}                            |
- * |                     {@link #labelVersion}    {@link #labelAppVersion}  |
- * |                     {@link #labelReleased}   {@link #labelAppReleased} |
- * |                     {@link #labelHomePage}   {@link #labelAppHomePage} |     
- * | {@link #labelEnvironment}                                              |
- * | {@link #textEnvironment}                                               |
- * |                    {@link #buttonCopyToClipboard} {@link #buttonClose} |
- * +------------------------------------------------------------------------+
+ * +---------------------------------------------------------------------------+
+ * | {@link #logo}          {@link #labelAppName}                              |
+ * |                        {@link #labelAppSlogan}                            |
+ * |                        {@link #labelVersion}    {@link #labelAppVersion}  |
+ * |                        {@link #labelReleased}   {@link #labelAppReleased} |
+ * |                        {@link #labelHomePage}   {@link #labelAppHomePage} |     
+ * | {@link #labelEnvironment}                                                 |
+ * | {@link #textEnvironment}                                                  |
+ * | {@link #buttonDonate} {@link #buttonCopyToClipboard} {@link #buttonClose} |
+ * +---------------------------------------------------------------------------+
  * 
  * @author Tomas Varaneckas
  * @version $Id$
@@ -139,6 +139,13 @@ public class AboutWindow extends AbstractWindow {
     private Button buttonCopyToClipboard;
     
     /**
+     * A beggar's button...
+     * 
+     * @see #createButtonDonate()
+     */
+    private Button buttonDonate;
+    
+    /**
      * Opens the window or makes it visible if it's hidden but not disposed
      */
     @Override
@@ -163,6 +170,7 @@ public class AboutWindow extends AbstractWindow {
         createButtonClose();
         createButtonCopyToClipboard();
         createTextEnvironment();
+        createButtonDonate();
         packAndSetMinSize();
         shell.open();
         shell.forceActive();
@@ -325,6 +333,26 @@ public class AboutWindow extends AbstractWindow {
         labelEnvironment.setText("Environment");
         labelEnvironment.setFont(SharedStyle.FONT_BOLD);
         labelEnvironment.setLayoutData(SharedStyle.relativeTo(logo, null));
+    }
+    
+    /**
+     * Creates the Donate button
+     */
+    private void createButtonDonate() {
+        buttonDonate = new Button(shell, SWT.PUSH);
+        buttonDonate.setText("&Donate");
+        final FormData layout = SharedStyle.relativeTo(textEnvironment, null, 
+                null, null);
+        layout.right = null;
+        buttonDonate.setLayoutData(layout);
+        buttonDonate.setToolTipText("If you like Hawkscope, you can support " +
+        		"the development by donating a small amount of money.");
+        buttonDonate.addSelectionListener(new SelectionAdapter() {
+            @Override
+            public void widgetSelected(SelectionEvent selectionevent) {
+                Program.launch(Version.DONATE_URL);
+            }
+        }) ;
     }
 
     /**

@@ -1,3 +1,20 @@
+/*
+ * Copyright (c) 2008-2009 Tomas Varaneckas
+ * http://www.varaneckas.com
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package com.varaneckas.hawkscope.hotkey;
 
 import java.awt.AWTException;
@@ -56,7 +73,8 @@ public class X11HotkeyListener implements HotkeyListener {
     private Robot createRobot() {
         try {
             return new Robot();
-        } catch (AWTException e) {
+        } catch (final AWTException e) {
+            log.error("Could not create Robot", e);
             return null;
         }
     }
@@ -68,8 +86,12 @@ public class X11HotkeyListener implements HotkeyListener {
     }
     
     /**
-     * Displays Hawkscope menu at mouse location.
-     * Based on very, very dirty hacks, because of this bug:
+     * Displays Hawkscope menu at mouse location. Based on dirty hacks and 
+     * blind experiments. Basically, it creates a window beneath the cursor
+     * and executes a real mouse click with help of {@link Robot}. This way
+     * invoking the menu works.
+     * 
+     * A bug that prevents the normal activity:
      * https://bugs.eclipse.org/bugs/show_bug.cgi?id=11570
      */
     protected void displayHawkscopeMenu() {
@@ -88,16 +110,25 @@ public class X11HotkeyListener implements HotkeyListener {
                         hawkscopeLaunchShell.setLocation(loc.x -30, loc.y - 30);
                         hawkscopeLaunchShell.setSize(60, 60);
                         hawkscopeLaunchShell.setVisible(true);
+                        //for a weird reason, if the second shell is not
+                        //displayed, the whole hack does not work.
                         supportShell.setLocation(loc.x -30, loc.y - 30);
                         supportShell.setSize(60, 60);
                         supportShell.setVisible(true);
+                        //need all the sleeps
+                        //if duration is lowered, hack starts to randomly
+                        //fail to work.
                         Thread.sleep(50L);
                         Thread.yield();
-                        robo.mousePress(InputEvent.BUTTON1_MASK);
-                        Thread.sleep(50L);
+                        if (robo != null) {
+                            robo.mousePress(InputEvent.BUTTON1_MASK);
+                            Thread.sleep(50L);
+                        }
                         MenuFactory.getMainMenu().getState().act(se);
                         Thread.sleep(50L);
-                        robo.mouseRelease(InputEvent.BUTTON1_MASK);
+                        if (robo != null) {
+                            robo.mouseRelease(InputEvent.BUTTON1_MASK);
+                        }
                         supportShell.setVisible(false);
                         hawkscopeLaunchShell.setVisible(false);
                     } catch (final Exception e) {

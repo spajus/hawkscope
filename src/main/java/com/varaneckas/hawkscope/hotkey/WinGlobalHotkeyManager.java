@@ -27,6 +27,8 @@ import com.melloware.jintellitype.JIntellitype;
 /**
  * Key listener for Windows.
  * Based on JIntellitype (http://www.malloware.com)
+ * JIntellitype.dll should be copied to Windows/System32 for development.
+ * The dll is copied to required folder at user side by the installer.
  *
  * @author Tomas Varaneckas
  * @version $Id$
@@ -49,6 +51,9 @@ public class WinGlobalHotkeyManager extends GlobalHotkeyManager {
 	 */
 	private final JIntellitype manager;
 	
+	/**
+	 * Constructor that loads the {@link JIntellitype} object
+	 */
 	public WinGlobalHotkeyManager() {
 	    this.manager = JIntellitype.getInstance();
     }

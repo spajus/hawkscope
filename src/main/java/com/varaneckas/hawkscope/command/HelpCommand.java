@@ -26,7 +26,7 @@ import com.varaneckas.hawkscope.gui.WindowFactory;
  * Displays About dialog
  *
  * @author Tomas Varaneckas
- * @version $Id: AboutCommand.java 250 2009-02-17 13:10:44Z tomas.varaneckas $
+ * @version $Id$
  */
 public class HelpCommand implements Command {
 

@@ -116,6 +116,12 @@ public class Version {
      */
     public static final String DOWNLOAD_URL 
             = Constants.HAWKSCOPE_URL_ROOT.concat("downloads/list");
+
+    /**
+     * URL where user can make a donation
+     */
+    public static final String DONATE_URL = 
+        "http://www.varaneckas.com/projects/opensource/hawkscope";
     
     /**
      * Tells if update is available

@@ -296,6 +296,9 @@ public class PluginsSettingsTabItem extends AbstractSettingsTabItem {
 		}
 	}
 
+	/**
+	 * Reloads the plugins
+	 */
     private void reloadPlugins() {
         tablePlugins.removeAll();
         PluginManager.getInstance().reloadPlugins();

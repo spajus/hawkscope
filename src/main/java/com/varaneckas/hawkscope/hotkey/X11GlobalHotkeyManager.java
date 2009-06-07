@@ -89,9 +89,9 @@ public class X11GlobalHotkeyManager extends GlobalHotkeyManager {
     }
 
     @Override
-    public void registerHotkey(int specKey, int key) {
+    public void registerHotkey(final int modifier, final int key) {
         try {
-            manager.registerAwtHotkey(1, specKey, key);
+            manager.registerAwtHotkey(1, modifier, key);
             manager.addHotkeyListener(getListener());
         } catch (final Exception e) {
             log.debug("Hotkey manager error!", e);

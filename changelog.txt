@@ -11,6 +11,7 @@ Changes in version 0.6.1 (2009-06-??)
 * Disabled plugins are no longer class-loaded
   http://code.google.com/p/hawkscope/issues/detail?id=99
 * Hawkscope icon is no longer invisible on dark backgrounds
+* Added a Donate button in About window
   
 Changes in version 0.6.0 (2009-04-04)
 -------------------------------------

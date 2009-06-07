@@ -495,13 +495,23 @@ public class Configuration {
 		}
     }
 
-    
+    /**
+     * Tells if global hotkey is enabled
+     * 
+     * @return true / false
+     */
     public boolean isHotkeyEnabled() {
         return properties.get(HOTKEY_ENABLED).equals("1");
     }
     
+    /**
+     * Parses hotkey string and returns int value of modifier.
+     * I.e.: InputEvent.CTRL_DOWN_MASK
+     * 
+     * @return InputEvent modifier value
+     */
     public int getHotkeyModifier() {
-        String hotkey = properties.get(HOTKEY_REPR);
+        final String hotkey = properties.get(HOTKEY_REPR);
         if (hotkey != null && hotkey.contains("+")) {
             //good hotkey
             if (hotkey.startsWith("Shift")) {
@@ -521,8 +531,13 @@ public class Configuration {
         return -1;
     }
     
+    /**
+     * Parses hotkey string and returns char value of the shortcut key
+     *  
+     * @return int (char) of ascii key ranged from 32 to 126
+     */
     public int getHotkey() {
-        String hotkey = properties.get(HOTKEY_REPR);
+        final String hotkey = properties.get(HOTKEY_REPR);
         if (hotkey != null && hotkey.contains("+")) {
             //good hotkey
             if (hotkey.endsWith("Space")) {
