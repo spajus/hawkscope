@@ -6,6 +6,8 @@ http://hawkscope.googlecode.com
 
 Changes in version 0.6.1 (2009-06-07)
 -------------------------------------
+* System wide shortcut key for Windows and Linux
+  http://code.google.com/p/hawkscope/issues/detail?id=35
 * Possibility to rename Quick Access items
   http://code.google.com/p/hawkscope/issues/detail?id=15
 * Disabled plugins are no longer class-loaded
