@@ -4,14 +4,16 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
-Changes in version 0.6.1 (2009-06-??)
+Changes in version 0.6.1 (2009-06-07)
 -------------------------------------
 * Possibility to rename Quick Access items
   http://code.google.com/p/hawkscope/issues/detail?id=15
 * Disabled plugins are no longer class-loaded
   http://code.google.com/p/hawkscope/issues/detail?id=99
 * Hawkscope icon is no longer invisible on dark backgrounds
+  http://code.google.com/p/hawkscope/issues/detail?id=98
 * Added a Donate button in About window
+  http://code.google.com/p/hawkscope/issues/detail?id=100
   
 Changes in version 0.6.0 (2009-04-04)
 -------------------------------------

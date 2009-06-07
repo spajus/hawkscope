@@ -121,7 +121,7 @@ public class Version {
      * URL where user can make a donation
      */
     public static final String DONATE_URL = 
-        "http://www.varaneckas.com/projects/opensource/hawkscope";
+        "http://www.varaneckas.com/projects/opensource/hawkscope/donate";
     
     /**
      * Tells if update is available
