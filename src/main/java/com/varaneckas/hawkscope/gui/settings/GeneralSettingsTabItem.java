@@ -18,6 +18,8 @@
 package com.varaneckas.hawkscope.gui.settings;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FormData;
@@ -35,6 +37,7 @@ import org.eclipse.swt.widgets.ToolItem;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
 import com.varaneckas.hawkscope.gui.SharedStyle;
+import com.varaneckas.hawkscope.hotkey.GlobalHotkeyManager;
 import com.varaneckas.hawkscope.menu.MainMenu;
 import com.varaneckas.hawkscope.util.OSUtils;
 import com.varaneckas.hawkscope.util.OSUtils.OS;
@@ -103,6 +106,16 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 	private Button menubarBlues;
 	
 	/**
+	 * Checkbox "[] Enable Global Hotkey"
+	 */
+	private Button enableHotkey;
+	
+	/**
+	 * Input for global hotkey shortcut
+	 */
+	private Text keyInput;
+	
+	/**
 	 * Creates the General settings {@link TabItem}
 	 * 
 	 * @param folder Settings {@link TabFolder}
@@ -113,6 +126,9 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		createMenuSection();
 		if (OSUtils.CURRENT_OS.equals(OS.MAC)) {
 			createMacSection();
+		} else {
+		    //so far macs haven't got one...
+		    createHotkeySection();
 		}
 	}
 	
@@ -257,8 +273,68 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 		menubarBlues = addCheckbox("Use &Mac Menubar icon " +
 				"blues workaround");
 		menubarBlues.setLayoutData(ident(SharedStyle.relativeTo(macintosh, null)));
+		menubarBlues.setToolTipText("Use a small workaround to solve " +
+				"the toggling of Hawkscope menubar icon selection.");
 		menubarBlues.setSelection(cfg.getProperties()
 				.get(Configuration.MAC_MENUBAR_BLUES_WORKAROUND).equals("1"));
+	}
+	
+	/**
+	 * Creates the Hotkey section
+	 */
+	private void createHotkeySection() {
+	    //Global Hotkey
+	    final Label hotkey = addSectionLabel("Global Hotkey");
+	    hotkey.setLayoutData(SharedStyle.relativeTo(hideKnownFileExt, null));
+	    
+	    //[ ] Enable global hotkey
+	    enableHotkey = addCheckbox("Enable global &hotkey");
+	    enableHotkey.setLayoutData(ident(SharedStyle.relativeTo(hotkey, null)));
+	    enableHotkey.setSelection(cfg.isHotkeyEnabled());
+	    enableHotkey.setToolTipText("Check to enable system-wide hotkey " +
+	    		"that invokes Hawkscope menu at mouse location.");
+	    enableHotkey.addListener(SWT.Selection, new Listener() {
+            public void handleEvent(final Event ev) {
+                keyInput.setEnabled(enableHotkey.getSelection());
+            }
+	    });
+	    
+	    final Label keys = addLabel("Key combination:");
+	    keys.setLayoutData(ident(SharedStyle.relativeTo(enableHotkey, null)));
+	    keyInput = addText(cfg.getProperties().get(Configuration.HOTKEY_REPR), 15);
+	    final FormData style = ident(SharedStyle.relativeTo(enableHotkey, keys));
+        style.width = 100;
+        //up a little, to center with reloadDelaySec
+        style.top.offset += SharedStyle.TEXT_TOP_OFFSET_ADJUST;
+        keyInput.setLayoutData(style);
+        keyInput.setEnabled(enableHotkey.getSelection());
+        keyInput.setToolTipText("Type a combination, like CTRL + SPACE");
+        keyInput.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent ev) {
+                String repr = "";
+                ev.doit = false;
+                switch (ev.stateMask) {
+                case SWT.SHIFT:   repr = "Shift + "; break;
+                case SWT.CTRL:    repr = "Ctrl + ";  break;
+                case SWT.ALT:     repr = "Alt + "; break;
+                case SWT.COMMAND: repr = OSUtils.CURRENT_OS.equals(OS.MAC) 
+                    ? "Command + " : "Win + "; break;
+                default: return;
+                }
+                log.debug(ev.keyCode);
+                if (ev.keyCode < 32 || ev.keyCode > 126) {
+                    repr = "";
+                    return;
+                }
+                char c = (char) ev.keyCode;
+                if (c == ' ') {
+                    repr += "Space";
+                } else {
+                    repr += ("" + c).toUpperCase();
+                }
+                keyInput.setText(repr);
+            }
+        });
 	}
 
     @Override
@@ -280,6 +356,16 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
         if (OSUtils.CURRENT_OS.equals(OS.MAC)) {
         	cfg.getProperties().put(Configuration.MAC_MENUBAR_BLUES_WORKAROUND,  
         			menubarBlues.getSelection() ? "1" : "0");
+        } else {
+            cfg.getProperties().put(Configuration.HOTKEY_ENABLED, 
+                    enableHotkey.getSelection() ? "1" : "0");
+            cfg.getProperties().put(Configuration.HOTKEY_REPR, 
+                    keyInput.getText());
+            final GlobalHotkeyManager keyman = GlobalHotkeyManager.getInstance();
+            if (keyman != null) {
+                keyman.clearHotkeys();
+                keyman.configure();
+            }
         }
     }
 }

@@ -17,8 +17,6 @@
  */
 package com.varaneckas.hawkscope.hotkey;
 
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.io.File;
 
 import com.varaneckas.hawkscope.cfg.Configuration;
@@ -100,7 +98,13 @@ public abstract class GlobalHotkeyManager {
     public void configure() {
         final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
                 .getConfiguration();
-        registerHotkey(InputEvent.SHIFT_MASK, KeyEvent.VK_SPACE);
+        if (cfg.isHotkeyEnabled()) {
+            final int modifier = cfg.getHotkeyModifier();
+            final int key = cfg.getHotkey();
+            if (modifier > 0 && key > 0) {
+                registerHotkey(modifier, key);
+            }
+        }
     }
 
 }

@@ -17,6 +17,8 @@
  */
 package com.varaneckas.hawkscope.cfg;
 
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
@@ -151,6 +153,16 @@ public class Configuration {
      * Hides known file extensions
      */
     public static final String HIDE_FILE_EXT = "hide.known.file.ext";
+    
+    /**
+     * Global hotkey enabled
+     */
+    public static final String HOTKEY_ENABLED = "global.hotkey.enabled";
+    
+    /**
+     * Global hotkey modifier (i.e.: Shift + Space)
+     */
+    public static final String HOTKEY_REPR = "global.hotkey";
     
     /**
      * Mac menubar blues workaround
@@ -482,4 +494,45 @@ public class Configuration {
 			return "";
 		}
     }
+
+    
+    public boolean isHotkeyEnabled() {
+        return properties.get(HOTKEY_ENABLED).equals("1");
+    }
+    
+    public int getHotkeyModifier() {
+        String hotkey = properties.get(HOTKEY_REPR);
+        if (hotkey != null && hotkey.contains("+")) {
+            //good hotkey
+            if (hotkey.startsWith("Shift")) {
+                return InputEvent.SHIFT_DOWN_MASK;
+            } 
+            if (hotkey.startsWith("Ctrl")) {
+                return InputEvent.CTRL_DOWN_MASK;
+            }
+            if (hotkey.startsWith("Alt")) {
+                return InputEvent.ALT_DOWN_MASK;
+            }
+            if (hotkey.startsWith("Win") || hotkey.startsWith("Command")) {
+                return InputEvent.META_DOWN_MASK;
+            }
+        }
+        //bad hotkey or no hotkey
+        return -1;
+    }
+    
+    public int getHotkey() {
+        String hotkey = properties.get(HOTKEY_REPR);
+        if (hotkey != null && hotkey.contains("+")) {
+            //good hotkey
+            if (hotkey.endsWith("Space")) {
+                return KeyEvent.VK_SPACE;
+            } else {
+                return hotkey.charAt(-1);
+            }
+        }
+        //bad or no hotkey
+        return -1;
+    }
+    
 }

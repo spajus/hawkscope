@@ -72,6 +72,10 @@ public class BasicConfigurationFactory extends ConfigurationFactory {
         data.put(Configuration.HTTP_PROXY_AUTH_PASSWORD, "");
         //hide known file extensions
         data.put(Configuration.HIDE_FILE_EXT, "0");
+        //hotkey disabled by default
+        data.put(Configuration.HOTKEY_ENABLED, "0");
+        //hotkey modifier is shift + space by default
+        data.put(Configuration.HOTKEY_REPR, "Shift + Space");
         //use OS icons - off by default for unix
         String useOsIcons = "1";
         //Icons theme by OS
