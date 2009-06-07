@@ -528,7 +528,7 @@ public class Configuration {
             if (hotkey.endsWith("Space")) {
                 return KeyEvent.VK_SPACE;
             } else {
-                return hotkey.charAt(-1);
+                return hotkey.charAt(hotkey.length() - 1);
             }
         }
         //bad or no hotkey

@@ -288,7 +288,7 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
 	    hotkey.setLayoutData(SharedStyle.relativeTo(hideKnownFileExt, null));
 	    
 	    //[ ] Enable global hotkey
-	    enableHotkey = addCheckbox("Enable global &hotkey");
+	    enableHotkey = addCheckbox("&Enable global hotkey");
 	    enableHotkey.setLayoutData(ident(SharedStyle.relativeTo(hotkey, null)));
 	    enableHotkey.setSelection(cfg.isHotkeyEnabled());
 	    enableHotkey.setToolTipText("Check to enable system-wide hotkey " +
@@ -313,6 +313,7 @@ public class GeneralSettingsTabItem extends AbstractSettingsTabItem {
             public void keyPressed(KeyEvent ev) {
                 String repr = "";
                 ev.doit = false;
+                log.debug(ev.stateMask);
                 switch (ev.stateMask) {
                 case SWT.SHIFT:   repr = "Shift + "; break;
                 case SWT.CTRL:    repr = "Ctrl + ";  break;
