@@ -17,8 +17,12 @@
  */
 package com.varaneckas.hawkscope.hotkey;
 
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 
+import com.varaneckas.hawkscope.cfg.Configuration;
+import com.varaneckas.hawkscope.cfg.ConfigurationFactory;
 import com.varaneckas.hawkscope.util.IOUtils;
 import com.varaneckas.hawkscope.util.OSUtils;
 
@@ -91,6 +95,12 @@ public abstract class GlobalHotkeyManager {
         }
         System.load(tempLib);
         return true;
+    }
+
+    public void configure() {
+        final Configuration cfg = ConfigurationFactory.getConfigurationFactory()
+                .getConfiguration();
+        registerHotkey(InputEvent.SHIFT_MASK, KeyEvent.VK_SPACE);
     }
 
 }

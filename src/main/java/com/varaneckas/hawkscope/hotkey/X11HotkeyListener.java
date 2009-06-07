@@ -36,12 +36,12 @@ public class X11HotkeyListener implements HotkeyListener {
     /**
      * Hawkscope launch shell for dirty hacks
      */
-    private Shell hawkscopeLaunchShell = new Shell(SWT.DIALOG_TRIM | SWT.NONE);
+    private Shell hawkscopeLaunchShell = new Shell(Display.getDefault(), SWT.ON_TOP);
     
     /**
      * Hawkscope support shell for dirty hacks
      */
-    private Shell supportShell = new Shell();
+    private Shell supportShell = new Shell(Display.getDefault(), SWT.ON_TOP);
     
     /**
      * A robot to simulate mouse clicks
@@ -81,7 +81,6 @@ public class X11HotkeyListener implements HotkeyListener {
                         MenuFactory.getMainMenu().forceHide();
                     }
                     try {
-                        hawkscopeLaunchShell.setText("Hawkscope");
                         final StateEvent se = new StateEvent();
                         final Point loc = Display.getDefault().getCursorLocation();
                         se.setX(loc.x);
@@ -89,15 +88,17 @@ public class X11HotkeyListener implements HotkeyListener {
                         hawkscopeLaunchShell.setLocation(loc.x -30, loc.y - 30);
                         hawkscopeLaunchShell.setSize(60, 60);
                         hawkscopeLaunchShell.setVisible(true);
-                        supportShell.setSize(1, 1);
+                        supportShell.setLocation(loc.x -30, loc.y - 30);
+                        supportShell.setSize(60, 60);
                         supportShell.setVisible(true);
-                        supportShell.setVisible(false);
-                        Thread.sleep(20L);
+                        Thread.sleep(50L);
                         Thread.yield();
                         robo.mousePress(InputEvent.BUTTON1_MASK);
-                        Thread.sleep(10L);
-                        robo.mouseRelease(InputEvent.BUTTON1_MASK);
+                        Thread.sleep(50L);
                         MenuFactory.getMainMenu().getState().act(se);
+                        Thread.sleep(50L);
+                        robo.mouseRelease(InputEvent.BUTTON1_MASK);
+                        supportShell.setVisible(false);
                         hawkscopeLaunchShell.setVisible(false);
                     } catch (final Exception e) {
                         throw new RuntimeException("Failed invoking hawkscope " +
