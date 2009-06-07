@@ -15,6 +15,6 @@ mvn install:install-file -DgroupId=org.eclipse.swt -DartifactId=swt-mac-32 -Dver
 #JXGrabKey for Linux 32 bit
 mvn install:install-file -DgroupId=jxgrabkey -DartifactId=jxgrabkey -Dversion=0.3.1-32 -DgeneratePom=true -Dpackaging=jar -Dfile=jxgrabkey-0.3.1-32.jar
 
-#JXGrabKey for Linux 32 bit
+#JXGrabKey for Linux 64 bit
 mvn install:install-file -DgroupId=jxgrabkey -DartifactId=jxgrabkey -Dversion=0.3.1-64 -DgeneratePom=true -Dpackaging=jar -Dfile=jxgrabkey-0.3.1-64.jar
  
