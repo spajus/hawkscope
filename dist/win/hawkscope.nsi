@@ -28,6 +28,7 @@ section
     file dist\output\win\Hawkscope.exe
     file changelog.txt
     file dist\win\msvcr71.dll
+    file dist\win\JIntellitype.dll
     writeUninstaller "$INSTDIR\uninstall.exe"
     createShortCut "$SMPROGRAMS\Startup\Hawkscope.lnk" "$INSTDIR\Hawkscope.exe"
     createDirectory "$SMPROGRAMS\Hawkscope"
