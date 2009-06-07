@@ -1,4 +1,6 @@
-#Maven SWT dependency installation. Please execute your line:
+$Id$
+
+#Maven SWT dependency installation. Please execute your lines:
 
 #Linux GTK amd64
 mvn install:install-file -DgroupId=org.eclipse.swt -DartifactId=swt-linux-64 -Dversion=3.4 -DgeneratePom=true -Dpackaging=jar -Dfile=swt-linux-64.jar 
