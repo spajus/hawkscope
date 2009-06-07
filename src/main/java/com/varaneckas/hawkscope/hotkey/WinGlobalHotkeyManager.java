@@ -86,7 +86,7 @@ public class WinGlobalHotkeyManager extends GlobalHotkeyManager {
         Display.getCurrent().asyncExec(new Runnable() {
             public void run() {
                 try {
-                    manager.registerHotKey(1, specKey, key);
+                    manager.registerSwingHotKey(1, specKey, key);
                     manager.addHotKeyListener(getListener());
                 } catch (Exception e) {
                     log.debug("Hotkey conflict!", e);
