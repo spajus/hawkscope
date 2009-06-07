@@ -251,11 +251,11 @@ public class Configuration {
      * @return
      */
     public Map<String, String> getQuickAccessNames() {
-        final List<String> raw = Arrays.asList(
-                properties.get(Configuration.QUICK_ACCESS_NAMES_LIST).split(";"));
-        if (raw == null) {
+        final String prop = properties.get(Configuration.QUICK_ACCESS_NAMES_LIST);
+        if (prop == null) {
             return Collections.emptyMap();
         }
+        final List<String> raw = Arrays.asList(prop.split(";"));
         final Map<String, String> names = new HashMap<String, String>();
         for (final String name : raw) {
             String[] n = name.split("\\:\\:");
