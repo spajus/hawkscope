@@ -4,6 +4,10 @@ HAWKSCOPE CHANGELOG
 ===================
 http://hawkscope.googlecode.com
 
+Changes in version 0.6.2 (2009-06-21)
+* Quick access list is now being saved properly on Windows
+  http://code.google.com/p/hawkscope/issues/detail?id=109
+
 Changes in version 0.6.1 (2009-06-07)
 -------------------------------------
 * System wide shortcut key for Windows and Linux
