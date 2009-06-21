@@ -287,9 +287,9 @@ public class QuickAccessSettingsTabItem extends AbstractSettingsTabItem {
         final StringBuilder quickAccess = new StringBuilder();
         final StringBuilder quickAccessNames = new StringBuilder();
         for (final TableItem item : tableQuickAccess.getItems()) {
-            quickAccess.append(item.getText(1));
+            quickAccess.append(item.getText(1).replaceAll("\\\\", "/"));
             quickAccess.append(';');
-            quickAccessNames.append(item.getText(1))
+            quickAccessNames.append(item.getText(1).replaceAll("\\\\", "/"))
                 .append("::").append(item.getText(0));
             quickAccessNames.append(';');
         }
