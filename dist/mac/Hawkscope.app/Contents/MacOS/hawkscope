@@ -1,4 +1,4 @@
 #!/bin/sh
 BASEDIR=`dirname $0`
-exec java -XstartOnFirstThread -Xms2m -Xmx6m -XX:PermSize=2m -XX:MaxPermSize=6m -Dorg.eclipse.swt.internal.carbon.noFocusRing -Dorg.eclipse.swt.internal.carbon.smallFonts -classpath $BASEDIR/hawkscope.jar -Djava.library.path=$BASEDIR com.varaneckas.hawkscope.Launcher
+exec java -XstartOnFirstThread -Xms16m -Xmx128m -XX:PermSize=32m -XX:MaxPermSize=64m -d32 -Dorg.eclipse.swt.internal.carbon.noFocusRing -Dorg.eclipse.swt.internal.carbon.smallFonts -classpath $BASEDIR/hawkscope.jar -Djava.library.path=$BASEDIR com.varaneckas.hawkscope.Launcher
        

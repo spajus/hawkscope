@@ -4,7 +4,7 @@
   <groupId>com.varaneckas</groupId>
   <artifactId>hawkscope</artifactId>
   <packaging>jar</packaging>
-  <version>0.6.1</version>
+  <version>0.6.3</version>
   <name>Hawkscope</name>
   <url>http://hawkscope.googlecode.com</url>
   <!-- $Id$ -->
@@ -203,7 +203,6 @@
         <activeByDefault>false</activeByDefault>
         <os>
           <family>Mac</family>
-          <arch>i386</arch>
         </os>
       </activation>
       <dependencies>
