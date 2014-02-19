@@ -2,6 +2,10 @@
 
 Cross-platform pluggable menu based launcher
 
+## Plugins
+
+You can find plugins here: [spajus/hawkscope-plugins](https://github.com/spajus/hawkscope-plugins)
+
 ## Building Hawkscope
 
 ### Prequisites
