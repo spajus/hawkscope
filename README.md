@@ -2,6 +2,10 @@
 
 Cross-platform pluggable menu based launcher
 
+![Screenshot Mac](http://lh6.ggpht.com/_nP8Aa6cTHpo/Sdc2NukoLRI/AAAAAAAABh4/eaZE1GkLjrM/s720/hs6.mac.png)
+![Screenshot Linux](http://lh6.ggpht.com/_nP8Aa6cTHpo/Sdc2N8yXdII/AAAAAAAABiA/qHH_7nlZO2c/s720/hs6.ubuntu.png)
+![Screenshot Windows](http://lh5.ggpht.com/_nP8Aa6cTHpo/Sdc2OGXh3XI/AAAAAAAABiI/4E7d2TNFJFM/s512/hs6.vista.png)
+
 ## Plugins
 
 You can find plugins here: [spajus/hawkscope-plugins](https://github.com/spajus/hawkscope-plugins)
